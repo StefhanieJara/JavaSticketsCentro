@@ -7,7 +7,7 @@ public class AdminDao {
     public static ArrayList<BPersona> listarCliente() {
         ArrayList<BPersona> listaClientes = new ArrayList<>();
         String user = "root";
-        String pass = "root";
+        String pass = "20195527";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
