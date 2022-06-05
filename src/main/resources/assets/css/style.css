@@ -1,0 +1,40 @@
+a {
+  font-size: 14px;
+  color: darkcyan;
+}
+body {
+  background-image: url("../../img/banner1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 100% 100%;
+}
+.color-general {
+  background-color: #e72d4b;
+}
+.logo-PUCP {
+  transform: translateX(50%) !important;
+  width: 50% !important;
+  height: 100px !important;
+}
+.login-color {
+  background: #212529;
+}
+
+.responsive-login {
+  width: 75%;
+}
+@media screen and (max-width: 992px) {
+  .responsive-login {
+    width: 100%;
+  }
+}
+
+.responsive-form {
+  width: 60%;
+}
+@media screen and (max-width: 992px) {
+  .responsive-form {
+    width: 100%;
+  }
+}

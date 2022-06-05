@@ -1,0 +1,67 @@
+:root  {
+		--color_facebook: #3b5998;
+		--color_twitter: #00acce;
+		--color_instagram:#e95950;
+		--color_pinterest: #c8232c;
+		--background-color:rgb(15,17,27);
+		
+		
+    }
+* { 
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		
+	}
+
+.title_grafico { 
+	margin: 60px;
+	text-align: left;
+	color: #000;
+	font-family:'Gill Sans', 'Gill Sana MT', Calibri, 'Trebuchet MS', sans-serif; 
+	} 
+.container_grafico{
+	width: 800px;
+	height: 260px;
+	display: flex;
+	justify-content: space-around;
+	align-items:center;
+	margin-left: auto;
+	margin-right: auto;
+	}
+.grafico{
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+	background-image: conic-gradient(var(--color_facebook) 40%,
+									var(--color_twitter) 40% 70%,
+									var(--color_instagram) 70% 88%,
+									var(--color_pinterest) 88%);
+	box-shadow: 1px 1px 5x 1px rgb(70, 70, 70);
+}
+.leyenda_all{
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+[class^="color_"]{
+	width: 15px;
+	height: 15px;
+	background-color: var(--color_facebook);
+	margin-right: 8px;
+	border-radius: 3px;
+}
+.color_twitter{
+	background-color: var(--color_twitter);
+}
+.color_instagram{
+	background-color: var(--color_instagram);
+}
+.color_pinterest{
+	background-color: var(--color_pinterest);
+}
+.social{
+	color: rgb(15,17,27);
+	font-family:'Gill Sans', 'Gill Sana MT', Calibri, 'Trebuchet MS', sans-serif;
+	line-height: 1.6;
+}
