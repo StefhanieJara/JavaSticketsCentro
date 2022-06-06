@@ -1,4 +1,5 @@
 package com.example.javasticketscentro.Daos;
+import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPersona;
 import java.sql.*;
 import java.util.ArrayList;
@@ -77,6 +78,40 @@ public class AdminDao {
         }
 
         return listaOperadores;
+    }
+
+    public static ArrayList<BCelebridad> listarCelebridad() {
+        ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
+        String user = "root";
+        String pass = "123456";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,rol  from celebridad");) {
+
+            while (rs.next()) {
+                BCelebridad bCelebridad = new BCelebridad();
+
+                bCelebridad.setNombre(rs.getString(1));
+                bCelebridad.setApellido(rs.getString(2));
+                bCelebridad.setRol(rs.getString(3));
+                listaCelebridad.add(bCelebridad);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaCelebridad;
     }
 
 
