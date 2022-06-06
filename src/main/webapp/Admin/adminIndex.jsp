@@ -112,7 +112,7 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="gestionSalas.html"
+                                    href="<%=request.getContextPath()%>/AdminGestionSalasServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionActoresDirectores.html"
+                                    href="<%=request.getContextPath()%>/ADServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionOperadores.html"
+                                    href="<%=request.getContextPath()%>/ListarOperadorServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="listaclientesV2.html"
+                                    href="<%=request.getContextPath()%>/AdminServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -204,7 +204,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="gestionSalas.html" class="btn btn-danger"
+                                    <a href="<%=request.getContextPath()%>/AdminGestionSalasServlet" class="btn btn-danger"
                                     >Ir a Salas</a
                                     >
                                 </div>
@@ -237,7 +237,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="visualizacionActoresDirectores.html"
+                                            href="<%=request.getContextPath()%>/ADServlet"
                                             class="btn btn-danger"
                                     >Ir a Actores y Directores</a
                                     >
@@ -274,7 +274,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="visualizacionOperadores.html"
+                                            href="<%=request.getContextPath()%>/ListarOperadorServlet"
                                             class="btn btn-danger"
                                     >Ir a Operadores</a
                                     >
@@ -310,7 +310,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="listaclientesV2.html" class="btn btn-danger"
+                                    <a href="<%=request.getContextPath()%>/AdminServlet" class="btn btn-danger"
                                     >Ir a lista de clientes</a
                                     >
                                 </div>

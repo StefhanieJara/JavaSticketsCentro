@@ -5,11 +5,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "Usuarioindex_2Servlet", value = "/Usuarioindex_2Servlet")
-public class Usuarioindex_2Servlet extends HttpServlet {
+@WebServlet(name = "EditarCelebridadServlet", value = "/EditarCelebridadServlet")
+public class EditarCelebridadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/Usuarioindex_2.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/editarCelebridad.jsp");
         requestDispatcher.forward(request,response);
     }
 

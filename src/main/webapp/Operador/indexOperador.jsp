@@ -89,7 +89,7 @@
     <div class="d-flex align-items-center flex-column mb-3 vh-100">
         <div class="p-2 w-100">
             <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Administrador</h5>
+                <h5 class="mb-0">Menú de Operador</h5>
                 <button
                         type="button"
                         class="btn-close text-reset"
@@ -112,7 +112,7 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="personalServlet"
+                                    href="<%=request.getContextPath()%>/personalServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="peliculaVisualizacionServlet"
+                                    href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionOperadoresServlet"
+                                    href="<%=request.getContextPath()%>/operador_estadisticasServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -192,7 +192,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="personalServlet" class="btn btn-danger">Ir a Personal</a>
+                                    <a href="<%=request.getContextPath()%>/personalServlet" class="btn btn-danger">Ir a Personal</a>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="peliculaVisualizacionServlet"
+                                            href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
                                             class="btn btn-danger"
                                     >Ir a Funciones</a
                                     >
@@ -258,7 +258,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-danger">Ir a Estadisticas</a>
+                                    <a href="<%=request.getContextPath()%>/operador_estadisticasServlet" class="btn btn-danger">Ir a Estadisticas</a>
                                 </div>
                             </div>
                         </div>

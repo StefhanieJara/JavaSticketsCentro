@@ -66,7 +66,7 @@
             <a
                     class="btn btn-tele-inverso"
                     role="button"
-                    href="usuarioCarrito.html"
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex"
             >
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
@@ -113,13 +113,13 @@
                     </div>
                     <div class="mb-3">
                         <div class="p-2">
-                            <a href="usuarioEditar.html" class="text-dark text-decoration-none">
+                            <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet" class="text-dark text-decoration-none">
                                 <span><i class="fas fa-user-edit"></i></span>
                                 <span>Editar perfil</span>
                             </a>
                         </div>
                         <div class="p-2">
-                            <a href="usuarioHistorial.html" class="text-dark text-decoration-none">
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Historial de tickets</span>
                             </a>

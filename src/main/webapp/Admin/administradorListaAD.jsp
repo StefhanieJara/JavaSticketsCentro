@@ -32,7 +32,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="registrarCelebridad.html" class="btn-float">
+<a href="<%=request.getContextPath()%>/RegistrarCelebridadServlet" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -113,7 +113,7 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="gestionSalas.html"
+                                    href="<%=request.getContextPath()%>/AdminGestionSalasServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -122,7 +122,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionActoresDirectores.html"
+                                    href="<%=request.getContextPath()%>/ADServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionOperadores.html"
+                                    href="<%=request.getContextPath()%>/ListarOperadorServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -140,7 +140,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="listaclientesV2.html"
+                                    href="<%=request.getContextPath()%>/AdminServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -154,7 +154,7 @@
         <!--Footer cerrar sesión-->
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
+                <a href="<%=request.getContextPath()%>/index.jsp" class="text-dark text-decoration-none">
                     <span><i class="fas fa-sign-out-alt"></i></span>
                     <span>Cerrar sesión</span>
                 </a>
@@ -219,7 +219,7 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarCelebridad.html">
+            <a href="<%=request.getContextPath()%>/EditarCelebridadServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
@@ -233,7 +233,7 @@
             </button>
         </div>
         <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarCelebridad.html">
+            <a href="<%=request.getContextPath()%>/EditarCelebridadServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <div class="mx-3"></div>

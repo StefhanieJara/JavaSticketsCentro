@@ -38,7 +38,7 @@
                         class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
                 >
                     <a class="navbar-brand py-0" href="#">
-                        <a href="index.html"><img src="assets/img/logo.png" /></a>
+                        <a href="index.html"><img src="img/logo.png" /></a>
                     </a>
                 </div>
                 <!--Buscador de peliculas-->
@@ -129,7 +129,7 @@
                             <div class="mb-3">
                                 <div class="p-2">
                                     <a
-                                            href="usuarioEditar.html"
+                                            href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet"
                                             class="text-dark text-decoration-none"
                                     >
                                         <span><i class="fas fa-user-edit"></i></span>
@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="p-2">
                                     <a
-                                            href="usuarioHistorial.html"
+                                            href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet"
                                             class="text-dark text-decoration-none"
                                     >
                                         <span><i class="fas fa-list"></i></span>
@@ -328,7 +328,7 @@
                                                     <button type="button" class="btn btn-danger disabled">
                                                         Cancelar pedido
                                                     </button>
-                                                    <button type="button" class="btn btn-danger disabled">
+                                                    <button type="button" class="btn btn-danger">
                                                         Calificar Película
                                                     </button>
                                                 </td>

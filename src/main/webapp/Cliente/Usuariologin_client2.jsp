@@ -38,13 +38,13 @@
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="assets/img/s1.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s1.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s2.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s2.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s8.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s8.jpg" class="d-block w-100" alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-md-6 d-flex flex-column justify-content-center align-content-center">
                             <div class="row">
-                                <a href="index.html"><img src="assets/img/PUCPnegativo(blanco).png" class="logo-PUCP"></a>
+                                <a href="index.html"><img src="img/PUCPnegativo(blanco).png" class="logo-PUCP"></a>
                             </div>
                             <br><br>
                             <div class="flex-row justify-content-center align-content-center">
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="text-center" href="recuperarContra.html">¿Olvidó su contraseña?</a>
+                            <a class="text-center" href="<%=request.getContextPath()%>/UsuariorecuperarContraServlet">¿Olvidó su contraseña?</a>
                         </div>
                     </div>
                 </div>
