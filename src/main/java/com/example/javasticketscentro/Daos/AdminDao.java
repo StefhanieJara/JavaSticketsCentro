@@ -41,4 +41,43 @@ public class AdminDao {
 
         return listaClientes;
     }
+
+    public static ArrayList<BPersona> listarOperador() {
+        ArrayList<BPersona> listaOperadores = new ArrayList<>();
+        String user = "root";
+        String pass = "123456";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol from persona where rol = 'Operador'");) {
+
+            while (rs.next()) {
+                BPersona bPersona = new BPersona();
+
+                bPersona.setNombre(rs.getString(1));
+                bPersona.setApellido(rs.getString(2));
+                bPersona.setNumCel(rs.getInt(3));
+                bPersona.setFecha_Nc(rs.getDate(4));
+                bPersona.setEmail(rs.getString(5));
+                bPersona.setRol(rs.getString(6));
+                listaOperadores.add(bPersona);
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaOperadores;
+    }
+
+
 }
