@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Niurka
-  Date: 05/06/2022
-  Time: 22:27
+  User: stefh
+  Date: 5/06/2022
+  Time: 23:18
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,7 +14,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP-Operador</title>
+    <title>Centro Cultural PUCP-Administrador</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,7 +40,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexOperador.html"><img src="img/logo.png" /></a>
+                <a href="indexAdmin.html"><img src="img/logo.png" /></a>
             </a>
         </div>
 
@@ -112,20 +112,20 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="personal.html"
+                                    href="gestionSalas.html"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Personal</span>
+                                <span>Gestione Salas</span>
                             </a>
                         </div>
                         <div class="p-2">
                             <a
-                                    href="peliculaVisualizacion.html"
+                                    href="visualizacionActoresDirectores.html"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Funciones</span>
+                                <span>Añadir Actores y Directores</span>
                             </a>
                         </div>
                         <div class="p-2">
@@ -134,7 +134,16 @@
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Estadísticas</span>
+                                <span>Visualizar Operadores</span>
+                            </a>
+                        </div>
+                        <div class="p-2">
+                            <a
+                                    href="listaclientesV2.html"
+                                    class="text-dark text-decoration-none"
+                            >
+                                <span><i class="fas fa-list"></i></span>
+                                <span>Visualizar Lista de Clientes</span>
                             </a>
                         </div>
                     </div>
@@ -156,7 +165,7 @@
     <div class="container">
         <div class="row">
             <div class="moverTitulo">
-                <h3 class="text-dark">Bienvenido Operador</h3>
+                <h3 class="text-dark">Bienvenido Administrador</h3>
             </div>
         </div>
         <div class="row">
@@ -172,7 +181,7 @@
                             <div
                                     class="card-header h-100 shadow border-0 text-white"
                                     style="
-                      background-image: url('img/cinePersonal.jpg');
+                      background-image: url('img/SalasCine.jpg');
                       background-size: cover;
                     "
                             >
@@ -180,37 +189,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Gestione Personal
-                                </h2>
-                            </div>
-                            <div class="card-body">
-                                <div
-                                        class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
-                                >
-                                    <ul class="">
-                                        <p>Configure el personal que atendera la función</p>
-                                    </ul>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <a href="personal.html" class="btn btn-danger">Ir a Personal</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div
-                                    class="card-header h-100 shadow border-0 text-white"
-                                    style="
-                      background-image: url('img/TeatroPucp.jpg');
-                      background-size: cover;
-                    "
-                            >
-                                <h2
-                                        class="mt-5 mb-3 fw-bold"
-                                        style="text-shadow: 0.5px 0.5px #2b2b2b"
-                                >
-                                    Gestione Funciones
+                                    Gestione Salas
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -219,15 +198,14 @@
                                 >
                                     <ul class="">
                                         <p>
-                                            Añada las funciones para una sede y sala determinada
+                                            Configure el numero de salas y la cantidad de personas
+                                            que puedan asistir a la función
                                         </p>
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a
-                                            href="peliculaVisualizacion.html"
-                                            class="btn btn-danger"
-                                    >Ir a Funciones</a
+                                    <a href="gestionSalas.html" class="btn btn-danger"
+                                    >Ir a Salas</a
                                     >
                                 </div>
                             </div>
@@ -238,7 +216,7 @@
                             <div
                                     class="card-header h-100 shadow border-0 text-white"
                                     style="
-                      background-image: url('img/estadistica.jpg');
+                      background-image: url('img/Actores.jpg');
                       background-size: cover;
                     "
                             >
@@ -246,7 +224,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Visualizar estadísticas
+                                    Añada Actores y Directores
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -254,11 +232,87 @@
                                         class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
                                 >
                                     <ul class="">
-                                        <p>Visualice las estadisticas de la las funciones.</p>
+                                        <p>Añadir actores y directores de una película</p>
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-danger">Ir a Estadisticas</a>
+                                    <a
+                                            href="visualizacionActoresDirectores.html"
+                                            class="btn btn-danger"
+                                    >Ir a Actores y Directores</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div
+                                    class="card-header h-100 shadow border-0 text-white"
+                                    style="
+                      background-image: url('img/hombreBoletos.jpg');
+                      background-size: cover;
+                    "
+                            >
+                                <h2
+                                        class="mt-5 mb-3 fw-bold"
+                                        style="text-shadow: 0.5px 0.5px #2b2b2b"
+                                >
+                                    Visualizar operadores
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div
+                                        class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
+                                >
+                                    <ul class="">
+                                        <p>
+                                            Visualice los trabajadores que estan operando en un
+                                            rango de días y su historial
+                                        </p>
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <a
+                                            href="visualizacionOperadores.html"
+                                            class="btn btn-danger"
+                                    >Ir a Operadores</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <div
+                                    class="card-header h-100 shadow border-0 text-white"
+                                    style="
+                      background-image: url('img/Clientes.jpg');
+                      background-size: cover;
+                    "
+                            >
+                                <h2
+                                        class="mt-5 mb-3 fw-bold"
+                                        style="text-shadow: 0.5px 0.5px #2b2b2b"
+                                >
+                                    Visualizar lista de Clientes
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div
+                                        class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
+                                >
+                                    <ul class="">
+                                        <p>
+                                            Visualice la lista de clientes presentes en cada
+                                            función
+                                        </p>
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <a href="listaclientesV2.html" class="btn btn-danger"
+                                    >Ir a lista de clientes</a
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -268,50 +322,6 @@
         </div>
     </div>
 </main>
-
-<div
-        class="modal fade"
-        id="motivoBloqueo"
-        tabindex="-1"
-        aria-labelledby="conf_eliminar"
-        aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content border-0">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="conf_eliminar">Bloquear farmacia</h5>
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                ></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-outline">
-                    <label class="form-label" for="bloqueoFarmacia">
-                        Escriba el motivo del bloqueo de la farmacia:
-                    </label>
-                    <textarea
-                            type="tel"
-                            id="bloqueoFarmacia"
-                            class="form-control"
-                    ></textarea>
-                </div>
-                <br />
-                ¿Está seguro que desea bloquearla?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-danger">
-                    Eliminar Producto
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
