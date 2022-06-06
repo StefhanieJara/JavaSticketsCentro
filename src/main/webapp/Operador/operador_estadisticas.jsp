@@ -69,7 +69,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexOperador.html"><img src="assets/img/logo.png" /></a>
+                <a href="indexOperador.html"><img src="img/logo.png" /></a>
             </a>
         </div>
 
@@ -133,7 +133,7 @@
                     <div class="my-2">
                         <h4 class="mb-3">Rex Campos Díaz</h4>
                         <img
-                                src="assets/img/images.png"
+                                src="img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
