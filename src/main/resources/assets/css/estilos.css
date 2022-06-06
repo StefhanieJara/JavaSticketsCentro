@@ -557,17 +557,17 @@ td {
 }
 
 .f1 {
-  background-image: url("../../img/national-cancer-institute-byGTytEGjBo-unsplash.jpg");
+  background-image: url("../../img/sedeChacarilla.jpg");
   background-size: cover;
 }
 
 .f2 {
-  background-image: url("../../img/tbel-abuseridze-eBW1nlFdZFw-unsplash.jpg");
+  background-image: url("../../img/sedeLince.jpg");
   background-size: cover;
 }
 
 .f3 {
-  background-image: url("../../img/national-cancer-institute-cw2Zn2ZQ9YQ-unsplash.jpg");
+  background-image: url("../../img/sedeMiraflores.jpg");
   background-size: cover;
 }
 
@@ -625,8 +625,7 @@ td {
   background-color: rgba(245, 127, 0, 0.87);
   border: 1px solid white;
   border-radius: 0.5rem;
-  /*background-image: url('../img/bgfar2.jpg');*/
-  /*background-size: cover;*/
+
 }
 
 .font-size-lgr {
