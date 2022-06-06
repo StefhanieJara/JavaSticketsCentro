@@ -26,14 +26,13 @@ mark{
 }
 
 /* Peliculas */
-.sedes{
-    background-color: #E72D4B;
+.container-pelicula{
     display: grid;
-    grid-template-columns: 34% 32% 34%;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: auto;
-    grid-template-areas: "sede1 sede2 sede3";
+    grid-template-areas: "col-pelicula1 col-pelicula2 col-pelicula3 col-pelicula4";
 }
-.sede1, .sede2, .sede3{
+.col-pelicula1, .col-pelicula2, .col-pelicula3, col-pelicula4{
     text-align: center;
     font-size: auto;
     align-items: center;
@@ -42,7 +41,26 @@ mark{
     margin-left: auto;
     margin-right: auto;
     font-family: 'Inconsolata', monospace;
-    letter-spacing: 2px;
+    color: #fff;
+}
+
+.title-peliculas{
+    color:#E72D4B;
+    bold: normal;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.textoPeliculas{
+    background: #000000;
+    font-weight: bold;
+    padding: 15px;
+    max-height: 60px;
+    margin: auto auto;
+    text-align: center;
+    border-left:8px solid #E72D4B;
+    border-top-left-radius:8px;
+    border-bottom-left-radius:8px;
     color: #fff;
 }
 
@@ -50,5 +68,15 @@ mark{
 .py-lg-5{
     color:#fff;
     font-size: 18px;
+    height: 120px;
+    text-align: center;
+    vertical-align: center;
     background-color: #000;
+}
+
+.imagenPeli{
+
+    padding-bottom:10px;
+    max-height: 455px;
+    resize: both;
 }

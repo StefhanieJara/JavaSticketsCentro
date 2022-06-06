@@ -174,77 +174,106 @@
     </div>
     <!-- -->
 
-    <div class="container">
-        <!--Mismo Distrito-->
+    <div class="container px-6 py-2">
         <div class="row">
-            <h3 class="tittle-w3layouts my-lg-4 my-4"><b>Estrenos</b></h3>
-        </div>
-        <div class="row">
-            <div class="container px-5 py-2" id="custom-cards-san-miguel">
-                <!--Nombre distrito-->
-                <h4 class="dist-name">San Miguel</h4>
-                <!--Farmacias-->
-                <div class="row row-cols-1 row-cols-lg-3 g-4 py-3">
-                    <!--F1-->
-                    <div class="col">
-                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f1">
-                            <h2>InkaFarma</h2>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>&nbsp;&nbsp;Calle Los Volados #420</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--F2-->
-                    <div class="col">
-                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f2">
-                            <h2>Botica Telecos</h2>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>&nbsp;&nbsp;Calle Los Amigues #310</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--F3-->
-                    <div onclick="location.href='usuarioFarmaciaElegida.html'" class="col">
-                        <div class="card card-farmacia f3">
-                            <h2>Botica Farmaco</h2>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>&nbsp;&nbsp;Jirón Los Desdes #123</small>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <h3 class="dist-name title-peliculas">Estrenos</h3>
+            <div class="row container-pelicula">
+                <div class="col-pelicula1">
+                    <a href=""><img src="img/s1.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Thor Ragnarok</div>
                 </div>
-                <!--Boton ver más-->
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-tele">Ver más</button>
+                <div class="col-pelicula2">
+                    <a href=""><img src="img/s2.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Doctor Strange</div>
+                </div>
+                <div class="col-pelicula3">
+                    <a href=""><img src="img/s5.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Spiderman: No way Home</div>
+                </div>
+                <div class="col-pelicula4">
+                    <a href=""><img src="img/s8.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Eternals</div>
                 </div>
             </div>
         </div>
     </div>
 
-</main>
-<div class="peliculas">
-
-</div>
-<div class="sedes">
-    <div class="sede1">
-        <table>
-            <tr>SEDE 1</tr>
-            <tr>INFO 1</tr>
-        </table>
+    <div class="container px-6 py-2">
+        <div class="row">
+            <h3 class="dist-name title-peliculas">Otras Películas</h3>
+            <div class="row container-pelicula">
+                <div class="col-pelicula1">
+                    <a href=""><img src="img/linaLima.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Lina Lima</div>
+                </div>
+                <div class="col-pelicula2">
+                    <a href=""><img src="img/s7.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Loki</div>
+                </div>
+                <div class="col-pelicula3">
+                    <a href=""><img src="img/posterthor.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Thor: Love and Thunder</div>
+                </div>
+                <div class="col-pelicula4">
+                    <a href=""><img src="img/posteravatar.jpg" class="imagenPeli" width="100%"></a>
+                    <div class="textoPeliculas">Avatar</div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="sede2">INFO 2</div>
-    <div class="sede3">INFO 3</div>
-</div>
 
+    <div class="container">
+        <div class="row">
+            <div class="container px-5 py-2" id="custom-cards-san-miguel">
+                <h4 class="dist-name" style="color:#E72D4B; font-weight: bold; margin-top: 30px">Nuestras Sedes</h4>
+                <div class="row row-cols-1 row-cols-lg-3 g-4 py-3">
+                    <!--SEDE 1-->
+                    <div class="col">
+                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f1">
+                            <h2>Chacarilla</h2>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-map-marker-alt fa-xs"></i>
+                                    <small>Calle Los Volados #420</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--SEDE 2-->
+                    <div class="col">
+                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f2">
+                            <h2>Lince</h2>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-map-marker-alt fa-xs"></i>
+                                    <small>Los Amigues #310</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--SEDE 3-->
+                    <div onclick="location.href='usuarioFarmaciaElegida.html'" class="col">
+                        <div class="card card-farmacia f3">
+                            <h2>Miraflores</h2>
+                            <ul>
+                                <li>
+                                    <i class="fas fa-map-marker-alt fa-xs"></i>
+                                    <small>Jirón Los Desdes #123</small>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+    <footer class="py-lg-5 py-4">
+        <p class="copy-right text-center ">&copy; 2022 JavaSticket. All Rights Reserved</p>
+    </footer>
 
     <!--JS-->
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
