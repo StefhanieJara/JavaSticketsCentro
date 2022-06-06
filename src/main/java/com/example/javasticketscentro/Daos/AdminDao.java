@@ -7,7 +7,7 @@ public class AdminDao {
     public static ArrayList<BPersona> listarCliente() {
         ArrayList<BPersona> listaClientes = new ArrayList<>();
         String user = "root";
-        String pass = "20195527";
+        String pass = "123456";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
@@ -19,7 +19,7 @@ public class AdminDao {
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select idPersona,nombre,apellido,numeroCelular,fechaDeNacimiento,email,direccionCliente from persona");) {
+             ResultSet rs = stmt.executeQuery("select idPersona,nombre,apellido,numeroCelular,fechaDeNacimiento,email,direccionCliente from persona where rol = 'Cliente'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
