@@ -1,12 +1,14 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Niurka
-  Date: 05/06/2022
-  Time: 22:36
+  User: david
+  Date: 5/06/2022
+  Time: 23:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<jsp:useBean id="listaCelebridades" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>" />
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,7 +16,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP-Lista de peliculas</title>
+    <title>Centro Cultural PUCP-Lista de Actores y Directores</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,6 +31,11 @@
     ></script>
 </head>
 <body>
+<!--Botón flotante "+" para agregar producto-->
+<a href="registrarCelebridad.html" class="btn-float">
+    <i class="fas fa-plus my-float"></i>
+</a>
+
 <!--Cabecera principal Cine-->
 <nav
         class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
@@ -37,12 +44,12 @@
     <div
             class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2"
     >
-        <!--Logo Centro cultural PUCP-->
+        <!--Logo Centro Cultural PUCP-->
         <div
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
             <a class="navbar-brand py-0" href="usuario.html">
-                <a href="indexAdmin.html"><img src="assets/img/logo.png" /></a>
+                <a href="indexAdmin.html"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Espacio-->
@@ -51,7 +58,7 @@
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         ></div>
-        <!--Menú Cine-->
+        <!--Menú farmacia-->
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0"
         >
@@ -71,7 +78,7 @@
     </div>
 </nav>
 
-<!--Menú Cine-->
+<!--Menú cine-->
 <div
         class="offcanvas offcanvas-end text-center"
         tabindex="-1"
@@ -91,14 +98,14 @@
                 ></button>
             </div>
         </div>
-        <!--Foto Cine-->
+        <!--Foto cine-->
         <div class="p-2">
             <div class="offcanvas-body p-3">
                 <div class="d-flex flex-column">
                     <div class="my-2">
                         <h4 class="mb-3">Rex Quispe Medina</h4>
                         <img
-                                src="assets/img/images.png"
+                                src="img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -165,7 +172,7 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Operadores</b></a
+            ><b>Lista de Actores y Directores</b></a
             >
         </li>
     </ul>
@@ -178,171 +185,134 @@
                         type="search"
                         id="form1"
                         class="form-control"
-                        placeholder="Buscar operador por nombre"
+                        placeholder="Buscar actor, actriz o director"
                 />
             </div>
             <button type="button" class="btn btn-tele border-start-1">
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <div class="ingresefecha">
-            <div class="col-md-2 mb-5">
-                <div class="form-outline mb-0">
-                    <label class="form-label" for="productName"
-                    >Ingrese la fecha de inicio</label
-                    >
-                    <input
-                            type="date"
-                            id="productName"
-                            class="form-control width=-100"
-                            placeholder="Ingrese el nombre de la película"
-                    />
-                </div>
-            </div>
-            <div class="col-md-2 mb-5">
-                <div class="form-outline mb-0">
-                    <label class="form-label" for="productName"
-                    >Ingrese la fecha de final</label
-                    >
-                    <input
-                            type="date"
-                            id="productName"
-                            class="form-control width=-100"
-                            placeholder="Ingrese el nombre de la película"
-                    />
-                </div>
-            </div>
-        </div>
-        </div>
-
-
     </form>
 
-
-    <!--Productos-->
+    <%for (BCelebridad celebridad : listaCelebridades ) {%>
+    <!--Celebridad-->
     <hr class="mx-md-5 mx-sm-3" />
-    <!--Producto 2-->
+    <!--Celebridad-->
     <div class="row justify-content-center align-items-start my-2">
         <!--Nombre del producto e imagen referencial-->
         <div class="col-md-2 text-center mt-2">
             <img
                     class="w-100"
-                    src="assets\img\magaly.jpg"
+                    src="img/bong.jpg"
                     style="max-height: 220px; max-width: 250px"
             />
         </div>
-        <!--Precio y Stock-->
+        <!--Rol-->
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
             <h6>Rol:</h6>
-            <p style="font-size: larger">Operador</p>
+            <p style="font-size: larger"><%=celebridad.getRol()%></p>
         </div>
-        <!--Descripción del producto-->
+        <!--Descripción de la celebridad-->
         <div class="col-md-6 mt-5 d-none d-md-block">
-            <h6>Nombre:</h6>
-            <p>Carlos Quispe Rodriguez</p>
-            <h6>Grupo:</h6>
-            <p>2</p>
-            <p>Carlos Quispe Rodriguez</p>
-            <h6>Grupo:</h6>
-            <p>2</p>
-            <h6>Dirección:</h6>
-            <p>Avenida Sol de Oro 1453 Residencia San Castillo 107</p>
-            <h6>Número de contacto:</h6>
-            <p>95890638252</p>
+            <h6>Nombre</h6>
+            <p><%=celebridad.getNombre()%> <%=celebridad.getApellido()%></p>
         </div>
-        <hr class="mx-md-5 mx-sm-3" />
-        <!--Producto 2-->
-        <div class="row justify-content-center align-items-start my-2">
-            <!--Nombre del producto e imagen referencial-->
-            <div class="col-md-2 text-center mt-2">
-                <img
-                        class="w-100"
-                        src="assets\img\bong.jpg"
-                        style="max-height: 220px; max-width: 250px"
-                />
-            </div>
-            <!--Precio y Stock-->
-            <div class="col-md-1 text-center mt-5 d-none d-md-block">
-                <h6>Rol:</h6>
-                <p style="font-size: larger">Director</p>
-            </div>
-            <!--Descripción del producto-->
-            <div class="col-md-6 mt-5 d-none d-md-block">
-                <h6>Nombre:</h6>
-                <p>Carlos Quispe Rodriguez</p>
-                <h6>Grupo:</h6>
-                <p>2</p>
-                <p>Carlos Quispe Rodriguez</p>
-                <h6>Grupo:</h6>
-                <p>2</p>
-                <h6>Dirección:</h6>
-                <p>Avenida Sol de Oro 1453 Residencia San Castillo 107</p>
-                <h6>Número de contacto:</h6>
-                <p>95890638252</p>
-            </div>
-            <hr class="mx-md-5 mx-sm-3" />
-            <!--Producto 3-->
-            <div class="row justify-content-center align-items-start my-2">
-                <!--Nombre del producto e imagen referencial-->
-                <div class="col-md-2 text-center mt-2">
-                    <img
-                            class="w-100"
-                            src="assets\img\benedict.jpg"
-                            style="max-height: 220px; max-width: 250px"
-                    />
-                </div>
-                <!--Precio y Stock-->
-                <div class="col-md-1 text-center mt-5 d-none d-md-block">
-                    <h6>Rol:</h6>
-                    <p style="font-size: larger">Actor</p>
-                </div>
-                <!--Descripción del producto-->
-                <div class="col-md-6 mt-5 d-none d-md-block">
-                    <h6>Nombre:</h6>
-                    <p>Carlos Quispe Rodriguez</p>
-                    <h6>Grupo:</h6>
-                    <p>2</p>
-                    <p>Carlos Quispe Rodriguez</p>
-                    <h6>Grupo:</h6>
-                    <p>2</p>
-                    <h6>Dirección:</h6>
-                    <p>Avenida Sol de Oro 1453 Residencia San Castillo 107</p>
-                    <h6>Número de contacto:</h6>
-                    <p>95890638252</p>
-                </div>
-                <hr class="mx-md-5 mx-sm-3" />
+        <!--Botones de editar y eliminar-->
+        <div class="col-sm-1 mt-5 d-none d-md-block text-center">
+            <a href="editarCelebridad.html">
+                <i class="far fa-edit btn-tele p-1 rounded"></i>
+            </a>
+            <hr class="my-1" style="background-color: white" />
+            <button
+                    class="btn btn-danger py-0 px-1"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmacion"
+            >
+                <i class="fas fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="d-flex justify-content-center my-2 d-md-none">
+            <a href="editarCelebridad.html">
+                <i class="far fa-edit btn-tele p-1 rounded"></i>
+            </a>
+            <div class="mx-3"></div>
+            <button
+                    class="btn btn-danger py-0 px-1"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmacion"
+            >
+                <i class="fas fa-times-circle"></i>
+            </button>
+        </div>
+    </div>
+    <%}%>
+    <!--Paginación-->
+    <div class="container">
+        <div class="d-flex justify-content-center my-3">
+            <nav aria-label="paginacion_productos">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link">Anterior</a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 
-                <!--Paginación-->
-                <div class="container">
-                    <div class="d-flex justify-content-center my-3">
-                        <nav aria-label="paginacion_productos">
-                            <ul class="pagination">
-                                <li class="page-item disabled">
-                                    <a class="page-link">Anterior</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item" aria-current="page">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+    <!--Modal eliminar producto: Producto no pendiente para pedido-->
+    <div
+            class="modal fade"
+            id="confirmacion"
+            tabindex="-1"
+            aria-labelledby="conf_eliminar"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="conf_eliminar">Eliminar Función</h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
                 </div>
-
-                <!--Modal eliminar producto: Producto no pendiente para pedido-->
+                <div class="modal-body">
+                    Esta celebridad será eliminada y ya no podra recuperar la
+                    información.<br />
+                    ¿Está seguro que desea eliminarlo del catálogo?
+                </div>
+                <div class="modal-footer">
+                    <button
+                            type="button"
+                            class="btn btn-light"
+                            data-bs-dismiss="modal"
+                    >
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        Eliminar Función
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!--JS-->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-
 </body>
 </html>
