@@ -58,7 +58,7 @@ public class AdminDao {
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol from persona where rol = 'Operador'");) {
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona from persona where rol = 'Operador'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
@@ -69,6 +69,7 @@ public class AdminDao {
                 bPersona.setFecha_Nc(rs.getDate(4));
                 bPersona.setEmail(rs.getString(5));
                 bPersona.setRol(rs.getString(6));
+                bPersona.setIdPer(rs.getInt(7));
                 listaOperadores.add(bPersona);
 
             }
