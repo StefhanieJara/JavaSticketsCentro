@@ -58,7 +58,7 @@
         .caja1{
             background-color: #ddd;
             width: 250px;
-            height: 900px;
+            height: 570px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -68,7 +68,7 @@
         .caja2{
             background-color: #ddd;
             width: 300px;
-            height: 930px;
+            height: 600px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -214,28 +214,6 @@
     </div>
     <div class="row g-3 align-items-center mt-2">
         <div class="rows-auto">
-            <label for="inputtext6" class="col-form-label">Correo Institucional</label>
-        </div>
-        <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-        </div>
-    </div>
-    <div class="row g-3 align-items-center mt-2">
-        <div class="rows-auto">
-            <label for="inputtext6" class="col-form-label">Telefono</label>
-        </div>
-        <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-        </div>
-    </div>
-    <div class="row g-3 align-items-center mt-2">
-        <div class="rows-auto">
-            <label for="inputtext6" class="col-form-label">Fecha de Nacimiento</label>
-        </div>
-        <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-        </div>
-        <div class="rows-auto">
             <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar filtros</button>
         </div>
     </div>
@@ -248,10 +226,10 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Correo PUCP</th>
+            <th>Email</th>
             <th>Telefono</th>
             <th>Nacimiento</th>
-            <th>Distrito</th>
+            <th>Direccion</th>
         </tr>
         </thead>
         <tbody>
@@ -260,9 +238,9 @@
             <td><%=cliente.getIdPer()%></td>
             <td><%=cliente.getNombre()%></td>
             <td><%=cliente.getApellido()%></td>
+            <td><%=cliente.getEmail()%></td>
             <td><%=cliente.getNumCel()%></td>
             <td><%=cliente.getFecha_Nc()%></td>
-            <td><%=cliente.getEmail()%></td>
             <td><%=cliente.getDireccion()%></td>
         </tr>
         <%} %>
