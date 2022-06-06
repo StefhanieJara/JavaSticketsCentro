@@ -6,6 +6,16 @@ public class BCelebridad {
     private String apellido;
     private String rol;
     private String foto;
+    private double calificacion;
+
+    public double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(double calificacion) {
+        this.calificacion = calificacion;
+    }
+
 
     public int getIdCelebridad() {
         return idCelebridad;
