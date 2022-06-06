@@ -5,12 +5,11 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UsuarioregistroServlet", value = "/UsuarioregistroServlet")
-public class UsuarioregistroServlet extends HttpServlet {
+@WebServlet(name = "UsuariologinclientServlet", value = "/UsuariologinclientServlet")
+public class UsuariologinclientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioconfirmarRegistro.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/Usuariologin_client.jsp");
         requestDispatcher.forward(request,response);
     }
 
