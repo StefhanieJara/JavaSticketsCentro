@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Niurka
-  Date: 05/06/2022
-  Time: 22:36
+  Date: 06/06/2022
+  Time: 01:25
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -42,7 +42,7 @@
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
             <a class="navbar-brand py-0" href="usuario.html">
-                <a href="indexAdmin.html"><img src="assets/img/logo.png" /></a>
+                <a href="AdminIndexServlet"><img src="assets/img/logo.png" /></a>
             </a>
         </div>
         <!--Espacio-->
@@ -117,7 +117,7 @@
                             <a
                                     href="visualizacionActoresDirectores.html"
                                     class="text-dark text-decoration-none"
-                            >
+                            >777777
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Añadir Actores y Directores</span>
                             </a>
@@ -340,9 +340,5 @@
 
 <!--JS-->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
-
-
 </body>
 </html>

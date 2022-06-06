@@ -8,7 +8,7 @@ public class AdminDao {
     public static ArrayList<BPersona> listarCliente() {
         ArrayList<BPersona> listaClientes = new ArrayList<>();
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
@@ -46,7 +46,7 @@ public class AdminDao {
     public static ArrayList<BPersona> listarOperador() {
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
@@ -58,7 +58,7 @@ public class AdminDao {
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol from persona where rol = 'Operador'");) {
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona from persona where rol = 'Operador'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
@@ -69,6 +69,7 @@ public class AdminDao {
                 bPersona.setFecha_Nc(rs.getDate(4));
                 bPersona.setEmail(rs.getString(5));
                 bPersona.setRol(rs.getString(6));
+                bPersona.setIdPer(rs.getInt(7));
                 listaOperadores.add(bPersona);
 
             }
@@ -83,7 +84,7 @@ public class AdminDao {
     public static ArrayList<BCelebridad> listarCelebridad() {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {

@@ -200,6 +200,8 @@
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
             <h6>Rol:</h6>
             <p style="font-size: larger"><%=operador.getRol()%></p>
+            <h6>ID:</h6>
+            <p style="font-size: larger"><%=operador.getIdPer()%></p>
         </div>
         <!--Descripción del operador-->
         <div class="col-md-6 mt-5 d-none d-md-block">
