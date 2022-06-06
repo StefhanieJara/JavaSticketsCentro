@@ -46,7 +46,7 @@ public class AdminDao {
     public static ArrayList<BPersona> listarOperador() {
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
@@ -83,7 +83,7 @@ public class AdminDao {
     public static ArrayList<BCelebridad> listarCelebridad() {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
 
         try {
