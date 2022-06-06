@@ -3,21 +3,21 @@ package com.example.javasticketscentro.Servlets;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
-@WebServlet(name = "ListarOperadorServlet", value = "/ListarOperadorServlet")
-public class ListarOperadorServlet extends HttpServlet {
+
+@WebServlet(name = "operador_estadisticasServlet", value = "/operador_estadisticasServlet")
+public class operador_estadisticasServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<BPersona> listaOperadores = AdminDao.listarOperador();
 
-        request.setAttribute("listaOperadores",listaOperadores);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/operador_estadisticas.jsp");
         requestDispatcher.forward(request,response);
     }
 
