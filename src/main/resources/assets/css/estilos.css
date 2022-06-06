@@ -36,14 +36,14 @@ select {
 .nav-item {
   margin-top: 70px;
 }
-/*Tele radius*/
+/*Check-box*/
 
 .form-check-input:checked {
   background-color: rgba(245, 127, 0, 0.87);
   border-color: rgba(245, 127, 0, 0.87);
 }
 
-/*Pestañas farmacia*/
+/*Pestañas*/
 
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
@@ -52,7 +52,7 @@ select {
   border-color: #dee2e6 #dee2e6 #fff;
 }
 
-/*Boton Telefarma*/
+/*Boton estilos*/
 
 .btn-tele {
   border-color: rgba(245, 127, 0, 0.87);
@@ -138,7 +138,7 @@ select {
   outline: 0;
 }
 
-/*Paginacion naranja*/
+/*Paginación*/
 
 .page-link {
   position: relative;
@@ -397,7 +397,7 @@ select {
   margin-bottom: 15px;
 }
 
-/*Tabla Hsitorial*/
+/*Tabla Historial*/
 
 .cell-1 {
   border-collapse: separate;
@@ -510,7 +510,7 @@ td {
   margin: auto;
 }
 
-/*Farmacias interfaz usuario*/
+/*Interfaz usuario*/
 
 .dist-name {
   border-bottom: 1px solid #dee2e6 !important;
@@ -571,7 +571,7 @@ td {
   background-size: cover;
 }
 
-/*Productos de una farmacia*/
+/*Pelicula*/
 
 .card-producto {
   display: flex;
