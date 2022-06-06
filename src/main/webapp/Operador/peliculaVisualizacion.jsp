@@ -47,7 +47,7 @@
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
             <a class="navbar-brand py-0" href="usuario.html">
-                <a href="indexOperador.html"><img src="img/logo.png" /></a>
+                <a href="indexOperadorServlet"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Espacio-->
@@ -114,7 +114,7 @@
         <!--Footer cerrar sesión-->
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
+                <a href="indexServlet" class="text-dark text-decoration-none">
                     <span><i class="fas fa-sign-out-alt"></i></span>
                     <span>Cerrar sesión</span>
                 </a>
@@ -221,7 +221,7 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarPelicula.html">
+            <a href="editarPeliculaServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
@@ -235,7 +235,7 @@
             </button>
         </div>
         <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarPelicula.html">
+            <a href="editarPeliculaServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <div class="mx-3"></div>
