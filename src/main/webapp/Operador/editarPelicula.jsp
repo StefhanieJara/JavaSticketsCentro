@@ -60,6 +60,17 @@
                                                 placeholder="Ingrese el nombre de la película"
                                         />
                                     </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Género de la pelicula</label
+                                        >
+                                        <input
+                                                type="text"
+                                                id="productName"
+                                                class="form-control"
+                                                placeholder="Ingrese el nombre de la película"
+                                        />
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6 mb-4 text-center">
