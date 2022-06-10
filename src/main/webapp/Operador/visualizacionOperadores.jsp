@@ -227,7 +227,7 @@
         <div class="col-md-2 text-center mt-2">
             <img
                     class="w-100"
-                    src="assets\img\magaly.jpg"
+                    src="img\magaly.jpg"
                     style="max-height: 220px; max-width: 250px"
             />
         </div>

@@ -152,6 +152,20 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
+        <br>
+        <div class="input-group justify-content-center">
+            <div class="form-outline" style="width: 36%">
+                <input
+                        type="search"
+                        id="form1"
+                        class="form-control"
+                        placeholder="Filtrar por genero"
+                />
+            </div>
+            <button type="button" class="btn btn-tele border-start-1">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </form>
 
     <!--Productos-->
@@ -164,7 +178,7 @@
             <img
                     class="w-100"
                     src="img\doctorStrange.jpg"
-                    style="max-height: 250px; max-width: 250px"
+                    style="max-height: 400px; max-width: 250px"
             />
         </div>
         <!--Precio y Stock-->
@@ -222,25 +236,24 @@
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
             <a href="<%=request.getContextPath()%>/editarPeliculaServlet">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
+                <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
             <button
-                    class="btn btn-danger py-0 px-1"
+                    class="btn btn-danger py-2 px-3"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target="#error"
-            >
+                    data-bs-target="#error">
                 <i class="fas fa-times-circle"></i>
             </button>
         </div>
         <div class="d-flex justify-content-center my-2 d-md-none">
             <a href="<%=request.getContextPath()%>/editarPeliculaServlet">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
+                <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <div class="mx-3"></div>
             <button
-                    class="btn btn-danger py-0 px-1"
+                    class="btn btn-danger py-2 px-3"
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#error"
@@ -250,180 +263,7 @@
         </div>
     </div>
     <hr class="mx-md-5 mx-sm-3" />
-    <!--Producto 2-->
-    <div class="row justify-content-center align-items-start my-2">
-        <!--Nombre del producto e imagen referencial-->
-        <div class="col-md-2 text-center mt-2">
-            <h4>Lina de Lima</h4>
-            <img
-                    class="w-100"
-                    src="img\linaLima.jpg"
-                    style="max-height: 220px; max-width: 250px"
-            />
-        </div>
-        <!--Precio y Stock-->
-        <div class="col-md-1 text-center mt-5 d-none d-md-block">
-            <h6>Precio de ticket</h6>
-            <p style="font-size: larger">s/ 36.00</p>
-            <h6>Stock</h6>
-            <p style="font-size: larger">24</p>
-        </div>
-        <div class="d-flex justify-content-around align-items-center d-md-none">
-            <h6 style="display: inline">
-                Precio de ticket
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;s/ 36.00
-                </p>
-            </h6>
-            <h6 style="display: inline">
-                Stock:
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;24
-                </p>
-            </h6>
-        </div>
-        <!--Descripción del producto-->
-        <div class="col-md-6 mt-5 d-none d-md-block">
-            <h6>Sinopsis</h6>
-            <p>
-                Como muchos emigrantes peruanos en Chile, Lina ayuda a su familia
-                trabajando a distancia. Este año, preparando su viaje de navidad
-                anual para volver a Lima para ver a su hijo adolescente, se da
-                cuenta de que ya no la necesita como antes.
-            </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-        </div>
-        <div class="d-flex flex-column mt-1 d-md-none px-5">
-            <h6>Sinopsis</h6>
-            <p>
-                Como muchos emigrantes peruanos en Chile, Lina ayuda a su familia
-                trabajando a distancia. Este año, preparando su viaje de navidad
-                anual para volver a Lima para ver a su hijo adolescente, se da
-                cuenta de que ya no la necesita como antes.
-            </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-        </div>
-        <!--Botones de editar y eliminar-->
-        <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarPelicula.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
-            </a>
-            <hr class="my-1" style="background-color: white" />
-            <button
-                    class="btn btn-danger py-0 px-1"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
-        <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarPelicula.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
-            </a>
-            <div class="mx-3"></div>
-            <button
-                    class="btn btn-danger py-0 px-1"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
-    </div>
-    <hr class="mx-md-5 mx-sm-3" />
-    <!--Producto 3-->
-    <div class="row justify-content-center align-items-start my-2">
-        <!--Nombre del producto e imagen referencial-->
-        <div class="col-md-2 text-center mt-2">
-            <h4>Parasite</h4>
-            <img
-                    class="w-100"
-                    src="img\parasite.jpg"
-                    style="max-height: 220px; max-width: 250px"
-            />
-        </div>
-        <!--Precio y Stock-->
-        <div class="col-md-1 text-center mt-5 d-none d-md-block">
-            <h6>Precio de ticket</h6>
-            <p style="font-size: larger">s/ 36.00</p>
-            <h6>Stock</h6>
-            <p style="font-size: larger">24</p>
-        </div>
-        <div class="d-flex justify-content-around align-items-center d-md-none">
-            <h6 style="display: inline">
-                Precio de ticket:
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;s/ 36.00
-                </p>
-            </h6>
-            <h6 style="display: inline">
-                Stock:
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;24
-                </p>
-            </h6>
-        </div>
-        <!--Descripción del producto-->
-        <div class="col-md-6 mt-5 d-none d-md-block">
-            <h6>Sinopsis</h6>
-            <p>
-                Tanto Gi Taek como su familia están sin trabajo. Cuando su hijo
-                mayor, Gi Woo, empieza a recibir clases particulares en la adinerada
-                casa de Park, las dos familias, que tienen mucho en común pese a
-                pertenecer a dos mundos totalmente distintos, comienzan una relación
-                de resultados imprevisibles.
-            </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-        </div>
-        <div class="d-flex flex-column mt-1 d-md-none px-5">
-            <h6>Sinopsis</h6>
-            <p>
-                Tanto Gi Taek como su familia están sin trabajo. Cuando su hijo
-                mayor, Gi Woo, empieza a recibir clases particulares en la adinerada
-                casa de Park, las dos familias, que tienen mucho en común pese a
-                pertenecer a dos mundos totalmente distintos, comienzan una relación
-                de resultados imprevisibles.
-            </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-        </div>
-        <!--Botones de editar y eliminar-->
-        <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarPelicula.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
-            </a>
-            <hr class="my-1" style="background-color: white" />
-            <button
-                    class="btn btn-danger py-0 px-1"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
-        <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarPelicula.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
-            </a>
-            <div class="mx-3"></div>
-            <button
-                    class="btn btn-danger py-0 px-1"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
-    </div>
-    <hr class="mx-md-5 mx-sm-3" />
+
 
     <!--Paginación-->
     <div class="container">

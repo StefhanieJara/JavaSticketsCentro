@@ -29,10 +29,6 @@
         ></script>
     </head>
     <body>
-        <!--Botón flotante "+" para agregar pelicula-->
-        <a href="registrarPelicula.html" class="btn-float">
-            <i class="fas fa-plus my-float"></i>
-        </a>
 
         <!--Cabecera principal Cine-->
         <nav
@@ -47,7 +43,7 @@
                         class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
                 >
                     <a class="navbar-brand py-0" href="usuario.html">
-                        <a href="indexOperador.html"><img src="assets/img/logo.png" /></a>
+                        <a href="indexOperador.html"><img src="img/logo.png" /></a>
                     </a>
                 </div>
                 <!--Espacio-->
@@ -103,7 +99,7 @@
                             <div class="my-2">
                                 <h4 class="mb-3">Rex Quispe Medina</h4>
                                 <img
-                                        src="assets/img/images.png"
+                                        src="img/images.png"
                                         class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                         alt="profile image"
                                 />
@@ -152,6 +148,20 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+                <br>
+                <div class="input-group justify-content-center">
+                    <div class="form-outline" style="width: 36%">
+                        <input
+                                type="search"
+                                id="form1"
+                                class="form-control"
+                                placeholder="Filtrar por genero"
+                        />
+                    </div>
+                    <button type="button" class="btn btn-tele border-start-1">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </form>
 
             <!--Pelicula-->
@@ -163,8 +173,8 @@
                     <h4>Doctor Strange</h4>
                     <img
                             class="w-100"
-                            src="assets\img\doctorStrange.jpg"
-                            style="max-height: 250px; max-width: 250px"
+                            src="img\doctorStrange.jpg"
+                            style="max-height: 400px; max-width: 250px"
                     />
                 </div>
                 <!--Precio y Stock-->
@@ -219,209 +229,7 @@
                     <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
                     <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
                 </div>
-                <!--Botones de editar y eliminar-->
-                <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <hr class="my-1" style="background-color: white" />
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#error"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
-                <div class="d-flex justify-content-center my-2 d-md-none">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <div class="mx-3"></div>
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#error"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
-            </div>
-            <hr class="mx-md-5 mx-sm-3" />
-            <!--pelicula 2-->
-            <div class="row justify-content-center align-items-start my-2">
-                <!--Nombre del pelicula e imagen referencial-->
-                <div class="col-md-2 text-center mt-2">
-                    <h4>Lina de Lima</h4>
-                    <img
-                            class="w-100"
-                            src="assets\img\linaLima.jpg"
-                            style="max-height: 220px; max-width: 250px"
-                    />
-                </div>
-                <!--Precio y Stock-->
-                <div class="col-md-1 text-center mt-5 d-none d-md-block">
-                    <h6>Precio de ticket</h6>
-                    <p style="font-size: larger">s/ 36.00</p>
-                    <h6>Stock</h6>
-                    <p style="font-size: larger">24</p>
-                </div>
-                <div class="d-flex justify-content-around align-items-center d-md-none">
-                    <h6 style="display: inline">
-                        Precio de ticket
-                        <p style="display: inline; font-size: large; font-weight: normal">
-                            &nbsp;s/ 36.00
-                        </p>
-                    </h6>
-                    <h6 style="display: inline">
-                        Stock:
-                        <p style="display: inline; font-size: large; font-weight: normal">
-                            &nbsp;24
-                        </p>
-                    </h6>
-                </div>
-                <!--Descripción de la pelicula-->
-                <div class="col-md-6 mt-5 d-none d-md-block">
-                    <h6>Sinopsis</h6>
-                    <p>
-                        Como muchos emigrantes peruanos en Chile, Lina ayuda a su familia
-                        trabajando a distancia. Este año, preparando su viaje de navidad
-                        anual para volver a Lima para ver a su hijo adolescente, se da
-                        cuenta de que ya no la necesita como antes.
-                    </p>
-                    <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-                    <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-                </div>
-                <div class="d-flex flex-column mt-1 d-md-none px-5">
-                    <h6>Sinopsis</h6>
-                    <p>
-                        Como muchos emigrantes peruanos en Chile, Lina ayuda a su familia
-                        trabajando a distancia. Este año, preparando su viaje de navidad
-                        anual para volver a Lima para ver a su hijo adolescente, se da
-                        cuenta de que ya no la necesita como antes.
-                    </p>
-                    <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-                    <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-                </div>
-                <!--Botones de editar y eliminar-->
-                <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <hr class="my-1" style="background-color: white" />
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
-                <div class="d-flex justify-content-center my-2 d-md-none">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <div class="mx-3"></div>
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
-            </div>
-            <hr class="mx-md-5 mx-sm-3" />
-            <!--pelicula 3-->
-            <div class="row justify-content-center align-items-start my-2">
-                <!--Nombre del pelicula e imagen referencial-->
-                <div class="col-md-2 text-center mt-2">
-                    <h4>Parasite</h4>
-                    <img
-                            class="w-100"
-                            src="assets\img\parasite.jpg"
-                            style="max-height: 220px; max-width: 250px"
-                    />
-                </div>
-                <!--Precio y Stock-->
-                <div class="col-md-1 text-center mt-5 d-none d-md-block">
-                    <h6>Precio de ticket</h6>
-                    <p style="font-size: larger">s/ 36.00</p>
-                    <h6>Stock</h6>
-                    <p style="font-size: larger">24</p>
-                </div>
-                <div class="d-flex justify-content-around align-items-center d-md-none">
-                    <h6 style="display: inline">
-                        Precio de ticket:
-                        <p style="display: inline; font-size: large; font-weight: normal">
-                            &nbsp;s/ 36.00
-                        </p>
-                    </h6>
-                    <h6 style="display: inline">
-                        Stock:
-                        <p style="display: inline; font-size: large; font-weight: normal">
-                            &nbsp;24
-                        </p>
-                    </h6>
-                </div>
-                <!--Descripción de la pelicula-->
-                <div class="col-md-6 mt-5 d-none d-md-block">
-                    <h6>Sinopsis</h6>
-                    <p>
-                        Tanto Gi Taek como su familia están sin trabajo. Cuando su hijo
-                        mayor, Gi Woo, empieza a recibir clases particulares en la adinerada
-                        casa de Park, las dos familias, que tienen mucho en común pese a
-                        pertenecer a dos mundos totalmente distintos, comienzan una relación
-                        de resultados imprevisibles.
-                    </p>
-                    <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-                    <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-                </div>
-                <div class="d-flex flex-column mt-1 d-md-none px-5">
-                    <h6>Sinopsis</h6>
-                    <p>
-                        Tanto Gi Taek como su familia están sin trabajo. Cuando su hijo
-                        mayor, Gi Woo, empieza a recibir clases particulares en la adinerada
-                        casa de Park, las dos familias, que tienen mucho en común pese a
-                        pertenecer a dos mundos totalmente distintos, comienzan una relación
-                        de resultados imprevisibles.
-                    </p>
-                    <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-                    <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-                </div>
-                <!--Botones de editar y eliminar-->
-                <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <hr class="my-1" style="background-color: white" />
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
-                <div class="d-flex justify-content-center my-2 d-md-none">
-                    <a href="editarPelicula.html">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
-                    </a>
-                    <div class="mx-3"></div>
-                    <button
-                            class="btn btn-danger py-0 px-1"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                </div>
+
             </div>
             <hr class="mx-md-5 mx-sm-3" />
 
@@ -448,79 +256,9 @@
                 </div>
             </div>
 
-            <!--Modal eliminar pelicula: pelicula pendiente para pedido-->
-            <div
-                    class="modal fade"
-                    id="error"
-                    tabindex="-1"
-                    aria-labelledby="err_eliminar"
-                    aria-hidden="true"
-            >
-                <div class="modal-dialog">
-                    <div class="modal-content border-0">
-                        <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title" id="err_eliminar">Error</h5>
-                            <button
-                                    type="button"
-                                    class="btn-close btn-close-white"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">
-                            Esta función será eliminada y ya no se podrá recuperar
-                        </div>
-                        <div class="modal-footer my-0 py-1">
-                            <button
-                                    type="button"
-                                    class="btn btn-danger"
-                                    data-bs-dismiss="modal"
-                            >
-                                Ok
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!--Modal eliminar pelicula: pelicula no pendiente para pedido-->
-            <div
-                    class="modal fade"
-                    id="confirmacion"
-                    tabindex="-1"
-                    aria-labelledby="conf_eliminar"
-                    aria-hidden="true"
-            >
-                <div class="modal-dialog">
-                    <div class="modal-content border-0">
-                        <div class="modal-header bg-danger text-white">
-                            <h5 class="modal-title" id="conf_eliminar">Eliminar Función</h5>
-                            <button
-                                    type="button"
-                                    class="btn-close btn-close-white"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body">
-                            Esta función será eliminada y ya no se podrá recuperar.<br />
-                            ¿Está seguro que desea eliminarlo del catálogo?
-                        </div>
-                        <div class="modal-footer">
-                            <button
-                                    type="button"
-                                    class="btn btn-light"
-                                    data-bs-dismiss="modal"
-                            >
-                                Cancelar
-                            </button>
-                            <button type="button" class="btn btn-danger">
-                                Eliminar Función
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
         </main>
 
         <!--JS-->
