@@ -30,7 +30,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="registrarPelicula.html" class="btn-float">
+<a href="<%=request.getContextPath()%>/RegistrarPeliculaServlet" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -87,7 +87,7 @@
         <!--Título y botón-->
         <div class="p-2 w-100">
             <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Farmacia</h5>
+                <h5 class="mb-0">Menú de Operador</h5>
                 <button
                         type="button"
                         class="btn-close text-reset"
@@ -221,7 +221,7 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarPeliculaServlet">
+            <a href="<%=request.getContextPath()%>/editarPeliculaServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
@@ -235,7 +235,7 @@
             </button>
         </div>
         <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarPeliculaServlet">
+            <a href="<%=request.getContextPath()%>/editarPeliculaServlet">
                 <i class="far fa-edit btn-tele p-1 rounded"></i>
             </a>
             <div class="mx-3"></div>

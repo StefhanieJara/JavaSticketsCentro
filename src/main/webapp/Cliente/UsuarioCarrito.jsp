@@ -30,7 +30,7 @@
             <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
                 <!--Logo Centro Cultural PUCP-->
                 <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
-                    <a href="index.html"><img src="assets/img/logo.png" /></a>
+                    <a href="index.html"><img src="img/logo.png" /></a>
                 </div>
                 <!--Buscador de peliculas-->
                 <div class="col-md-7 d-none d-md-block ps-0">
@@ -81,18 +81,18 @@
                         <div class="d-flex flex-column">
                             <div class="my-2">
                                 <h4 class="mb-3">Paco Perez</h4>
-                                <img src="assets/img/images.png"
+                                <img src="img/images.png"
                                      class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                             </div>
                             <div class="mb-3">
                                 <div class="p-2">
-                                    <a href="usuarioEditar.html" class="text-dark text-decoration-none">
+                                    <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet" class="text-dark text-decoration-none">
                                         <span><i class="fas fa-user-edit"></i></span>
                                         <span>Editar usuario</span>
                                     </a>
                                 </div>
                                 <div class="p-2">
-                                    <a href="usuarioHistorial.html" class="text-dark text-decoration-none">
+                                    <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                         <span><i class="fas fa-list"></i></span>
                                         <span>Historial de compras</span>
                                     </a>
@@ -135,7 +135,7 @@
                                 <div class="d-sm-flex">
                                     <!--Imagen de la pelicula-->
                                     <div class="cart-item-thumb mx-auto">
-                                        <img src="assets/img/doctorStrange.jpg"
+                                        <img src="img/doctorStrange.jpg"
                                              class="img-carrito">
                                     </div>
                                     <!--Info de la pelicula-->
@@ -187,7 +187,7 @@
                                 <div class="d-sm-flex">
                                     <!--Imagen de la pelicula-->
                                     <div class="cart-item-thumb mx-auto">
-                                        <img src="assets/img/linaLima.jpg"
+                                        <img src="img/linaLima.jpg"
                                              class="img-carrito">
                                     </div>
                                     <!--Info de la pelicula-->
@@ -247,7 +247,7 @@
                                 <div class="d-sm-flex">
                                     <!--Imagen de la pelicula-->
                                     <div class="cart-item-thumb mx-auto">
-                                        <img src="assets/img/linaLima.jpg"
+                                        <img src="img/linaLima.jpg"
                                              class="img-carrito">
                                     </div>
                                     <!--Info de la pelicula-->
@@ -300,7 +300,7 @@
                                 <div class="d-sm-flex">
                                     <!--Imagen de la pelicula-->
                                     <div class="cart-item-thumb mx-auto">
-                                        <img src="assets/img/doctorStrange.jpg"
+                                        <img src="img/doctorStrange.jpg"
                                              class="img-carrito">
                                     </div>
                                     <!--Info de la pelicula-->
@@ -399,7 +399,10 @@
                                 <span>&nbsp;s/ 325.00</span>
                             </div>
                             <!--Boton pedir-->
-                            <button class="btn btn-tele btn-block">
+                            <a
+                                    href="<%=request.getContextPath()%>/UsuariopaymentServlet"
+                                    class="btn btn-danger"
+                            >Comprar</a>
                                 <!--<i class="far fa-credit-card"></i> -->Comprar
                             </button>
                         </div>

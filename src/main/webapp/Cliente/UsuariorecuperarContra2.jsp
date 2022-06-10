@@ -38,13 +38,13 @@
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="assets/img/s1.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s1.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s2.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s2.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s8.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s8.jpg" class="d-block w-100" alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -72,7 +72,7 @@
                                             <label class="mb-2">Confirme su nueva contraseña:</label>
                                             <input type="password" class="form-control">
                                             <br><br><br><br><br><br>
-                                            <div class="text-center"><a href="confirmarContra.html" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <div class="text-center"><a href="<%=request.getContextPath()%>/UsuarioConfContraServlet" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 Confirmar
                                             </a></div>
                                         </div>

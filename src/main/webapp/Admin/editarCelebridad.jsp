@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Niurka
-  Date: 06/06/2022
-  Time: 01:20
+  User: stefh
+  Date: 6/06/2022
+  Time: 14:23
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,7 +15,7 @@
                 name="viewport"
                 content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
         />
-        <title>Centro Cultural PUCP - Editar Producto</title>
+        <title>Centro Cultural PUCP Editar Producto</title>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,7 +43,7 @@
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-2">Editar función</h4>
+                        <h4 class="my-2">Editar Celebridad</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <form>
@@ -51,14 +51,53 @@
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productName"
-                                        >Nombre de la pelicula</label
+                                        >Nombres de la celebridad</label
                                         >
                                         <input
                                                 type="text"
                                                 id="productName"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"
+                                                placeholder="Ingrese los nombres"
                                         />
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Apellidos de la celebridad</label
+                                        >
+                                        <input
+                                                type="text"
+                                                id="productName"
+                                                class="form-control"
+                                                placeholder="Ingrese los apellidos"
+                                        />
+                                    </div>
+                                    <div class="d-flex justify-content-start my-3">
+                                        <div class="pb-1">Rol:&nbsp;&nbsp;&nbsp;</div>
+                                        <div class="form-check form-check-inline">
+                                            <input
+                                                    class="form-check-input"
+                                                    type="radio"
+                                                    name="inlineRadioOptions"
+                                                    id="siReceta"
+                                                    value="option1"
+                                                    checked
+                                            />
+                                            <label class="form-check-label" for="siReceta"
+                                            >Director</label
+                                            >
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input
+                                                    class="form-check-input"
+                                                    type="radio"
+                                                    name="inlineRadioOptions"
+                                                    id="noReceta"
+                                                    value="option2"
+                                            />
+                                            <label class="form-check-label" for="noReceta"
+                                            >Actor</label
+                                            >
+                                        </div>
                                     </div>
                                 </div>
 
@@ -68,7 +107,7 @@
                                     >
                                     <div class="text-center mt-2 mb-3">
                                         <img
-                                                src="img/doctorStrange.jpg"
+                                                src="assets/img/benedict.jpg"
                                                 class="img-thumbnail"
                                                 width="100px"
                                                 height="100px"
@@ -84,66 +123,24 @@
                                                 value="Subir imagen"
                                         />
                                     </div>
-                                    <div class="d-flex justify-content-start my-3">
-                                        <div class="pb-1">
-                                            ¿Desea cambiar el aforo?&nbsp;&nbsp;&nbsp;
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="siReceta"
-                                                    value="option1"
-                                                    checked
-                                            />
-                                            <label class="form-check-label" for="siReceta"
-                                            >Sí</label
-                                            >
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="noReceta"
-                                                    value="option2"
-                                            />
-                                            <label class="form-check-label" for="noReceta"
-                                            >No</label
-                                            >
-                                        </div>
-                                    </div>
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productStock"
-                                        >Stock de tickets disponible</label
-                                        >
-                                        <input
-                                                type="number"
-                                                id="productStock"
-                                                class="form-control"
-                                                placeholder="0"
-                                        />
-                                    </div>
                                 </div>
                             </div>
+
                             <div class="">
                                 <a
-                                        href="<%=request.getContextPath()%>/editarPeliculaServlet"
+                                        href="<%=request.getContextPath()%>/ADServlet"
                                         class="btn btn-danger"
-                                >Editar Pelicula</a>
+                                >Editar Celebridad</a>
                             </div>
+                        </form>
                     </div>
-
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
+
