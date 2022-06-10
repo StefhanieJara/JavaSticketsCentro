@@ -6,6 +6,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Admin/administradorListaAD.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Admin/administradorListaCl.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Admin/administradorListaOp.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Cliente/UsuariodescripcionPeli.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Cliente" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Operador/editarCelebridad.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Operador" />
       </map>
     </option>

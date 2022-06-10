@@ -9,36 +9,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <title>Telefarma - Producto X</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/estilos.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-            rel="stylesheet"
-    />
-    <script
-            src="https://kit.fontawesome.com/5733880de3.js"
-            crossorigin="anonymous"
-    ></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>PUCP - Descripción de pelicula</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/estilos.css">
+    <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
+
+
+    <STYLE TYPE="text/css">
+        body{
+            font-family: Arial;
+        }
+        #main-container{
+            margin: 56px ;
+            width: 1400px;
+            padding-top: 80px;
+        }
+
+
+    </STYLE>
+
+
 </head>
 <body>
+
 <nav
         class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
 >
     <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
-        <!--Logo telefarma-->
+        <!--Logo Centro Cultural PUCP-->
         <div
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="index.html"><img src="assets/img/logo.png" /></a>
+                <a href="index.html"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Buscador de productos-->
@@ -121,7 +129,7 @@
                     <div class="my-2">
                         <h4 class="mb-3">Paco Perez</h4>
                         <img
-                                src="assets/img/images.png"
+                                src="img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -160,132 +168,124 @@
         </div>
     </div>
 </div>
-
-<!--Contenido-->
-<main class="">
-    <!--Alinear cabecera con contenido-->
-    <div class="card-header my-5"></div>
-    <!--Detalles producto-->
-    <div class="container">
-        <div class="row">
-            <!--Imagen del producto-->
-            <div class="col-md-5">
-                <div class="row text-center">
-                    <img src="assets/img/s2.jpg" class="img-detalles" />
-                </div>
-            </div>
-            <!--Info del producto-->
-            <div class="col-md-7">
-                <!--Nombre-->
-                <h3>Doctor Strange</h3>
-                <!--<p class="mb-2 text-muted text-uppercase small">Shirts</p>-->
-                <!--Puede servir para poner tableta, jarabe, etc-->
-                <!--Precio-->
-                <h4>
-                    <span class="me-1"><strong>s/ 35</strong></span>
-                </h4>
-                <!--Descripción-->
-                <p class="pt-1">
-                    Stephen Strange es un médico especializado en neurocirugía,
-                    codicioso y egocéntrico, que solo se preocupa por la riqueza de su
-                    carrera, hasta que en un accidente sufrió una enfermedad nerviosa
-                    en sus manos que le obligó a retirarse.
-                </p>
-                <h5 class="text-dark">Genero:</h5>
-                <h6 class="text-dark">Accion, Ciencia ficcion, Superheroe</h6>
-                <h5 class="text-dark">Duracion:</h5>
-                <h6 class="text-dark">2h 30min</h6>
-                <h5 class="text-dark">Director:</h5>
-                <h6 class="text-dark">Sam Raimi</h6>
-                <h5 class="text-dark">Actores:</h5>
-                <h6 class="text-dark">Michael Waldron, Jade Bartlett, etc</h6>
-                <!--Detalles-->
-                <div class="table-responsive">
-                    <table class="table table-sm table-borderless mb-0">
-                        <tbody>
-                        <!--Sede-->
+<main>
+    <br><br>
+    <div class="main-container">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card-header my-5"></div>
+                <div class="container">
+                    <table>
+                        <thead>
                         <tr>
-                            <th class="ps-0 w-25" scope="row">
-                                <strong>Sede</strong>
-                            </th>
-                            <td>Lince</td>
+                            <h3 class="text-dark">Doctor Strange</h3>
                         </tr>
-                        <!--Stock-->
+                        </thead>
                         <tr>
-                            <th class="ps-0 w-25" scope="row">
-                                <strong>Stock</strong>
-                            </th>
-                            <td>19</td>
+                            <img src="img/s2.jpg"
+                                 style="float:left; padding-right: 10px;" width="400" height="620" alt="Foto Dr Strange" >
                         </tr>
-                        </tbody>
+                        <tr>
+                            <h5 class="text-dark">Descripcion:</h5>
+                        </tr>
+                        <tr>
+                            <h6 class="text-dark">Stephen Strange es un médico especializado en neurocirugía, codicioso y egocéntrico, que solo se preocupa por la riqueza de su carrera, hasta que en un accidente sufrió una enfermedad nerviosa en sus manos que le obligó a retirarse.</h6>
+                        </tr>
+                        <tr>
+                            <h5 class="text-dark">Genero:</h5>
+                        </tr>
+                        <tr>
+                            <h6 class="text-dark">Superheroe</h6>
+                        </tr>
+                        <tr>
+                            <h5 class="text-dark">Duracion:</h5>
+                        </tr>
+                        <tr>
+                            <h6 class="text-dark">2h 30min</h6>
+                        </tr>
+                        <tr>
+                            <h5 class="text-dark">Director:</h5>
+                        </tr>
+                        <tr>
+                            <h6 class="text-dark">Sam Raimi</h6>
+                        </tr>
+                        <tr>
+                            <h5 class="text-dark">Actores:</h5>
+                        </tr>
+                        <tr>
+                            <ul>
+                                <li type="circle"><h6 class="text-dark">Michael Waldron</h6></li>
+                            </ul>
+                        </tr>
                     </table>
-                    <select class="form-select" name="Distrito">
-                        <option value="" selected disabled>Horario</option>
-                        <option value="14:00">2:00pm</option>
-                        <option value="17:20">5:20pm</option>
-                        <option value="20:00">8:00pm</option>
-                        <option value="23:20">11:20pm</option>
-                    </select>
                 </div>
-                <hr />
-                <!--Cantidad y añadir carrito-->
-                <div class="table-responsive">
+                <div class="main-container">
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
-                        <tr>
-                            <td class="ps-2 p-0 w-25">Cantidad</td>
-                        </tr>
-                        <!--Botones aumentar/disminuir-->
-                        <tr>
-                            <td class="ps-0 pt-0">
-                                <div class="d-flex">
-                                    <button
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                            class="btn btn-tele"
-                                            id="menos"
-                                            type="button"
-                                    >
-                                        <i class="fas fa-minus fa-xs"></i>
+                        <br>
+                        </br>
+                        <select class="form-select" name="Distrito">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="14:00">2:00pm</option>
+                            <option value="17:20">5:20pm</option>
+                            <option value="20:00">8:00pm</option>
+                            <option value="23:20">11:20pm</option>
+
+                        </select>
+                        <br>
+                        </br>
+                        <table>
+                            <tr>
+                                <td class="ps-2 p-0 w-25">Cantidad</td>
+                            </tr>
+                            <!--Botones aumentar/disminuir-->
+                            <tr>
+                                <td class="ps-0 pt-0">
+                                    <div class="d-flex">
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                class="btn btn-tele" id="menos" type="button" style="width:40px; height:40px">
+                                            <i class="fas fa-minus fa-xs"></i>
+                                        </button>
+                                        <input class="form-control border-start-0 border-end-0 text-center"
+                                               type="number" style="width:40px; height:40px ;" id="contador"
+                                               value="1" min="1"/>
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                class="btn btn-tele" id="mas" type="button" style="width:40px; height:40px">
+                                            <i class="fas fa-plus fa-xs"></i>
+                                            <div class="col-md-4 mb-3">
+
+
+                                <td class="text-end">
+
+                                    <button type="button" class="btn btn-tele btn-md mr-1 mb-2">
+                                        <i class="fas fa-shopping-cart"></i> Añadir al carrito
                                     </button>
-                                    <input
-                                            class="form-control border-start-0 border-end-0 text-center"
-                                            type="number"
-                                            style="width: 46px"
-                                            id="contador"
-                                            value="1"
-                                            min="1"
-                                    />
-                                    <button
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                            class="btn btn-tele"
-                                            id="mas"
-                                            type="button"
-                                    >
-                                        <i class="fas fa-plus fa-xs"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <!--Botón añadir a carrito-->
-                            <td class="text-end">
-                                <button
-                                        type="button"
-                                        class="btn btn-tele btn-md mr-1 mb-2"
-                                >
-                                    <i class="fas fa-shopping-cart"></i> Añadir al carrito
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+
+                                </td>
                 </div>
+                </td>
+
+
+                </tr>
+                </tbody>
+                </table>
             </div>
+            <h2 class="text-dark"> </h2>
+
+
         </div>
+    </div>
     </div>
 </main>
 
-<!--JS-->
+
+
+
+
+
+
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
-
