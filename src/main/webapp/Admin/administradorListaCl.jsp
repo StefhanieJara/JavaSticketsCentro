@@ -170,11 +170,13 @@
 </div>
 <main>
     <div class="card-header my-5"></div>
-    <div class="container">
-        <div class="row">
-            <h3 class="text-dark">LISTA DE CLIENTES</h3>
-        </div>
-    </div>
+    <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+        <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="#"
+            ><b>Lista de Clientes</b></a
+            >
+        </li>
+    </ul>
 </main>
 <div class="caja2">
 </div>
