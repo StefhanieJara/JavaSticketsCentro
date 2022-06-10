@@ -14,7 +14,7 @@
           name="viewport"
           content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
   />
-  <title>Centro Cultural PUCP-Gestión Salas</title>
+  <title>PUCP-Agregar sala</title>
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -173,7 +173,7 @@
                     class="card-header"
                     style="background-color: #e72d4b; color: white"
             >
-              <h4 class="my-2">Gestión de Salas</h4>
+              <h4 class="my-2">Agregar sala</h4>
             </div>
             <div class="card-body p-4 p-md-5">
               <form>
