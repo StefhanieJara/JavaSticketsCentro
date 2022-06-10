@@ -16,7 +16,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP-Lista de Actores y Directores</title>
+    <title>PUCP-Lista de Actores y Directores</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="registrarCelebridad.html" class="btn-float">
+<a href="insertarCelebridadServlet" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -202,29 +202,29 @@
         <!--Nombre del producto e imagen referencial-->
         <div class="col-md-2 text-center mt-2">
             <img
-                    class="w-100"
+                    class="w-75"
                     src="img/bong.jpg"
-                    style="max-height: 220px; max-width: 250px"
+                    style="max-height: 400px; max-width: 250px"
             />
         </div>
         <!--Rol-->
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
-            <h6>Rol:</h6>
+            <h6>Rol</h6>
             <p style="font-size: larger"><%=celebridad.getRol()%></p>
         </div>
         <!--Descripción de la celebridad-->
-        <div class="col-md-6 mt-5 d-none d-md-block">
+        <div class="col-md-2 mt-5 d-none d-md-block">
             <h6>Nombre</h6>
             <p><%=celebridad.getNombre()%> <%=celebridad.getApellido()%></p>
         </div>
         <!--Botones de editar y eliminar-->
-        <div class="col-sm-1 mt-5 d-none d-md-block text-center">
-            <a href="editarCelebridad.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
+        <div class="col-sm-1 mt-5 d-none d-md-block text-around">
+            <a href="editarCelebridadServlet">
+                <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
             <button
-                    class="btn btn-danger py-0 px-1"
+                    class="btn btn-danger py-2 px-3"
                     type="button"
                     data-bs-toggle="modal"
                     data-bs-target="#confirmacion"
@@ -232,21 +232,21 @@
                 <i class="fas fa-times-circle"></i>
             </button>
         </div>
-        <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="editarCelebridad.html">
-                <i class="far fa-edit btn-tele p-1 rounded"></i>
+        <div class="d-flex justify-content-center my-1 d-md-none">
+            <a href="">
+                <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <div class="mx-3"></div>
             <button
-                    class="btn btn-danger py-0 px-1"
+                    class="btn btn-danger py-2 px-3"
                     type="button"
                     data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
+                    data-bs-target="#confirmacion">
                 <i class="fas fa-times-circle"></i>
             </button>
         </div>
     </div>
+    <hr class="mx-md-5 mx-sm-3" />
     <%}%>
     <!--Paginación-->
     <div class="container">
@@ -282,7 +282,7 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="conf_eliminar">Eliminar Función</h5>
+                    <h5 class="modal-title" id="conf_eliminar">Eliminar Celebridad</h5>
                     <button
                             type="button"
                             class="btn-close btn-close-white"
@@ -304,7 +304,7 @@
                         Cancelar
                     </button>
                     <button type="button" class="btn btn-danger">
-                        Eliminar Función
+                        Eliminar Celebridad
                     </button>
                 </div>
             </div>
