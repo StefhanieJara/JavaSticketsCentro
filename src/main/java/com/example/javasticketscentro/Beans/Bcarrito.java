@@ -1,13 +1,48 @@
 package com.example.javasticketscentro.Beans;
 
+import java.time.Clock;
+import java.util.Date;
+
 public class Bcarrito {
     private double precio;
-    private double subtotal;
+    private String pelicula;
+    private Date fecha;
+    private Clock horaInicio;
+    private int sala;
     private int cantidad;
-    private String nombre_peli;
     private String sede;
-    private double suma;
 
+    public String getPelicula() {
+        return pelicula;
+    }
+
+    public void setPelicula(String pelicula) {
+        this.pelicula = pelicula;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Clock getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Clock horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public int getSala() {
+        return sala;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
 
     public double getPrecio() {
         return precio;
@@ -17,13 +52,7 @@ public class Bcarrito {
         this.precio = precio;
     }
 
-    public double getSubtotal() {
-        return subtotal;
-    }
 
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
 
     public int getCantidad() {
         return cantidad;
@@ -33,13 +62,7 @@ public class Bcarrito {
         this.cantidad = cantidad;
     }
 
-    public String getNombre_peli() {
-        return nombre_peli;
-    }
 
-    public void setNombre_peli(String nombre_peli) {
-        this.nombre_peli = nombre_peli;
-    }
 
     public String getSede() {
         return sede;
@@ -49,11 +72,4 @@ public class Bcarrito {
         this.sede = sede;
     }
 
-    public double getSuma() {
-        return suma;
-    }
-
-    public void setSuma(double suma) {
-        this.suma = suma;
-    }
 }
