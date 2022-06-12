@@ -19,7 +19,7 @@ public class CarritoDao {
             throw new RuntimeException(e);
         }
 
-        String sql = "select * from centro1 where blabla";
+        String sql = "select * from centro1.compra where ?";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
@@ -28,9 +28,9 @@ public class CarritoDao {
             try (ResultSet rs = preparedStatement.executeQuery();) {
                 while (rs.next()) {
                     Bcarrito bcarrito = new Bcarrito();
-                    bcarrito.setNombre_peli(rs.getString(1));
+                    bcarrito.setPelicula(rs.getString(1));
                     bcarrito.setCantidad(rs.getInt(2));
-                    bcarrito.setSubtotal(rs.getDouble(3));
+                   // bcarrito.setSubtotal(rs.getDouble(3));
                     bcarrito.setPrecio(rs.getDouble(4));
                     bcarrito.setSede(rs.getString(5));
                     listaCarrito.add(bcarrito);

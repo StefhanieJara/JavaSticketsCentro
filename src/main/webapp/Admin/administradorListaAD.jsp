@@ -32,7 +32,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="insertarCelebridadServlet" class="btn-float">
+<a href="<%=request.getContextPath()%>/ADServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -219,7 +219,7 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-around">
-            <a href="editarCelebridadServlet">
+            <a href="<%=request.getContextPath()%>/ADServlet?action=agregar">
                 <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />

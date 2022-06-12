@@ -223,22 +223,6 @@ public class AdminDao {
         pstmt.setInt(contador, posicion);
     }
 
-    //Añadir Celebridades
-    public void anadirCelebridades(String nombre,String apellido, String rol, String foto){
-        String sql="insert into celebridad (nombre, apellido, rol, foto, calificacion) values (?,?,?,?,?)";
-        try(Connection conn= DriverManager.getConnection(url,user,pass);
-            PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setString(1,nombre);
-            pstmt.setString(2,apellido);
-            pstmt.setString(3,rol);
-            pstmt.setString(4,foto);
-            pstmt.setDouble(5,0.0);
-            pstmt.executeUpdate();
-        }catch(SQLException e) {
-            System.out.println("Hubo un error en la conexión!");
-            e.printStackTrace();
-        }
-    }
     //Métodos internos para filtrar Operadores
     public String generarSQL_filtrosOpe(String tabla, String rol,String nombre, String apellido, int id,int cantidadResul){
         String sql, sql0,sql1,sql2;
@@ -318,6 +302,22 @@ public class AdminDao {
         }
     }
 
+    //Añadir Celebridades
+    public void anadirCelebridades(String nombre,String apellido, String rol, String foto){
+        String sql="insert into celebridad (nombre, apellido, rol, foto, calificacion) values (?,?,?,?,?)";
+        try(Connection conn= DriverManager.getConnection(url,user,pass);
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1,nombre);
+            pstmt.setString(2,apellido);
+            pstmt.setString(3,rol);
+            pstmt.setString(4,foto);
+            pstmt.setDouble(5,0.0);
+            pstmt.executeUpdate();
+        }catch(SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+    }
     //Eliminar Celebridad
     public void eliminarCelebridad(int id_Celebridad){
         eliminarCelebridadPorPelicula(id_Celebridad, 0);
@@ -332,7 +332,6 @@ public class AdminDao {
             e.printStackTrace();
         }
     }
-
     //Eliminar Celebridad por Pelicula
     public void eliminarCelebridadPorPelicula(int idCelebridad, int idPelicula){
         if(idPelicula==0){
@@ -408,5 +407,19 @@ public class AdminDao {
         }
     }
 
-
+    public void editarCelebridad(int id_Celebridad){
+        String sql="";
+        try(Connection conn= DriverManager.getConnection(url,user,pass);
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1,nombre);
+            pstmt.setString(2,apellido);
+            pstmt.setString(3,rol);
+            pstmt.setString(4,foto);
+            pstmt.setDouble(5,0.0);
+            pstmt.executeUpdate();
+        }catch(SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+    }
 }
