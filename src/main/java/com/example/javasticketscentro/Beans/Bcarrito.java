@@ -1,16 +1,25 @@
 package com.example.javasticketscentro.Beans;
 
-import java.time.Clock;
+import java.sql.Time;
+
 import java.util.Date;
 
 public class Bcarrito {
     private double precio;
     private String pelicula;
     private Date fecha;
-    private Clock horaInicio;
+    private Time horaInicio;
     private int sala;
     private int cantidad;
     private String sede;
+
+    public Time getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(Time horaInicio) {
+        this.horaInicio = horaInicio;
+    }
 
     public String getPelicula() {
         return pelicula;
@@ -28,13 +37,7 @@ public class Bcarrito {
         this.fecha = fecha;
     }
 
-    public Clock getHoraInicio() {
-        return horaInicio;
-    }
 
-    public void setHoraInicio(Clock horaInicio) {
-        this.horaInicio = horaInicio;
-    }
 
     public int getSala() {
         return sala;
