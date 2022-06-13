@@ -1,6 +1,8 @@
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
+<%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaHistorial" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
+<jsp:useBean id="listaHistorial_detalle" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>" />
 <jsp:useBean id="textoBuscar" scope="request" type="java.lang.String" class="java.lang.String" />
 <!DOCTYPE html>
 <html lang="en">
@@ -172,9 +174,7 @@
                                                 <th class="col-2">Fecha de compra</th>
                                                 <th class="col-1">código</th>
                                                 <th class="col-2">Sede</th>
-                                                <th class="col-2">Fecha de la función</th>
                                                 <th class="col-1">Total</th>
-                                                <th class="col-1">Estado</th>
                                                 <th class="col-1">Detalles</th>
                                             </tr>
                                         </thead>
@@ -188,9 +188,7 @@
                                                 </td>
                                                 <td><%historial.getCodigo()%></td>
                                                 <td><%historial.getSede()%></td>
-                                                <td><%historial.getFecha_funcion()%></td>
                                                 <td>s/ <%historial.getTotal()%></td>
-                                                <td><span class="badge bg-success">Vigente</span></td>
                                                 <td
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
@@ -203,21 +201,32 @@
                                             <tr id="dt-1" class="collapse cell-1 row-child">
                                                 <td colspan="1" class="">Unidades</td>
                                                 <td colspan="2">Película</td>
+                                                <td colspan="2">Fecha de la funcion</td>
                                                 <td colspan="2">Precio por ticket</td>
                                                 <td colspan="2">Total</td>
+                                                <td colspan="2">Estado</td>
                                             </tr>
                                             <% int j = 1;
-                                                for (Bhistorial detalle : listaHistorial) { %>
+                                                for (Bhistorial_detalle detalle : listaHistorial_detalle) { %>
                                             <tr id="dt-1" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">3</td>
+                                                <td colspan="1" class=""><%detalle.getUnidades()%></td>
                                                 <td colspan="2">
                                                     <%detalle.getPelicula()%>
                                                 </td>
-                                                <td colspan="2">s/ <%detalle.getPrecio_por_peli()%></td>
-                                                <td colspan="2">s/ <%detalle.getTotal_detalle()%></td>
+                                                <td colspan="2">
+                                                    <%detalle.getFecha()%>
+                                                </td>
+                                                <td colspan="2">
+                                                    <%detalle.getPrecio()%>
+                                                </td>
+                                                <td colspan="2">
+                                                    <%detalle.getTotal()%>
+                                                </td>
+                                                <td><span class="badge bg-success"><%detalle.getEstado()%></span></td>
+
                                             </tr>
-                                            <% j = i+1;
-                                            } %>
+                                            <% j ++;
+                                            }%>
                                             <tr id="dt-1" class="collapse cell-1 row-child">
                                                 <td colspan="7">
                                                     <button type="button" class="btn btn-danger">
@@ -225,7 +234,7 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <% i = j;
+                                            <% i ++;
                                             } %>
                                         </tbody>
                                     </table>
@@ -242,4 +251,5 @@
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
+
 
