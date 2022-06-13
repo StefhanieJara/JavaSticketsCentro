@@ -1,3 +1,4 @@
+
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.Bhistorial;
@@ -28,13 +29,13 @@ public class HistorialDao {
 
             try (ResultSet rs = preparedStatement.executeQuery();) {
                 while (rs.next()) {
-  /*                  Bhistorial bhistorial = new Bhistorial();
+                    Bhistorial bhistorial = new Bhistorial();
                     bhistorial.setFecha_compra(rs.getString(1));
                     bhistorial.setCodigo(rs.getString(2));
-                    bhistorial.setSede(rs.getString(3));
-                    bhistorial.setTotal(rs.getDouble(4));
 
-                    listaHistorial.add(bhistorial);*/
+                    bhistorial.setTotal(rs.getDouble(3));
+
+                    listaHistorial.add(bhistorial);
                 }
             }
         } catch (SQLException e) {
@@ -69,8 +70,7 @@ public class HistorialDao {
                     Bhistorial bhistorial = new Bhistorial();
                     bhistorial.setFecha_compra(rs.getString(1));
                     bhistorial.setCodigo(rs.getString(2));
-                    bhistorial.setSede(rs.getString(3));
-                    bhistorial.setTotal(rs.getDouble(4));
+                    bhistorial.setTotal(rs.getDouble(3));
 
                     listaHistorial.add(bhistorial);
                 }
@@ -111,6 +111,7 @@ public class HistorialDao {
                     bdetalle.setPrecio(rs.getDouble(4));
                     bdetalle.setEstado(rs.getString(5));
                     bdetalle.setTotal(rs.getDouble(6));
+                    bdetalle.setSede(rs.getString(7));
 
                     lista_detalle.add(bdetalle);
                 }
