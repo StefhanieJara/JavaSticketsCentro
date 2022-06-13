@@ -1,3 +1,5 @@
+
+
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -173,7 +175,6 @@
                                             <tr class="text-center">
                                                 <th class="col-2">Fecha de compra</th>
                                                 <th class="col-1">código</th>
-                                                <th class="col-2">Sede</th>
                                                 <th class="col-1">Total</th>
                                                 <th class="col-1">Detalles</th>
                                             </tr>
@@ -187,7 +188,7 @@
                                                     <i class="far fa-clock"></i>&nbsp;&nbsp;<%historial.getFecha_compra()%>
                                                 </td>
                                                 <td><%historial.getCodigo()%></td>
-                                                <td><%historial.getSede()%></td>
+
                                                 <td>s/ <%historial.getTotal()%></td>
                                                 <td
                                                         class="table-elipse"
@@ -201,6 +202,7 @@
                                             <tr id="dt-1" class="collapse cell-1 row-child">
                                                 <td colspan="1" class="">Unidades</td>
                                                 <td colspan="2">Película</td>
+                                                <th colspan="2">Sede</th>
                                                 <td colspan="2">Fecha de la funcion</td>
                                                 <td colspan="2">Precio por ticket</td>
                                                 <td colspan="2">Total</td>
@@ -213,6 +215,7 @@
                                                 <td colspan="2">
                                                     <%detalle.getPelicula()%>
                                                 </td>
+                                                <td colspan="2"><%detalle.getSede()%></td>
                                                 <td colspan="2">
                                                     <%detalle.getFecha()%>
                                                 </td>
@@ -251,5 +254,4 @@
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
-
 

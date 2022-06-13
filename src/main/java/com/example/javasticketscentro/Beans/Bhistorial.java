@@ -3,7 +3,6 @@ package com.example.javasticketscentro.Beans;
 public class Bhistorial {
     private String fecha_compra;
     private String codigo;
-    private String sede;
     private double total;
 
     public String getFecha_compra() {
@@ -22,13 +21,6 @@ public class Bhistorial {
         this.codigo = codigo;
     }
 
-    public String getSede() {
-        return sede;
-    }
-
-    public void setSede(String sede) {
-        this.sede = sede;
-    }
 
     public double getTotal() {
         return total;

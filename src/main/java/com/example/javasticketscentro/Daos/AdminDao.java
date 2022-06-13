@@ -15,14 +15,11 @@ public class AdminDao {
         String user = "root";
         String pass = "root";
         String url = "jdbc:mysql://localhost:3306/centro1";
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("select idPersona,nombre,apellido,numeroCelular,fechaDeNacimiento,email,direccionCliente from persona where rol = 'Cliente'");) {
@@ -38,7 +35,6 @@ public class AdminDao {
                 bPersona.setEmail(rs.getString(6));
                 bPersona.setDireccion(rs.getString(7));
                 listaClientes.add(bPersona);
-
             }
 
         } catch (SQLException e) {
@@ -585,20 +581,46 @@ public class AdminDao {
             e.printStackTrace();
         }
     }
-    public void editarCelebridad(int id_Celebridad){
-        String sql="INSERT INTO centro1.celebridad (nombre, apellido, rol, foto, calificacion) VALUES ( ?, ?, ?, ?, ?) ";
+    public void editarCelebridad(BCelebridad bCelebridad){
+        String sql="UPDATE centro1.celebridad SET nombre = ?, apellido = ?, rol = ?, foto = ? where idCelebridad = ?";
 
         try(Connection conn= DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            //       pstmt.setString(1,nombre);
-            //       pstmt.setString(2,apellido);
-            //       pstmt.setString(3,rol);
-            //       pstmt.setString(4,foto);
-            //       pstmt.setDouble(5,0.0);
-            pstmt.executeUpdate();
+                pstmt.setString(1,bCelebridad.getNombre());
+                pstmt.setString(2,bCelebridad.getApellido());
+                pstmt.setString(3,bCelebridad.getRol());
+                pstmt.setString(4,bCelebridad.getFoto());
+                pstmt.setInt(5, bCelebridad.getIdCelebridad());
+                pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+    }
+
+    public BCelebridad buscarPorId(int id){
+        BCelebridad celebridad = null;
+        String sql = "select * from centro1.celebridad where idCelebridad=?";
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery();) {
+
+                if (rs.next()) {
+                    celebridad = new BCelebridad();
+                    celebridad.setIdCelebridad(rs.getInt(1));
+                    celebridad.setNombre(rs.getString(2));
+                    celebridad.setApellido(rs.getString(3));
+                    celebridad.setRol(rs.getString(4));
+                    celebridad.setFoto(rs.getString(5));
+                    celebridad.setCalificacion(rs.getInt(6));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  celebridad;
     }
 }
