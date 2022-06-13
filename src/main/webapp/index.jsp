@@ -183,7 +183,7 @@
                     <div class="textoPeliculas">Thor Ragnarok</div>
                 </div>
                 <div class="col-pelicula2">
-                    <a href=""><img src="img/s2.jpg" class="imagenPeli" width="100%"></a>
+                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=8"><img src="img/s2.jpg" class="imagenPeli" width="100%"></a>
                     <div class="textoPeliculas">Doctor Strange</div>
                 </div>
                 <div class="col-pelicula3">

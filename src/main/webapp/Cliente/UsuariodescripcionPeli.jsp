@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %>
+<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -6,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
+<jsp:useBean id="funciones" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,8 +180,9 @@
                 <div class="container">
                     <table>
                         <thead>
+                        <br>
                         <tr>
-                            <h3 class="text-dark">Doctor Strange</h3>
+                            <h3 class="text-dark"><%=pelicula.getNombre()%></h3>
                         </tr>
                         </thead>
                         <tr>
@@ -189,32 +193,52 @@
                             <h5 class="text-dark">Descripcion:</h5>
                         </tr>
                         <tr>
-                            <h6 class="text-dark">Stephen Strange es un médico especializado en neurocirugía, codicioso y egocéntrico, que solo se preocupa por la riqueza de su carrera, hasta que en un accidente sufrió una enfermedad nerviosa en sus manos que le obligó a retirarse.</h6>
+                            <h6 class="text-dark"><%=pelicula.getSinopsis()%></h6>
                         </tr>
                         <tr>
                             <h5 class="text-dark">Genero:</h5>
                         </tr>
                         <tr>
-                            <h6 class="text-dark">Superheroe</h6>
+                            <h6 class="text-dark"><%=pelicula.getGenero()%></h6>
                         </tr>
                         <tr>
                             <h5 class="text-dark">Duracion:</h5>
                         </tr>
                         <tr>
-                            <h6 class="text-dark">2h 30min</h6>
+                            <%String[] horario= pelicula.getDuracion().split(":");%>
+                            <%String hora= horario[0], minuto=horario[1];%>
+                            <h6 class="text-dark"><%=hora%> h<%=" "+minuto%> m</h6>
                         </tr>
                         <tr>
-                            <h5 class="text-dark">Director:</h5>
+                            <h5 class="text-dark">Directores:</h5>
                         </tr>
                         <tr>
-                            <h6 class="text-dark">Sam Raimi</h6>
+                            <h6 class="text-dark">
+                                <%int i=1;%>
+                                <% for(BCelebridad bCelebridad: pelicula.getDirectores()){%>
+                                    <%if(i<pelicula.getDirectores().size()){%>
+                                        <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()+", "%>
+                                    <%}else{%>
+                                        <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()%>
+                                    <%}%>
+                                <% i++;}%>
+                            </h6>
                         </tr>
                         <tr>
                             <h5 class="text-dark">Actores:</h5>
                         </tr>
                         <tr>
                             <ul>
-                                <li type="circle"><h6 class="text-dark">Michael Waldron</h6></li>
+                                <li type="circle"><h6 class="text-dark">
+                                    <%i=1;%>
+                                    <%for(BCelebridad bCelebridad: pelicula.getActores()){%>
+                                        <%if(i<pelicula.getDirectores().size()){%>
+                                            <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()+", "%>
+                                        <%}else{%>
+                                            <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()%>
+                                        <%}%>
+                                    <%i++;}%>
+                                </h6></li>
                             </ul>
                         </tr>
                     </table>
@@ -223,14 +247,12 @@
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
-                        <br>
-                        </br>
+                        <br><br><br><br>
                         <select class="form-select" name="Distrito">
-                            <option value="" selected disabled>Horario</option>
-                            <option value="14:00">2:00pm</option>
-                            <option value="17:20">5:20pm</option>
-                            <option value="20:00">8:00pm</option>
-                            <option value="23:20">11:20pm</option>
+                            <option value="" selected disabled>Funciones</option>
+                            <%for(BFuncion bFuncion: funciones){%>
+                                <option value=""><%="Hora de Inicio: "+bFuncion.getHoraInicio()%>pm <%=" Fecha:"+bFuncion.getFecha()%></option>
+                            <%}%>
 
                         </select>
                         <br>

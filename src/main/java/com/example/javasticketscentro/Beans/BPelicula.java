@@ -1,5 +1,7 @@
 package com.example.javasticketscentro.Beans;
 
+import java.util.ArrayList;
+
 public class BPelicula {
     private int idPelicula;
     private String nombre;
@@ -9,6 +11,24 @@ public class BPelicula {
     private String foto;
     private double calificacionPelicula;
     private String genero;
+    private ArrayList<BCelebridad> actores = new ArrayList<>();
+    private ArrayList<BCelebridad> directores = new ArrayList<>();
+
+    public ArrayList<BCelebridad> getActores() {
+        return actores;
+    }
+
+    public void setActores(ArrayList<BCelebridad> actores) {
+        this.actores = actores;
+    }
+
+    public ArrayList<BCelebridad> getDirectores() {
+        return directores;
+    }
+
+    public void setDirectores(ArrayList<BCelebridad> directores) {
+        this.directores = directores;
+    }
 
     public int getIdPelicula() {
         return idPelicula;
