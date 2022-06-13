@@ -99,14 +99,14 @@ public class AdminDao {
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,rol  from celebridad");) {
+             ResultSet rs = stmt.executeQuery("select idCelebridad,nombre,apellido,rol  from celebridad");) {
 
             while (rs.next()) {
                 BCelebridad bCelebridad = new BCelebridad();
-
-                bCelebridad.setNombre(rs.getString(1));
-                bCelebridad.setApellido(rs.getString(2));
-                bCelebridad.setRol(rs.getString(3));
+                bCelebridad.setIdCelebridad(rs.getInt(1));
+                bCelebridad.setNombre(rs.getString(2));
+                bCelebridad.setApellido(rs.getString(3));
+                bCelebridad.setRol(rs.getString(4));
                 listaCelebridad.add(bCelebridad);
 
             }
@@ -325,6 +325,7 @@ public class AdminDao {
         String sql="delete from celebridad where idCelebridad= ?";
         try(Connection conn= DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt= conn.prepareStatement(sql)){
+            System.out.println("El id a eliminar es: "+id_Celebridad);
             pstmt.setInt(1,id_Celebridad);
             pstmt.executeUpdate();
         }catch(SQLException e) {

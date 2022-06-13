@@ -20,11 +20,11 @@ public class ADServlet extends HttpServlet {
         switch (action){
             case "listar":
                 request.setAttribute("listaCelebridades", adminDao.listarCelebridad());
-                RequestDispatcher listarActDir = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
+                RequestDispatcher listarActDir = request.getRequestDispatcher("/Admin/administradorListaAD.jsp");
                 listarActDir.forward(request, response);
                 break;
             case "agregar":
-                RequestDispatcher agregarActDir = request.getRequestDispatcher("Admin/registrarCelebridad.jsp");
+                RequestDispatcher agregarActDir = request.getRequestDispatcher("/Admin/registrarCelebridad.jsp");
                 agregarActDir.forward(request, response);
                 break;
             case "eliminar":
@@ -35,7 +35,8 @@ public class ADServlet extends HttpServlet {
             case "editar":
                 idCelebridad = Integer.parseInt(request.getParameter("id"));
                 adminDao.editarCelebridad(idCelebridad);
-                response.sendRedirect(request.getContextPath()+"Admin/editarCelebridad.jsp");
+                RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
+                editarCelebridad.forward(request, response);
                 break;
         }
     }

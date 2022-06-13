@@ -211,6 +211,7 @@
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
             <h6>Rol</h6>
             <p style="font-size: larger"><%=celebridad.getRol()%></p>
+            <p><%=celebridad.getIdCelebridad()%></p>
         </div>
         <!--Descripción de la celebridad-->
         <div class="col-md-2 mt-5 d-none d-md-block">
@@ -222,69 +223,11 @@
             <a href="<%=request.getContextPath()%>/ADServlet?action=editar&id=<%=celebridad.getIdCelebridad()%>">
                 <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
-            <hr class="my-1" style="background-color: white" />
-            <button
-                    class="btn btn-danger py-2 px-3"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
-        <div class="d-flex justify-content-center my-1 d-md-none">
-            <a href="">
-                <i class="far fa-edit btn-tele p-3 rounded"></i>
+            <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
+                <i class="btn btn-danger mt-2 p-3 fas fa-times-circle"></i>
             </a>
-            <div class="mx-3"></div>
-            <button
-                    class="btn btn-danger py-2 px-3"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#confirmacion">
-                <i class="fas fa-times-circle"></i>
-            </button>
+        </div>
 
-        </div>
-        <!--Modal eliminar producto: Producto no pendiente para pedido-->
-        <div
-                class="modal fade"
-                id="confirmacion"
-                tabindex="-1"
-                aria-labelledby="conf_eliminar"
-                aria-hidden="true"
-        >
-            <div class="modal-dialog">
-                <div class="modal-content border-0">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title" id="conf_eliminar">Eliminar Celebridad</h5>
-                        <button
-                                type="button"
-                                class="btn-close btn-close-white"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        Esta celebridad será eliminada y ya no podra recuperar la
-                        información.<br />
-                        ¿Está seguro que desea eliminarlo del catálogo?
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                                type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal"
-                        >
-                            Cancelar
-                        </button>
-                        <a href = "<%=request.getContextPath()%>/ADServlet?action=eliminar" type="button" class="btn btn-danger">
-                            Eliminar Celebridad
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <hr class="mx-md-5 mx-sm-3" />
     <%}%>
