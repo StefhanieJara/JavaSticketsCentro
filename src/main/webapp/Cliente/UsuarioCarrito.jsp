@@ -399,12 +399,12 @@
                                 <span>&nbsp;s/ 325.00</span>
                             </div>
                             <!--Boton pedir-->
-                            <a
-                                    href="<%=request.getContextPath()%>/UsuariopaymentServlet"
-                                    class="btn btn-danger"
-                            >Comprar</a>
-                                <!--<i class="far fa-credit-card"></i> -->Comprar
-                            </button>
+
+                            <div class="d-flex justify-content-center">
+                                <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=pagar" class="btn btn-danger"
+                                >Pagar</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>

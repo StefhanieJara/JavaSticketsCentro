@@ -177,17 +177,18 @@
                                     <h4 class="my-2">Realice el pago:</h4>
                                 </div>
                                 <div class="card-body p-4 p-md-5">
-                                    <form>
+                                    <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=guardar">
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-outline">
                                                     <label class="form-label" for="Name"
-                                                    >Ingrese el numero de su tarjeta</label
+                                                    >Ingrese el número de su tarjeta</label
                                                     >
                                                     <input
                                                             type="number"
                                                             id="Name"
                                                             class="form-control"
+                                                            name="numeroTarjeta"
                                                             placeholder="Ingrese numero de tarjeta"
                                                     />
                                                 </div>
@@ -202,6 +203,7 @@
                                                             type="number"
                                                             id="Mail"
                                                             class="form-control"
+                                                            name="cvv"
                                                             placeholder="Ingrese el cvv"
                                                     />
                                                 </div>
@@ -212,10 +214,11 @@
                                                     >Fecha de vencimiento</label
                                                     >
                                                     <input
-                                                            type="date"
+                                                            type="text"
                                                             id="Mail"
                                                             class="form-control"
-                                                            placeholder="Ingrese fecha"
+                                                            name="fechaVencimiento"
+                                                            placeholder="07/2022"
                                                     />
                                                 </div>
                                             </div>
@@ -228,7 +231,22 @@
                                                             type="text"
                                                             id="Mail"
                                                             class="form-control"
+                                                            name="bancoNombre"
                                                             placeholder="Ingrese el nombre del banco"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-outline">
+                                                    <label class="form-label" for="Mail"
+                                                    >Ingrese su id de cliente</label
+                                                    >
+                                                    <input
+                                                            type="text"
+                                                            id="Mail"
+                                                            class="form-control"
+                                                            name="id_cliente"
+                                                            placeholder="Ingrese su id
                                                     />
                                                 </div>
                                             </div>
@@ -240,13 +258,14 @@
                                                 <label class="form-label" for="productName"
                                                 >Elija el tipo de tarjeta</label
                                                 >
-                                                <select
+                                                <select name="tipoTarjeta"
                                                         id="country1"
                                                         onchange="change_country(this.value)"
                                                         class="frm-field required sect"
                                                 >
-                                                    <option value="null">Credito</option>
-                                                    <option value="null">Debito</option>
+                                                    <option selected="true" disabled="disabled">Select </option>
+                                                    <option >Credito</option>
+                                                    <option >Debito</option>
                                                 </select>
                                             </div>
 
@@ -254,9 +273,10 @@
                                                 <input
                                                         class="btn btn-tele"
                                                         type="submit"
-                                                        value="Relizar pago"
+                                                        value="Realizar pago"
                                                 />
                                             </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
