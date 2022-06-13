@@ -28,13 +28,13 @@ public class HistorialDao {
 
             try (ResultSet rs = preparedStatement.executeQuery();) {
                 while (rs.next()) {
-                    Bhistorial bhistorial = new Bhistorial();
+  /*                  Bhistorial bhistorial = new Bhistorial();
                     bhistorial.setFecha_compra(rs.getString(1));
                     bhistorial.setCodigo(rs.getString(2));
                     bhistorial.setSede(rs.getString(3));
                     bhistorial.setTotal(rs.getDouble(4));
 
-                    listaHistorial.add(bhistorial);
+                    listaHistorial.add(bhistorial);*/
                 }
             }
         } catch (SQLException e) {
