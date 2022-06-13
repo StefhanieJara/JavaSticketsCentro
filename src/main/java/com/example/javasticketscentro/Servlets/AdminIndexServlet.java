@@ -28,7 +28,7 @@ public class AdminIndexServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath()+ "/ListarOperadorServlet");
                 break;
             case "gestionClientes":
-                response.sendRedirect(request.getContextPath()+ "/AdminClientesServlet");
+                response.sendRedirect(request.getContextPath()+ "/AdminClienteServlet");
                 break;
         }
     }

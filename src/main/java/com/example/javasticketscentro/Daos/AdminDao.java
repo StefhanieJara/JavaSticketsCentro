@@ -3,11 +3,13 @@ import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPersona;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AdminDao {
     String user = "root";
     String pass = "root";
     String url = "jdbc:mysql://localhost:3306/centro1";
+
     public static ArrayList<BPersona> listarCliente() {
         ArrayList<BPersona> listaClientes = new ArrayList<>();
         String user = "root";
@@ -115,6 +117,7 @@ public class AdminDao {
     }
 
 
+
     //Añadimos nuevas salas
     public void anadirSala(int idSede,int aforo,int numero){
         String sql="insert into sala (Sede_idSede, aforo, numero) values (?,?,?)";
@@ -128,6 +131,46 @@ public class AdminDao {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+    }
+
+
+    public static ArrayList<BPersona> buscarPorNombreCl(String nombreBuscar) {
+        ArrayList<BPersona> listaClientes = new ArrayList<>();
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String sql = "select idPersona,nombre,apellido,numeroCelular,fechaDeNacimiento,email,direccionCliente from persona where rol = 'Cliente' and nombre like ?";
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+             preparedStatement.setString(1, "%" + nombreBuscar.toLowerCase()+"%" );
+
+            try(ResultSet rs = preparedStatement.executeQuery();){
+                while (rs.next()) {
+                    BPersona bPersona = new BPersona();
+                    bPersona.setIdPer(rs.getInt(1));
+                    bPersona.setNombre(rs.getString(2));
+                    bPersona.setApellido(rs.getString(3));
+                    bPersona.setNumCel(rs.getInt(4));
+                    bPersona.setFecha_Nc(rs.getDate(5));
+                    bPersona.setEmail(rs.getString(6));
+                    bPersona.setDireccion(rs.getString(7));
+                    listaClientes.add(bPersona);
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaClientes;
     }
 
     //Métodos internos para filtrar Clientes
