@@ -46,7 +46,7 @@
                         <h4 class="my-2">Registrar Celebridad</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <form method="POST" action="<%=request.getContextPath()%>/ADServlet?action=crear">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
@@ -54,6 +54,7 @@
                                         >Nombres de la celebridad</label
                                         >
                                         <input
+                                                name = "nombresCeleb"
                                                 type="text"
                                                 id="productName"
                                                 class="form-control"
@@ -65,6 +66,7 @@
                                         >Apellidos de la celebridad</label
                                         >
                                         <input
+                                                name = "apellidosCeleb"
                                                 type="text"
                                                 id="productName"
                                                 class="form-control"
@@ -73,31 +75,18 @@
                                     </div>
                                     <div class="d-flex justify-content-start my-3">
                                         <div class="pb-1">Rol:&nbsp;&nbsp;&nbsp;</div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="siReceta"
-                                                    value="option1"
-                                                    checked
-                                            />
-                                            <label class="form-check-label" for="siReceta"
-                                            >Director</label
+                                        <div class="form-outline mb-4 py-4 dropdown">
+                                            <select name="rol"
+                                                    id="country1"
+                                                    onchange="change_country(this.value)"
+                                                    class="frm-field required sect"
                                             >
+                                                <option selected="true" disabled="disabled">Seleccione el rol</option>
+                                                <option >Actor</option>
+                                                <option >Director</option>
+                                            </select>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="noReceta"
-                                                    value="option2"
-                                            />
-                                            <label class="form-check-label" for="noReceta"
-                                            >Actor</label
-                                            >
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -118,6 +107,7 @@
 
                                     <div class="d-flex justify-content-center my-3">
                                         <input
+                                                name="foto"
                                                 class="btn btn-tele"
                                                 type="submit"
                                                 value="Subir imagen"
@@ -126,12 +116,7 @@
                                 </div>
                             </div>
 
-                            <div class="">
-                                <a
-                                        href="<%=request.getContextPath()%>/ADServlet"
-                                        class="btn btn-danger"
-                                >Registrar Funcion</a>
-                            </div>
+                            <button type="submit" class="btn btn-danger">Registrar celebridad</button>
                         </form>
                     </div>
                 </div>

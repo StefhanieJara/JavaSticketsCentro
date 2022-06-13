@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="celebridad" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,18 +48,20 @@
                         <h4 class="my-2">Editar Celebridad</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <form method="POST" action="<%=request.getContextPath()%>/ADServlet?action=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
+                                    <input type="hidden" name="id" value="<%=celebridad.getIdCelebridad()%>" />
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productName"
                                         >Nombres de la celebridad</label
                                         >
                                         <input
+                                                name = "nombresCeleb"
                                                 type="text"
                                                 id="productName"
                                                 class="form-control"
-                                                placeholder="Ingrese los nombres"
+                                                value="<%=celebridad.getNombre()%>"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
@@ -65,39 +69,32 @@
                                         >Apellidos de la celebridad</label
                                         >
                                         <input
+                                                name = "apellidosCeleb"
                                                 type="text"
                                                 id="productName"
                                                 class="form-control"
-                                                placeholder="Ingrese los apellidos"
+                                                value="<%=celebridad.getApellido()%>"
                                         />
                                     </div>
                                     <div class="d-flex justify-content-start my-3">
                                         <div class="pb-1">Rol:&nbsp;&nbsp;&nbsp;</div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="siReceta"
-                                                    value="option1"
-                                                    checked
-                                            />
-                                            <label class="form-check-label" for="siReceta"
-                                            >Director</label
+                                        <div class="form-outline mb-4 py-4 dropdown">
+                                            <select
+                                                    name="rol"
+                                                    id="country1"
+                                                    onchange="change_country(this.value)"
+                                                    class="frm-field required sect"
                                             >
+                                                <% if (celebridad.getRol().equals("actor")){ %>
+                                                    <option selected="true">Actor</option>
+                                                    <option >Director</option>
+                                                <% }else{%>
+                                                    <option>Actor</option>
+                                                    <option selected="true">Director</option>
+                                                <% } %>
+                                            </select>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="noReceta"
-                                                    value="option2"
-                                            />
-                                            <label class="form-check-label" for="noReceta"
-                                            >Actor</label
-                                            >
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -126,12 +123,7 @@
                                 </div>
                             </div>
 
-                            <div class="">
-                                <a
-                                        href="<%=request.getContextPath()%>/ADServlet"
-                                        class="btn btn-danger"
-                                >Editar Celebridad</a>
-                            </div>
+                            <button type="submit" class="btn btn-danger">Actualizar celebridad</button>
                         </form>
                     </div>
                 </div>
