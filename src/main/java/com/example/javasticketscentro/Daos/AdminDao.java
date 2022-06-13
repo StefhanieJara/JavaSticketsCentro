@@ -411,11 +411,11 @@ public class AdminDao {
         String sql="";
         try(Connection conn= DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setString(1,nombre);
-            pstmt.setString(2,apellido);
-            pstmt.setString(3,rol);
-            pstmt.setString(4,foto);
-            pstmt.setDouble(5,0.0);
+     //       pstmt.setString(1,nombre);
+     //       pstmt.setString(2,apellido);
+     //       pstmt.setString(3,rol);
+     //       pstmt.setString(4,foto);
+     //       pstmt.setDouble(5,0.0);
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");

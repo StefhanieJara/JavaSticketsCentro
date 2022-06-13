@@ -16,10 +16,10 @@ public class ADServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
-
+        int idCelebridad = 0;
         switch (action){
             case "listar":
-                request.setAttribute("listaActDir", adminDao.listarCelebridad());
+                request.setAttribute("listaCelebridades", adminDao.listarCelebridad());
                 RequestDispatcher listarActDir = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
                 listarActDir.forward(request, response);
                 break;
@@ -28,24 +28,16 @@ public class ADServlet extends HttpServlet {
                 agregarActDir.forward(request, response);
                 break;
             case "eliminar":
-                String idCelebridad = request.getParameter("id");
-                adminDao.eliminarCelebridad();
+                idCelebridad = Integer.parseInt(request.getParameter("id"));
+                adminDao.eliminarCelebridad(idCelebridad);
                 response.sendRedirect(request.getContextPath() + "/ADServlet");
                 break;
             case "editar":
-                String iCelebridad = request.getParameter("id");
-                adminDao.
+                idCelebridad = Integer.parseInt(request.getParameter("id"));
+                adminDao.editarCelebridad(idCelebridad);
+                response.sendRedirect(request.getContextPath()+"Admin/editarCelebridad.jsp");
                 break;
         }
-
-        ArrayList<BCelebridad> listaCelebridades = AdminDao.listarCelebridad();
-
-        request.setAttribute("listaCelebridades",listaCelebridades);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
-        requestDispatcher.forward(request,response);
-
-
     }
 
     @Override

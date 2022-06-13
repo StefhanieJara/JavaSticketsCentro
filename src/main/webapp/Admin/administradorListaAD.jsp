@@ -32,7 +32,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="<%=request.getContextPath()%>/ADServlet?action=crear" class="btn-float">
+<a href="<%=request.getContextPath()%>/ADServlet?action=agregar" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -219,7 +219,7 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-around">
-            <a href="<%=request.getContextPath()%>/ADServlet?action=agregar">
+            <a href="<%=request.getContextPath()%>/ADServlet?action=editar&id=<%=celebridad.getIdCelebridad()%>">
                 <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
             <hr class="my-1" style="background-color: white" />
@@ -244,6 +244,46 @@
                     data-bs-target="#confirmacion">
                 <i class="fas fa-times-circle"></i>
             </button>
+
+        </div>
+        <!--Modal eliminar producto: Producto no pendiente para pedido-->
+        <div
+                class="modal fade"
+                id="confirmacion"
+                tabindex="-1"
+                aria-labelledby="conf_eliminar"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content border-0">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="conf_eliminar">Eliminar Celebridad</h5>
+                        <button
+                                type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        Esta celebridad será eliminada y ya no podra recuperar la
+                        información.<br />
+                        ¿Está seguro que desea eliminarlo del catálogo?
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+                        <a href = "<%=request.getContextPath()%>/ADServlet?action=eliminar" type="button" class="btn btn-danger">
+                            Eliminar Celebridad
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <hr class="mx-md-5 mx-sm-3" />
@@ -268,46 +308,6 @@
                     </li>
                 </ul>
             </nav>
-        </div>
-    </div>
-
-    <!--Modal eliminar producto: Producto no pendiente para pedido-->
-    <div
-            class="modal fade"
-            id="confirmacion"
-            tabindex="-1"
-            aria-labelledby="conf_eliminar"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content border-0">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="conf_eliminar">Eliminar Celebridad</h5>
-                    <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
-                </div>
-                <div class="modal-body">
-                    Esta celebridad será eliminada y ya no podra recuperar la
-                    información.<br />
-                    ¿Está seguro que desea eliminarlo del catálogo?
-                </div>
-                <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal"
-                    >
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                        Eliminar Celebridad
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 </main>
