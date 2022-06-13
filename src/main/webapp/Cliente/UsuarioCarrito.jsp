@@ -30,7 +30,7 @@
             <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
                 <!--Logo Centro Cultural PUCP-->
                 <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
-                    <a href="indexServlet"><img src="img/logo.png" /></a>
+                    <a href="index.html"><img src="img/logo.png" /></a>
                 </div>
                 <!--Buscador de peliculas-->
                 <div class="col-md-7 d-none d-md-block ps-0">
@@ -38,14 +38,14 @@
                         <div style="width: 40%">
                             <input type="search" id="buscador_pelicula" class="form-control" placeholder="Busca un pelicula"/>
                         </div>
-                        <a role="button" class="btn btn-tele border-start-1" href="">
+                        <a role="button" class="btn btn-tele border-start-1" href="usuariopeliculaBuscada.html">
                             <i class="fas fa-search"></i>
                         </a>
                     </div>
                 </div>
                 <!--Carrito-->
                 <div class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
-                    <a class="btn btn-tele-inverso" role="button" href="UsuarioCarritoIndex">
+                    <a class="btn btn-tele-inverso" role="button" href="usuarioCarrito.html">
                         <div style="font-size: 0.60rem"> <!--para cambios más precisos del tamaño-->
                             <i class="fas fa-cart-plus fa-3x"></i>
                         </div>
@@ -104,7 +104,7 @@
                 <!--Footer cerrar sesión-->
                 <div class="mt-auto p-2 w-100">
                     <div class="offcanvas-body border-top pt-4">
-                        <a href="indexServlet" class="text-dark text-decoration-none">
+                        <a href="index.html" class="text-dark text-decoration-none">
                             <span><i class="fas fa-sign-out-alt"></i></span>
                             <span>Cerrar sesión</span>
                         </a>
@@ -120,55 +120,36 @@
             <!--Carrito-->
             <div class="container pb-5 mt-2 mt-md-3">
                 <div class="row">
-                    <!--Productos en carrito-->
+                    <!--peliculas en carrito-->
                     <div class="col-md-9 col-xl-8">
                         <!--Items de la 1-->
                         <div>
                             <!--Nombre cabecera-->
                             <h3 class="cart-header px-4 py-3">
-                                <span>Checkout</span>
+                                <span>Lince</span>
+                                <div><h6 class="mb-0">Fecha actual:&nbsp;&nbsp;<input type="datetime-local" style="max-width: 180px;"></h6></div>
                             </h3>
-                            <!--Producto-->
+                            <!--pelicula-->
                             <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">
                                 <!--Bloque 1-->
                                 <div class="d-sm-flex">
-                                    <!--Imagen del producto-->
+                                    <!--Imagen de la pelicula-->
                                     <div class="cart-item-thumb mx-auto">
                                         <img src="img/doctorStrange.jpg"
                                              class="img-carrito">
                                     </div>
-                                    <!--Info del producto-->
+                                    <!--Info de la pelicula-->
                                     <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
                                         <!--Nombre-->
-                                        <h5 class="mb-sm-3 mb-1">Doctor Strange</h5>
+                                        <h5 class="mb-sm-3 mb-1">Doctor Stranger</h5>
                                         <!--Precios-->
                                         <div>
-                                            <span class="text-muted">Precio:</span>
+                                            <span class="text-muted"><i class="fas fa-tag"></i> Precio:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                             <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 30</span>
                                         </div>
                                         <div>
-                                            <span class="text-muted">Hora:</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">14:30</span>
-                                        </div>
-
-                                    </div>
-                                    <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
-
-                                      <br>
-                                        <!--Fecha-->
-                                        <div>
-                                            <span class="text-muted">Fecha:</span>
-                                            <span class="ms-sm-2 ms-0 ">17/02/2023</span>
-                                        </div>
-                                        <!--Sede-->
-                                        <div>
-                                            <span class="text-muted">Sede:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">Lince</span>
-                                        </div>
-                                        <!--Sala-->
-                                        <div>
-                                            <span class="text-muted">Sala:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">2</span>
+                                            <span class="text-muted"><i class="fas fa-tags"></i> Subtotal:</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 60</span>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +158,8 @@
                                      style="max-width: 10rem;">
                                     <!--Cantidad-->
                                     <div class="form-group mt-sm-4 mt-0">
-
+                                        <!--Label-->
+                                        <span class="text-muted">Cantidad:</span>
                                         <!--Botones-->
                                         <div class="d-flex justify-content-center">
                                             <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
@@ -193,11 +175,173 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <!--Botón agregar-->
-                                    <button class="btn btn-success btn-sm mt-sm-4 mt-2 w-100" type="button">
-                                        Agregar
-                                    </button>
                                     <!--Botón borrar-->
+                                    <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--pelicula-->
+                            <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">
+                                <!--Bloque 1-->
+                                <div class="d-sm-flex">
+                                    <!--Imagen de la pelicula-->
+                                    <div class="cart-item-thumb mx-auto">
+                                        <img src="img/linaLima.jpg"
+                                             class="img-carrito">
+                                    </div>
+                                    <!--Info de la pelicula-->
+                                    <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
+                                        <!--Nombre-->
+                                        <h5 class="mb-sm-3 mb-1">Lina de Lima</h5>
+                                        <!--Precios-->
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tag"></i> Precio:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 60</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tags"></i> Subtotal:</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 120</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Bloque 2-->
+                                <div class="pt-sm-0 pt-2 pe-md-3 pe-0 mx-sm-0 mx-auto text-sm-left text-center"
+                                     style="max-width: 10rem;">
+                                    <!--Contador-->
+                                    <div class="form-group mt-sm-4 mt-0">
+                                        <!--Label-->
+                                        <span class="text-muted">Cantidad:</span>
+                                        <!--Botones-->
+                                        <div class="d-flex justify-content-center">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="btn btn-tele" id="menos" type="button">
+                                                <i class="fas fa-minus fa-xs"></i>
+                                            </button>
+                                            <input class="form-control border-start-0 border-end-0 text-center"
+                                                   type="number" style="width:46px;" id="contador"
+                                                   value="1" min="1"/>
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="btn btn-tele" id="mas" type="button">
+                                                <i class="fas fa-plus fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--Botón borrar-->
+                                    <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <!--Nombre cabecera-->
+                            <h3 class="cart-header px-4 py-3">
+                                <span>Miraflores</span>
+                                <div><h6 class="mb-0">Fecha de registro:&nbsp;&nbsp;<input type="datetime-local" style="max-width: 180px;"></h6></div>
+                            </h3>
+                            <!--pelicula-->
+                            <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">
+                                <!--Bloque 1-->
+                                <div class="d-sm-flex">
+                                    <!--Imagen de la pelicula-->
+                                    <div class="cart-item-thumb mx-auto">
+                                        <img src="img/linaLima.jpg"
+                                             class="img-carrito">
+                                    </div>
+                                    <!--Info de la pelicula-->
+                                    <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
+                                        <!--Nombre-->
+                                        <h5 class="mb-sm-3 mb-1">Lina de Lima</h5>
+                                        <!--Precios-->
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tag"></i> Precio:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 60</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tags"></i> Subtotal:</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 120</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Bloque 2-->
+                                <div class="pt-sm-0 pt-2 pe-md-3 pe-0 mx-sm-0 mx-auto text-sm-left text-center"
+                                     style="max-width: 10rem;">
+                                    <!--Contador-->
+                                    <div class="form-group mt-sm-4 mt-0">
+                                        <!--Label-->
+                                        <span class="text-muted">Cantidad:</span>
+                                        <!--Botones-->
+                                        <div class="d-flex justify-content-center">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="btn btn-tele" id="menos" type="button">
+                                                <i class="fas fa-minus fa-xs"></i>
+                                            </button>
+                                            <input class="form-control border-start-0 border-end-0 text-center"
+                                                   type="number" style="width:46px;" id="contador"
+                                                   value="1" min="1"/>
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="btn btn-tele" id="mas" type="button">
+                                                <i class="fas fa-plus fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--Botón borrar-->
+                                    <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--pelicula-->
+
+                            <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom rem1">
+                                <!--Bloque 1-->
+                                <div class="d-sm-flex">
+                                    <!--Imagen de la pelicula-->
+                                    <div class="cart-item-thumb mx-auto">
+                                        <img src="img/doctorStrange.jpg"
+                                             class="img-carrito">
+                                    </div>
+                                    <!--Info de la pelicula-->
+                                    <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
+                                        <!--Nombre-->
+                                        <h5 class="mb-sm-3 mb-1">Doctor Strange</h5>
+                                        <!--Precios-->
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tag"></i> Precio:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 60</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted"><i class="fas fa-tags"></i> Subtotal:</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 120</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Bloque 2-->
+                                <div class="pt-sm-0 pt-2 pe-md-3 pe-0 mx-sm-0 mx-auto text-sm-left text-center"
+                                     style="max-width: 10rem;">
+                                    <!--Contador-->
+                                    <div class="form-group mt-sm-4 mt-0">
+                                        <!--Label-->
+                                        <span class="text-muted">Cantidad:</span>
+                                        <!--Botones-->
+                                        <div class="d-flex justify-content-center">
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                    class="btn btn-tele" id="menos" type="button">
+                                                <i class="fas fa-minus fa-xs"></i>
+                                            </button>
+                                            <input class="form-control border-start-0 border-end-0 text-center"
+                                                   type="number" style="width:46px;" id="contador"
+                                                   value="1" min="1"/>
+                                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                    class="btn btn-tele" id="mas" type="button">
+                                                <i class="fas fa-plus fa-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!--Botón borrar-->
+
                                     <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
                                         <i class="far fa-trash-alt"></i>
                                     </button>
@@ -214,20 +358,38 @@
                             <div class="table-responsive">
                                 <table class="table table-striped text-center mb-0">
                                     <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Sede</th>
-                                        <th scope="col">Subtotal</th>
-                                    </tr>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">pelicula</th>
+                                            <th scope="col">Sede</th>
+                                            <th scope="col">Subtotal</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td>Doctor Strange</td>
-                                        <td>Lince</td>
-                                        <td>s/ 60</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="text-center">3</td>
+                                            <td>Doctor Strange</td>
+                                            <td>Lince</td>
+                                            <td>s/ 60</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">4</td>
+                                            <td>Lina de Lima</td>
+                                            <td>Miraflores</td>
+                                            <td>s/ 120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">15</td>
+                                            <td>Taxi Driver</td>
+                                            <td>Chacarilla</td>
+                                            <td>s/ 60</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>El Padrino</td>
+                                            <td>Lince</td>
+                                            <td>s/ 60</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -237,9 +399,12 @@
                                 <span>&nbsp;s/ 325.00</span>
                             </div>
                             <!--Boton pedir-->
-                            <button class="btn btn-tele btn-block">
-                                <!--<i class="far fa-credit-card"></i> -->Comprar
-                            </button>
+
+                            <div class="d-flex justify-content-center">
+                                <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=pagar" class="btn btn-danger"
+                                >Pagar</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
