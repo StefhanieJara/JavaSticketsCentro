@@ -19,7 +19,7 @@ public class HistorialDao {
             throw new RuntimeException(e);
         }
 
-        String sql = "select * from centro1 where blabla";
+        /*String sql = "select * from centro1. where blabla";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
@@ -31,7 +31,7 @@ public class HistorialDao {
                     bhistorial.setFecha_compra(rs.getString(1));
                     bhistorial.setCodigo(rs.getString(2));
                     bhistorial.setSede(rs.getString(3));
-                    bhistorial.setFecha_funcion(rs.getString(4));
+                    /*bhistorial.setFecha_funcion(rs.getString(4));
                     bhistorial.setTotal(rs.getDouble(5));
                     bhistorial.setEstado(rs.getString(5));
                     bhistorial.setUnidadades(rs.getInt(5));
@@ -44,7 +44,7 @@ public class HistorialDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
 
         return listaHistorial;
