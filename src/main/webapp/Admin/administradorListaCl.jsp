@@ -9,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaClientes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersona>" />
 <jsp:useBean id="cant_muestras" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="total" scope="request" type="java.lang.Integer"/>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -259,18 +261,33 @@
     <div class="d-flex justify-content-center my-3">
         <nav aria-label="paginacion_productos">
             <ul class="pagination">
-
-                <li class="page-item disabled">
-                    <a class="page-link">Anterior</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item" aria-current="page">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Siguiente</a>
-                </li>
+                <%if(pagina==1){%>
+                    <li class="page-item disabled">
+                        <a class="page-link">Anterior</a>
+                    </li>
+                <%}else{%>
+                    <li class="page-item">
+                        <a class="page-link">Anterior</a>
+                    </li>
+                <%}%>
+                <%int cant_paginas=(int)Math.ceil((double)total/cant_muestras);
+                    System.out.println(total);%>
+                <%for(int i=1;i<=cant_paginas;i++){%>
+                    <%if(i==pagina){%>
+                        <li class="page-item active"><a class="page-link" href="#"><%=i%></a></li>
+                    <%}else{%>
+                        <li class="page-item"><a class="page-link" href="#"><%=i%></a></li>
+                    <%}%>
+                <%}%>
+                <%if(pagina==cant_paginas){%>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                <%}else{%>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                <%}%>
             </ul>
         </nav>
     </div>

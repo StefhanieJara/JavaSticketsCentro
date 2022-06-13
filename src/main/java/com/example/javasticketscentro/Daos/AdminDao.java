@@ -180,7 +180,6 @@ public class AdminDao {
         }
         return listCliente;
     }
-
     //Métodos internos para filtrar Clientes
     public String generarSQL_filtrosClie(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP,int cantidadResul){
         String sql, sql0,sql1,sql2,sql3;
@@ -229,6 +228,84 @@ public class AdminDao {
         contador++;
         pstmt.setInt(contador, posicion);
     }
+
+    //Obtener tamaño de Clientes
+    public int obtenerTotalResultados(String nombre, String apellido, String dni, String codigoPUCP){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String tabla="persona";
+        String rol="Cliente";
+        ArrayList<BPersona> listCliente= new ArrayList<>();
+        String sql=generarSQL_sizeClient(tabla, rol, nombre, apellido, dni, codigoPUCP);
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            enviar_PstmtSizeClient(pstmt,nombre, apellido, dni,codigoPUCP);
+
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    BPersona p = new BPersona();
+                    p.setIdPer(resultSet.getInt(1));
+                    listCliente.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+        return listCliente.size();
+    }
+    //Métodos internos para tamaño de Clientes
+    public String generarSQL_sizeClient(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP){
+        String sql, sql0,sql1,sql2,sql3;
+
+        if(nombre!=null && !nombre.equals("")){
+            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like ? ";
+        }else{
+            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like '%' ";
+        }
+        if(dni!=null && !dni.equals("")){
+            sql1="and dni like ? ";
+        }else{
+            sql1="and dni like '%' ";
+        }
+        if(apellido!=null && !apellido.equals("")){
+            sql2="and apellido like ? ";
+        }else{
+            sql2="and apellido like '%' ";
+        }
+        if(codigoPUCP!=null && !codigoPUCP.equals("")) {
+            sql3="and codigoPUCP like ?)";
+        }else{
+            sql3=")";
+        }
+        sql=sql0+sql1+sql2+sql3;
+        return sql;
+    }
+    public void enviar_PstmtSizeClient(PreparedStatement pstmt, String nombre, String apellido, String dni,String codigoPUCP) throws SQLException {
+        int contador=0;
+        if(nombre!=null && !nombre.equals("")){
+            contador++;
+            pstmt.setString(contador,"%"+nombre+"%");
+        }
+        if(dni!=null && !dni.equals("")){
+            contador++;
+            pstmt.setString(contador,"%"+dni+"%");
+        }
+        if(apellido!=null && !apellido.equals("")){
+            contador++;
+            pstmt.setString(contador,"%"+apellido+"%");
+        }
+        if(codigoPUCP!=null && !codigoPUCP.equals("")){
+            contador++;
+            pstmt.setString(contador,"%"+codigoPUCP+"%");
+        };
+    }
+
+
 
     //Métodos internos para filtrar actores y directores
     public String generarSQL_filtrosCel(String tabla, String rol, String nombre,String apellido,int cant_result){
