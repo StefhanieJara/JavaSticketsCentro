@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaClientes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersona>" />
-
+<jsp:useBean id="cant_muestras" scope="request" type="java.lang.Integer"/>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -181,7 +181,7 @@
 <div class="caja2">
 </div>
 <div class="caja1">
-    <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?action=buscar">
+    <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
     <div class="row g-3 align-items-center mt-2 ">
 
         <div class="rows-auto">
@@ -259,6 +259,7 @@
     <div class="d-flex justify-content-center my-3">
         <nav aria-label="paginacion_productos">
             <ul class="pagination">
+
                 <li class="page-item disabled">
                     <a class="page-link">Anterior</a>
                 </li>

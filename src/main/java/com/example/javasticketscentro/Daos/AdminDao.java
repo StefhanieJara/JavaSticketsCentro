@@ -10,40 +10,6 @@ public class AdminDao {
     String pass = "root";
     String url = "jdbc:mysql://localhost:3306/centro1";
 
-    public static ArrayList<BPersona> listarCliente() {
-        ArrayList<BPersona> listaClientes = new ArrayList<>();
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select idPersona,nombre,apellido,numeroCelular,fechaDeNacimiento,email,direccionCliente from persona where rol = 'Cliente'");) {
-
-            while (rs.next()) {
-                BPersona bPersona = new BPersona();
-
-                bPersona.setIdPer(rs.getInt(1));
-                bPersona.setNombre(rs.getString(2));
-                bPersona.setApellido(rs.getString(3));
-                bPersona.setNumCel(rs.getInt(4));
-                bPersona.setFecha_Nc(rs.getDate(5));
-                bPersona.setEmail(rs.getString(6));
-                bPersona.setDireccion(rs.getString(7));
-                listaClientes.add(bPersona);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return listaClientes;
-    }
-
     public static ArrayList<BPersona> listarOperador() {
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         String user = "root";
@@ -67,7 +33,7 @@ public class AdminDao {
                 bPersona.setNombre(rs.getString(1));
                 bPersona.setApellido(rs.getString(2));
                 bPersona.setNumCel(rs.getInt(3));
-                bPersona.setFecha_Nc(rs.getDate(4));
+                bPersona.setFecha_Nc(rs.getString(4));
                 bPersona.setEmail(rs.getString(5));
                 bPersona.setRol(rs.getString(6));
                 bPersona.setIdPer(rs.getInt(7));
@@ -134,7 +100,7 @@ public class AdminDao {
     }
 
 
-    public static ArrayList<BPersona> buscarPorNombreCl(String nombreBuscar) {
+    /*public static ArrayList<BPersona> buscarPorNombreCl(String nombreBuscar) {
         ArrayList<BPersona> listaClientes = new ArrayList<>();
         String user = "root";
         String pass = "root";
@@ -171,28 +137,70 @@ public class AdminDao {
         }
 
         return listaClientes;
+    }*/
+    public ArrayList<BPersona> listaCliente(String nombre, String apellido, String dni, String codigoPUCP, int pagina, int cant_result){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        String tabla="persona";
+        String rol="Cliente";
+        ArrayList<BPersona> listCliente= new ArrayList<>();
+        String sql=generarSQL_filtrosClie(tabla, rol, nombre, apellido, dni, codigoPUCP, cant_result);
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            int posicion=(pagina-1)*cant_result;
+            enviar_PstmtClie(pstmt, posicion,nombre, apellido, dni,codigoPUCP);
+
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    BPersona p = new BPersona();
+                    p.setIdPer(resultSet.getInt(1));
+                    p.setNombre(resultSet.getString(3));
+                    p.setDni(resultSet.getInt(2));
+                    p.setApellido(resultSet.getString(4));
+                    p.setFoto(resultSet.getString(5));
+                    p.setNumCel(resultSet.getInt(6));
+                    p.setFecha_Nc(resultSet.getString(7));
+                    p.setEmail(resultSet.getString(8));
+                    p.setUsuario(resultSet.getString(9));
+                    p.setContrasenia(resultSet.getString(10));
+                    p.setDireccion(resultSet.getString(11));
+                    p.setRol(resultSet.getString(12));
+                    p.setCodigoPUCP(resultSet.getInt(13));
+                    listCliente.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+        return listCliente;
     }
 
     //Métodos internos para filtrar Clientes
-    public String generarSQL_filtrosClie(String tabla, String rol,String nombre, String apellido, int dni,int codigoPUCP,int cantidadResul){
+    public String generarSQL_filtrosClie(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP,int cantidadResul){
         String sql, sql0,sql1,sql2,sql3;
 
-        if(nombre!=null){
+        if(nombre!=null && !nombre.equals("")){
             sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like ? ";
         }else{
             sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like '%' ";
         }
-        if(dni!=0){
+        if(dni!=null && !dni.equals("")){
             sql1="and dni like ? ";
         }else{
             sql1="and dni like '%' ";
         }
-        if(apellido!=null){
+        if(apellido!=null && !apellido.equals("")){
             sql2="and apellido like ? ";
         }else{
             sql2="and apellido like '%' ";
         }
-        if(codigoPUCP!=0) {
+        if(codigoPUCP!=null && !codigoPUCP.equals("")) {
             sql3="and codigoPUCP like ?) limit ?,"+cantidadResul;
         }else{
             sql3=") limit ?,"+cantidadResul;
@@ -200,21 +208,21 @@ public class AdminDao {
         sql=sql0+sql1+sql2+sql3;
         return sql;
     }
-    public void enviar_PstmtClie(PreparedStatement pstmt, int posicion, String nombre, String apellido, int dni,int codigoPUCP) throws SQLException {
+    public void enviar_PstmtClie(PreparedStatement pstmt, int posicion, String nombre, String apellido, String dni,String codigoPUCP) throws SQLException {
         int contador=0;
-        if(nombre!=null){
+        if(nombre!=null && !nombre.equals("")){
             contador++;
             pstmt.setString(contador,"%"+nombre+"%");
         }
-        if(dni!=0){
+        if(dni!=null && !dni.equals("")){
             contador++;
             pstmt.setString(contador,"%"+dni+"%");
         }
-        if(apellido!=null){
+        if(apellido!=null && !apellido.equals("")){
             contador++;
             pstmt.setString(contador,"%"+apellido+"%");
         }
-        if(codigoPUCP!=0){
+        if(codigoPUCP!=null && !codigoPUCP.equals("")){
             contador++;
             pstmt.setString(contador,"%"+codigoPUCP+"%");
         }

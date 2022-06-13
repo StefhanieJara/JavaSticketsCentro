@@ -9,7 +9,7 @@ public class BPersona {
     private String apellido;
     private int numCel;
     private String foto;
-    private Date fecha_Nc;
+    private String fecha_Nc;
     private String email;
     private String usuario;
     private String contrasenia;
@@ -66,11 +66,11 @@ public class BPersona {
     }
 
 
-    public Date getFecha_Nc() {
+    public String getFecha_Nc() {
         return fecha_Nc;
     }
 
-    public void setFecha_Nc(Date fecha_Nc) {
+    public void setFecha_Nc(String fecha_Nc) {
         this.fecha_Nc = fecha_Nc;
     }
 
