@@ -177,6 +177,77 @@
                             <h1>Mi Perfil</h1>
                         </div>
                         <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >Nombre</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="text"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="Olivia"
+                                />
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >Apellido</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="text"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="Rodrigo"
+                                />
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >DNI</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="number"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="71834998"
+                                        readonly
+                                />
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >Codigo</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="number"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="20108992"
+                                        readonly
+                                />
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
                             <div class="rows-auto">
                                 <label for="inputtext6" class="col-form-label"
                                 >Telefono</label

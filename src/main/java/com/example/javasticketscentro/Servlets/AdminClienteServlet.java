@@ -34,12 +34,10 @@ public class AdminClienteServlet extends HttpServlet {
             case "buscar" -> {
                 String nombreBuscar = request.getParameter("nombreBuscar");
                 String apellidoBuscar = request.getParameter("apellidoBuscar");
-                String dniBuscar = request.getParameter("dnioBuscar");
+                String dniBuscar = request.getParameter("dniBuscar");
                 String codigoBuscar = request.getParameter("codigoBuscar");
                 request.setAttribute("listaClientes", AdminDao.buscarPorNombreCl(nombreBuscar));
-                request.setAttribute("listaClientes", AdminDao.buscarPorApellidoCl(apellidoBuscar));
-                request.setAttribute("listaClientes", AdminDao.buscarPorDniCl(dniBuscar));
-                request.setAttribute("listaClientes", AdminDao.buscarPorCodigoCl(codigoBuscar));
+
 
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaCl");
                 requestDispatcher.forward(request, response);
