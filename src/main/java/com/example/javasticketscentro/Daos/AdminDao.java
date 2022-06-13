@@ -372,7 +372,6 @@ public class AdminDao {
         String sql="delete from celebridad where idCelebridad= ?";
         try(Connection conn= DriverManager.getConnection(url,user,pass);
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            System.out.println("El id a eliminar es: "+id_Celebridad);
             pstmt.setInt(1,id_Celebridad);
             pstmt.executeUpdate();
         }catch(SQLException e) {
