@@ -236,26 +236,8 @@
                         <br>
                         </br>
                         <table>
-                            <tr>
-                                <td class="ps-2 p-0 w-25">Cantidad</td>
-                            </tr>
-                            <!--Botones aumentar/disminuir-->
-                            <tr>
-                                <td class="ps-0 pt-0">
-                                    <div class="d-flex">
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                                                class="btn btn-tele" id="menos" type="button" style="width:40px; height:40px">
-                                            <i class="fas fa-minus fa-xs"></i>
-                                        </button>
-                                        <input class="form-control border-start-0 border-end-0 text-center"
-                                               type="number" style="width:40px; height:40px ;" id="contador"
-                                               value="1" min="1"/>
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                                                class="btn btn-tele" id="mas" type="button" style="width:40px; height:40px">
-                                            <i class="fas fa-plus fa-xs"></i>
-                                            <div class="col-md-4 mb-3">
 
-
+                            <tr>
                                 <td class="text-end">
 
                                     <button type="button" class="btn btn-tele btn-md mr-1 mb-2">
@@ -264,13 +246,8 @@
 
 
                                 </td>
-                </div>
-                </td>
-
-
-                </tr>
-                </tbody>
-                </table>
+                            </tr>
+                        </table>
             </div>
             <h2 class="text-dark"> </h2>
 

@@ -7,6 +7,7 @@ public class Bhistorial_detalle {
     private Double precio;
     private String estado;
     private Double total;
+    private String sede;
 
 
     public int getUnidades() {
@@ -55,5 +56,13 @@ public class Bhistorial_detalle {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public String getSede() {
+        return sede;
+    }
+
+    public void setSede(String sede) {
+        this.sede = sede;
     }
 }
