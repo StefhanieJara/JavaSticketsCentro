@@ -38,7 +38,6 @@ public class Bcarrito {
     }
 
 
-
     public int getSala() {
         return sala;
     }
