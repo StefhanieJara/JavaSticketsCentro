@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.javasticketscentro.Beans.Bcarrito" %><%--
   Created by IntelliJ IDEA.
   User: Kevin
   Date: 05/06/2022
@@ -6,12 +7,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="listaFunciones" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bcarrito>"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Centro Cultural PUCP-Carrito de compras</title>
+        <title>PUCP-Carrito de compras</title>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/css/estilos.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,7 +131,9 @@
                                 <span>Checkout</span>
                             </h3>
                             <!--Producto-->
+                            <% for (Bcarrito funcion : listaFunciones) { %>
                             <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">
+
                                 <!--Bloque 1-->
                                 <div class="d-sm-flex">
                                     <!--Imagen del producto-->
@@ -140,15 +144,15 @@
                                     <!--Info del producto-->
                                     <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
                                         <!--Nombre-->
-                                        <h5 class="mb-sm-3 mb-1">Doctor Strange</h5>
+                                        <h5 class="mb-sm-3 mb-1"><%=funcion.getPelicula()%></h5>
                                         <!--Precios-->
                                         <div>
                                             <span class="text-muted">Precio:</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 30</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 ">s/ <%=funcion.getPrecio()%></span>
                                         </div>
                                         <div>
                                             <span class="text-muted">Hora:</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">14:30</span>
+                                            <span class=" ms-sm-2 ms-0 "><%=funcion.getHoraInicio()%></span>
                                         </div>
 
                                     </div>
@@ -158,17 +162,17 @@
                                         <!--Fecha-->
                                         <div>
                                             <span class="text-muted">Fecha:</span>
-                                            <span class="ms-sm-2 ms-0 ">17/02/2023</span>
+                                            <span class="ms-sm-2 ms-0 "><%=funcion.getFecha()%></span>
                                         </div>
                                         <!--Sede-->
                                         <div>
-                                            <span class="text-muted">Sede:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">Lince</span>
+                                            <span class="text-muted">Sede:&nbsp;</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 "><%=funcion.getSede()%></span>
                                         </div>
                                         <!--Sala-->
                                         <div>
-                                            <span class="text-muted">Sala:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <span class="font-size-lgr ms-sm-2 ms-0 ">2</span>
+                                            <span class="text-muted">Sala:&nbsp;</span>
+                                            <span class="font-size-lgr ms-sm-2 ms-0 "><%=funcion.getSala()%></span>
                                         </div>
                                     </div>
                                 </div>
@@ -198,11 +202,16 @@
                                         Agregar
                                     </button>
                                     <!--Botón borrar-->
-                                    <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
+                                    <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmacion">
                                         <i class="far fa-trash-alt"></i>
                                     </button>
                                 </div>
+
                             </div>
+                            <%}%>
                         </div>
                     </div>
                     <!--Costo total-->
@@ -239,6 +248,46 @@
                             <!--Boton pedir-->
                             <button class="btn btn-tele btn-block">
                                 <!--<i class="far fa-credit-card"></i> -->Comprar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal eliminar producto: Producto no pendiente para pedido-->
+            <div
+                    class="modal fade"
+                    id="confirmacion"
+                    tabindex="-1"
+                    aria-labelledby="conf_eliminar"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content border-0">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="conf_eliminar">Eliminar Función</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            Esta función será eliminada y ya no podra recuperar la
+                            información.<br />
+                            ¿Está seguro que desea eliminarlo del carrito?
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-light"
+                                    data-bs-dismiss="modal"
+                            >
+                                Cancelar
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                Eliminar Función
                             </button>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CarritoDao {
-    public ArrayList<Bcarrito> Resumen(String textoBuscar) {
+    public static ArrayList<Bcarrito> listarFuncion() {
         ArrayList<Bcarrito> listaCarrito = new ArrayList<>();
 
         String user = "root";
@@ -26,8 +26,8 @@ public class CarritoDao {
                 "    inner join sala sa on fs.Sala_idSala = sa.idSala\n" +
                 "    inner join sede se on sa.Sede_idSede = se.idSede\n" +
                 "    inner join compra c on t.Compra_idCompra = c.idCompra\n" +
-                "    where c.Persona_idPersona = ?\n" +
-                "    group by p.idPelicula";
+                "    where c.Persona_idPersona = 1\n" +
+                "    group by f.idFuncion";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
