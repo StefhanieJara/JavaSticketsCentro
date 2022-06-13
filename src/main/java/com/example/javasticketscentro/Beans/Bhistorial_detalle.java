@@ -1,17 +1,19 @@
 package com.example.javasticketscentro.Beans;
 
 public class Bhistorial_detalle {
-    private String unidades;
+    private int unidades;
     private String pelicula;
     private String fecha;
-    private String precio;
+    private Double precio;
     private String estado;
+    private Double total;
 
-    public String getUnidades() {
+
+    public int getUnidades() {
         return unidades;
     }
 
-    public void setUnidades(String unidades) {
+    public void setUnidades(int unidades) {
         this.unidades = unidades;
     }
 
@@ -31,11 +33,11 @@ public class Bhistorial_detalle {
         this.fecha = fecha;
     }
 
-    public String getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -45,5 +47,13 @@ public class Bhistorial_detalle {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 }
