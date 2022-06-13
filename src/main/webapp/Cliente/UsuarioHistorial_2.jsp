@@ -1,11 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Kevin
-  Date: 05/06/2022
-  Time: 09:15 p. m.
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
+<%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="listaHistorial" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
+<jsp:useBean id="listaHistorial_detalle" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>" />
+<jsp:useBean id="textoBuscar" scope="request" type="java.lang.String" class="java.lang.String" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,14 +27,10 @@
         ></script>
     </head>
     <body>
-        <nav
-                class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
-        >
+        <nav class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger">
             <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
                 <!--Logo Centro Cultural PUCP-->
-                <div
-                        class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
-                >
+                <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
                     <a class="navbar-brand py-0" href="#">
                         <a href="index.html"><img src="img/logo.png" /></a>
                     </a>
@@ -50,8 +44,7 @@
                                     type="search"
                                     id="buscador_pelicula"
                                     class="form-control"
-                                    placeholder="Busca una pelicula"
-                            />
+                                    placeholder="Busca una pelicula"/>
                         </div>
                         <a
                                 role="button"
@@ -181,25 +174,21 @@
                                                 <th class="col-2">Fecha de compra</th>
                                                 <th class="col-1">código</th>
                                                 <th class="col-2">Sede</th>
-                                                <th class="col-2">Fecha de la función</th>
                                                 <th class="col-1">Total</th>
-                                                <th class="col-1">Estado</th>
                                                 <th class="col-1">Detalles</th>
                                             </tr>
                                         </thead>
                                         <!--Pedidos-->
                                         <tbody class="text-center">
-                                            <!--Pedido 1-->
+                                        <% int i = 1;
+                                            for (Bhistorial historial  : listaHistorial) { %>
                                             <tr class="cell-1">
                                                 <td>
-                                                    <i class="far fa-clock"></i>&nbsp;&nbsp;15/05/2022 -
-                                                    5:15 pm
+                                                    <i class="far fa-clock"></i>&nbsp;&nbsp;<%historial.getFecha_compra()%>
                                                 </td>
-                                                <td>#IW-20190740</td>
-                                                <td>Miraflores</td>
-                                                <td>Mayo 28, 2022 - 10:00 pm</td>
-                                                <td>s/ 180.00</td>
-                                                <td><span class="badge bg-success">Vigente</span></td>
+                                                <td><%historial.getCodigo()%></td>
+                                                <td><%historial.getSede()%></td>
+                                                <td>s/ <%historial.getTotal()%></td>
                                                 <td
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
@@ -208,27 +197,36 @@
                                                     <i class="fas fa-ellipsis-h text-black-50"></i>
                                                 </td>
                                             </tr>
-                                            <!--Detalles pedido 1 (dt-1)-->
+                                            <!--Detalles pedido-->
                                             <tr id="dt-1" class="collapse cell-1 row-child">
                                                 <td colspan="1" class="">Unidades</td>
                                                 <td colspan="2">Película</td>
+                                                <td colspan="2">Fecha de la funcion</td>
                                                 <td colspan="2">Precio por ticket</td>
                                                 <td colspan="2">Total</td>
+                                                <td colspan="2">Estado</td>
                                             </tr>
+                                            <% int j = 1;
+                                                for (Bhistorial_detalle detalle : listaHistorial_detalle) { %>
                                             <tr id="dt-1" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">3</td>
+                                                <td colspan="1" class=""><%detalle.getUnidades()%></td>
                                                 <td colspan="2">
-                                                    Doctor Stranger: Multiverse of madness
+                                                    <%detalle.getPelicula()%>
                                                 </td>
-                                                <td colspan="2">s/ 30.00</td>
-                                                <td colspan="2">s/ 90.00</td>
+                                                <td colspan="2">
+                                                    <%detalle.getFecha()%>
+                                                </td>
+                                                <td colspan="2">
+                                                    <%detalle.getPrecio()%>
+                                                </td>
+                                                <td colspan="2">
+                                                    <%detalle.getTotal()%>
+                                                </td>
+                                                <td><span class="badge bg-success"><%detalle.getEstado()%></span></td>
+
                                             </tr>
-                                            <tr id="dt-1" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">3</td>
-                                                <td colspan="2">Avengers: End game</td>
-                                                <td colspan="2">s/ 30.00</td>
-                                                <td colspan="2">s/ 90.00</td>
-                                            </tr>
+                                            <% j ++;
+                                            }%>
                                             <tr id="dt-1" class="collapse cell-1 row-child">
                                                 <td colspan="7">
                                                     <button type="button" class="btn btn-danger">
@@ -236,103 +234,8 @@
                                                     </button>
                                                 </td>
                                             </tr>
-
-                                            <!--Pedido 2-->
-                                            <tr class="cell-1">
-                                                <td>
-                                                    <i class="far fa-clock"></i>&nbsp;&nbsp;19/05/2022-
-                                                    1:30 pm
-                                                </td>
-                                                <td>#IW-20190212</td>
-                                                <td>Chacarrilla</td>
-                                                <td>Mayo 26, 2022 - 8:30 pm</td>
-                                                <td>s/ 235.00</td>
-                                                <td><span class="badge bg-success">Vigente</span></td>
-                                                <td
-                                                        class="table-elipse"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#dt-2"
-                                                >
-                                                    <i class="fas fa-ellipsis-h text-black-50"></i>
-                                                </td>
-                                            </tr>
-                                            <!--Detalles pedido 2 (dt-2)-->
-                                            <tr id="dt-2" class="collapse cell-1 row-child">
-                                                <td colspan="1" class="">Unidades</td>
-                                                <td colspan="2">Película</td>
-                                                <td colspan="2">Precio por ticket</td>
-                                                <td colspan="2">Total</td>
-                                            </tr>
-                                            <tr id="dt-2" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">2</td>
-                                                <td colspan="2">Thor Ragnarok</td>
-                                                <td colspan="2">s/ 30.00</td>
-                                                <td colspan="2">s/ 30.00</td>
-                                            </tr>
-                                            <tr id="dt-2" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">5</td>
-                                                <td colspan="2">Thor: Love and Thunder</td>
-                                                <td colspan="2">s/ 35.00</td>
-                                                <td colspan="2">s/ 175.00</td>
-                                            </tr>
-                                            <tr id="dt-2" class="collapse cell-1 row-child">
-                                                <td colspan="7">
-                                                    <button type="button" class="btn btn-danger disabled">
-                                                        Cancelar pedido
-                                                    </button>
-                                                </td>
-                                            </tr>
-
-                                            <!--Pedido 3-->
-                                            <tr class="cell-1">
-                                                <td>
-                                                    <i class="far fa-clock"></i>&nbsp;&nbsp;31/05/2022 -
-                                                    08:40 am
-                                                </td>
-                                                <td>#IW-20190740</td>
-                                                <td>Lince</td>
-                                                <td>Julio 8, 2022 - 7:00 pm</td>
-                                                <td>s/120.00 &nbsp;</td>
-                                                <td><span class="badge bg-danger">Asistido</span></td>
-                                                <td
-                                                        class="table-elipse"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#dt-3"
-                                                >
-                                                    <i class="fas fa-ellipsis-h text-black-50"></i>
-                                                </td>
-                                            </tr>
-                                            <!--Detalles pedido 3 (dt-3)-->
-                                            <tr id="dt-3" class="collapse cell-1 row-child">
-                                                <td colspan="1" class="">Unidades</td>
-                                                <td colspan="2">Película</td>
-                                                <td colspan="2">Precio por ticket</td>
-                                                <td colspan="2">Total</td>
-                                            </tr>
-                                            <tr id="dt-3" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">2</td>
-                                                <td colspan="2">
-                                                    Doctor Stranger: Multiverse of madness
-                                                </td>
-                                                <td colspan="2">s/ 60.00</td>
-                                                <td colspan="2">s/ 60.00</td>
-                                            </tr>
-                                            <tr id="dt-3" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class="">2</td>
-                                                <td colspan="2">Civil war</td>
-                                                <td colspan="2">s/ 30.00</td>
-                                                <td colspan="2">s/ 60.00</td>
-                                            </tr>
-                                            <tr id="dt-3" class="collapse cell-1 row-child">
-                                                <td colspan="7">
-                                                    <button type="button" class="btn btn-danger disabled">
-                                                        Cancelar pedido
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger">
-                                                        Calificar Película
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                            <% i ++;
+                                            } %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -348,4 +251,5 @@
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>
+
 
