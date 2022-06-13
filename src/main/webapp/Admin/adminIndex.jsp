@@ -204,7 +204,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="<%=request.getContextPath()%>/AdminGestionSalasServlet" class="btn btn-danger"
+                                    <a href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas" class="btn btn-danger"
                                     >Ir a Salas</a
                                     >
                                 </div>
@@ -237,7 +237,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="<%=request.getContextPath()%>/ADServlet"
+                                            href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionCelebridad"
                                             class="btn btn-danger"
                                     >Ir a Actores y Directores</a
                                     >
@@ -274,7 +274,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="<%=request.getContextPath()%>/ListarOperadorServlet"
+                                            href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionOperadores"
                                             class="btn btn-danger"
                                     >Ir a Operadores</a
                                     >
@@ -310,7 +310,7 @@
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a href="<%=request.getContextPath()%>/AdminServlet" class="btn btn-danger"
+                                    <a href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionClientes" class="btn btn-danger"
                                     >Ir a lista de clientes</a
                                     >
                                 </div>

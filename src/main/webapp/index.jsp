@@ -229,7 +229,7 @@
                 <div class="row row-cols-1 row-cols-lg-3 g-4 py-3">
                     <!--SEDE 1-->
                     <div class="col">
-                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f1">
+                        <div onclick="" class="card card-farmacia f1">
                             <h2>Chacarilla</h2>
                             <ul>
                                 <li>
@@ -241,7 +241,7 @@
                     </div>
                     <!--SEDE 2-->
                     <div class="col">
-                        <div onclick="location.href='usuarioFarmaciaElegida.html'" class="card card-farmacia f2">
+                        <div onclick="href=''" class="card card-farmacia f2">
                             <h2>Lince</h2>
                             <ul>
                                 <li>
@@ -252,7 +252,7 @@
                         </div>
                     </div>
                     <!--SEDE 3-->
-                    <div onclick="location.href='usuarioFarmaciaElegida.html'" class="col">
+                    <div onclick="href=''" class="col">
                         <div class="card card-farmacia f3">
                             <h2>Miraflores</h2>
                             <ul>

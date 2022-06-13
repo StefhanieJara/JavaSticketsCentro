@@ -1,5 +1,7 @@
 package com.example.javasticketscentro.Servlets;
 
+import com.example.javasticketscentro.Daos.AdminDao;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -9,8 +11,26 @@ import java.io.IOException;
 public class AdminIndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/adminIndex.jsp");
-        requestDispatcher.forward(request,response);
+        String action = request.getParameter("action") == null ? "index" : request.getParameter("action");
+        AdminDao adminDao = new AdminDao();
+        switch (action) {
+            case "index":
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/adminIndex.jsp");
+                requestDispatcher.forward(request,response);
+                break;
+            case "gestionSalas":
+                response.sendRedirect(request.getContextPath() + "/AdminGestionSalasServlet");
+                break;
+            case "gestionCelebridad":
+                response.sendRedirect(request.getContextPath() + "/ADServlet");
+                break;
+            case "gestionOperadores":
+                response.sendRedirect(request.getContextPath()+ "/ListarOperadorServlet");
+                break;
+            case "gestionClientes":
+                response.sendRedirect(request.getContextPath()+ "/AdminClientesServlet");
+                break;
+        }
     }
 
     @Override
