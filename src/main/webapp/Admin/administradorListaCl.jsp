@@ -181,13 +181,15 @@
 <div class="caja2">
 </div>
 <div class="caja1">
+    <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?action=buscar">
     <div class="row g-3 align-items-center mt-2 ">
+
         <div class="rows-auto">
-            <h4><center>FILTROS</center></h4>
+            <h4>FILTROS</h4>
             <label for="inputtext6" class="col-form-label">Nombre</label>
         </div>
         <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <input type="text" id="inputtext6" name="nombreBuscar" class="form-control" aria-label="Filtrar por nombre" placeholder="Filtrar por nombre">
         </div>
     </div>
     <div class="row g-3 align-items-center mt-2 ">
@@ -195,7 +197,7 @@
             <label for="inputtext6" class="col-form-label">Apellido</label>
         </div>
         <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <input type="text" id="inputtext6" name="apellidoBuscar" class="form-control" aria-label="Filtrar por apellido" placeholder="Filtrar por apellido">
         </div>
     </div>
     <div class="row g-3 align-items-center mt-2">
@@ -203,7 +205,7 @@
             <label for="inputtext6" class="col-form-label"> DNI</label>
         </div>
         <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <input type="text" id="inputtext6" name="dniBuscar" class="form-control" aria-label="Filtrar por DNI" placeholder="Filtrar por DNI">
         </div>
     </div>
     <div class="row g-3 align-items-center mt-2">
@@ -211,7 +213,7 @@
             <label for="inputtext6" class="col-form-label">Codigo Pucp</label>
         </div>
         <div class="rows-auto">
-            <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <input type="text" id="inputtext6" name="codigoBuscar" class="form-control" aria-label="Filtrar por codigo" placeholder="Filtrar por codigo">
         </div>
     </div>
     <div class="row g-3 align-items-center mt-2">
@@ -219,6 +221,7 @@
             <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar filtros</button>
         </div>
     </div>
+    </form>
 </div>
 
 <div id="main-container">
