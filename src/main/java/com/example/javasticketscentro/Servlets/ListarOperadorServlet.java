@@ -20,7 +20,7 @@ public class ListarOperadorServlet extends HttpServlet {
         int idOperador = 0;
         switch (action){
             case "listar":
-                request.setAttribute("listaOperadores",AdminDao.listarOperador());
+                request.setAttribute("listaOperadores",adminDao.listarOperador());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
                 requestDispatcher.forward(request,response);
                 break;

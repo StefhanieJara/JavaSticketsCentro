@@ -9,7 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AdminClienteServlet", value = "/AdminClienteServlet")
+    @WebServlet(name = "AdminClienteServlet", value = "/AdminClienteServlet")
 public class AdminClienteServlet extends HttpServlet {
     private static int cant_resultClientes=5;
     @Override

@@ -7,19 +7,10 @@ import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class HistorialDao {
-    public ArrayList<Bhistorial> Resumen(String textoBuscar) {
+public class HistorialDao extends BaseDao{
+    /*public ArrayList<Bhistorial> Resumen(String textoBuscar) {
         ArrayList<Bhistorial> listaHistorial = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', " +
                 " subquery.Codigo as 'Codigo', " +
@@ -43,7 +34,7 @@ public class HistorialDao {
                 "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
                 "WHERE p.idPersona = 1) AS subquery;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
 
@@ -68,16 +59,6 @@ public class HistorialDao {
 
     public ArrayList<Bhistorial> Historial(String cliente) {
         ArrayList<Bhistorial> listaHistorial = new ArrayList<>();
-
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "SELECT tablita.Unidades as 'Unidades', " +
                 " tablita.Pelicula as 'Pelicula', " +
@@ -104,7 +85,7 @@ public class HistorialDao {
                 "WHERE p.idPersona = 1) AS tablita " +
                 "WHERE tablita.Codigo = '10793DD';";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
 
@@ -129,19 +110,9 @@ public class HistorialDao {
     public ArrayList<Bhistorial_detalle> Historial_detalle(String cliente, String sede) {
         ArrayList<Bhistorial_detalle> lista_detalle = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
+        String sql = "select * from  where blabla";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String sql = "select * from centro1 where blabla";
-
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
 
@@ -165,6 +136,6 @@ public class HistorialDao {
 
 
         return lista_detalle;
-    }
+    }*/
 
 }
