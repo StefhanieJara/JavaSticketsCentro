@@ -7,24 +7,15 @@ import com.example.javasticketscentro.Beans.BPelicula;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class PeliculaDao {
-    String user = "root";
-    String pass = "root";
-    String url = "jdbc:mysql://localhost:3306/centro1";
+public class PeliculaDao extends BaseDao {
 
     public BPelicula devolverPelicula(String id) {
         BPelicula pelicula = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         try{
             int id_int=Integer.parseInt(id);
             String sql="select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p inner join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) inner join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
-            try(Connection conn= DriverManager.getConnection(url,user, pass);
+            try(Connection conn= this.getConnection();
                 PreparedStatement pstmt= conn.prepareStatement(sql)){
                 pstmt.setInt(1,id_int);
                 try(ResultSet resultSet= pstmt.executeQuery()){
@@ -64,19 +55,14 @@ public class PeliculaDao {
     }
     public ArrayList<BFuncion> detectarFunciones(String id){
         ArrayList<BFuncion> listaFunciones= new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         try{
             int id_int=Integer.parseInt(id);
             String sql="select * from funcion f " +
                     "inner join pelicula p on (p.idPelicula=f.Pelicula_idPelicula) " +
                     "where p.idPelicula=?";
-            try(Connection conn= DriverManager.getConnection(url,user, pass);
+            try(Connection conn= this.getConnection();
                 PreparedStatement pstmt= conn.prepareStatement(sql)){
                 pstmt.setInt(1,id_int);
                 try(ResultSet resultSet= pstmt.executeQuery()){

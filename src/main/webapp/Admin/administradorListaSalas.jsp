@@ -1,27 +1,33 @@
-<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
-  User: stefh
+  User: david
   Date: 5/06/2022
-  Time: 11:46
+  Time: 20:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaClientes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersona>" />
-<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="filtros" scope="request" type="java.util.ArrayList<java.lang.String>"/>
+<jsp:useBean id="listaSala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" />
+<jsp:useBean id="listaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
+<jsp:useBean id="filtro" scope="request" type="java.lang.String"/>
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Lista de clientes</title>
+    <title>PUCP-Lista de operadores</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/estilos.css">
     <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css_2/checkout.css" />
+    <script
+            src="https://kit.fontawesome.com/5733880de3.js"
+            crossorigin="anonymous"></script>
 
     <STYLE TYPE="text/css">
         body{
@@ -60,7 +66,7 @@
         .caja1{
             background-color: #ddd;
             width: 250px;
-            height: 570px;
+            height: 650px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -70,7 +76,7 @@
         .caja2{
             background-color: #ddd;
             width: 300px;
-            height: 600px;
+            height: 650px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -78,10 +84,13 @@
             margin-right: 50px;
         }
     </STYLE>
-
 </head>
 <body>
-
+<!--Botón flotante "+" para agregar producto-->
+<a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=crear" class="btn-float">
+    <i class="fas fa-plus my-float"></i>
+</a>
+<!--Cabecera principal Cine-->
 <nav class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
      style="background-color: #e72d4b">
     <div class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2">
@@ -116,7 +125,7 @@
                 <div class="d-flex flex-column">
                     <div class="my-2">
                         <h4 class="mb-3">Admin45</h4>
-                        <img src="img/magaly.jpg"
+                        <img src="img/images.png"
                              class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                     </div>
                     <div class="mb-3">
@@ -171,159 +180,130 @@
     </div>
 </div>
 <main>
-    <div class="card-header my-5"></div>
+    <!--Alinear cabecera con contenido-->
+    <div class="card-header mt-5 mb-4"></div>
+
+    <!--Pestañas visualización y gestión-->
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Clientes</b></a
+            ><b>Lista de Operadores</b></a
             >
         </li>
     </ul>
-</main>
-<div class="caja2">
-</div>
 
-<div class="caja1">
-    <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
-    <div class="row g-3 align-items-center mt-2 ">
-        <div class="rows-auto">
-            <h4>FILTROS</h4>
-            <input type="hidden" name="pagina" value="1">
-            <label for="inputtext6" class="col-form-label">Nombre</label>
-        </div>
-        <div class="rows-auto">
-            <%if(filtros.get(0).equals("")){%>
-                <input type="text" id="inputtext6" name="nombreBuscar" class="form-control" aria-label="Filtrar por nombre" placeholder="Filtrar por nombre">
-            <%}else{%>
-                <input type="text" id="inputtext6" name="nombreBuscar" class="form-control" aria-label="Filtrar por nombre" placeholder="Filtrar por nombre" value="<%=filtros.get(0)%>">
-            <%}%>
-        </div>
+    <div class="caja2">
     </div>
-    <div class="row g-3 align-items-center mt-2 ">
-        <div class="rows-auto">
-            <label for="inputtext6" class="col-form-label">Apellido</label>
+    <div class="caja1">
+        <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+        <div class="row g-3 align-items-center mt-2 ">
+            <div class="rows-auto">
+                <h4><center>FILTROS</center></h4>
+                <label for="inputtext6" class="col-form-label">Sede</label>
+                <input type="hidden" name="pagina" value="1">
+            </div>
+            <div class="rows-auto">
+                <select class="form-select form-select-sm" name="filtro" aria-label=".form-select-sm example">
+                    <option value="Selecciona la sede" <%="Selecciona la sede"==filtro ? "selected":""%>>Selecciona la sede</option>
+                    <%for(BSede bSede : listaSedes){%>
+                        <option value="<%=bSede.getNombre()%>" <%=bSede.getNombre().equals(filtro) ?"selected" : ""%> ><%=bSede.getNombre()%></option>
+                    <%}%>
+                </select>
+            </div>
         </div>
-        <div class="rows-auto">
-            <%if(filtros.get(1).equals("")){%>
-                <input type="text" id="inputtext6" name="apellidoBuscar" class="form-control" aria-label="Filtrar por apellido" placeholder="Filtrar por apellido">
-            <%}else{%>
-                <input type="text" id="inputtext6" name="apellidoBuscar" class="form-control" aria-label="Filtrar por apellido" placeholder="Filtrar por apellido" value="<%=filtros.get(1)%>">
-            <%}%>
+        <div class="row row-cols-3 justify-content-center">
+            <input
+                    class="btn btn-tele"
+                    type="submit"
+                    value="Filtrar"
+            />
         </div>
+        </form>
     </div>
-    <div class="row g-3 align-items-center mt-2">
-        <div class="rows-auto ">
-            <label for="inputtext6" class="col-form-label"> DNI</label>
-        </div>
-        <div class="rows-auto">
-            <%if(filtros.get(2).equals("")){%>
-                <input type="text" id="inputtext6" name="dniBuscar" class="form-control" aria-label="Filtrar por DNI" placeholder="Filtrar por DNI">
-            <%}else{%>
-                <input type="text" id="inputtext6" name="dniBuscar" class="form-control" aria-label="Filtrar por DNI" placeholder="Filtrar por DNI" value="<%=filtros.get(2)%>">
-            <%}%>
-        </div>
-    </div>
-    <div class="row g-3 align-items-center mt-2">
-        <div class="rows-auto">
-            <label for="inputtext6" class="col-form-label">Codigo Pucp</label>
-        </div>
-        <div class="rows-auto">
-            <%if(filtros.get(3).equals("")){%>
-                <input type="text" id="inputtext6" name="codigoBuscar" class="form-control" aria-label="Filtrar por codigo" placeholder="Filtrar por codigo">
-            <%}else{%>
-                <input type="text" id="inputtext6" name="codigoBuscar" class="form-control" aria-label="Filtrar por codigo" placeholder="Filtrar por codigo" value="<%=filtros.get(3)%>">
-            <%}%>
-        </div>
-    </div>
-    <div class="row g-3 align-items-center mt-2">
-        <div class="rows-auto">
-            <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar filtros</button>
-        </div>
-    </div>
-    </form>
-</div>
-<div id="main-container">
-    <table>
-        <thead>
-        <tr>
-            <th>Nombres</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th>Nacimiento</th>
-            <th>Direccion</th>
+
+    <div id="main-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Aforo</th>
+                <th>Numero</th>
+                <th></th>
+            </tr>
+            </thead>
+                <%for (BSala sala : listaSala ) {%>
+            <tr>
+                <td><%=sala.getNombre()%></td>
+                <td><%=sala.getAforo()%></td>
+                <td><%=sala.getNumero()%></td>
+                <td>
+                    <div class="col-sm-1 d-none d-md-block text-around">
+                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar&id=<%=sala.getIdSala()%>">
+                            <i class="far fa-edit btn-tele p-1 rounded"></i>
+                        </a>
+                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar&id=<%=sala.getIdSala()%>">
+                            <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                        </a>
+                    </div>
+
+                </td>
         </tr>
-        </thead>
-        <tbody>
-        <%for (BPersona cliente : listaClientes) { %>
-        <tr>
-            <td><%=cliente.getNombre() +" "+ cliente.getApellido()%></td>
-            <td><%=cliente.getEmail()%></td>
-            <td><%=cliente.getNumCel()%></td>
-            <td><%=cliente.getFecha_Nc()%></td>
-            <td><%=cliente.getDireccion()%></td>
-        </tr>
-        <%} %>
-        </tbody>
-    </table>
-</div>
+        <%}%>
+        </table>
+    </div>
 
 
 
-<div class="container">
-    <div class="d-flex justify-content-center my-3">
-        <nav aria-label="paginacion_productos">
-            <ul class="pagination">
-                <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
-                    <input type="hidden" name="pagina" value="<%=pagina-1%>">
-                    <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
-                    <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
-                    <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
-                    <input type="hidden" name="codigoBuscar" value="<%=filtros.get(3)%>">
-                    <%if(pagina==1){%>
+    <div class="container">
+        <div class="d-flex justify-content-center my-3">
+            <nav aria-label="paginacion_productos">
+                <ul class="pagination">
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==1){%>
                         <li class="page-item disabled">
                             <a class="page-link">Anterior</a>
                         </li>
-                    <%}else{%>
+                        <%}else{%>
                         <li class="page-item">
                             <button type="submit" class="page-link">Anterior</button>
                         </li>
-                    <%}%>
-                </form>
+                        <%}%>
+                    </form>
 
-                <%for(int i=1;i<=cant_paginas;i++){%>
-                <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
-                    <input type="hidden" name="pagina" value="<%=i%>">
-                    <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
-                    <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
-                    <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
-                    <input type="hidden" name="codigoBuscar" value="<%=filtros.get(3)%>">
-                    <%if(i==pagina){%>
+                    <%for(int i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+
+                        <%if(i==pagina){%>
                         <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
-                    <%}else{%>
+                        <%}else{%>
                         <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
                     <%}%>
-                </form>
-                <%}%>
-                <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
-                    <input type="hidden" name="pagina" value="<%=pagina+1%>">
-                    <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
-                    <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
-                    <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
-                    <input type="hidden" name="codigoBuscar" value="<%=filtros.get(3)%>">
-                    <%if(pagina==cant_paginas){%>
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==cant_paginas){%>
                         <li class="page-item disabled">
                             <a class="page-link" href="#">Siguiente</a>
                         </li>
-                    <%}else{%>
+                        <%}else{%>
                         <li class="page-item">
                             <button type="submit" class="page-link" href="#">Siguiente</button>
                         </li>
-                    <%}%>
-                </form>
-            </ul>
-        </nav>
+                        <%}%>
+                    </form>
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
+
+</main>
+
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

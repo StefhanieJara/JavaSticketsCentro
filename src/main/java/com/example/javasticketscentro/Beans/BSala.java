@@ -5,6 +5,15 @@ public class BSala {
     private int idSede;
     private int aforo;
     private int numero;
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public int getIdSala() {
         return idSala;
