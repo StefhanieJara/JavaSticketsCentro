@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Servlets.ADServlet" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +32,7 @@
     </head>
 </head>
 <body>
+
 <section class="vh-100">
     <div class="container py-4 h-100">
         <div class="row justify-content-center align-items-center h-100">
@@ -90,33 +92,15 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label"
-                                    >Imagen Referencial</label
-                                    >
-                                    <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="assets/img/benedict.jpg"
-                                                class="img-thumbnail"
-                                                width="100px"
-                                                height="100px"
-                                                alt="medicamento"
-                                        />
-                                    </div>
-                                    <input class="form-control" type="file" id="formFile" />
-
-                                    <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                name="foto"
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
+                                <div class="card">
+                                    <img id="img-preview">
+                                    <div class="card-footer">
+                                        <input type="file" id="img-uploader">
+                                        <progress id="img-upload-bar" width="10px"value="0" max="100" style="width: 100%"></progress>
                                     </div>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-danger">Registrar celebridad</button>
+                            <a href="<%=request.getContextPath()%>/ADServlet?id=" type="submit" class="btn btn-danger">Registrar celebridad</a>
                         </form>
                     </div>
                 </div>
@@ -126,6 +110,8 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>
 
