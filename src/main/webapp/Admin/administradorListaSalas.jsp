@@ -1,7 +1,5 @@
-
-<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: david
   Date: 5/06/2022
@@ -10,6 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaSala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" />
+<jsp:useBean id="listaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
+<jsp:useBean id="filtro" scope="request" type="java.lang.String"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -84,7 +87,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="<%=request.getContextPath()%>/ListaSalasServlet?action=crear" class="btn-float">
+<a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 <!--Cabecera principal Cine-->
@@ -192,18 +195,19 @@
     <div class="caja2">
     </div>
     <div class="caja1">
-        <form method="POST" action="<%=request.getContextPath()%>/ListaSalasServlet?action=filtrar">
+        <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
         <div class="row g-3 align-items-center mt-2 ">
             <div class="rows-auto">
                 <h4><center>FILTROS</center></h4>
                 <label for="inputtext6" class="col-form-label">Sede</label>
+                <input type="hidden" name="pagina" value="1">
             </div>
             <div class="rows-auto">
                 <select class="form-select form-select-sm" name="filtro" aria-label=".form-select-sm example">
-                    <option selected>Selecciona la sede</option>
-                    <option>San Miguel</option>
-                    <option>Lince</option>
-                    <option>Miraflores</option>
+                    <option value="Selecciona la sede" <%="Selecciona la sede"==filtro ? "selected":""%>>Selecciona la sede</option>
+                    <%for(BSede bSede : listaSedes){%>
+                        <option value="<%=bSede.getNombre()%>" <%=bSede.getNombre().equals(filtro) ?"selected" : ""%> ><%=bSede.getNombre()%></option>
+                    <%}%>
                 </select>
             </div>
         </div>
@@ -221,25 +225,23 @@
         <table>
             <thead>
             <tr>
-                <th>ID Sala</th>
-                <th>Numero</th>
-                <th>Aforo</th>
                 <th>Nombre</th>
-                <th>X</th>
+                <th>Aforo</th>
+                <th>Numero</th>
+                <th></th>
             </tr>
             </thead>
                 <%for (BSala sala : listaSala ) {%>
             <tr>
-                <td><%=sala.getIdSala()%></td>
-                <td><%=sala.getNumero()%></td>
-                <td><%=sala.getAforo()%></td>
                 <td><%=sala.getNombre()%></td>
+                <td><%=sala.getAforo()%></td>
+                <td><%=sala.getNumero()%></td>
                 <td>
                     <div class="col-sm-1 d-none d-md-block text-around">
-                        <a href="<%=request.getContextPath()%>/ListaSalasServlet?action=editar&id=<%=sala.getIdSala()%>">
+                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar&id=<%=sala.getIdSala()%>">
                             <i class="far fa-edit btn-tele p-1 rounded"></i>
                         </a>
-                        <a href="<%=request.getContextPath()%>/ListaSalasServlet?action=eliminar&id=<%=sala.getIdSala()%>">
+                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar&id=<%=sala.getIdSala()%>">
                             <i class="btn btn-danger p-1 fas fa-times-circle"></i>
                         </a>
                     </div>
@@ -256,17 +258,45 @@
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+
+                    <%for(int i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>

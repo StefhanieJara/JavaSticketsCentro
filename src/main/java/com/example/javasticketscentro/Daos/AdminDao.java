@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Daos;
 import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BSala;
+import com.example.javasticketscentro.Beans.BSede;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,18 +10,18 @@ import java.util.Locale;
 
 public class AdminDao extends BaseDao{
     //  Gestión de Clientes:
-    public ArrayList<BPersona> listaCliente(String nombre, String apellido, String dni, String codigoPUCP, int pagina, int cant_result){
+    public ArrayList<BPersona> listaCliente(String nombre, String apellido, String dni, String codigoPUCP, int pagina, int cant_result, boolean limit){
 
         String tabla="persona";
         String rol="Cliente";
         ArrayList<BPersona> listCliente= new ArrayList<>();
-        String sql=generarSQL_filtrosClie(tabla, rol, nombre, apellido, dni, codigoPUCP, cant_result);
+        String sql=generarSQL_filtrosClie(tabla, rol, nombre, apellido, dni, codigoPUCP, cant_result, limit);
 
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             int posicion=(pagina-1)*cant_result;
-            enviar_PstmtClie(pstmt, posicion,nombre, apellido, dni,codigoPUCP);
+            enviar_PstmtClie(pstmt, posicion,nombre, apellido, dni,codigoPUCP, limit);
 
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
@@ -48,7 +49,7 @@ public class AdminDao extends BaseDao{
         return listCliente;
     }
     //Métodos internos para filtrar Clientes
-    public String generarSQL_filtrosClie(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP,int cantidadResul){
+    public String generarSQL_filtrosClie(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP,int cantidadResul, boolean limit){
         String sql, sql0,sql1,sql2,sql3;
 
         if(nombre!=null && !nombre.equals("")){
@@ -66,88 +67,23 @@ public class AdminDao extends BaseDao{
         }else{
             sql2="and apellido like '%' ";
         }
-        if(codigoPUCP!=null && !codigoPUCP.equals("")) {
-            sql3="and codigoPUCP like ?) limit ?,"+cantidadResul;
-        }else{
-            sql3=") limit ?,"+cantidadResul;
-        }
-        sql=sql0+sql1+sql2+sql3;
-        return sql;
-    }
-    public void enviar_PstmtClie(PreparedStatement pstmt, int posicion, String nombre, String apellido, String dni,String codigoPUCP) throws SQLException {
-        int contador=0;
-        if(nombre!=null && !nombre.equals("")){
-            contador++;
-            pstmt.setString(contador,"%"+nombre+"%");
-        }
-        if(dni!=null && !dni.equals("")){
-            contador++;
-            pstmt.setString(contador,"%"+dni+"%");
-        }
-        if(apellido!=null && !apellido.equals("")){
-            contador++;
-            pstmt.setString(contador,"%"+apellido+"%");
-        }
-        if(codigoPUCP!=null && !codigoPUCP.equals("")){
-            contador++;
-            pstmt.setString(contador,"%"+codigoPUCP+"%");
-        }
-        contador++;
-        pstmt.setInt(contador, posicion);
-    }
-
-    //Obtener tamaño de Clientes
-    public int obtenerTotalResultados(String nombre, String apellido, String dni, String codigoPUCP){
-        String tabla="persona";
-        String rol="Cliente";
-        ArrayList<BPersona> listCliente= new ArrayList<>();
-        String sql=generarSQL_sizeClient(tabla, rol, nombre, apellido, dni, codigoPUCP);
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            enviar_PstmtSizeClient(pstmt,nombre, apellido, dni,codigoPUCP);
-
-            try (ResultSet resultSet = pstmt.executeQuery()) {
-                while (resultSet.next()) {
-                    BPersona p = new BPersona();
-                    p.setIdPer(resultSet.getInt(1));
-                    listCliente.add(p);
-                }
+        if(limit){
+            if(codigoPUCP!=null && !codigoPUCP.equals("")) {
+                sql3="and codigoPUCP like ?) limit ?,"+cantidadResul;
+            }else{
+                sql3=") limit ?,"+cantidadResul;
             }
-        } catch (SQLException e) {
-            System.out.println("Hubo un error en la conexión!");
-            e.printStackTrace();
-        }
-        return listCliente.size();
-    }
-    //Métodos internos para tamaño de Clientes
-    public String generarSQL_sizeClient(String tabla, String rol,String nombre, String apellido, String dni,String codigoPUCP){
-        String sql, sql0,sql1,sql2,sql3;
-
-        if(nombre!=null && !nombre.equals("")){
-            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like ? ";
         }else{
-            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like '%' ";
-        }
-        if(dni!=null && !dni.equals("")){
-            sql1="and dni like ? ";
-        }else{
-            sql1="and dni like '%' ";
-        }
-        if(apellido!=null && !apellido.equals("")){
-            sql2="and apellido like ? ";
-        }else{
-            sql2="and apellido like '%' ";
-        }
-        if(codigoPUCP!=null && !codigoPUCP.equals("")) {
-            sql3="and codigoPUCP like ?)";
-        }else{
-            sql3=")";
+            if(codigoPUCP!=null && !codigoPUCP.equals("")) {
+                sql3="and codigoPUCP like ?)";
+            }else{
+                sql3=")";
+            }
         }
         sql=sql0+sql1+sql2+sql3;
         return sql;
     }
-    public void enviar_PstmtSizeClient(PreparedStatement pstmt, String nombre, String apellido, String dni,String codigoPUCP) throws SQLException {
+    public void enviar_PstmtClie(PreparedStatement pstmt, int posicion, String nombre, String apellido, String dni,String codigoPUCP, boolean limit) throws SQLException {
         int contador=0;
         if(nombre!=null && !nombre.equals("")){
             contador++;
@@ -164,7 +100,11 @@ public class AdminDao extends BaseDao{
         if(codigoPUCP!=null && !codigoPUCP.equals("")){
             contador++;
             pstmt.setString(contador,"%"+codigoPUCP+"%");
-        };
+        }
+        if(limit){
+            contador++;
+            pstmt.setInt(contador, posicion);
+        }
     }
 
     // Gestión de Operadores
@@ -579,8 +519,6 @@ public class AdminDao extends BaseDao{
     public void eliminarSala(int idSala){
         eliminarFuncionSala(idSala, 0);
 
-        System.out.println(idSala);
-
         String sql="delete from sala where idSala=?";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
@@ -655,39 +593,30 @@ public class AdminDao extends BaseDao{
 
         return bsala;
     }
-    //Listar Sala:
-    public ArrayList<BSala> listarSala() {
+
+    //Filtrar Sala y listarla:
+    public ArrayList<BSala> filtrarSala(String nombre, boolean limit, int cant_resul, int pagina) {
         ArrayList<BSala> listaSala= new ArrayList<>();
-        try (Connection conn = this.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("select idSala,Sede_idSede,numero, aforo, nombre from sala sa inner join sede s on sa.Sede_idSede= s.idSede;");) {
-            while (rs.next()) {
-                BSala bSala = new BSala();
-                bSala.setIdSala(rs.getInt(1));
-                bSala.setIdSede(rs.getInt(2));
-                bSala.setNumero(rs.getInt(3));
-                bSala.setAforo(rs.getInt(4));
-                bSala.setNombre(rs.getString(5));
-                listaSala.add(bSala);
-
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        String sql;
+        int posicion=0;
+        if(limit){
+            posicion=(pagina-1)*cant_resul;
+            sql= "select idSala,Sede_idSede,numero, aforo, nombre " +
+                    "from sala sa " +
+                    "    inner join sede s on sa.Sede_idSede= s.idSede " +
+                    "where nombre like ? limit ?, "+ cant_resul;
+        }else{
+            sql= "select idSala,Sede_idSede,numero, aforo, nombre " +
+                    "from sala sa " +
+                    "    inner join sede s on sa.Sede_idSede= s.idSede " +
+                    "where nombre like ?;";
         }
-
-        return listaSala;
-    }
-    //Filtrar Sala:
-    public ArrayList<BSala> filtrarSala(String nombre) {
-        ArrayList<BSala> listaSala= new ArrayList<>();
         try (Connection conn = this.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("select idSala,Sede_idSede,numero, aforo, nombre " +
-                     "from sala sa " +
-                     "    inner join sede s on sa.Sede_idSede= s.idSede " +
-                     "where nombre like ?;");) {
-            stmt.setString(1,nombre);
-
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1,"%"+nombre+"%");
+            if(limit){
+                stmt.setInt(2, posicion);
+            }
             try(ResultSet rs= stmt.executeQuery()){
                 while (rs.next()){
                     BSala bSala = new BSala();
@@ -721,5 +650,24 @@ public class AdminDao extends BaseDao{
         }
 
         return id;
+    }
+
+    //Listar Sedes:
+    public ArrayList<BSede> listarSedes(){
+        ArrayList<BSede> lista= new ArrayList<>();
+        try(Connection conn= this.getConnection();
+            Statement stmt= conn.createStatement();
+            ResultSet rs= stmt.executeQuery("select * from sede")){
+            while(rs.next()){
+                BSede bSede= new BSede();
+                bSede.setIdSede(rs.getInt(1));
+                bSede.setNombre(rs.getString(2));
+                bSede.setDireccion(rs.getString(3));
+                lista.add(bSede);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 }
