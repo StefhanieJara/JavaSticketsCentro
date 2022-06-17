@@ -80,9 +80,7 @@
                                         <div class="form-outline mb-4 py-4 dropdown">
                                             <select name="rol"
                                                     id="country1"
-                                                    onchange="change_country(this.value)"
-                                                    class="frm-field required sect"
-                                            >
+                                                    class="frm-field required sect">
                                                 <option selected="true" disabled="disabled">Seleccione el rol</option>
                                                 <option >Actor</option>
                                                 <option >Director</option>
@@ -100,7 +98,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="<%=request.getContextPath()%>/ADServlet?id=" type="submit" class="btn btn-danger">Registrar celebridad</a>
+                            <button type="submit" class="btn btn-danger">Registrar celebridad</button>
                         </form>
                     </div>
                 </div>

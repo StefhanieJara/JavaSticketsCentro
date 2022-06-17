@@ -62,6 +62,7 @@
                                                 id="productName"
                                                 class="form-control"
                                                 value="<%=celebridad.getNombre()%>"
+                                                placeholder="Ingrese los nombres"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
@@ -74,6 +75,7 @@
                                                 id="productName"
                                                 class="form-control"
                                                 value="<%=celebridad.getApellido()%>"
+                                                placeholder="Ingrese los apellidos"
                                         />
                                     </div>
                                     <div class="d-flex justify-content-start my-3">
@@ -82,10 +84,8 @@
                                             <select
                                                     name="rol"
                                                     id="country1"
-                                                    onchange="change_country(this.value)"
-                                                    class="frm-field required sect"
-                                            >
-                                                <% if (celebridad.getRol().equals("actor")){ %>
+                                                    class="frm-field required sect">
+                                                <% if (celebridad.getRol().equals("actor") || celebridad.getRol().equals("Actor")){ %>
                                                     <option selected="true">Actor</option>
                                                     <option >Director</option>
                                                 <% }else{%>

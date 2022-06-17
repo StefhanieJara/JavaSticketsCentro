@@ -263,20 +263,10 @@ public class AdminDao extends BaseDao{
 
     // Gestión de Celebridades
 
-    public static ArrayList<BCelebridad> listarCelebridad() {
+    public ArrayList<BCelebridad> listarCelebridad() {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery("select idCelebridad,nombre,apellido,rol  from celebridad");) {
 

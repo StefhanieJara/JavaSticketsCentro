@@ -53,23 +53,32 @@ public class ADServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
 
         AdminDao adminDao = new AdminDao();
-
         switch (action){
             case "crear":
                 String nombre = request.getParameter("nombresCeleb");
                 String apellido = request.getParameter("apellidosCeleb");
                 String rol = request.getParameter("rol");
                 String foto = request.getParameter("foto");
-                if (foto == null){
-                    foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/220px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
+                if(nombre=="" || apellido=="" || rol==null){
+                    response.sendRedirect(request.getContextPath()+"/ADServlet?action=agregar");
+                }else{
+                    if (foto == null){
+                        foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/220px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
+                    }
+                    adminDao.crearCelebridad(nombre, apellido, rol, foto);
+                    response.sendRedirect(request.getContextPath()+"/ADServlet");
                 }
-                adminDao.crearCelebridad(nombre, apellido, rol, foto);
-                response.sendRedirect(request.getContextPath()+"/ADServlet");
                 break;
             case "actualizar":
                 BCelebridad bCelebridad = leerParametros(request);
-                adminDao.editarCelebridad(bCelebridad);
-                response.sendRedirect(request.getContextPath()+"/ADServlet");
+                if(bCelebridad.getApellido().equals("") || bCelebridad.getNombre().equals("")){
+                    request.setAttribute("celebridad", adminDao.buscarPorId(bCelebridad.getIdCelebridad()));
+                    RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
+                    editarCelebridad.forward(request, response);
+                }else{
+                    adminDao.editarCelebridad(bCelebridad);
+                    response.sendRedirect(request.getContextPath()+"/ADServlet");
+                }
                 break;
             case "buscar":
                 break;
