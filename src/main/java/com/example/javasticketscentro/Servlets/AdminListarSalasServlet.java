@@ -30,6 +30,7 @@ public class AdminListarSalasServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }
             case "crear"->{
+                request.setAttribute("sedes", adminDao.listarSedes());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorAñadirSala.jsp");
                 requestDispatcher.forward(request,response);
 
@@ -42,16 +43,21 @@ public class AdminListarSalasServlet extends HttpServlet {
             }
             case "editar"->{
                 String idStr = request.getParameter("id");
-                int id = Integer.parseInt(idStr);
-                BSala bSala = adminDao.buscarSala(id);
-                if(bSala != null){
-                    request.setAttribute("bSala", bSala);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorEditarSala.jsp");
-                    requestDispatcher.forward(request,response);
-                }else {
+                try{
+                    int id = Integer.parseInt(idStr);
+                    BSala bSala = adminDao.buscarSala(id);
+                    if(bSala != null){
+                        request.setAttribute("bSala", bSala);
+                        request.setAttribute("sedes", adminDao.listarSedes());
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorEditarSala.jsp");
+                        requestDispatcher.forward(request,response);
+                    }else {
+                        response.sendRedirect(request.getContextPath() + "/AdminListarSalasServlet");
+                    }
+                }catch (NumberFormatException e){
+                    System.out.println("ID debe ser entero");
                     response.sendRedirect(request.getContextPath() + "/AdminListarSalasServlet");
                 }
-
             }
         }
 
@@ -76,25 +82,32 @@ public class AdminListarSalasServlet extends HttpServlet {
                     int elegirSede = adminDao.encontrarIDSede(elegirSedeStr);
                     if(elegirSede!=0){
                         adminDao.anadirSala(elegirSede,aforo,numeroSala);
+                        response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
+                    }else{
+                        response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet?action=crear");
                     }
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir tipo de dato");
                 }
-                response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
+
             }
             case "editar2"->{
+                int idSala= Integer.parseInt(request.getParameter("idSala"));
                 try{
                     int numeroSala = Integer.parseInt(numeroSalaStr);
                     int aforo = Integer.parseInt(aforoStr);
                     int elegirSede = adminDao.encontrarIDSede(elegirSedeStr);
-                    int idSala= Integer.parseInt(request.getParameter("idSala"));
                     if(elegirSede!=0){
                         adminDao.editarSala(elegirSede,aforo,numeroSala, idSala);
+                        response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
                     }
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir tipo de dato");
                 }
-                response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
+                request.setAttribute("bSala", adminDao.buscarSala(idSala));
+                request.setAttribute("sedes", adminDao.listarSedes());
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorEditarSala.jsp");
+                requestDispatcher.forward(request,response);
             }
             case "filtrar"->{
                 String filtro= request.getParameter("filtro");

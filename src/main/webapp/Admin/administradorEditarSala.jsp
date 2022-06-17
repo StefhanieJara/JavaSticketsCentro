@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 12/06/2022
@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="bSala" scope="request" type="com.example.javasticketscentro.Beans.BSala"/>
+<jsp:useBean id="sedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,7 +178,7 @@
                             <h4 class="my-2">Editar Sala</h4>
                         </div>
                         <div class="card-body p-4 p-md-5">
-                            <form method="POST" action="<%=request.getContextPath()%>/ListaSalasServlet?action=editar2">
+                            <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar2">
                                 <div class="row mb-3">
                                     <input type="hidden"
                                            name="idSala"
@@ -196,6 +197,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-outline">
+                                            <input type="hidden" name="pagina" value="1">
                                             <label class="form-label" for="farmaMail">Máximo de personas en la sala (aforo)</label>
                                             <input type="number"
                                                     id="farmaMail"
@@ -213,10 +215,10 @@
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
-                                            <option>Seleccionar</option>
-                                            <option>San Miguel</option>
-                                            <option>Lince</option>
-                                            <option>Miraflores</option>
+                                            <option value="Selecciona">Selecciona</option>
+                                            <%for(BSede bSede : sedes){%>
+                                                <option value="<%=bSede.getNombre()%>" <%=bSede.getNombre().equals(bSala.getNombre()) ?"selected" : ""%> ><%=bSede.getNombre()%></option>
+                                            <%}%>
                                         </select>
                                     </div>
 

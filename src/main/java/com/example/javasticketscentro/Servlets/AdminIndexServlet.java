@@ -19,7 +19,7 @@ public class AdminIndexServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
                 break;
             case "gestionSalas":
-                response.sendRedirect(request.getContextPath() + "/AdminGestionSalasServlet");
+                response.sendRedirect(request.getContextPath() + "/AdminListarSalasServlet");
                 break;
             case "gestionCelebridad":
                 response.sendRedirect(request.getContextPath() + "/ADServlet");

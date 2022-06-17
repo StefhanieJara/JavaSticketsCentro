@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 12/06/2022
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="sedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,10 +177,11 @@
                             <h4 class="my-2">Añadir Sala</h4>
                         </div>
                         <div class="card-body p-4 p-md-5">
-                            <form method="POST" action="<%=request.getContextPath()%>/ListaSalasServlet?action=guardar">
+                            <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=guardar">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="form-outline">
+                                            <input type="hidden" name="pagina" value="1"><!--Siempre regresaremos pagina 1-->
                                             <label class="form-label" for="farmaName">Ingrese el numero de sala</label>
                                             <input type="number"
                                                     name="numeroSala"
@@ -208,10 +210,10 @@
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
-                                            <option>Seleccionar</option>
-                                            <option>San Miguel</option>
-                                            <option>Lince</option>
-                                            <option>Miraflores</option>
+                                            <option value="Selecciona" selected>Selecciona</option>
+                                            <%for(BSede bSede : sedes){%>
+                                            <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
+                                            <%}%>
                                         </select>
                                     </div>
 

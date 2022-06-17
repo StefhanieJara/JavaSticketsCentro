@@ -187,7 +187,7 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Operadores</b></a
+            ><b>Lista de Salas</b></a
             >
         </li>
     </ul>
