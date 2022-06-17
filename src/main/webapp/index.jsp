@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="assets/css/estilosindex.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="assets/css_2/estilos_carrusel.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
 </head>
@@ -143,34 +144,24 @@
 <!--Contenido de página-->
 <main>
     <!--Alinear cabecera con contenido-->
-    <div class="card-header my-5"></div><BR>
-    <!--Farmacias-->
-
+    <div class="card-header my-5"></div>
 
     <!-- Banner -->
+
     <!-- Banner presentación -->
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-caption text-center">
-                <h1 style="margin-bottom: 20px"><mark><b>BIENVENIDOS AL</b></mark></h1>
-                <h2 style="margin-bottom: 30px"><b>CENTRO CULTURAL PUCP</b></h2>
-                <span>¡Disfruta de nuestra amplia cartelera de cine!</span>
-            </div>
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="img/banner1.jpg" alt="Escenario">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="img/banner2.jpg" alt="Principal">
-            </div>
+    <div class="slider_carr">
+        <div class="carousel-caption text-center">
+            <h1 style="margin-bottom: 40px"><mark><b>BIENVENIDOS AL</b></mark></h1>
+            <h2 style="margin-bottom: 50px"><mark><b>CENTRO CULTURAL PUCP</b></mark></h2>
+            <span>¡Disfruta de nuestra amplia cartelera de cine!</span>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Anterior</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Siguiente</span>
-        </a>
+        <ul>
+            <li><img  src="img/banner3.jpg" alt=""></li>
+            <li><img  src="img/banner2.jpg" alt=""></li>
+            <li><img  src="img/banner3.jpg" alt=""></li>
+            <li><img  src="img/banner2.jpg" alt=""></li>
+        </ul>
+
     </div>
     <!-- -->
 
@@ -234,7 +225,7 @@
                             <ul>
                                 <li>
                                     <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>Calle Los Volados #420</small>
+                                    <a href="https://www.google.com/maps/place/Chacarilla+420,+San+Isidro+15046/@-12.1010132,-77.0318613,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8696d016bd3:0xaa6210c576067e77!8m2!3d-12.1010185!4d-77.0296726"><small>Calle Los Volados #420</small></a>
                                 </li>
                             </ul>
                         </div>
@@ -246,7 +237,7 @@
                             <ul>
                                 <li>
                                     <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>Los Amigues #310</small>
+                                    <a href="https://www.google.com/maps/place/Av.+Gral.+Antonio+Alvarez+de+Arenales+310,+Jes%C3%BAs+Mar%C3%ADa+15072/@-12.0678789,-77.0403835,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8ebeea94ad9:0x729b8d1c7b119d9!8m2!3d-12.0678842!4d-77.0381948"><small>Los Amigues #310</small></a>
                                 </li>
                             </ul>
                         </div>
@@ -258,7 +249,7 @@
                             <ul>
                                 <li>
                                     <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <small>Jirón Los Desdes #123</small>
+                                    <a href="https://www.google.com/maps/place/Larcomar/@-12.1319449,-77.0327036,17z/data=!3m1!4b1!4m5!3m4!1s0x9105b7e1b4b5a533:0xa549043226dcfb18!8m2!3d-12.1319502!4d-77.0305149"><small>Jirón Los Desdes #123</small></a>
                                 </li>
                             </ul>
                         </div>
