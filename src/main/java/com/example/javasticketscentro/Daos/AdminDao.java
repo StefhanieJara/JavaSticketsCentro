@@ -263,37 +263,55 @@ public class AdminDao extends BaseDao{
 
     // Gestión de Celebridades
 
-    public static ArrayList<BCelebridad> listarCelebridad() {
+    public ArrayList<BCelebridad> listarCelebridad(String nombreCompleto, boolean limit, int cantResul, int pagina) {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select idCelebridad,nombre,apellido,rol,foto  from celebridad");) {
-
-            while (rs.next()) {
-                BCelebridad bCelebridad = new BCelebridad();
-                bCelebridad.setIdCelebridad(rs.getInt(1));
-                bCelebridad.setNombre(rs.getString(2));
-                bCelebridad.setApellido(rs.getString(3));
-                bCelebridad.setRol(rs.getString(4));
-                bCelebridad.setFoto(rs.getString(5));
-                listaCelebridad.add(bCelebridad);
+        String[] nombreApellido= nombreCompleto.split(" ");
+        String sql;
+        if(limit){
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ? and c.apellido like ? limit ?,"+cantResul;
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol, foto from celebridad c where c.nombre like ? limit ?, "+cantResul;
             }
-
+        }else{
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ? and c.apellido like ?";
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ?";
+            }
+        }
+        int posicion=(pagina-1)*cantResul;
+        try (Connection connection = this.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);) {
+            if(limit){
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    stmt.setInt(3, posicion);
+                }else{
+                    stmt.setInt(2, posicion);
+                }
+            }else{
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    System.out.println(nombreApellido[0]+" "+nombreApellido[1]);
+                }
+            }
+            try(ResultSet rs =stmt.executeQuery()) {
+                while (rs.next()) {
+                    BCelebridad bCelebridad = new BCelebridad();
+                    bCelebridad.setIdCelebridad(rs.getInt(1));
+                    bCelebridad.setNombre(rs.getString(2));
+                    bCelebridad.setApellido(rs.getString(3));
+                    bCelebridad.setRol(rs.getString(4));
+                    bCelebridad.setFoto(rs.getString(5));
+                    listaCelebridad.add(bCelebridad);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return listaCelebridad;
     }
         //Métodos internos para filtrar actores y directores
