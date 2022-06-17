@@ -58,13 +58,17 @@ public class ADServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        String URLFoto = request.getParameter("photoUrl");
         AdminDao adminDao = new AdminDao();
+
         switch (action){
             case "crear":
                 String nombre = request.getParameter("nombresCeleb");
                 String apellido = request.getParameter("apellidosCeleb");
                 String rol = request.getParameter("rol");
-                String foto = request.getParameter("foto");
+                String foto = URLFoto;
+                adminDao.crearCelebridad(nombre, apellido, rol, foto);
+                response.sendRedirect(request.getContextPath()+"/ADServlet");
                 if(nombre=="" || apellido=="" || rol==null){
                     response.sendRedirect(request.getContextPath()+"/ADServlet?action=agregar");
                 }else{

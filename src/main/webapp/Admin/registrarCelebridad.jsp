@@ -80,7 +80,8 @@
                                         <div class="form-outline mb-4 py-4 dropdown">
                                             <select name="rol"
                                                     id="country1"
-                                                    class="frm-field required sect">
+                                                    class="frm-field required sect"
+                                            >
                                                 <option selected="true" disabled="disabled">Seleccione el rol</option>
                                                 <option >Actor</option>
                                                 <option >Director</option>
@@ -94,11 +95,13 @@
                                     <img id="img-preview">
                                     <div class="card-footer">
                                         <input type="file" id="img-uploader">
-                                        <progress id="img-upload-bar" width="10px"value="0" max="100" style="width: 100%"></progress>
+                                        <progress id="img-upload-bar" width="10px" value="0" max="100"
+                                                  style="width: 100%"></progress>
                                     </div>
                                 </div>
+                                <input type="hidden" name="photoUrl" id="photoUrl" />
                             </div>
-                            <button type="submit" class="btn btn-danger">Registrar celebridad</button>
+                            <button type="submit" id="enviar" class="btn btn-danger">Registrar celebridad</button>
                         </form>
                     </div>
                 </div>

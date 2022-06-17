@@ -113,44 +113,6 @@
                                 alt="profile image"
                         />
                     </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a
-                                    href="gestionSalas.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Salas</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionActoresDirectores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Añadir Actores y Directores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionOperadores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Operadores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="listaclientesV2.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Lista de Clientes</span>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -202,7 +164,7 @@
         <div class="col-md-2 text-center mt-2">
             <img
                     class="w-75"
-                    src="img/bong.jpg"
+                    src=<%=celebridad.getFoto()%>
                     style="max-height: 400px; max-width: 250px"
             />
         </div>
