@@ -8,6 +8,7 @@ public class Bhistorial_detalle {
     private Double precio;
     private String estado;
     private Double total;
+    private String idPelicula;
 
 
 
@@ -65,5 +66,13 @@ public class Bhistorial_detalle {
 
     public void setSede(String sede) {
         this.sede = sede;
+    }
+
+    public String getIdPelicula() {
+        return idPelicula;
+    }
+
+    public void setIdPelicula(String idPelicula) {
+        this.idPelicula = idPelicula;
     }
 }

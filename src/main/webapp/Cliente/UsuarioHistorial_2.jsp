@@ -6,6 +6,7 @@
 
 
 <% ArrayList<Bhistorial> listadetickets = (ArrayList<Bhistorial>) request.getAttribute("lista"); %>
+<% ArrayList<Bhistorial_detalle> listadeFunciones = (ArrayList<Bhistorial_detalle>) request.getAttribute("listaFunciones"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -186,9 +187,10 @@
                                         </thead>
                                         <!--Pedidos-->
                                         <%int i=1;%>
-                                        <%for(Bhistorial ticket : listadetickets) {%>
+
                                         <tbody class="text-center">
                                             <!--Pedido 1-->
+                                            <%for(Bhistorial ticket : listadetickets) {%>
                                             <tr class="cell-1">
                                                 <td><i class="far fa-clock"></i><%=ticket.getFecha_compra()%></td>
                                                 <td><%=ticket.getCodigo()%></td>
@@ -198,12 +200,13 @@
                                                         data-bs-toggle="collapse"
                                                         data-bs-target="#dt-<%=i%>"
                                                 >
-                                                    <i class="fas fa-ellipsis-h text-black-50"></i>
+                                                    <i href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=listarFunciones&id=<%=ticket.getCodigo()%>" class="fas fa-ellipsis-h text-black-50"></i>
                                                 </td>
                                             </tr>
                                             <!--Detalles pedido 1 (dt-1)-->
+                                            <%System.out.println(listadeFunciones);%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
-                                                <td colspan="0.7" class="">Unidades</td>
+                                                <td colspan="0.7">Unidades</td>
                                                 <td colspan="0.7">Película</td>
                                                 <td colspan="0.7">Sede</td>
                                                 <td colspan="0.7">Fecha</td>
@@ -211,25 +214,29 @@
                                                 <td colspan="0.7">Estado</td>
                                                 <td colspan="0.7">Subtotal</td>
                                             </tr>
-                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
-                                                <td colspan="0.7" class="">3</td>
-                                                <td colspan="0.7">Doctor 12</td>
-                                                <td colspan="0.7">Miraflores</td>
-                                                <td colspan="0.7">2022-06-01</td>
-                                                <td colspan="0.7">s/ 30.00</td>
-                                                <td colspan="0.7">Vigente</td>
-                                                <td colspan="0.7">s/ 90.00</td>
-                                            </tr>
-                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
-                                                <td colspan="7">
-                                                    <button type="button" class="btn btn-danger">
+
+
+
+                                                <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
+                                                    <td colspan="0.7">Uno</td>
+                                                    <td colspan="0.7">Uno</td>
+                                                    <td colspan="0.7">Uno</td>
+                                                    <td colspan="0.7">Uno</td>
+                                                    <td colspan="0.7">Uno</td>
+                                                    <td><span class="badge bg-success">Vigente</span></td>
+                                                    <td colspan="0.7">S/99.00</td>
+                                                </tr>
+                                                <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
+                                                    <td colspan="7">
+                                                        <button type="button" class="btn btn-danger">
                                                         Cancelar pedido
                                                     </button>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+
+
                                             <%i++;%>
                                             <%}%>
-
                                         </tbody>
                                     </table>
                                 </div>

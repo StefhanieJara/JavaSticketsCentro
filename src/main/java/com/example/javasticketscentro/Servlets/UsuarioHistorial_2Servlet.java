@@ -1,6 +1,7 @@
 package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.Bhistorial;
+import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 import com.example.javasticketscentro.Daos.HistorialDao;
 
 import javax.servlet.*;
@@ -25,6 +26,15 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                 RequestDispatcher view = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
                 view.forward(request, response);
             }
+            case "listarFunciones" -> {
+                String codigo = request.getParameter("codigo");
+                request.setAttribute("listaFunciones", historialDao.buscarFuncionesDeTicket(codigo));
+
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
+                requestDispatcher.forward(request, response);
+
+            }
+
         }
 
     }
