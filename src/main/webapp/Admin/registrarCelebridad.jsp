@@ -80,7 +80,8 @@
                                         <div class="form-outline mb-4 py-4 dropdown">
                                             <select name="rol"
                                                     id="country1"
-                                                    class="frm-field required sect">
+                                                    class="frm-field required sect"
+                                            >
                                                 <option selected="true" disabled="disabled">Seleccione el rol</option>
                                                 <option >Actor</option>
                                                 <option >Director</option>
@@ -90,15 +91,20 @@
                                     </div>
                                 </div>
 
-                                <div class="card">
-                                    <img id="img-preview">
-                                    <div class="card-footer">
-                                        <input type="file" id="img-uploader">
-                                        <progress id="img-upload-bar" width="10px"value="0" max="100" style="width: 100%"></progress>
+                                <div class="col-md-6 mb-4 text-center">
+                                    <div class="text-center mt-2 mb-3">
+                                        <img id="img-preview" style="max-width: 300px; resize: both; max-width: 300px" />
                                     </div>
+                                    <div class="d-flex justify-content-center my-3">
+                                        <input type="file" id="img-uploader">
+
+                                    </div>
+                                    <progress id="img-upload-bar" width="10px" value="0" max="100"
+                                              style="width: 100%"></progress>
                                 </div>
+                                <input type="hidden" name="photoUrl" id="photoUrl" />
                             </div>
-                            <button type="submit" class="btn btn-danger">Registrar celebridad</button>
+                            <button type="submit" id="enviar" class="btn btn-danger">Registrar celebridad</button>
                         </form>
                     </div>
                 </div>

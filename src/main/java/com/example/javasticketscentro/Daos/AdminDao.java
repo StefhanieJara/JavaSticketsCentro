@@ -263,27 +263,55 @@ public class AdminDao extends BaseDao{
 
     // Gestión de Celebridades
 
-    public ArrayList<BCelebridad> listarCelebridad() {
+    public ArrayList<BCelebridad> listarCelebridad(String nombreCompleto, boolean limit, int cantResul, int pagina) {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
-
-        try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select idCelebridad,nombre,apellido,rol  from celebridad");) {
-
-            while (rs.next()) {
-                BCelebridad bCelebridad = new BCelebridad();
-                bCelebridad.setIdCelebridad(rs.getInt(1));
-                bCelebridad.setNombre(rs.getString(2));
-                bCelebridad.setApellido(rs.getString(3));
-                bCelebridad.setRol(rs.getString(4));
-                listaCelebridad.add(bCelebridad);
-
+        String[] nombreApellido= nombreCompleto.split(" ");
+        String sql;
+        if(limit){
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ? and c.apellido like ? limit ?,"+cantResul;
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol, foto from celebridad c where c.nombre like ? limit ?, "+cantResul;
             }
-
+        }else{
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ? and c.apellido like ?";
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol, foto  from celebridad c where c.nombre like ?";
+            }
+        }
+        int posicion=(pagina-1)*cantResul;
+        try (Connection connection = this.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);) {
+            if(limit){
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    stmt.setInt(3, posicion);
+                }else{
+                    stmt.setInt(2, posicion);
+                }
+            }else{
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    System.out.println(nombreApellido[0]+" "+nombreApellido[1]);
+                }
+            }
+            try(ResultSet rs =stmt.executeQuery()) {
+                while (rs.next()) {
+                    BCelebridad bCelebridad = new BCelebridad();
+                    bCelebridad.setIdCelebridad(rs.getInt(1));
+                    bCelebridad.setNombre(rs.getString(2));
+                    bCelebridad.setApellido(rs.getString(3));
+                    bCelebridad.setRol(rs.getString(4));
+                    bCelebridad.setFoto(rs.getString(5));
+                    listaCelebridad.add(bCelebridad);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return listaCelebridad;
     }
         //Métodos internos para filtrar actores y directores
@@ -561,9 +589,7 @@ public class AdminDao extends BaseDao{
     public  BSala buscarSala(int idSala) {
         BSala bsala = null;
 
-        String sql = "select * from sala s "+
-                "inner join sede se on (s.Sede_idSede = se.idSede) " +
-                "where idSala = ?";
+        String sql = "select * from sala where idSala = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -577,7 +603,6 @@ public class AdminDao extends BaseDao{
                     bsala.setIdSala(rs.getInt(3));
                     bsala.setAforo(rs.getInt(2));
                     bsala.setNumero(rs.getInt(4));
-                    bsala.setNombre(rs.getString(6));
                 }
             }
         } catch (SQLException e) {

@@ -9,18 +9,26 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 @WebServlet(name = "ADServlet", urlPatterns ={"/ADServlet"} )
 public class ADServlet extends HttpServlet {
+    private int cant_resultClientes=5;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
+        int pagina= request.getParameter("pagina") == null ? 1 :Integer.parseInt(request.getParameter("pagina"));
+        String filtro = "";
         int idCelebridad = 0;
         switch (action){
             case "listar":
-                request.setAttribute("listaCelebridades", adminDao.listarCelebridad());
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarCelebridad(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("filtro", filtro);
+                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
                 RequestDispatcher listarActDir = request.getRequestDispatcher("/Admin/administradorListaAD.jsp");
                 listarActDir.forward(request, response);
                 break;
@@ -51,55 +59,73 @@ public class ADServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-
+        String URLFoto = request.getParameter("photoUrl");
+        if  (URLFoto == null){
+            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
+        }else if (URLFoto.equals("")){
+            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
+        }
+        String nombre = request.getParameter("nombresCeleb");
+        String apellido = request.getParameter("apellidosCeleb");
+        String rol = request.getParameter("rol");
         AdminDao adminDao = new AdminDao();
         switch (action){
             case "crear":
-                String nombre = request.getParameter("nombresCeleb");
-                String apellido = request.getParameter("apellidosCeleb");
-                String rol = request.getParameter("rol");
-                String foto = request.getParameter("foto");
-                if(nombre=="" || apellido=="" || rol==null){
+                if(nombre.equals("") || apellido.equals("") || rol==null){
                     response.sendRedirect(request.getContextPath()+"/ADServlet?action=agregar");
                 }else{
-                    if (foto == null){
-                        foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/220px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
-                    }
-                    adminDao.crearCelebridad(nombre, apellido, rol, foto);
-                    response.sendRedirect(request.getContextPath()+"/ADServlet");
+                    adminDao.crearCelebridad(nombre, apellido, rol, URLFoto);
+                    response.sendRedirect(request.getContextPath()+"/ADServlet?action=listar");
                 }
                 break;
             case "actualizar":
-                BCelebridad bCelebridad = leerParametros(request);
-                if(bCelebridad.getApellido().equals("") || bCelebridad.getNombre().equals("")){
-                    request.setAttribute("celebridad", adminDao.buscarPorId(bCelebridad.getIdCelebridad()));
+                int id = Integer.parseInt(request.getParameter("id"));
+                BCelebridad celebr = new BCelebridad();
+                celebr.setIdCelebridad(id);
+                celebr.setNombre(nombre);
+                celebr.setApellido(apellido);
+                celebr.setRol(rol);
+                celebr.setFoto(URLFoto);
+                if(celebr.getApellido().equals("") || celebr.getNombre().equals("")){
+                    request.setAttribute("celebridad", adminDao.buscarPorId(celebr.getIdCelebridad()));
                     RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
                     editarCelebridad.forward(request, response);
                 }else{
-                    adminDao.editarCelebridad(bCelebridad);
+                    adminDao.editarCelebridad(celebr);
                     response.sendRedirect(request.getContextPath()+"/ADServlet");
                 }
                 break;
             case "buscar":
+                int pagina= Integer.parseInt(request.getParameter("pagina"));
+                String filtro= request.getParameter("filtro");
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarCelebridad(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);
+                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("filtro", filtro);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
+                requestDispatcher.forward(request, response);
                 break;
         }
     }
 
-    public BCelebridad leerParametros(HttpServletRequest request){
+   /* public BCelebridad leerParametros(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
         String nombre = request.getParameter("nombresCeleb");
         String apellido = request.getParameter("apellidosCeleb");
         String rol = request.getParameter("rol");
-        String foto = request.getParameter("foto");
-        if (foto == null){
-            foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/220px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
+        String URLFoto = request.getParameter("photoUrl");
+        if  (URLFoto == null){
+            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
+        }else if (URLFoto.equals("")){
+            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
         }
         BCelebridad celebr = new BCelebridad();
         celebr.setIdCelebridad(id);
         celebr.setNombre(nombre);
         celebr.setApellido(apellido);
         celebr.setRol(rol);
-        celebr.setFoto(foto);
+        celebr.setFoto(URLFoto);
         return celebr;
-    }
+    }*/
 }

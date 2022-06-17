@@ -1,5 +1,6 @@
 <%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 5/06/2022
