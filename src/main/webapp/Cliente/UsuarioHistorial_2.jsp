@@ -1,11 +1,12 @@
-
-
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaHistorial" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
-<jsp:useBean id="listaHistorial_detalle" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>" />
-<jsp:useBean id="textoBuscar" scope="request" type="java.lang.String" class="java.lang.String" />
+<jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
+
+
+<% ArrayList<Bhistorial> listadetickets = (ArrayList<Bhistorial>) request.getAttribute("lista"); %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,29 +30,33 @@
         ></script>
     </head>
     <body>
-        <nav class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger">
+        <nav
+                class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
+        >
             <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
                 <!--Logo Centro Cultural PUCP-->
-                <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
+                <div
+                        class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
                     <a class="navbar-brand py-0" href="#">
-                        <a href="index.html"><img src="img/logo.png" /></a>
+                        <a href="index.html"><img src="assets/img/logo.png" /></a>
                     </a>
                 </div>
-                <!--Buscador de peliculas-->
+                <!--Buscador de productos-->
                 <div class="col-md-7 d-none d-md-block ps-0">
-
+                    <!--desaparece en menores a medium-->
                     <div class="input-group">
                         <div style="width: 50%">
                             <input
                                     type="search"
-                                    id="buscador_pelicula"
+                                    id="buscador_producto"
                                     class="form-control"
-                                    placeholder="Busca una pelicula"/>
+                                    placeholder="Busca una pelicula"
+                            />
                         </div>
                         <a
                                 role="button"
                                 class="btn btn-tele border-start-1"
-                                href="usuariopeliculaBuscada.html"
+                                href="usuarioProductoBuscado.html"
                         >
                             <i class="fas fa-search"></i>
                         </a>
@@ -124,7 +129,7 @@
                             <div class="mb-3">
                                 <div class="p-2">
                                     <a
-                                            href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet"
+                                            href="usuarioEditar.html"
                                             class="text-dark text-decoration-none"
                                     >
                                         <span><i class="fas fa-user-edit"></i></span>
@@ -133,7 +138,7 @@
                                 </div>
                                 <div class="p-2">
                                     <a
-                                            href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet"
+                                            href="usuarioHistorial.html"
                                             class="text-dark text-decoration-none"
                                     >
                                         <span><i class="fas fa-list"></i></span>
@@ -144,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <!--cerrar sesión-->
+                <!--Footer cerrar sesión-->
                 <div class="mt-auto p-2 w-100">
                     <div class="offcanvas-body border-top pt-4">
                         <a href="index.html" class="text-dark text-decoration-none">
@@ -174,71 +179,57 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th class="col-2">Fecha de compra</th>
-                                                <th class="col-1">código</th>
-                                                <th class="col-1">Total</th>
-                                                <th class="col-1">Detalles</th>
+                                                <th class="col-1">Codigo</th>
+                                                <th class="col-2">Total</th>
+                                                <th class="col-2">Detalles</th>
                                             </tr>
                                         </thead>
                                         <!--Pedidos-->
+                                        <%int i=1;%>
+                                        <%for(Bhistorial ticket : listadetickets) {%>
                                         <tbody class="text-center">
-                                        <% int i = 1;
-                                            for (Bhistorial historial  : listaHistorial) { %>
+                                            <!--Pedido 1-->
                                             <tr class="cell-1">
-                                                <td>
-                                                    <i class="far fa-clock"></i>&nbsp;&nbsp;<%historial.getFecha_compra()%>
-                                                </td>
-                                                <td><%historial.getCodigo()%></td>
-
-                                                <td>s/ <%historial.getTotal()%></td>
+                                                <td><i class="far fa-clock"></i><%=ticket.getFecha_compra()%></td>
+                                                <td><%=ticket.getCodigo()%></td>
+                                                <td><%=ticket.getTotal()%></td>
                                                 <td
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
-                                                        data-bs-target="#dt-2"
+                                                        data-bs-target="#dt-<%=i%>"
                                                 >
                                                     <i class="fas fa-ellipsis-h text-black-50"></i>
                                                 </td>
                                             </tr>
-                                            <!--Detalles pedido-->
-                                            <tr id="dt-1" class="collapse cell-1 row-child">
-                                                <td colspan="1" class="">Unidades</td>
-                                                <td colspan="2">Película</td>
-                                                <th colspan="2">Sede</th>
-                                                <td colspan="2">Fecha de la funcion</td>
-                                                <td colspan="2">Precio por ticket</td>
-                                                <td colspan="2">Total</td>
-                                                <td colspan="2">Estado</td>
+                                            <!--Detalles pedido 1 (dt-1)-->
+                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
+                                                <td colspan="0.7" class="">Unidades</td>
+                                                <td colspan="0.7">Película</td>
+                                                <td colspan="0.7">Sede</td>
+                                                <td colspan="0.7">Fecha</td>
+                                                <td colspan="0.7">Precio </td>
+                                                <td colspan="0.7">Estado</td>
+                                                <td colspan="0.7">Subtotal</td>
                                             </tr>
-                                            <% int j = 1;
-                                                for (Bhistorial_detalle detalle : listaHistorial_detalle) { %>
-                                            <tr id="dt-1" class="collapse cell-1 row-child-rows">
-                                                <td colspan="1" class=""><%detalle.getUnidades()%></td>
-                                                <td colspan="2">
-                                                    <%detalle.getPelicula()%>
-                                                </td>
-                                                <td colspan="2"><%detalle.getSede()%></td>
-                                                <td colspan="2">
-                                                    <%detalle.getFecha()%>
-                                                </td>
-                                                <td colspan="2">
-                                                    <%detalle.getPrecio()%>
-                                                </td>
-                                                <td colspan="2">
-                                                    <%detalle.getTotal()%>
-                                                </td>
-                                                <td><span class="badge bg-success"><%detalle.getEstado()%></span></td>
-
+                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
+                                                <td colspan="0.7" class="">3</td>
+                                                <td colspan="0.7">Doctor 12</td>
+                                                <td colspan="0.7">Miraflores</td>
+                                                <td colspan="0.7">2022-06-01</td>
+                                                <td colspan="0.7">s/ 30.00</td>
+                                                <td colspan="0.7">Vigente</td>
+                                                <td colspan="0.7">s/ 90.00</td>
                                             </tr>
-                                            <% j ++;
-                                            }%>
-                                            <tr id="dt-1" class="collapse cell-1 row-child">
+                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
                                                 <td colspan="7">
                                                     <button type="button" class="btn btn-danger">
                                                         Cancelar pedido
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <% i ++;
-                                            } %>
+                                            <%i++;%>
+                                            <%}%>
+
                                         </tbody>
                                     </table>
                                 </div>

@@ -7,10 +7,21 @@ import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class HistorialDao extends BaseDao{
-    /*public ArrayList<Bhistorial> Resumen(String textoBuscar) {
-        ArrayList<Bhistorial> listaHistorial = new ArrayList<>();
+public class HistorialDao{
 
+    public static ArrayList<Bhistorial> listaTickets() {
+
+        ArrayList<Bhistorial> tickets = new ArrayList<>();
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', " +
                 " subquery.Codigo as 'Codigo', " +
@@ -34,31 +45,36 @@ public class HistorialDao extends BaseDao{
                 "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
                 "WHERE p.idPersona = 1) AS subquery;";
 
-        try (Connection connection = this.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
 
-
-            try (ResultSet rs = preparedStatement.executeQuery();) {
-                while (rs.next()) {
-                    Bhistorial bhistorial = new Bhistorial();
-                    bhistorial.setFecha_compra(rs.getString(1));
-                    bhistorial.setCodigo(rs.getString(2));
-
-                    bhistorial.setTotal(rs.getDouble(3));
-
-                    listaHistorial.add(bhistorial);
-                }
+            while (rs.next()) {
+                Bhistorial bhistorial = new Bhistorial();
+                bhistorial.setFecha_compra(rs.getString(1));
+                bhistorial.setCodigo(rs.getString(2));
+                bhistorial.setTotal(rs.getDouble(3));
+                tickets.add(bhistorial);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-        return listaHistorial;
+        return tickets;
     }
+/*
+    public ArrayList<Bhistorial_detalle> listaFucnionesPorTicket() {
 
-    public ArrayList<Bhistorial> Historial(String cliente) {
-        ArrayList<Bhistorial> listaHistorial = new ArrayList<>();
+        ArrayList<Bhistorial_detalle> funcionesTicket = new ArrayList<>();
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         String sql = "SELECT tablita.Unidades as 'Unidades', " +
                 " tablita.Pelicula as 'Pelicula', " +
@@ -85,57 +101,25 @@ public class HistorialDao extends BaseDao{
                 "WHERE p.idPersona = 1) AS tablita " +
                 "WHERE tablita.Codigo = '10793DD';";
 
-        try (Connection connection = this.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
 
-            try (ResultSet rs = preparedStatement.executeQuery();) {
-                while (rs.next()) {
-                    Bhistorial bhistorial = new Bhistorial();
-                    bhistorial.setFecha_compra(rs.getString(1));
-                    bhistorial.setCodigo(rs.getString(2));
-                    bhistorial.setTotal(rs.getDouble(3));
-
-                    listaHistorial.add(bhistorial);
-                }
+            while (rs.next()) {
+                Bhistorial_detalle bhistorial_detalle = new Bhistorial_detalle();
+                bhistorial_detalle.setUnidades(rs.getInt(1));
+                bhistorial_detalle.setPelicula(rs.getString(2));
+                bhistorial_detalle.setSede(rs.getString(3));
+                bhistorial_detalle.setFecha(rs.getString(4));
+                bhistorial_detalle.setPrecio(rs.getDouble(5));
+                funcionesTicket.add(bhistorial_detalle);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return funcionesTicket;
 
-
-        return listaHistorial;
     }
-
-    public ArrayList<Bhistorial_detalle> Historial_detalle(String cliente, String sede) {
-        ArrayList<Bhistorial_detalle> lista_detalle = new ArrayList<>();
-
-        String sql = "select * from  where blabla";
-
-        try (Connection connection = this.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-
-
-            try (ResultSet rs = preparedStatement.executeQuery();) {
-                while (rs.next()) {
-                    Bhistorial_detalle bdetalle = new Bhistorial_detalle();
-                    bdetalle.setUnidades(rs.getInt(1));
-                    bdetalle.setPelicula(rs.getString(2));
-                    bdetalle.setFecha(rs.getString(3));
-                    bdetalle.setPrecio(rs.getDouble(4));
-                    bdetalle.setEstado(rs.getString(5));
-                    bdetalle.setTotal(rs.getDouble(6));
-                    bdetalle.setSede(rs.getString(7));
-
-                    lista_detalle.add(bdetalle);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        return lista_detalle;
-    }*/
-
+  */
 }

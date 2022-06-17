@@ -3,11 +3,12 @@ package com.example.javasticketscentro.Beans;
 public class Bhistorial_detalle {
     private int unidades;
     private String pelicula;
+    private String sede;
     private String fecha;
     private Double precio;
     private String estado;
     private Double total;
-    private String sede;
+
 
 
     public int getUnidades() {
