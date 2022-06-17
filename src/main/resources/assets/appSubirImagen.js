@@ -27,8 +27,6 @@ imageUploader.addEventListener('change', async (e) => {
             }
         }
     );
-    console.log(res);
     imagePreview.src = res.data.secure_url;
-    console.log(res.data.secure_url);
     document.getElementById("photoUrl").value = res.data.secure_url;
 });
