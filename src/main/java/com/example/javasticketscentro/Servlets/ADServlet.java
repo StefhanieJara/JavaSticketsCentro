@@ -13,14 +13,21 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ADServlet", urlPatterns ={"/ADServlet"} )
 public class ADServlet extends HttpServlet {
+    private int cant_resultClientes=5;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
+        int pagina= request.getParameter("pagina") == null ? 1 :Integer.parseInt(request.getParameter("pagina"));
+        String filtro = "";
         int idCelebridad = 0;
         switch (action){
             case "listar":
-                request.setAttribute("listaCelebridades", adminDao.listarCelebridad());
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarCelebridad(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("filtro", filtro);
+                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
                 RequestDispatcher listarActDir = request.getRequestDispatcher("/Admin/administradorListaAD.jsp");
                 listarActDir.forward(request, response);
                 break;
@@ -51,7 +58,6 @@ public class ADServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-
         AdminDao adminDao = new AdminDao();
         switch (action){
             case "crear":
@@ -81,6 +87,15 @@ public class ADServlet extends HttpServlet {
                 }
                 break;
             case "buscar":
+                int pagina= Integer.parseInt(request.getParameter("pagina"));
+                String filtro= request.getParameter("filtro");
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarCelebridad(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);
+                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("filtro", filtro);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
+                requestDispatcher.forward(request, response);
                 break;
         }
     }

@@ -9,6 +9,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaCelebridades" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>" />
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="filtro" scope="request" type="java.lang.String"/>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -178,17 +181,13 @@
     </ul>
 
     <!--Barra de búsqueda producto-->
-    <form class="mb-4">
+    <form class="mb-4" method="post" action="<%=request.getContextPath()%>/ADServlet?action=buscar">
         <div class="input-group justify-content-center">
             <div class="form-outline" style="width: 36%">
-                <input
-                        type="search"
-                        id="form1"
-                        class="form-control"
-                        placeholder="Buscar actor, actriz o director"
-                />
+                <input type="hidden" name="pagina" value="1">
+                <input type="search" id="form1" name="filtro" class="form-control" value="<%=filtro%>" placeholder="Busque por Nombre y Apellido | Ejemplo: Jhon Ruiz"/>
             </div>
-            <button type="button" class="btn btn-tele border-start-1">
+            <button type="submit" class="btn btn-tele border-start-1">
                 <i class="fas fa-search"></i>
             </button>
         </div>
@@ -236,19 +235,43 @@
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/ADServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+                    <%for(int i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/ADServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/ADServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <input type="hidden" name="filtro" value="<%=filtro%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>

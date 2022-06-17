@@ -263,69 +263,59 @@ public class AdminDao extends BaseDao{
 
     // Gestión de Celebridades
 
-    public ArrayList<BCelebridad> listarCelebridad() {
+    public ArrayList<BCelebridad> listarCelebridad(String nombreCompleto, boolean limit, int cantResul, int pagina) {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
-
-        try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select idCelebridad,nombre,apellido,rol  from celebridad");) {
-
-            while (rs.next()) {
-                BCelebridad bCelebridad = new BCelebridad();
-                bCelebridad.setIdCelebridad(rs.getInt(1));
-                bCelebridad.setNombre(rs.getString(2));
-                bCelebridad.setApellido(rs.getString(3));
-                bCelebridad.setRol(rs.getString(4));
-                listaCelebridad.add(bCelebridad);
-
+        String[] nombreApellido= nombreCompleto.split(" ");
+        String sql;
+        if(limit){
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol  from celebridad c where c.nombre like ? and c.apellido like ? limit ?,"+cantResul;
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol  from celebridad c where c.nombre like ? limit ?, "+cantResul;
             }
-
+        }else{
+            if(nombreApellido.length!=1){
+                sql= "select idCelebridad,nombre,apellido,rol  from celebridad c where c.nombre like ? and c.apellido like ?";
+            }else{
+                sql= "select idCelebridad,nombre,apellido,rol  from celebridad c where c.nombre like ?";
+            }
+        }
+        int posicion=(pagina-1)*cantResul;
+        try (Connection connection = this.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);) {
+            if(limit){
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    stmt.setInt(3, posicion);
+                }else{
+                    stmt.setInt(2, posicion);
+                }
+            }else{
+                stmt.setString(1, "%"+nombreApellido[0]+"%");
+                if(nombreApellido.length!=1){
+                    stmt.setString(2, "%"+nombreApellido[1]+"%");
+                    System.out.println(nombreApellido[0]+" "+nombreApellido[1]);
+                }
+            }
+            try(ResultSet rs =stmt.executeQuery()){
+                while (rs.next()) {
+                    BCelebridad bCelebridad = new BCelebridad();
+                    bCelebridad.setIdCelebridad(rs.getInt(1));
+                    bCelebridad.setNombre(rs.getString(2));
+                    bCelebridad.setApellido(rs.getString(3));
+                    bCelebridad.setRol(rs.getString(4));
+                    listaCelebridad.add(bCelebridad);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         return listaCelebridad;
     }
-        //Métodos internos para filtrar actores y directores
-    public String generarSQL_filtrosCel(String tabla, String rol, String nombre,String apellido,int cant_result){
-        String sql, sql0,sql1,sql2;
 
-        if(rol!=null){
-            sql0="Select * from "+tabla+" where (rol like ? ";
-        }else{
-            sql0="Select * from "+tabla+" where (rol like '%' ";
-        }
-        if(nombre!=null){
-            sql1="and nombre like ? ";
-        }else{
-            sql1="and nombre like '%' ";
-        }
-        if(apellido!=null){
-            sql2="and apellido like ?) limit ?,"+ cant_result;
-        }else{
-            sql2=") limit ?," + cant_result;
-        }
-        sql=sql0+sql1+sql2;
-        return sql;
-    }
-    public void enviar_PstmtCel(PreparedStatement pstmt, int posicion, String rol, String nombre, String apellido) throws SQLException {
-        int contador=0;
-        if(rol != null){
-            contador++;
-            pstmt.setString(contador,"%"+rol+"%");
-        }
-        if(nombre!=null){
-            contador++;
-            pstmt.setString(contador,"%"+nombre+"%");
-        }
-        if(apellido!=null){
-            contador++;
-            pstmt.setString(contador,"%"+apellido+"%");
-        }
-        contador++;
-        pstmt.setInt(contador, posicion);
-    }
-        //Eliminar Celebridad
+    //Eliminar Celebridad
     public void eliminarCelebridad(int id_Celebridad){
         eliminarCelebridadPorPelicula(id_Celebridad, 0);
         eliminarCalificacionCelebridad(id_Celebridad,0);
