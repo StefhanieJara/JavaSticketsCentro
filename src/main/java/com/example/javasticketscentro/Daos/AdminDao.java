@@ -112,7 +112,7 @@ public class AdminDao extends BaseDao{
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona from persona where rol = 'Operador'");) {
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona,direccionCliente from persona where rol = 'Operador'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
@@ -124,6 +124,7 @@ public class AdminDao extends BaseDao{
                 bPersona.setEmail(rs.getString(5));
                 bPersona.setRol(rs.getString(6));
                 bPersona.setIdPer(rs.getInt(7));
+                bPersona.setDireccion(rs.getString(8));
                 listaOperadores.add(bPersona);
 
             }
@@ -229,7 +230,7 @@ public class AdminDao extends BaseDao{
                     operador.setEmail(rs.getString(8));
                     operador.setUsuario(rs.getString(9));
                     operador.setContrasenia(rs.getString(10));
-                    operador.setCodigoPUCP(rs.getInt(11));
+                    operador.setDireccion(rs.getString(11));
                 }
             }
         } catch (SQLException e) {
@@ -688,4 +689,32 @@ public class AdminDao extends BaseDao{
         }
         return lista;
     }
+    public BPersona buscarOperadorPorId_editar(int id){
+        BPersona operador = null;
+        String sql = "select * from centro1.persona where idPersona=?";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    operador = new BPersona();
+                    operador.setIdPer(rs.getInt(1));
+                    operador.setDni(rs.getInt(2));
+                    operador.setNombre(rs.getString(3));
+                    operador.setApellido(rs.getString(4));
+                    operador.setFoto(rs.getString(5));
+                    operador.setNumCel(rs.getInt(6));
+                    operador.setFecha_Nc(rs.getString(7));
+                    operador.setEmail(rs.getString(8));
+                    operador.setUsuario(rs.getString(9));
+                    operador.setContrasenia(rs.getString(10));
+                    operador.setDireccion(rs.getString(11));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return operador;
+    }
+
 }
