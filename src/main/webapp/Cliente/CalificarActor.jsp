@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
   Created by IntelliJ IDEA.
   User: david
   Date: 10/06/2022
@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="listaActores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+<%int i = 1;%>
 <html lang="en">
 <head>
     <head>
@@ -27,7 +29,30 @@
                 src="https://kit.fontawesome.com/5733880de3.js"
                 crossorigin="anonymous"
         ></script>
-        <link rel="stylesheet" href="assets/css/stars.css" />
+        <style>
+
+            .star{
+                font-size: 3rem;
+                color: #ff9800;
+                background-color: unset;
+                border: none;
+
+            }
+
+
+            .star_rating{
+                user-select: none;
+                background-color: azure;
+                padding: 1.4rem 2.5rem;
+                margin: 2rem;
+                border-radius: .4rem;
+                text-align: center;
+
+            }
+            .star:hover{
+                cursor: pointer;
+            }
+        </style>
     </head>
 </head>
 <body>
@@ -46,51 +71,30 @@
                         <h4 class="my-2">Calificar Actores y Directores</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <%for (BCelebridad actor: listaActores){%>
+                        <form method="post" action="<%=request.getContextPath()%>/calificar?action=calificarC">
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Actores</label>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <p style="font-size:30px; color: black;"><em>Benedict Cumberbatch</em></p>
-                                        <img src="img/benedict.jpg" style="max-width:200px; max-height: 400px;">
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <div class="ec-stars-wrapper">
-                                            <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                            <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                            <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                            <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                            <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Calificar"
-                                        />
+                                        <p style="font-size:25px; color: red;"><em>Actores</em></p>
                                     </div>
 
+
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Directores</label>
+                                        <p style="font-size:30px; color: black;"><em><%=actor.getNombre()%> <%=actor.getApellido()%></em></p>
+                                        <img src="<%=actor.getFoto()%>" style="max-width:200px; max-height: 400px;">
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <p style="font-size:30px; color: black;"><em>Sam Raimi</em></p>
-                                        <img src="img/bong.jpg" style="max-width:200px; max-height: 400px;">
+                                    <div class="star_rating">
+                                        <button class="star" type="button" name="s5" id="s5">&#9734;</button>
+                                        <button class="star" type="button" name="s5" id="s4">&#9734;</button>
+                                        <button class="star" type="button" name="s3" id="s3">&#9734;</button>
+                                        <button class="star" type="button" name="s2" id="s2">&#9734;</button>
+                                        <button class="star" type="button" name="s1" id="s1">&#9734;</button>
+                                        <p class="current_rating">0 de 5</p>
+                                        <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <div class="ec-stars-wrapper">
-                                            <a href="#" data-value="1" title="Votar con 1 estrellas">&#9733;</a>
-                                            <a href="#" data-value="2" title="Votar con 2 estrellas">&#9733;</a>
-                                            <a href="#" data-value="3" title="Votar con 3 estrellas">&#9733;</a>
-                                            <a href="#" data-value="4" title="Votar con 4 estrellas">&#9733;</a>
-                                            <a href="#" data-value="5" title="Votar con 5 estrellas">&#9733;</a>
-                                        </div>
-                                    </div>
+                                    <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=actor.getIdCelebridad()%>"/>
+                                    <input type="hidden"  name="idPersona" id="idPersona" value="8"/>
                                     <div class="form-outline mb-4">
                                         <input
                                                 class="btn btn-tele"
@@ -101,6 +105,10 @@
                                 </div>
                             </div>
                         </form>
+                        <%}%>
+                        <div>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,5 +117,25 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    const allStars = document.querySelectorAll('.star');
+    let current_rating = document.querySelector('.current_rating');
+    allStars.forEach((star, i) =>{
+        star.onclick = function(){
+            console.log(i);
+            let current_start_level = i+1;
+            current_rating.innerHTML = current_start_level +  ' de 5';
+            document.getElementById("puntaje").value = current_start_level;
+
+            allStars.forEach((star, j)=>{
+                if(current_start_level >= j+1){
+                    star.innerHTML = '&#9733';
+                }  else{
+                    star.innerHTML = '&#9734';
+                }
+            })
+        }
+    })
+</script>
 </body>
 </html>
