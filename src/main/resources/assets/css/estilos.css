@@ -16,8 +16,9 @@ hr {
 
 input,
 select {
-  box-shadow: none !important;
-  border: 1px solid #e72d4b !important;
+  box-shadow: none;
+  border: 1px solid #695e60;
+
 }
 /*editar perfil*/
 .contenerdor_perfil {
@@ -36,6 +37,7 @@ select {
 .nav-item {
   margin-top: 70px;
 }
+
 /*Check-box*/
 
 .form-check-input:checked {
@@ -58,6 +60,7 @@ select {
   border-color: rgba(245, 127, 0, 0.87);
   background-color: rgba(245, 127, 0, 0.87);
   color: white;
+
 }
 
 .btn-tele:hover {
