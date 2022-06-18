@@ -73,7 +73,7 @@
             </a>
         </div>
 
-        <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0">
+        <!--<div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0">
             <div class="input-group">
                 <div class="form-outline" style="width: 50%">
                     <input
@@ -87,7 +87,7 @@
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-        </div>
+        </div>-->
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         ></div>

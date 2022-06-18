@@ -222,6 +222,7 @@
                     <div class="col">
                         <div onclick="" class="card card-farmacia f1">
                             <h2>Chacarilla</h2>
+
                             <ul>
                                 <li>
                                     <i class="fas fa-map-marker-alt fa-xs"></i>
