@@ -59,18 +59,18 @@ public class ADServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-        String URLFoto = request.getParameter("photoUrl");
-        if  (URLFoto == null){
-            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
-        }else if (URLFoto.equals("")){
-            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
-        }
         String nombre = request.getParameter("nombresCeleb");
         String apellido = request.getParameter("apellidosCeleb");
         String rol = request.getParameter("rol");
+        String URLFoto = request.getParameter("photoUrl");
         AdminDao adminDao = new AdminDao();
         switch (action){
             case "crear":
+                if  (URLFoto == null){
+                    URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
+                }else if (URLFoto.equals("")){
+                    URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
+                }
                 if(nombre.equals("") || apellido.equals("") || rol==null){
                     response.sendRedirect(request.getContextPath()+"/ADServlet?action=agregar");
                 }else{
@@ -85,6 +85,11 @@ public class ADServlet extends HttpServlet {
                 celebr.setNombre(nombre);
                 celebr.setApellido(apellido);
                 celebr.setRol(rol);
+                if  (URLFoto == null){
+                    URLFoto="mantener";
+                }else if (URLFoto.equals("")){
+                    URLFoto="mantener";
+                }
                 celebr.setFoto(URLFoto);
                 if(celebr.getApellido().equals("") || celebr.getNombre().equals("")){
                     request.setAttribute("celebridad", adminDao.buscarPorId(celebr.getIdCelebridad()));

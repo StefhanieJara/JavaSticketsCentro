@@ -483,15 +483,24 @@ public class AdminDao extends BaseDao{
         }
     }
     public void editarCelebridad(BCelebridad bCelebridad){
-        String sql="UPDATE centro1.celebridad SET nombre = ?, apellido = ?, rol = ?, foto = ? where idCelebridad = ?";
-
+        String sql;
+        if (bCelebridad.getFoto().equals("mantener")){
+            sql="UPDATE centro1.celebridad SET nombre = ?, apellido = ?, rol = ? where idCelebridad = ?";
+        }
+        else{
+            sql="UPDATE centro1.celebridad SET nombre = ?, apellido = ?, rol = ?, foto = ? where idCelebridad = ?";
+        }
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
             pstmt.setString(1,bCelebridad.getNombre());
             pstmt.setString(2,bCelebridad.getApellido());
             pstmt.setString(3,bCelebridad.getRol());
-            pstmt.setString(4,bCelebridad.getFoto());
-            pstmt.setInt(5, bCelebridad.getIdCelebridad());
+            if (bCelebridad.getFoto().equals("mantener")){
+                pstmt.setInt(4, bCelebridad.getIdCelebridad());
+            }else{
+                pstmt.setString(4,bCelebridad.getFoto());
+                pstmt.setInt(5, bCelebridad.getIdCelebridad());
+            }
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
