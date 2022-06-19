@@ -132,14 +132,14 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Peliculas</b></a
+            ><h2>Lista de Peliculas</h2></a
             >
         </li>
     </ul>
 
     <!--Barra de búsqueda producto-->
     <form class="mb-4">
-        <div class="input-group justify-content-center">
+        <div class="input-group justify-content-center"style="">
             <div class="form-outline" style="width: 36%">
                 <input
                         type="search"
@@ -152,8 +152,8 @@
                 <i class="fas fa-search"></i>
             </button>
         </div>
-        <br>
-        <div class="input-group justify-content-center">
+
+        <div class="input-group justify-content-center"style="">
             <div class="form-outline" style="width: 36%">
                 <input
                         type="search"

@@ -104,7 +104,6 @@
                                     </div>
                                     <div class="d-flex justify-content-center my-3">
                                         <input type="file" id="img-uploader">
-
                                     </div>
                                     <progress id="img-upload-bar" width="10px" value="0" max="100"
                                               style="width: 100%"></progress>

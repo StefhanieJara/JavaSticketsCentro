@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class HistorialDao{
 
-    public static ArrayList<Bhistorial> listaTickets() {
+    public ArrayList<Bhistorial> listaTickets() {
 
         ArrayList<Bhistorial> tickets = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class HistorialDao{
                 "    inner join funcion_has_sala fs on (f.idFuncion = fs.Funcion_idFuncion) " +
                 "    inner join sala sa on (fs.Sala_idSala = sa.idSala) " +
                 "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
-                "WHERE p.idPersona = 1) AS subquery;";
+                "WHERE p.idPersona = 2) AS subquery;";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
@@ -62,7 +62,8 @@ public class HistorialDao{
         return tickets;
     }
 
-    public static ArrayList<Bhistorial_detalle> buscarFuncionesDeTicket(String codigo) {
+    public ArrayList<Bhistorial_detalle> buscarFuncionesDeTicket(String codigo) {
+
 
         ArrayList<Bhistorial_detalle> funcionesTicket = new ArrayList<>();
 
@@ -109,11 +110,48 @@ public class HistorialDao{
                 }
             }
 
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return funcionesTicket;
+
+    }
+
+    public void borrar(String ticketId) {
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "delete from ticket where Compra_idCompra = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setString(1, ticketId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql2 = "delete from compra where idCompra = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = connection.prepareStatement(sql2);) {
+
+            pstmt.setString(1, ticketId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
