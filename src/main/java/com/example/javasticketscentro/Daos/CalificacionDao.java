@@ -85,25 +85,66 @@ public class CalificacionDao extends BaseDao {
         return celebridades;
     }
 
-    public void anadirPuntajePorPelicula(int idPersona, int idPelicula, int puntaje) {
-
-        String sql = "INSERT INTO calificacion (Pelicula_idPelicula, puntaje, Persona_idPersona)\n" +
-                "VALUES (?, ?, ?) ";
-
+    public boolean existe_puntaje(int idPersona, int idPelicula){
+        String sql="select * from calificacion where Pelicula_idPelicula=? and Persona_idPersona = ?";
+        boolean existe = false;
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(2, puntaje);
             pstmt.setInt(1, idPelicula);
-            pstmt.setInt(3, idPersona);
-            pstmt.executeUpdate();
+            pstmt.setInt(2, idPersona);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    existe=true;
+                }
+            }
         }
 
-    catch( SQLException e){
-        System.out.println("Hubo un error en la conexión!");
-        e.printStackTrace();
+        catch( SQLException e){
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+        return existe;
     }
+    public void anadirPuntajePorPelicula(int idPersona, int idPelicula, int puntaje) {
+
+        if(existe_puntaje(idPersona,idPelicula)){
+            String sql = "UPDATE calificacion\n" +
+                    "SET puntaje = ?\n" +
+                    "where Pelicula_idPelicula = ? and Persona_idPersona = ?";
+            try (Connection conn = this.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setInt(1, puntaje);
+                pstmt.setInt(2, idPelicula);
+                pstmt.setInt(3, idPersona);
+                pstmt.executeUpdate();
+            }
+
+            catch( SQLException e){
+                System.out.println("Hubo un error en la conexión!");
+                e.printStackTrace();
+            }
+        }else {
+            String sql = "INSERT INTO calificacion (Pelicula_idPelicula, puntaje, Persona_idPersona)\n" +
+                    "VALUES (?, ?, ?) ";
+
+            try (Connection conn = this.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setInt(2, puntaje);
+                pstmt.setInt(1, idPelicula);
+                pstmt.setInt(3, idPersona);
+                pstmt.executeUpdate();
+            }
+
+            catch( SQLException e){
+                System.out.println("Hubo un error en la conexión!");
+                e.printStackTrace();
+            }
+        }
+
 }
+
 
 
     public void anadirPuntajePorCelebridad(int idPersona,int idCelebridad,int puntaje){
@@ -122,6 +163,46 @@ public class CalificacionDao extends BaseDao {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+    }
+
+    public int puntajePeliculaPorId(int idPersona, int idPelicula){
+        int puntaje = 0;
+        String sql = "select puntaje from calificacion where Persona_idPersona = ? and Pelicula_idPelicula = ?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,idPersona);
+            pstmt.setInt(2, idPelicula);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    puntaje = resultSet.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+        return puntaje;
+    }
+
+    public int puntajeCelebridadPorId(int idPersona, int idCelebridad){
+        int puntaje = 0;
+        String sql = "select puntaje from calificacion_celebridad where Persona_idPersona = ? and Celebridad_idCelebridad = ?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1,idPersona);
+            pstmt.setInt(2, idCelebridad);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    puntaje = resultSet.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+        return puntaje;
     }
 
 }

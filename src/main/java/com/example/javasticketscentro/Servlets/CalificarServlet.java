@@ -20,46 +20,64 @@ public class CalificarServlet extends HttpServlet {
         System.out.println(action);
         CalificacionDao calificacionDao = new CalificacionDao();
         String idPeliculaStr =  request.getParameter("idPelicula")==null?"2":request.getParameter("idPelicula");
-        int idPelicula;
-     switch (action){
-            case "listarP":
-                try{
-                    idPelicula = Integer.parseInt(idPeliculaStr);
-                    BPelicula pelicula = calificacionDao.listarPelicula(idPelicula);
-                    if(pelicula != null){
-                        request.setAttribute("Pelicula", pelicula);
-                        RequestDispatcher listarP = request.getRequestDispatcher("Cliente/CalificarPelicula.jsp");
-                        listarP.forward(request, response);
-                    }
-                }catch (NumberFormatException e){
-                    System.out.println("Error al convertir tipo de dato");
-                }
-                response.sendRedirect(request.getContextPath()+"/calificar");
-                break;
-            case "listarD":
-                idPelicula = Integer.parseInt(idPeliculaStr);
-                ArrayList<BCelebridad> listaDirector = calificacionDao.listarDirectorPorID(idPelicula);
-                if(listaDirector.get(0) != null){
-                    request.setAttribute("listaDirectores", listaDirector);
-                    RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
-                    listarD.forward(request, response);
-                }else{
-                    response.sendRedirect(request.getContextPath()+"/calificar");
-                }
-            case "listarA":
-                idPelicula = Integer.parseInt(idPeliculaStr);
-                ArrayList<BCelebridad> listaActor = calificacionDao.listarActorPorID(idPelicula);
-                if(listaActor.get(0) != null){
-                    request.setAttribute("listaActores", listaActor);
-                    RequestDispatcher listarA = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
-                    listarA.forward(request, response);
-                }else{
-                    response.sendRedirect(request.getContextPath()+"/calificar");
-                }
+        String idCelebridadStr =  request.getParameter("idCelebridad")==null?"2":request.getParameter("idCelebridad");
+        String idPersonaStr =  request.getParameter("idPersona")==null?"2":request.getParameter("idPersona");
+        System.out.println(action);
+        int idPelicula, idCelebridad, idPersona;
+     switch (action) {
+         case "listarP":
+             try {
+                 idPersona = Integer.parseInt(idPersonaStr);
+                 idPelicula = Integer.parseInt(idPeliculaStr);
+                 BPelicula pelicula = calificacionDao.listarPelicula(idPelicula);
+                 if (pelicula != null) {
+                     request.setAttribute("Persona", idPersona);
+                     request.setAttribute("Pelicula", pelicula);
+                     request.setAttribute("puntaje", calificacionDao.puntajePeliculaPorId(idPersona, idPelicula));
+                     RequestDispatcher listarP = request.getRequestDispatcher("Cliente/CalificarPelicula.jsp");
+                     listarP.forward(request, response);
+                 }
+             } catch (NumberFormatException e) {
+                 System.out.println("Error al convertir tipo de dato");
+             }
+             response.sendRedirect(request.getContextPath() + "/calificar");
+             break;
+         case "listarD":
+             try {
+                 idPelicula = Integer.parseInt(idPeliculaStr);
+                 ArrayList<BCelebridad> listaDirector = calificacionDao.listarDirectorPorID(idPelicula);
+                 if (listaDirector.get(0) != null) {
+                     request.setAttribute("listaDirectores", listaDirector);
+                     RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
+                     listarD.forward(request, response);
+                 }
+             } catch (NumberFormatException e) {
+                 System.out.println("Error al convertir tipo de dato");
+             }
+             response.sendRedirect(request.getContextPath() + "/calificar?action=listarD");
+             break;
+         case "listarA":
+             try {
+                 idPersona = Integer.parseInt(idPersonaStr);
+                 idPelicula = Integer.parseInt(idPeliculaStr);
+                 idCelebridad = Integer.parseInt(idCelebridadStr);
+                 ArrayList<BCelebridad> listaActor = calificacionDao.listarActorPorID(idPelicula);
+                 if (listaActor.get(0) != null) {
+                     request.setAttribute("Persona",idPersona);
+                     request.setAttribute("idPelicula",idPelicula);
+                     request.setAttribute("puntaje", calificacionDao.puntajeCelebridadPorId(idPersona, idCelebridad));
+                     request.setAttribute("listaActores", listaActor);
+                     RequestDispatcher listarA = request.getRequestDispatcher("Cliente/CalificarActor.jsp");
+                     listarA.forward(request, response);
+                 }
+             } catch (NumberFormatException e) {
+                 System.out.println("Error al convertir tipo de dato");
+             }
+             response.sendRedirect(request.getContextPath() + "/calificar?action=listarA");
+             break;
 
-                break;
 
-        }
+     }
 
     }
 
@@ -74,13 +92,17 @@ public class CalificarServlet extends HttpServlet {
                 String idPersonaS = request.getParameter("idPersona");
                 String idPeliculaS= request.getParameter("idPelicula");
                 String puntajePelicula = request.getParameter("puntaje");
-                int puntaje = Integer.parseInt(puntajePelicula);
-                System.out.println(puntaje);
-                int idPelicula = Integer.parseInt(idPeliculaS);
-                int idPersona = Integer.parseInt(idPersonaS);
+                try{
+                    int puntaje = Integer.parseInt(puntajePelicula);
+                    System.out.println(puntaje);
+                    int idPelicula = Integer.parseInt(idPeliculaS);
+                    int idPersona = Integer.parseInt(idPersonaS);
+                    calificacionDao.anadirPuntajePorPelicula(idPersona, idPelicula, puntaje);
+                    response.sendRedirect(request.getContextPath()+"/calificar");
+                }catch (NumberFormatException e){
+                    System.out.println("Erro al convertir");
+                }
 
-                calificacionDao.anadirPuntajePorPelicula(idPersona, idPelicula, puntaje);
-                response.sendRedirect(request.getContextPath()+"/calificar");
             }
             case "calificarC" -> {
                 String idPersonaS = request.getParameter("idPersona");

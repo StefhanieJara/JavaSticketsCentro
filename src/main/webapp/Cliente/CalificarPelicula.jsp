@@ -7,7 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="Pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
-<%int contador = 0;%>
+<jsp:useBean id="puntaje" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="Persona" scope="request" type="java.lang.Integer"/>
+
+<%int contador;%>
 <html lang="en">
 <head>
     <head>
@@ -86,17 +89,20 @@
                                     </div>
 
                                     <div class="star_rating">
-                                        <button class="star" type="button" name="star5" id="star5">&#9734;</button>
-                                        <button class="star" type="button" name="star4" id="star4">&#9734;</button>
-                                        <button class="star" type="button" name="star3" id="star3">&#9734;</button>
-                                        <button class="star" type="button" name="star2" id="star2">&#9734;</button>
+                                        <%for (contador=0; contador<puntaje; contador++){%>
+                                        <button class="star" type="button" name="star5" id="star5">&#9733;</button>
+                                        <%}%>
+
+                                        <%for (contador=0; contador<5-puntaje; contador++){%>
                                         <button class="star" type="button" name="star1" id="star1">&#9734;</button>
-                                        <p class="current_rating">0 de 5</p>
+                                        <%}%>
+
+                                        <p class="current_rating"><%=puntaje%> de 5</p>
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
                                 <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=Pelicula.getIdPelicula()%>"/>
-                                    <input type="hidden"  name="idPersona" id="idPersona" value="8"/>
-                                    <input class="btn btn-tele" type="submit" value="Calificar"/>
+                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=Persona%>"/>
+                                    <input  class="btn btn-tele" type="submit" value="Calificar" />
                                 </div>
                             </div>
                         </form>
@@ -105,8 +111,9 @@
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificar?action=listarA" type="button" class="btn btn-success">Calificar Actor</a>
+                            <a href="<%=request.getContextPath()%>/calificar?action=listarA&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Actor</a>
                         </div>
+
                     </div>
                 </div>
             </div>
