@@ -34,10 +34,12 @@ public class UsuariodescripcionServlet extends HttpServlet {
             default:
                 try{
                     int idClient= Integer.parseInt(idCliente);
-                    request.setAttribute("pelicula", peliculaDao.devolverPelicula(idPeli));
+                    BPelicula pelicula = peliculaDao.devolverPelicula(idPeli);
+                    request.setAttribute("pelicula", pelicula);
                     request.setAttribute("funciones", peliculaDao.detectarFunciones(idPeli));
                     request.setAttribute("idClient", idClient);
                     request.setAttribute("funcionElegida", funcionElegida);
+                    System.out.println("id= "+pelicula.getIdPelicula());
                     requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
                     requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){

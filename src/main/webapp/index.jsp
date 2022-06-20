@@ -121,7 +121,7 @@
                             </a>
                         </div>
                         <div class="p-2">
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?idCliente=12&action=listar" class="text-dark text-decoration-none">
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Historial de tickets</span>
                             </a>
@@ -165,46 +165,23 @@
 
     </div>
     <!-- -->
-
-    <div class="container px-6 py-2">
-        <div class="row">
-            <h3 class="dist-name title-peliculas">Películas en cartelera</h3>
-            <div class="row container-pelicula">
-                <% for (BPelicula pelicula : Listapeliculas) { %>
-
-                <div class="col-pelicula1">
-                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=pelicula.getIdPelicula()%>&idCliente=17"><img src="<%=pelicula.getFoto()%>" class="imagenPeli" height="100%"></a>
-                    <div class="textoPeliculas"><%=pelicula.getNombre()%></div>
-                </div>
+    <% for (int j=0; j<=Math.ceil(Listapeliculas.size()/4);j++) {%>
+        <div class="container px-6 py-2">
+            <div class="row">
+                <% if (j==0) {%>
+                <h3 class="dist-name title-peliculas">Películas en cartelera</h3>
                 <%}%>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container px-6 py-2">
-        <div class="row">
-            <h3 class="dist-name title-peliculas">Otras Películas</h3>
-            <div class="row container-pelicula">
-                <div class="col-pelicula1">
-                    <a href=""><img src="img/linaLima.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Lina Lima</div>
-                </div>
-                <div class="col-pelicula2">
-                    <a href=""><img src="img/s7.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Loki</div>
-                </div>
-                <div class="col-pelicula3">
-                    <a href=""><img src="img/posterthor.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Thor: Love and Thunder</div>
-                </div>
-                <div class="col-pelicula4">
-                    <a href=""><img src="img/posteravatar.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Avatar</div>
+                <div class="row container-pelicula">
+                    <% for (int i=j*4; i<j+4; i++) { %>
+                    <div class="col-pelicula1">
+                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=Listapeliculas.get(i).getIdPelicula()%>&idCliente=5"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
+                        <div class="textoPeliculas"><%=Listapeliculas.get(i).getNombre()%></div>
+                    </div>
+                    <%}%>
                 </div>
             </div>
         </div>
-    </div>
+    <%}%>
 
     <div class="container">
         <div class="row">

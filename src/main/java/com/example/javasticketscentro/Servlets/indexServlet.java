@@ -15,7 +15,6 @@ public class indexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IndexDao indexDao = new IndexDao();
         ArrayList<BPelicula> listapeliculas = indexDao.listaPeliculas();
-        System.out.println(listapeliculas.get(1).getIdPelicula());
         request.setAttribute("Listapeliculas", listapeliculas);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request,response);
