@@ -32,6 +32,11 @@ public class Calificar1Servlet extends HttpServlet {
                     request.setAttribute("idPersona",idPersona);
                     request.setAttribute("idPelicula",idPelicula);
                     request.setAttribute("listaActores", listaActor);
+                    ArrayList<Integer> listaPuntajes = new ArrayList<>();
+                    for(BCelebridad celebridad : listaActor){
+                        listaPuntajes.add(calificacionDao.puntajeCelebridadPorId(idPersona,celebridad.getIdCelebridad()));
+                    }
+                    request.setAttribute("puntajes", listaPuntajes);
                     RequestDispatcher view = request.getRequestDispatcher("Cliente/CalificarActor.jsp");
                     view.forward(request, response);
                 } catch (NumberFormatException e) {
@@ -47,25 +52,26 @@ public class Calificar1Servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action") == null ? "listarA" : request.getParameter("action");
+        String action = request.getParameter("action");
         CalificacionDao calificacionDao = new CalificacionDao();
+
+        String idPersonaS = request.getParameter("idPersona");
+        String idCelebridadS = request.getParameter("idCelebridad");
+        String idPeliculaS = request.getParameter("idPelicula");
+        String puntajePelicula = request.getParameter("puntaje");
 
         switch (action){
             case "calificarA" -> {
                 try{
-                    String idPersonaS = request.getParameter("idPersona");
-                    String idCelebridadS = request.getParameter("idCelebridad");
-                    String idPeliculaS = request.getParameter("idPelicula");
-                    String puntajePelicula = request.getParameter("puntaje");
                     int puntaje = Integer.parseInt(puntajePelicula);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
                     int idPersona = Integer.parseInt(idPersonaS);
                     calificacionDao.anadirPuntajePorCelebridad(idPersona, idCelebridad, puntaje);
-                    response.sendRedirect(request.getContextPath()+"/calificarActor");
                 }catch (NumberFormatException e){
+                    System.out.println("Puntaje: "+puntajePelicula+" CelebridadID: "+idCelebridadS+" IDPERSONA: "+idPersonaS);
                     System.out.println("Error al convertir");
                 }
-
+                response.sendRedirect(request.getContextPath()+"/calificarActor?action=listarA&idPersona="+idPersonaS+"&idPelicula="+idPeliculaS);
             }
         }
 

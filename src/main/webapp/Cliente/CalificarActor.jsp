@@ -9,8 +9,7 @@
 <jsp:useBean id="listaActores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
-<%int i = 1;
-int contador;%>
+<jsp:useBean id="puntajes" scope="request" type="java.util.ArrayList<java.lang.Integer>"/>
 
 <html lang="en">
 <head>
@@ -75,6 +74,7 @@ int contador;%>
                         <h4 class="my-2">Calificar Actores</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
+                        <%int i=0, contador;%>
                         <%for (BCelebridad actor: listaActores){%>
                         <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=calificarA">
                             <div class="row" >
@@ -82,39 +82,35 @@ int contador;%>
                                     <div class="form-outline mb-4">
                                         <p style="font-size:25px; color: red;"><em>Actor</em></p>
                                     </div>
-
-
                                     <div class="form-outline mb-4">
                                         <p style="font-size:30px; color: black;"><em><%=actor.getNombre()%> <%=actor.getApellido()%></em></p>
                                         <img src="<%=actor.getFoto()%>" style="max-width:200px; max-height: 400px;">
                                     </div>
                                     <div class="star_rating">
-                                        <%for (contador=0; contador<actor.getPuntaje(); contador++){%>
+                                        <%for (contador=0; contador<puntajes.get(i); contador++){%>
                                         <button class="star" type="button" name="star5" id="star5">&#9733;</button>
                                         <%}%>
-
-                                        <%for (contador=0; contador<5-actor.getPuntaje(); contador++){%>
+                                        <%for (contador=0; contador<5-puntajes.get(i); contador++){%>
                                         <button class="star" type="button" name="star1" id="star1">&#9734;</button>
                                         <%}%>
-                                        <p class="current_rating"><%=actor.getPuntaje()%> de 5</p>
+                                        <p class="current_rating"><%=puntajes.get(i)%> de 5</p>
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
                                     <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=actor.getIdCelebridad()%>"/>
                                     <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
                                     <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                     <div class="form-outline mb-4">
-                                        <input
-                                                class="btn btn-tele"
+                                        <input class="btn btn-tele"
                                                 type="submit"
-                                                value="Calificar"
-                                        />
+                                                value="Calificar"/>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <%}%>
+                        <% i++;
+                        }%>
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
                             <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Director</a>
@@ -129,24 +125,23 @@ int contador;%>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    const allStars = document.querySelectorAll('.star');
-    let current_rating = document.querySelector('.current_rating');
-    allStars.forEach((star, i) =>{
-        star.onclick = function(){
-            console.log(i);
-            let current_start_level = i+1;
-            current_rating.innerHTML = current_start_level +  ' de 5';
-            document.getElementById("puntaje").value = current_start_level;
-
-            allStars.forEach((star, j)=>{
-                if(current_start_level >= j+1){
-                    star.innerHTML = '&#9733';
-                }  else{
-                    star.innerHTML = '&#9734';
-                }
-            })
-        }
-    })
-</script>
+        const allStars = document.querySelectorAll('.star');
+        let current_rating = document.querySelector('.current_rating');
+        allStars.forEach((star, i) =>{
+            star.onclick = function(){
+                console.log(i);
+                let current_start_level = i+1;
+                current_rating.innerHTML = current_start_level +  ' de 5';
+                document.getElementById("puntaje").value = current_start_level;
+                allStars.forEach((star, j)=>{
+                    if(current_start_level >= j+1){
+                        star.innerHTML = '&#9733';
+                    }else{
+                        star.innerHTML = '&#9734';
+                    }
+                })
+            }
+        })
+    </script>
 </body>
 </html>

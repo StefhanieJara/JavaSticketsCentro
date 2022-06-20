@@ -23,7 +23,6 @@ public class Calificar2Servlet extends HttpServlet {
         int idPelicula, idCelebridad, idPersona;
         switch (action) {
             case "listarD":
-
                 try {
                     idPersona = Integer.parseInt(idPersonaStr);
                     idPelicula = Integer.parseInt(idPeliculaStr);
@@ -48,23 +47,21 @@ public class Calificar2Servlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listarD" : request.getParameter("action");
         CalificacionDao calificacionDao = new CalificacionDao();
-
+        String idPersonaS = request.getParameter("idPersona");
+        String idCelebridadS = request.getParameter("idCelebridad");
+        String idPeliculaS = request.getParameter("idPelicula");
+        String puntajePelicula = request.getParameter("puntaje");
         switch (action){
             case "calificarD" -> {
                 try{
-                    String idPersonaS = request.getParameter("idPersona");
-                    String idCelebridadS = request.getParameter("idCelebridad");
-                    String idPeliculaS = request.getParameter("idPelicula");
-                    String puntajePelicula = request.getParameter("puntaje");
                     int puntaje = Integer.parseInt(puntajePelicula);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
                     int idPersona = Integer.parseInt(idPersonaS);
                     calificacionDao.anadirPuntajePorCelebridad(idPersona, idCelebridad, puntaje);
-                    response.sendRedirect(request.getContextPath()+"/calificarDirector");
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir");
                 }
-
+                response.sendRedirect(request.getContextPath()+"/calificarDirector?action=listarD&idPersona="+idPersonaS+"&idPelicula="+idPeliculaS);
             }
         }
     }

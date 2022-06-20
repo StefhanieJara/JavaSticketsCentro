@@ -113,7 +113,7 @@
                         </form>
                         <%}%>
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
 
                     </div>
