@@ -1,10 +1,19 @@
 package com.example.javasticketscentro.Beans;
 
 public class Bticket {
-    private BCompra bCompra; //No lo uso, pero lo pondré por siacaso
+    private BCompra bCompra;
     private BFuncion bFuncion;
     private String qr;
     private int cantButaca;
+    private boolean descuento;
+
+    public boolean isDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(boolean descuento) {
+        this.descuento = descuento;
+    }
 
     public BCompra getbCompra() {
         return bCompra;
