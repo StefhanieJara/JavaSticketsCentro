@@ -14,7 +14,7 @@ public class PeliculaDao extends BaseDao {
 
         try{
             int id_int=Integer.parseInt(id);
-            String sql="select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p inner join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) inner join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
+            String sql="select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p left join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) left join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
             try(Connection conn= this.getConnection();
                 PreparedStatement pstmt= conn.prepareStatement(sql)){
                 pstmt.setInt(1,id_int);
@@ -36,7 +36,10 @@ public class PeliculaDao extends BaseDao {
                         bCelebridad.setNombre(resultSet.getString(9));
                         bCelebridad.setApellido(resultSet.getString(10));
                         bCelebridad.setRol(resultSet.getString(11));
-                        if(bCelebridad.getRol().equals("director")){
+                        if(bCelebridad.getRol() == null || bCelebridad.getRol().equals("director")){
+                            //Por si no hay ninguna celebridad
+                            bCelebridad.setNombre("");
+                            bCelebridad.setApellido("");
                             pelicula.getDirectores().add(bCelebridad);
                         }else{
                             pelicula.getActores().add(bCelebridad);

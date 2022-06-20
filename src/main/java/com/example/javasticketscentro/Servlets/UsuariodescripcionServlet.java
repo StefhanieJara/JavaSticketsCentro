@@ -19,8 +19,6 @@ public class UsuariodescripcionServlet extends HttpServlet {
         PeliculaDao peliculaDao= new PeliculaDao();
         String idPeli = request.getParameter("id") == null ? "determinado" : request.getParameter("id");
         String idCliente = request.getParameter("idCliente") == null ? "12" : request.getParameter("idCliente");
-        System.out.println(idPeli);
-        System.out.println(idCliente);
         //Buscamos una funcion que se halla comprado anteriormente o este en el carrito (pagado==1 or carrito==1)
         BFuncion funcionElegida = peliculaDao.detectarFuncionEscogida(idPeli,idCliente, 1, 1);
         if(funcionElegida==null){

@@ -173,7 +173,7 @@
                 <% for (BPelicula pelicula : Listapeliculas) { %>
 
                 <div class="col-pelicula1">
-                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=pelicula.getIdPelicula()%>&idCliente=5"><img src="<%=pelicula.getFoto()%>" class="imagenPeli" height="100%"></a>
+                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=pelicula.getIdPelicula()%>&idCliente=17"><img src="<%=pelicula.getFoto()%>" class="imagenPeli" height="100%"></a>
                     <div class="textoPeliculas"><%=pelicula.getNombre()%></div>
                 </div>
                 <%}%>
