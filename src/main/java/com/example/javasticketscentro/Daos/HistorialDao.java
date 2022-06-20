@@ -7,21 +7,12 @@ import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class HistorialDao{
+public class HistorialDao extends BaseDao{
 
-    public ArrayList<Bhistorial> listaTickets() {
+    public ArrayList<Bhistorial> listaTickets(int idCliente) {
 
         ArrayList<Bhistorial> tickets = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', " +
                 " subquery.Codigo as 'Codigo', " +
@@ -43,18 +34,19 @@ public class HistorialDao{
                 "    inner join funcion_has_sala fs on (f.idFuncion = fs.Funcion_idFuncion) " +
                 "    inner join sala sa on (fs.Sala_idSala = sa.idSala) " +
                 "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
-                "WHERE p.idPersona = 14) AS subquery;";
+                "WHERE p.idPersona = ?) AS subquery;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
-
-            while (rs.next()) {
-                Bhistorial bhistorial = new Bhistorial();
-                bhistorial.setFecha_compra(rs.getString(1));
-                bhistorial.setCodigo(rs.getString(2));
-                bhistorial.setTotal(rs.getDouble(3));
-                tickets.add(bhistorial);
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setInt(1,idCliente);
+            try(ResultSet rs= pstmt.executeQuery()){
+                while (rs.next()) {
+                    Bhistorial bhistorial = new Bhistorial();
+                    bhistorial.setFecha_compra(rs.getString(1));
+                    bhistorial.setCodigo(rs.getString(2));
+                    bhistorial.setTotal(rs.getDouble(3));
+                    tickets.add(bhistorial);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -63,19 +55,7 @@ public class HistorialDao{
     }
 
     public ArrayList<Bhistorial_detalle> buscarFuncionesDeTicket(String codigo) {
-
-
         ArrayList<Bhistorial_detalle> funcionesTicket = new ArrayList<>();
-
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "SELECT t.cantidadButaca as Unidades, " +
                 "                    pel.nombre as Pelicula, " +
@@ -93,7 +73,7 @@ public class HistorialDao{
                 "                    inner join sede se on (sa.Sede_idSede = se.idSede) " +
                 "                WHERE c.idCompra = ?;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
             preparedStatement.setString(1,codigo);
@@ -106,6 +86,7 @@ public class HistorialDao{
                     bhistorial_detalle.setSede(rs.getString(3));
                     bhistorial_detalle.setFecha(rs.getString(4));
                     bhistorial_detalle.setPrecio(rs.getDouble(5));
+                    bhistorial_detalle.setIdPelicula(rs.getInt(6));
                     funcionesTicket.add(bhistorial_detalle);
                 }
             }
@@ -119,19 +100,9 @@ public class HistorialDao{
 
     public void borrar(String ticketId) {
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "delete from ticket where Compra_idCompra = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
 
             pstmt.setString(1, ticketId);
@@ -143,7 +114,7 @@ public class HistorialDao{
 
         String sql2 = "delete from compra where idCompra = ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql2);) {
 
             pstmt.setString(1, ticketId);

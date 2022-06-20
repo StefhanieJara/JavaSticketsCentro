@@ -108,7 +108,7 @@
                         </form>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=Persona%>" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
                             <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Actor</a>

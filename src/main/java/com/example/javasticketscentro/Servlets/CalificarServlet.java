@@ -17,9 +17,9 @@ public class CalificarServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarP" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula")==null?"6":request.getParameter("idPelicula");
+        String idPeliculaStr =  request.getParameter("idPelicula");
 
-        String idPersonaStr =  request.getParameter("idPersona")==null?"12":request.getParameter("idPersona");
+        String idPersonaStr =  request.getParameter("idPersona");
 
         int idPelicula, idCelebridad, idPersona;
      switch (action) {
@@ -34,13 +34,14 @@ public class CalificarServlet extends HttpServlet {
                      request.setAttribute("puntaje", calificacionDao.puntajePeliculaPorId(idPersona, idPelicula));
                      RequestDispatcher listarP = request.getRequestDispatcher("Cliente/CalificarPelicula.jsp");
                      listarP.forward(request, response);
+                 }else{
+                     response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
                  }
              } catch (NumberFormatException e) {
                  System.out.println("Error al convertir tipo de dato");
+                 response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
              }
-             response.sendRedirect(request.getContextPath() + "/calificarPelicula");
              break;
-
      }
 
     }
@@ -62,11 +63,10 @@ public class CalificarServlet extends HttpServlet {
                     int idPelicula = Integer.parseInt(idPeliculaS);
                     int idPersona = Integer.parseInt(idPersonaS);
                     calificacionDao.anadirPuntajePorPelicula(idPersona, idPelicula, puntaje);
-                    response.sendRedirect(request.getContextPath()+"/calificarPelicula");
-                }catch (NumberFormatException e){
+                    }catch (NumberFormatException e){
                     System.out.println("Error al convertir");
-                }
-
+                    }
+                response.sendRedirect(request.getContextPath()+"/calificarPelicula?action=listarP&idPersona="+idPersonaS+"&idPelicula="+idPeliculaS);
             }
 
 

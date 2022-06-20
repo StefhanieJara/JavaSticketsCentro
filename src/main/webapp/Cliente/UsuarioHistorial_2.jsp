@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
 <jsp:useBean id="listaHistoriales" scope="request" type="java.util.ArrayList<java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>>" />
-
+<jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -221,7 +221,7 @@
                                                     <td colspan="0.7"><%=funcion.getPrecio()%></td>
                                                     <td><span class="badge bg-success">Vigente</span></td>
                                                     <td colspan="0.7">S/99.00</td>
-                                                    <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=12&idPelicula=<%=funcion.getPrecio()%>" type="button" class="btn btn-success">Calificar Pelicula</a></td>
+                                                    <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Pelicula</a></td>
                                                 </tr>
                                             <%}%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">

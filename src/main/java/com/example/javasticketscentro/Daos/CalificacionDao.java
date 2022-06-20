@@ -63,18 +63,19 @@ public class CalificacionDao extends BaseDao {
     }
 
     public ArrayList<BCelebridad> listarActorPorID(int idPersona, int idPelicula) {
-        ArrayList<BCelebridad> celebridades = new ArrayList<>();
+        ArrayList<BCelebridad> celebridades = null;
         String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad, cc.puntaje, cc.Persona_idPersona from pelicula pe \n" +
-                "                inner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
-                "                inner join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
-                "                inner join calificacion_celebridad cc on cc.Celebridad_idCelebridad = ce.idCelebridad\n" +
+                "                left join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
+                "                left join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
+                "                left join calificacion_celebridad cc on cc.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "                where pe.idPelicula = ? and cc.Persona_idPersona = ? and ce.rol = 'actor' ";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idPelicula);
             pstmt.setInt(2, idPersona);
             try (ResultSet resultSet = pstmt.executeQuery()) {
-                while (resultSet.next()) {
+                if(resultSet.next()){
+                    celebridades= new ArrayList<>();
                     BCelebridad celebridad = new BCelebridad();
                     celebridad.setNombre(resultSet.getString(1));
                     celebridad.setApellido(resultSet.getString(2));
@@ -83,6 +84,16 @@ public class CalificacionDao extends BaseDao {
                     celebridad.setPuntaje(resultSet.getInt(5));
                     celebridad.setIdPersona(resultSet.getInt(6));
                     celebridades.add(celebridad);
+                    while (resultSet.next()) {
+                        celebridad = new BCelebridad();
+                        celebridad.setNombre(resultSet.getString(1));
+                        celebridad.setApellido(resultSet.getString(2));
+                        celebridad.setFoto(resultSet.getString(3));
+                        celebridad.setIdCelebridad(resultSet.getInt(4));
+                        celebridad.setPuntaje(resultSet.getInt(5));
+                        celebridad.setIdPersona(resultSet.getInt(6));
+                        celebridades.add(celebridad);
+                    }
                 }
             }
 
