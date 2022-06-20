@@ -38,8 +38,10 @@ public class PeliculaDao extends BaseDao {
                         bCelebridad.setRol(resultSet.getString(11));
                         if(bCelebridad.getRol() == null || bCelebridad.getRol().equals("director")){
                             //Por si no hay ninguna celebridad
-                            bCelebridad.setNombre("");
-                            bCelebridad.setApellido("");
+                            if(bCelebridad.getRol()==null){
+                                bCelebridad.setNombre("");
+                                bCelebridad.setApellido("");
+                            }
                             pelicula.getDirectores().add(bCelebridad);
                         }else{
                             pelicula.getActores().add(bCelebridad);
