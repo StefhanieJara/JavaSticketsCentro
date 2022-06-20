@@ -6,9 +6,18 @@ public class BCelebridad {
     private String apellido;
     private String rol;
     private String foto;
+    private BPelicula bPelicula;
     private int idPersona;
     private int puntaje;
     private double calificacion;
+
+    public BPelicula getbPelicula() {
+        return bPelicula;
+    }
+
+    public void setbPelicula(BPelicula bPelicula) {
+        this.bPelicula = bPelicula;
+    }
 
     public double getCalificacion() {
         return calificacion;

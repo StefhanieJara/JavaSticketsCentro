@@ -7,10 +7,19 @@ public class BFuncion {
     private String fecha;
     private BPelicula bPelicula;
     private BSala bSala;
+    private BSede bSede;
     private String horaInicio;
     private float Asistencia;
     private int cancelado;
     private int carrito;
+
+    public BSede getbSede() {
+        return bSede;
+    }
+
+    public void setbSede(BSede bSede) {
+        this.bSede = bSede;
+    }
 
     public int getCancelado() {
         return cancelado;
