@@ -188,7 +188,7 @@
                         <br>
                         <br>
                         <tr>
-                            <img src="img/s2.jpg"
+                            <img src="<%=pelicula.getFoto()%>"
                                  style="float:left; padding-right: 10px;" width="400" height="620" alt="Foto Dr Strange" >
                         </tr>
                         <br>

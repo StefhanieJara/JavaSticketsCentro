@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %><%--
   Created by IntelliJ IDEA.
   User: CARLOS
   Date: 5/06/2022
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="Listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -167,27 +168,19 @@
 
     <div class="container px-6 py-2">
         <div class="row">
-            <h3 class="dist-name title-peliculas">Estrenos</h3>
+            <h3 class="dist-name title-peliculas">Películas en cartelera</h3>
             <div class="row container-pelicula">
+                <% for (BPelicula pelicula : Listapeliculas) { %>
+
                 <div class="col-pelicula1">
-                    <a href=""><img src="img/s1.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Thor Ragnarok</div>
+                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=pelicula.getIdPelicula()%>&idCliente=5"><img src="<%=pelicula.getFoto()%>" class="imagenPeli" height="100%"></a>
+                    <div class="textoPeliculas"><%=pelicula.getNombre()%></div>
                 </div>
-                <div class="col-pelicula2">
-                    <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=8"><img src="img/s2.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Doctor Strange</div>
-                </div>
-                <div class="col-pelicula3">
-                    <a href=""><img src="img/s5.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Spiderman: No way Home</div>
-                </div>
-                <div class="col-pelicula4">
-                    <a href=""><img src="img/s8.jpg" class="imagenPeli" width="100%"></a>
-                    <div class="textoPeliculas">Eternals</div>
-                </div>
+                <%}%>
             </div>
         </div>
     </div>
+
 
     <div class="container px-6 py-2">
         <div class="row">
