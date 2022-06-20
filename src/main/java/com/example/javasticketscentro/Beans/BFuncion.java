@@ -6,6 +6,7 @@ public class BFuncion {
     private int stock;
     private String fecha;
     private String horaInicio;
+    private float asistencia;
 
     public int getId() {
         return id;
@@ -45,5 +46,13 @@ public class BFuncion {
 
     public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
+    }
+
+    public float getAsistencia() {
+        return asistencia;
+    }
+
+    public void setAsistencia(float asistencia) {
+        this.asistencia = asistencia;
     }
 }

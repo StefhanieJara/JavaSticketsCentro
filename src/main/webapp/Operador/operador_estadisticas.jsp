@@ -6,10 +6,20 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="asistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="busqueda" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="genero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="vista1" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="vista2" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="calificada" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="busqueda" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="actor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="director" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Centro Cultural PUCP - Estadisticas</title>
+    <title>PUCP - Estadisticas</title>
     <meta charset="utf-8">
     <link href="assets/css_2/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
     <link href="assets/css_2/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -58,7 +68,6 @@
 
 </head>
 <body>
-
 <nav
         class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
 >
@@ -69,7 +78,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexOperador.html"><img src="img/logo.png" /></a>
+                <a href="indexOperador.html"><img src="assets/img/logo.png" /></a>
             </a>
         </div>
 
@@ -133,7 +142,7 @@
                     <div class="my-2">
                         <h4 class="mb-3">Rex Campos Díaz</h4>
                         <img
-                                src="img/images.png"
+                                src="assets/img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -191,14 +200,14 @@
                         <li>Pelicula </li>
                         <li>Vistas</li>
                         <li>Calificaciones</li>
-                        <li>Actores y Directores </li>
+                        <li>Actores y Directores</li>
                     </ul>
                     <div class="resp-tabs-container">
                         <!--/tab_one-->
                         <div class="tab1">
                             <div class="pay_info">
                                 <div class="vertical_post check_box_agile">
-                                    <div class="container-fluid">
+                                    <div class="container-fluid" >
 
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
                                             Porcentaje de pelicula más asistida
@@ -222,22 +231,22 @@
                                                 <section class="container_grafico">
                                                     <div class= "grafico"></div>
                                                     <div class= "container_leyenda">
-															<span class = "leyenda_all">
-																<span class="color_facebook"></span>
-																<p class = "social">40% Lina de Lima</p>
-															</span>
+                                                      <span class = "leyenda_all">
+                                                        <span class="color_facebook"></span>
+                                                        <p class = "social">40% Lina de Lima</p>
+                                                      </span>
                                                         <span class="leyenda_all">
-																<span class="color_twitter"></span>
-																<p class = "social"> 30% Benedetta </p>
-															</span>
+                                                        <span class="color_twitter"></span>
+                                                        <p class = "social"> 30% Benedetta </p>
+                                                      </span>
                                                         <span class="leyenda_all">
-																<span class="color_instagram"></span>
-																<p class = "social"> 18% Largas distancias </p>
-															</span>
+                                                        <span class="color_instagram"></span>
+                                                        <p class = "social"> 18% Largas distancias </p>
+                                                      </span>
                                                         <span class="leyenda_all">
-																<span class="color_pinterest"></span>
-																<p class = "social"> 12% Matrix 4</p>
-															</span>
+                                                        <span class="color_pinterest"></span>
+                                                        <p class = "social"> 12% Matrix 4</p>
+                                                      </span>
 
 
                                                     </div>
@@ -303,7 +312,55 @@
                         <div class="tab2">
                             <div class="pay_info">
                                 <FONT FACE="impact" SIZE=6 COLOR="red">
-                                    Seleccione los parametros
+                                    Función más vista
+                                </FONT></br>
+                                <div class="row justify-content-start">
+                                    <div class="col-3">
+                                        <br>
+                                        <form >
+                                            <label> Fecha de inicio </label>
+                                            <input type="date">
+                                        </form><br>
+                                        <form>
+                                            <label> Fecha de fin </label>
+                                            <input type="date">
+                                        </form><br>
+                                        <form >
+                                            <label> Sede</label>
+                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option selected>Seleccione la sede</option>
+                                                <option value="1">Lima</option>
+                                                <option value="2">Comas</option>
+                                                <option value="3">San Juan de Lurigancho</option>
+                                            </select>
+                                        </form><br>
+                                        <form>
+                                            <label> Sala </label>
+                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option selected>Seleccione la sala</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </form><br>
+
+
+                                        <button type="button" class="btn btn-danger">Inspeccionar</button>
+
+                                    </div>
+                                    <div class="col-3">
+                                        <table >
+
+                                            <tr>
+                                                <td><h2>Cannes</h2></td><td><h2>2</h2></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <FONT FACE="impact" SIZE=6 COLOR="red">
+                                    Función menos vista
                                 </FONT></br>
                                 <div class="row justify-content-start">
                                     <div class="col-3">
@@ -340,40 +397,23 @@
 
                                     </div>
                                     <div class="col-5">
-                                        <section class="container_grafico" style="height: 350px">
-                                            <div class= "grafico" style="background-image: conic-gradient(var(--color_twitter) 60%,
-									var(--color_facebook) 60% 90%,
-									var(--color_pinterest) 90%);"></div>
-                                            <div class= "container_leyenda">
+                                        <table >
 
-															<span class = "leyenda_all">
-																<span class="color_twitter"></span>
-																<p class = "social">60% Lina de Lima</p>
-															</span>
+                                            <tr>
+                                                <td><h2>Cannes</h2></td><td><h2>2</h2></td>
+                                            </tr>
 
-                                                <span class="leyenda_all">
-																<span class="color_facebook"></span>
-																<p class = "social"> 30% Largas distancias </p>
-															</span>
-
-                                                <span class="leyenda_all">
-																<span class="color_pinterest"></span>
-																<p class = "social"> 10% Benedetta </p>
-															</span>
-
-
-
-                                            </div>
-                                        </section>
+                                        </table>
                                     </div>
-                                </div><br>
+                                </div>
+
                             </div>
                         </div>
                         <div class="tab3">
 
                             <div class="pay_info">
                                 <div class="row justify-content-around">
-                                    <div class="col-7">
+                                    <div class="col-sm-5">
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
                                             Pelicula mejor calificada
                                         </FONT></br>
@@ -393,12 +433,23 @@
 
                                             </div>
                                         </div><br><br>
-                                        <h4> Lina de Lima </h4>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
+                                        <table >
+
+                                            <tr>
+                                                <td><h2>Lina de Lima</h2></td><td>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                            </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                    <div class ="col-4">
+                                        <img src="img/s1.jpg" style="height: 400px; width: 250px">
                                     </div>
                                     <div class="col-2">
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
@@ -533,20 +584,20 @@
                                 </div>
 
                                 <div class="row justify-content-start">
-                                    <div class="col-2">
-                                        <h4>Sam Raimi</h4><br>
+                                    <div class="col-6">
+                                        <table >
 
-                                    </div>
-                                    <div class="col-4">
+                                            <tr>
+                                                <td><h2>Lina de Lima</h2></td><td>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                            </td>
+                                            </tr>
 
-                                        <div >
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <br>
-                                        </div> <br> <br>
+                                        </table>
                                     </div>
                                 </div>
                                 <br><br>

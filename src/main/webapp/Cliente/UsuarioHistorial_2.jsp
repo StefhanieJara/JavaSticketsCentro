@@ -3,10 +3,8 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
+<jsp:useBean id="listaHistoriales" scope="request" type="java.util.ArrayList<java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>>" />
 
-
-<% ArrayList<Bhistorial> listadetickets = (ArrayList<Bhistorial>) request.getAttribute("lista"); %>
-<% ArrayList<Bhistorial_detalle> listadeFunciones = (ArrayList<Bhistorial_detalle>) request.getAttribute("listaFunciones"); %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -187,24 +185,22 @@
                                         </thead>
                                         <!--Pedidos-->
                                         <%int i=1;%>
-
                                         <tbody class="text-center">
                                             <!--Pedido 1-->
-                                            <%for(Bhistorial ticket : listadetickets) {%>
+                                            <%for(Bhistorial ticket : lista) {%>
                                             <tr class="cell-1">
-                                                <td><i class="far fa-clock"></i><%=ticket.getFecha_compra()%></td>
-                                                <td><%=ticket.getCodigo()%></td>
-                                                <td><%=ticket.getTotal()%></td>
-                                                <td
+                                                <td name="FechaCompra" id="FechaCompra"><%=ticket.getFecha_compra()%></td>
+                                                <td name="CodigoTicket" id="CodigoTicket"><%=ticket.getCodigo()%></td>
+                                                <td name="CostoTotal" id="CostoTotal"><%=ticket.getTotal()%></td>
+                                                <td name="ObtenerFunciones" id="ObtenerFunciones"
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
                                                         data-bs-target="#dt-<%=i%>"
                                                 >
-                                                    <i href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=listarFunciones&id=<%=ticket.getCodigo()%>" class="fas fa-ellipsis-h text-black-50"></i>
+                                                    <a href="#" class="fas fa-ellipsis-h text-black-50"></a>
                                                 </td>
                                             </tr>
                                             <!--Detalles pedido 1 (dt-1)-->
-                                            <%System.out.println(listadeFunciones);%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
                                                 <td colspan="0.7">Unidades</td>
                                                 <td colspan="0.7">Película</td>
@@ -215,26 +211,21 @@
                                                 <td colspan="0.7">Subtotal</td>
                                             </tr>
 
-
-
+                                            <%for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
                                                 <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
-                                                    <td colspan="0.7">Uno</td>
-                                                    <td colspan="0.7">Uno</td>
-                                                    <td colspan="0.7">Uno</td>
-                                                    <td colspan="0.7">Uno</td>
-                                                    <td colspan="0.7">Uno</td>
+                                                    <td colspan="0.7"><%=funcion.getUnidades()%></td>
+                                                    <td colspan="0.7"><%=funcion.getPelicula()%></td>
+                                                    <td colspan="0.7"><%=funcion.getSede()%></td>
+                                                    <td colspan="0.7"><%=funcion.getFecha()%></td>
+                                                    <td colspan="0.7"><%=funcion.getPrecio()%></td>
                                                     <td><span class="badge bg-success">Vigente</span></td>
                                                     <td colspan="0.7">S/99.00</td>
                                                 </tr>
-                                                <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
-                                                    <td colspan="7">
-                                                        <button type="button" class="btn btn-danger">
-                                                        Cancelar pedido
-                                                    </button>
-                                                    </td>
-                                                </tr>
-
-
+                                            <%}%>
+                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
+                                                <td colspan="7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=borrar&id=<%=ticket.getCodigo() %>" class="btn btn-danger">Cancelar ticket</a>
+                                                </td>
+                                            </tr>
                                             <%i++;%>
                                             <%}%>
                                         </tbody>
