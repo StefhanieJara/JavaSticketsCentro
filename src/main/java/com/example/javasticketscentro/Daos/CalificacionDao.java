@@ -31,15 +31,17 @@ public class CalificacionDao extends BaseDao {
         return pelicula;
     }
 
-    public ArrayList<BCelebridad> listarDirectorPorID(int idPelicula) {
-        ArrayList<BCelebridad> celebridades = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad from pelicula pe \n" +
+    public ArrayList<BCelebridad> listarDirectorPorID(int idPersona, int idPelicula) {
+        ArrayList<BCelebridad> celebridades = new ArrayList<>();
+        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad,  cc.puntaje, cc.Persona_idPersona from pelicula pe \n" +
                 "\t\t\tinner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
                 "            inner join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
-                "where pe.idPelicula = ? and ce.rol = 'director' ";
+                "            inner join calificacion_celebridad cc on cc.Celebridad_idCelebridad = ce.idCelebridad\n" +
+                "where pe.idPelicula = ? and cc.Persona_idPersona = ? and ce.rol = 'director' ";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idPelicula);
+            pstmt.setInt(2, idPersona);
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     BCelebridad celebridad = new BCelebridad();
@@ -47,6 +49,8 @@ public class CalificacionDao extends BaseDao {
                     celebridad.setApellido(resultSet.getString(2));
                     celebridad.setFoto(resultSet.getString(3));
                     celebridad.setIdCelebridad(resultSet.getInt(4));
+                    celebridad.setPuntaje(resultSet.getInt(5));
+                    celebridad.setIdPersona(resultSet.getInt(6));
                     celebridades.add(celebridad);
                 }
             }
@@ -58,15 +62,17 @@ public class CalificacionDao extends BaseDao {
         return celebridades;
     }
 
-    public ArrayList<BCelebridad> listarActorPorID(int idPelicula) {
-        ArrayList<BCelebridad> celebridades = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad from pelicula pe \n" +
-                "\t\t\tinner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
-                "            inner join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
-                "where pe.idPelicula = ? and ce.rol = 'actor' ";
+    public ArrayList<BCelebridad> listarActorPorID(int idPersona, int idPelicula) {
+        ArrayList<BCelebridad> celebridades = new ArrayList<>();
+        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad, cc.puntaje, cc.Persona_idPersona from pelicula pe \n" +
+                "                inner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
+                "                inner join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
+                "                inner join calificacion_celebridad cc on cc.Celebridad_idCelebridad = ce.idCelebridad\n" +
+                "                where pe.idPelicula = ? and cc.Persona_idPersona = ? and ce.rol = 'actor' ";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idPelicula);
+            pstmt.setInt(2, idPersona);
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     BCelebridad celebridad = new BCelebridad();
@@ -74,6 +80,8 @@ public class CalificacionDao extends BaseDao {
                     celebridad.setApellido(resultSet.getString(2));
                     celebridad.setFoto(resultSet.getString(3));
                     celebridad.setIdCelebridad(resultSet.getInt(4));
+                    celebridad.setPuntaje(resultSet.getInt(5));
+                    celebridad.setIdPersona(resultSet.getInt(6));
                     celebridades.add(celebridad);
                 }
             }
@@ -84,6 +92,8 @@ public class CalificacionDao extends BaseDao {
         }
         return celebridades;
     }
+
+
 
     public boolean existe_puntaje(int idPersona, int idPelicula){
         String sql="select * from calificacion where Pelicula_idPelicula=? and Persona_idPersona = ?";
@@ -143,26 +153,65 @@ public class CalificacionDao extends BaseDao {
             }
         }
 
-}
-
-
-
-    public void anadirPuntajePorCelebridad(int idPersona,int idCelebridad,int puntaje){
-        String sql = "INSERT INTO calificacion_celebridad (Celebridad_idCelebridad, puntaje, Persona_idPersona)\n" +
-                "VALUES (?, ?, ?)";
-
+}   public boolean existe_puntaje1(int idPersona, int idCelebridad){
+        String sql = "select * from calificacion_celebridad where Persona_idPersona = ? and Celebridad_idCelebridad = ?";
+        boolean existe = false;
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, idCelebridad);
-            pstmt.setInt(2, puntaje);
-            pstmt.setInt(3, idPersona);
-            pstmt.executeUpdate();
+            pstmt.setInt(1, idPersona);
+            pstmt.setInt(2, idCelebridad);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                while (resultSet.next()) {
+                    existe=true;
+                }
+            }
         }
 
         catch( SQLException e){
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+
+        return existe;
+    }
+
+
+
+    public void anadirPuntajePorCelebridad(int idPersona,int idCelebridad,int puntaje){
+        if(existe_puntaje1(idPersona, idCelebridad)){
+            String sql = "UPDATE calificacion_celebridad\n" +
+                    "SET puntaje = ?\n" +
+                    "where Celebridad_idCelebridad = ? and Persona_idPersona = ?";
+            try (Connection conn = this.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, puntaje);
+                pstmt.setInt(2, idCelebridad);
+                pstmt.setInt(3, idPersona);
+                pstmt.executeUpdate();
+            }catch (SQLException e){
+                System.out.println("Hubo un error en la conexión!");
+                e.printStackTrace();
+            }
+        }else{
+            String sql = "INSERT INTO calificacion_celebridad (Celebridad_idCelebridad, puntaje, Persona_idPersona)\n" +
+                    "VALUES (?, ?, ?)";
+
+            try (Connection conn = this.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, idCelebridad);
+                pstmt.setInt(2, puntaje);
+                pstmt.setInt(3, idPersona);
+                pstmt.executeUpdate();
+            }
+
+            catch( SQLException e){
+                System.out.println("Hubo un error en la conexión!");
+                e.printStackTrace();
+            }
+        }
+
+
+
     }
 
     public int puntajePeliculaPorId(int idPersona, int idPelicula){
@@ -204,5 +253,8 @@ public class CalificacionDao extends BaseDao {
         }
         return puntaje;
     }
+
+
+
 
 }

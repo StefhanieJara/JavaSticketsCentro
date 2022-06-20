@@ -76,7 +76,7 @@
                     </div>
                     <div class="card-body p-4 p-md-5">
 
-                        <form method="post" action="<%=request.getContextPath()%>/calificar?action=calificarP" >
+                        <form method="post" action="<%=request.getContextPath()%>/calificarPelicula?action=calificarP" >
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
@@ -111,8 +111,9 @@
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificar?action=listarA&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Actor</a>
+                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Actor</a>
                         </div>
+
 
                     </div>
                 </div>

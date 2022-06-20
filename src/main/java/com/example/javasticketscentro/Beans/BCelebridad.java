@@ -6,6 +6,8 @@ public class BCelebridad {
     private String apellido;
     private String rol;
     private String foto;
+    private int idPersona;
+    private int puntaje;
     private double calificacion;
 
     public double getCalificacion() {
@@ -55,5 +57,21 @@ public class BCelebridad {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
     }
 }

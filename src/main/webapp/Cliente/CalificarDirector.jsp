@@ -7,7 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaDirectores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<%int i = 0;%>
+<jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
+<%int i = 1;
+    int contador;%>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -71,40 +74,48 @@
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <%for (BCelebridad director: listaDirectores){%>
-                        <form method="post" action="<%=request.getContextPath()%>/calificar?action=calificarC">
-                            <div class="form-outline mb-4">
-                                <p style="font-size:25px; color: red;"><em>Directores</em></p>
-                            </div>
+                        <form method="post" action="<%=request.getContextPath()%>/calificarDirector?action=calificarD">
+                            <div class="row" >
+                                <div class="col" align="center">
+                                    <div class="form-outline mb-4">
+                                        <p style="font-size:25px; color: red;"><em>Director</em></p>
+                                    </div>
 
 
-                            <div class="form-outline mb-4">
-                                <p style="font-size:30px; color: black;"><em><%=director.getNombre()%> <%=director.getApellido()%></em></p>
-                                <img src="<%=director.getFoto()%>" style="max-width:200px; max-height: 400px;">
-                            </div>
-                            <div class="star_rating">
-                                <button class="star" type="button" name="star5" id="star5">&#9734;</button>
-                                <button class="star" type="button" name="star4" id="star4">&#9734;</button>
-                                <button class="star" type="button" name="star3" id="star3">&#9734;</button>
-                                <button class="star" type="button" name="star2" id="star2">&#9734;</button>
-                                <button class="star" type="button" name="star1" id="star1">&#9734;</button>
-                                <p class="current_rating">0 de 5</p>
-                                <input type="hidden" name="puntaje" id="puntaje"/>
+                                    <div class="form-outline mb-4">
+                                        <p style="font-size:30px; color: black;"><em><%=director.getNombre()%> <%=director.getApellido()%></em></p>
+                                        <img src="<%=director.getFoto()%>" style="max-width:200px; max-height: 400px;">
+                                    </div>
+                                    <div class="star_rating">
+                                        <%for (contador=0; contador<director.getPuntaje(); contador++){%>
+                                        <button class="star" type="button" name="star5" id="star5">&#9733;</button>
+                                        <%}%>
 
-                            </div>
-                            <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=director.getIdCelebridad()%>"/>
-                            <input type="hidden"  name="idPersona" id="idPersona" value="8"/>
-                            <div class="form-outline mb-4">
-                                <input
-                                        class="btn btn-tele"
-                                        type="submit"
-                                        value="Calificar"
-                                />
+                                        <%for (contador=0; contador<5-director.getPuntaje(); contador++){%>
+                                        <button class="star" type="button" name="star1" id="star1">&#9734;</button>
+                                        <%}%>
+                                        <p class="current_rating"><%=director.getPuntaje()%> de 5</p>
+                                        <input type="hidden" name="puntaje" id="puntaje"/>
+
+                                    </div>
+                                    <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=director.getIdCelebridad()%>"/>
+                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
+                                    <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
+                                    <div class="form-outline mb-4">
+                                        <input
+                                                class="btn btn-tele"
+                                                type="submit"
+                                                value="Calificar"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <%}%>
                         <div>
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
+
                     </div>
                 </div>
             </div>

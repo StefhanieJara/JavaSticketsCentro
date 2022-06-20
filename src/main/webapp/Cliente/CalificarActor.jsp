@@ -7,7 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaActores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<%int i = 1;%>
+<jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
+<%int i = 1;
+int contador;%>
+
 <html lang="en">
 <head>
     <head>
@@ -68,15 +72,15 @@
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-2">Calificar Actores y Directores</h4>
+                        <h4 class="my-2">Calificar Actores</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <%for (BCelebridad actor: listaActores){%>
-                        <form method="post" action="<%=request.getContextPath()%>/calificar?action=calificarC">
+                        <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=calificarA">
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
-                                        <p style="font-size:25px; color: red;"><em>Actores</em></p>
+                                        <p style="font-size:25px; color: red;"><em>Actor</em></p>
                                     </div>
 
 
@@ -85,16 +89,19 @@
                                         <img src="<%=actor.getFoto()%>" style="max-width:200px; max-height: 400px;">
                                     </div>
                                     <div class="star_rating">
-                                        <button class="star" type="button" name="s5" id="s5">&#9734;</button>
-                                        <button class="star" type="button" name="s5" id="s4">&#9734;</button>
-                                        <button class="star" type="button" name="s3" id="s3">&#9734;</button>
-                                        <button class="star" type="button" name="s2" id="s2">&#9734;</button>
-                                        <button class="star" type="button" name="s1" id="s1">&#9734;</button>
-                                        <p class="current_rating">0 de 5</p>
+                                        <%for (contador=0; contador<actor.getPuntaje(); contador++){%>
+                                        <button class="star" type="button" name="star5" id="star5">&#9733;</button>
+                                        <%}%>
+
+                                        <%for (contador=0; contador<5-actor.getPuntaje(); contador++){%>
+                                        <button class="star" type="button" name="star1" id="star1">&#9734;</button>
+                                        <%}%>
+                                        <p class="current_rating"><%=actor.getPuntaje()%> de 5</p>
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
                                     <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=actor.getIdCelebridad()%>"/>
-                                    <input type="hidden"  name="idPersona" id="idPersona" value="8"/>
+                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
+                                    <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                     <div class="form-outline mb-4">
                                         <input
                                                 class="btn btn-tele"
@@ -109,6 +116,10 @@
                         <div>
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
+                        <div>
+                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Director</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
