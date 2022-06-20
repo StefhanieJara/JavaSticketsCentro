@@ -181,27 +181,33 @@
                         <thead>
                         <br>
                         <tr>
-                            <h3 class="text-dark"><%=pelicula.getNombre()%></h3>
+                            <center><h1 class="text-dark" ><%=pelicula.getNombre()%></h1><center>
                         </tr>
                         </thead>
+                        <br>
+                        <br>
+                        <br>
                         <tr>
                             <img src="img/s2.jpg"
                                  style="float:left; padding-right: 10px;" width="400" height="620" alt="Foto Dr Strange" >
                         </tr>
+                        <br>
+                        <br>
+                        <br>
                         <tr>
-                            <h5 class="text-dark">Descripcion:</h5>
+                            <b class="text-dark">Descripcion:</b>
                         </tr>
                         <tr>
-                            <h6 class="text-dark"><%=pelicula.getSinopsis()%></h6>
+                            <p class="text-dark"><%=pelicula.getSinopsis()%></p>
                         </tr>
                         <tr>
-                            <h5 class="text-dark">Genero:</h5>
+                            <b class="text-dark">Genero:</b>
                         </tr>
                         <tr>
-                            <h6 class="text-dark"><%=pelicula.getGenero()%></h6>
+                            <p class="text-dark"><%=pelicula.getGenero()%></p>
                         </tr>
                         <tr>
-                            <h5 class="text-dark">Duracion:</h5>
+                            <b class="text-dark">Duracion:</b>
                         </tr>
                         <tr>
                             <%String[] horario= pelicula.getDuracion().split(":");%>
@@ -209,7 +215,7 @@
                             <h6 class="text-dark"><%=hora%> h<%=" "+minuto%> m</h6>
                         </tr>
                         <tr>
-                            <h5 class="text-dark">Directores:</h5>
+                            <b class="text-dark">Directores:</b>
                         </tr>
                         <tr>
                             <h6 class="text-dark">
@@ -224,7 +230,7 @@
                             </h6>
                         </tr>
                         <tr>
-                            <h5 class="text-dark">Actores:</h5>
+                            <b class="text-dark">Actores:</b>
                         </tr>
                         <tr>
                             <ul>
@@ -289,11 +295,16 @@
                         </select>
                         <br>
                         <table>
+                        </br>
+                        <table ALIGN="right">
+
                             <tr>
                                 <td class="text-end">
                                     <button type="<%=funcionElegida.getId()==0 ? "submit" : "button"%>" class="btn btn-tele btn-md mr-1 mb-2">
                                         <i class="fas fa-shopping-cart"></i> Añadir al carrito
                                     </button>
+
+
                                 </td>
                             </tr>
                         </table>
@@ -301,6 +312,8 @@
                 </form>
                 </div>
             <h2 class="text-dark"> </h2>
+
+
         </div>
     </div>
     </div>
