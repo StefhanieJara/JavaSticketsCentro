@@ -323,18 +323,6 @@
                                 >
                                     Guardar
                                 </button>
-
-                                <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        style="
-                        background-color: red;
-                        border-color: red;
-                        color: white;
-                      "
-                                >
-                                    Modificar
-                                </button>
                             </div>
                         </div>
                     </div>
