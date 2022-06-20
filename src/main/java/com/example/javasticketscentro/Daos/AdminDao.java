@@ -112,7 +112,7 @@ public class AdminDao extends BaseDao{
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona from persona where rol = 'Operador'");) {
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona,direccionCliente from persona where rol = 'Operador'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
@@ -179,7 +179,7 @@ public class AdminDao extends BaseDao{
                                  String fecha_Nc, String email, String usuario, String contrasenia,
                                  String direccion, String rol){
         String sql="insert into persona (dni, nombre, apellido, foto, numeroCelular, fechaDeNacimiento, "+
-                "email, usuario, contrasenia, direccionCliente, rol, codigoPUCP) values (?,?,?,?,?,?,?,?,?,?,?,NULL)";
+                "email, usuario, contrasenia, direccionCliente, rol) values (?,?,?,?,?,?,?,?,?,?,?)";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
             pstmt.setInt(1,dni);
@@ -200,11 +200,11 @@ public class AdminDao extends BaseDao{
         }
     }
 
-    public void eliminarOperador(int id_Operador){
+    public void eliminarOperador(int id){
         String sql="delete from persona where idPersona=?";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setInt(1,id_Operador);
+            pstmt.setInt(1,id);
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
@@ -239,22 +239,16 @@ public class AdminDao extends BaseDao{
         return operador;
     }
     public void editarOperadores(BPersona operador){
-        String sql="UPDATE centro1.persona SET dni = ?, nombre = ?, apellido = ?, foto = ?, numeroCelular = ?, fechaDeNacimiento = ?, email = ?, usuario = ?, contrasenia = ?, direccionCliente = ?, rol = ?, codigoPUCP = NULL where idPersona = ?";
+        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, email = ?, direccionCliente = ? where idPersona = ?";
 
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setInt(1,operador.getDni());
-            pstmt.setString(2,operador.getNombre());
-            pstmt.setString(3,operador.getApellido());
-            pstmt.setString(4, operador.getFoto());
-            pstmt.setInt(5, operador.getNumCel());
-            pstmt.setString(6, operador.getFecha_Nc());
-            pstmt.setString(7, operador.getEmail());
-            pstmt.setString(8, operador.getUsuario());
-            pstmt.setString(9, operador.getContrasenia());
-            pstmt.setString(10, operador.getDireccion());
-            pstmt.setString(11, operador.getRol());
-            pstmt.setInt(12, operador.getIdPer());
+            pstmt.setString(1,operador.getNombre());
+            pstmt.setString(2,operador.getApellido());
+            pstmt.setInt(3, operador.getNumCel());
+            pstmt.setString(4, operador.getEmail());
+            pstmt.setString(5, operador.getDireccion());
+            pstmt.setInt(6, operador.getIdPer());
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");

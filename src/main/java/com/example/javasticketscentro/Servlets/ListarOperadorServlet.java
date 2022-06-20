@@ -28,22 +28,6 @@ public class ListarOperadorServlet extends HttpServlet {
                 RequestDispatcher agregarOperadores = request.getRequestDispatcher("/Admin/registrarOperador.jsp");
                 agregarOperadores.forward(request, response);
                 break;
-            case "eliminar":
-                idOperador = Integer.parseInt(request.getParameter("id"));
-                adminDao.eliminarOperador(idOperador);
-                response.sendRedirect(request.getContextPath() + "/ListaOperadorServlet");
-                break;
-            case "editar":
-                idOperador = Integer.parseInt(request.getParameter("id"));
-                BPersona operador = adminDao.buscarOperadorPorId(idOperador);
-                if (operador != null){
-                    request.setAttribute("operador", operador);
-                    RequestDispatcher editarOperador = request.getRequestDispatcher("/Admin/editarOperador.jsp");
-                    editarOperador.forward(request, response);
-                }else{
-                    response.sendRedirect(request.getContextPath()+"/ListaOperadorServlet");
-                }
-                break;
         }
     }
 
@@ -59,7 +43,8 @@ public class ListarOperadorServlet extends HttpServlet {
                 String nombre = request.getParameter("nombreOperador");
                 String apellido = request.getParameter("apellidoOperador");
                 String rol = "Operador";
-                String foto = request.getParameter("foto");
+                //String foto = request.getParameter("foto");
+                String foto = "xd";
                 int dni = Integer.parseInt(request.getParameter("dni"));
                 int numCel = Integer.parseInt(request.getParameter("numCel"));
                 String usuario = request.getParameter("usuario");
@@ -68,35 +53,11 @@ public class ListarOperadorServlet extends HttpServlet {
                 String direccion = request.getParameter("direccion");
                 String fecha_Nc = request.getParameter("fechaNac");
                 adminDao.anadirOperadores(nombre, dni,apellido, numCel, foto, fecha_Nc, email, usuario, contrasenia, direccion, rol);
-                response.sendRedirect(request.getContextPath()+"/ListaOperadorServlet");
-                break;
-            case "actualizar":
-                BPersona operador = leerParametros(request);
-                adminDao.editarOperadores(operador);
-                response.sendRedirect(request.getContextPath()+"/ListaOperadorServlet");
+                response.sendRedirect(request.getContextPath()+"/ListarOperadorServlet");
                 break;
             case "buscar":
                 break;
         }
     }
-    public BPersona leerParametros(HttpServletRequest request){
-        BPersona operador = new BPersona();
-        operador.setNombre(request.getParameter("nombreOperador"));
-        operador.setApellido(request.getParameter("apellidoOperador"));
-        operador.setRol("Operador");
-        String foto = request.getParameter("foto");
-        if (foto == null){
-            foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg/220px-Chris_Hemsworth_by_Gage_Skidmore_2_%28cropped%29.jpg";
-        }
-        operador.setFoto(foto);
-        operador.setDni(Integer.parseInt(request.getParameter("dni")));
-        operador.setNumCel(Integer.parseInt(request.getParameter("numCel")));
-        operador.setUsuario(request.getParameter("usuario"));
-        operador.setContrasenia(request.getParameter("contrasenia"));
-        operador.setEmail(request.getParameter("email"));
-        operador.setDireccion(request.getParameter("direccion"));
-        operador.setFecha_Nc(request.getParameter("fechaNac"));
-        operador.setIdPer(Integer.parseInt(request.getParameter("id")));
-        return operador;
-    }
+
 }

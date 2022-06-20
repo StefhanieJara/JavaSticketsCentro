@@ -18,6 +18,7 @@ public class BPersonal {
         this.nombre_sede = nombre_sede;
     }
 
+
     public int getIdPersonal() {
         return idPersonal;
     }

@@ -1,11 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: david
-  Date: 10/06/2022
-  Time: 11:08
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<jsp:useBean id="Operador" scope="request" type="com.example.javasticketscentro.Beans.BPersona" />
+
+
 <html lang="en">
 <head>
     <head>
@@ -30,98 +28,96 @@
     </head>
 </head>
 <body>
-<section class="vh-100">
-    <div class="container py-4 h-100">
+
+<nav class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger">
+    <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
+
+        <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
+            <a class="navbar-brand py-0" href="#">
+                <a href="index.html"><img src="img/logo.png" /></a>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<main>
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
-                <div
-                        class="card shadow-2-strong card-registration"
-                        style="border-radius: 15px"
-                >
-                    <div
-                            class="card-header"
-                            style="background-color: #e72d4b; color: white"
-                    >
+                <div class="card shadow-2-strong card-registration"
+                        style="border-radius: 15px">
+                    <div class="card-header"
+                         style="background-color: #e72d4b; color: white">
                         <h4 class="my-2">Editar Operador</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <form method="POST" action="<%=request.getContextPath()%>/EditarOperadorServlet?a=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >ID</label
-                                        >
-                                        <input
-                                                type="number"
-                                                id="productName"
-                                                class="form-control"
-                                                placeholder="451"
-                                                readonly
-                                        />
-                                    </div>
+                                        <label class="form-label" for="idPer">ID</label>
+                                        <input name="idPer"
+                                               type="text"
+                                               id="idPer"
+                                               class="form-control"
+                                               value="<%=Operador.getIdPer()%>"
+                                               placeholder=<%=Operador.getIdPer()%>
+                                               readonly/></div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Nombre</label
-                                        >
+                                        <label class="form-label" for="nombre">Nombre</label>
                                         <input
+                                                name ="nombre"
                                                 type="text"
-                                                id="productName"
+                                                id="nombre"
                                                 class="form-control"
-                                                placeholder="Cambiar nombre"
-                                        />
+                                                value="<%=Operador.getNombre()%>"
+                                                placeholder="Ingrese su Nombre"
+                                        >
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Apellidos</label
-                                        >
-                                        <input
+                                        <label class="form-label" for="apellido">Apellidos</label>
+                                        <input  name ="apellido"
                                                 type="text"
-                                                id="productName"
+                                                id="apellido"
                                                 class="form-control"
-                                                placeholder="Cambiar apellido"
-                                        />
+                                                value="<%=Operador.getApellido()%>"
+                                                placeholder="Ingrese su Apellido"
+                                        >
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Correo</label
-                                        >
-                                        <input
+                                        <label class="form-label" for="email">Correo</label>
+                                        <input  name ="email"
                                                 type="text"
-                                                id="productName"
+                                                id="email"
                                                 class="form-control"
-                                                placeholder="Cambiar correo"
-                                        />
+                                                value="<%=Operador.getEmail()%>"
+                                                placeholder="Ingrese su email"
+                                        >
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Direccion</label
-                                        >
-                                        <input
+                                        <label class="form-label" for="direccion">Direccion</label>
+                                        <input  name ="direccion"
                                                 type="text"
-                                                id="productName"
+                                                id="direccion"
                                                 class="form-control"
-                                                placeholder="Cambiar direccion"
-                                        />
+                                                value="<%=Operador.getDireccion()%>"
+                                                placeholder="Ingrese su direccion"
+                                        >
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Numero de contacto</label
-                                        >
-                                        <input
-                                                type="number"
-                                                id="productName"
+                                        <label class="form-label" for="numCel">Numero de contacto</label>
+                                        <input  name ="numCel"
+                                                type="text"
+                                                id="numCel"
                                                 class="form-control"
-                                                placeholder="Cambiar numero"
-                                        />
+                                                value="<%=Operador.getNumCel()%>"
+                                                placeholder="Ingrese su numero de celular"
+                                        >
                                     </div>
 
                                 </div>
 
                                 <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label"
-                                    >Imagen referencial</label
-                                    >
+                                    <label for="formFile" class="form-label">Imagen referencial</label>
                                     <div class="text-center mt-2 mb-3">
                                         <img
                                                 src="img/benedict.jpg"
@@ -133,31 +129,18 @@
                                     </div>
                                     <input class="form-control" type="file" id="formFile" />
 
-                                    <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
-                                    </div>
                                 </div>
                             </div>
 
-                            <div class="">
-                                <input
-                                        class="btn btn-tele"
-                                        type="submit"
-                                        value="Guardar Edición"
-                                />
-                            </div>
+                            <button type="submit" class="btn btn-tele">Guardar Edicion</button>
+
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-</section>
-
+</main>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 </html>

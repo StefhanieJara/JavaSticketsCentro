@@ -1,12 +1,6 @@
 
 <%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: david
-  Date: 5/06/2022
-  Time: 20:42
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaOperadores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersona>" />
 <html lang="en">
@@ -182,9 +176,9 @@
     <!--Pestañas visualización y gestión-->
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
-            <a class="nav-link text-white active" aria-current="page" href="#"
+            <h3><a class="nav-link text-white active" aria-current="page" href="#"
             ><b>Lista de Operadores</b></a
-            >
+            ></h3>
         </li>
     </ul>
 
@@ -240,18 +234,19 @@
         <table>
             <thead>
             <tr>
-                <th>ID</th><th>Foto</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Telefono</th><th>Direccion</th><th>X</th>
+                <th>Foto</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Telefono</th><th>Direccion</th><th>X</th>
             </tr>
             </thead>
-                <%for (BPersona operador : listaOperadores ) {%>
+                <% int a = 1;
+                for (BPersona operador : listaOperadores ) {%>
             <tr>
-                <td><%=operador.getIdPer()%></td><td><img
+                <td><img
                     class="w-100"
                     src="img\magaly.jpg"
                     style="max-height: 200px; max-width: 100px"
             /></td><td><%=operador.getNombre()%></td><td><%=operador.getApellido()%></td><td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
                 <td>
-                    <a href="EditarOperadorServlet">
+                    <a href="<%=request.getContextPath()%>/EditarOperadorServlet?&id=<%=operador.getIdPer()%>">
                         <i class="far fa-edit btn-tele p-2 rounded"></i>
                     </a>
                     <hr class="my-1" style="background-color: white" />
@@ -259,27 +254,62 @@
                             class="btn btn-danger py-1 px-2"
                             type="button"
                             data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
+                            data-bs-target="#confirmacion<%=a%>">
                         <i class="fas fa-times-circle"></i>
                     </button>
+
     </div>
     <div class="d-flex justify-content-center my-2 d-md-none">
-        <a href="editaOperador.html">
+
             <i class="far fa-edit btn-tele p-1 rounded"></i>
-        </a>
+
         <div class="mx-3"></div>
         <button
                 class="btn btn-danger py-0 px-1"
                 type="button"
                 data-bs-toggle="modal"
-                data-bs-target="#confirmacion"
+                data-bs-target="#confirmacion<%=a%>"
         >
             <i class="fas fa-times-circle"></i>
         </button>
         </td>
         </tr>
-        <%}%>
+        <div class="modal fade"
+             id="confirmacion<%=a%>"
+             tabindex="-1"
+             aria-labelledby="conf_eliminar"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content border-0">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="conf_eliminar">Eliminar Operador</h5>
+                        <button
+                                type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        Este operador será eliminado y ya no podra recuperar la
+                        información.<br />
+                        ¿Está seguro que desea eliminarlo de la lista?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="<%=request.getContextPath()%>/ListarOperadorServlet">
+                            <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">Cancelar</button>
+                        </a>
+                        <a href="<%=request.getContextPath()%>/EditarOperadorServlet?a=borrar&id=<%=operador.getIdPer()%>">
+                            <button type="button" class="btn btn-danger">Eliminar Operador</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% a++;
+                }%>
         </table>
     </div>
 
@@ -305,45 +335,7 @@
         </div>
     </div>
 
-    <!--Modal eliminar producto: Producto no pendiente para pedido-->
-    <div
-            class="modal fade"
-            id="confirmacion"
-            tabindex="-1"
-            aria-labelledby="conf_eliminar"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content border-0">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="conf_eliminar">Eliminar Operador</h5>
-                    <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
-                </div>
-                <div class="modal-body">
-                    Este operador será eliminado y ya no podra recuperar la
-                    información.<br />
-                    ¿Está seguro que desea eliminarlo de la lista?
-                </div>
-                <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal"
-                    >
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                        Eliminar Operador
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </main>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
