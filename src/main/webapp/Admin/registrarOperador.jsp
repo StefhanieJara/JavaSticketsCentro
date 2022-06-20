@@ -106,7 +106,7 @@
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="fechaNac">Ferha de Nacimiento</label>
                                         <input name="fechaNac"
-                                               type="text"
+                                               type="date"
                                                id="fechaNac"
                                                class="form-control"
                                                placeholder="aaaa-mm-dd"/>
@@ -126,7 +126,7 @@
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="contrasenia">Contraseña</label>
                                         <input name="contrasenia"
-                                               type="text"
+                                               type="password"
                                                id="contrasenia"
                                                class="form-control"
                                                placeholder="Ingrese su contraseña"/>
