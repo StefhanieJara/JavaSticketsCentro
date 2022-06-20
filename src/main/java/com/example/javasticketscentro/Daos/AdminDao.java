@@ -1,8 +1,5 @@
 package com.example.javasticketscentro.Daos;
-import com.example.javasticketscentro.Beans.BCelebridad;
-import com.example.javasticketscentro.Beans.BPersona;
-import com.example.javasticketscentro.Beans.BSala;
-import com.example.javasticketscentro.Beans.BSede;
+import com.example.javasticketscentro.Beans.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -262,6 +259,67 @@ public class AdminDao extends BaseDao{
     }
 
     // Gestión de Celebridades
+    public static ArrayList<BCelebridad> listarDirector() {
+
+        ArrayList<BCelebridad> listarDirector = new ArrayList<>();
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='director';";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            while (rs.next()) {
+                BCelebridad bCelebridad = new BCelebridad();
+                bCelebridad.setNombre(rs.getString(1));
+                listarDirector.add(bCelebridad);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listarDirector;
+    }
+    public static ArrayList<BCelebridad> listarActor() {
+
+        ArrayList<BCelebridad> listarActor = new ArrayList<>();
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='actor';";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            while (rs.next()) {
+                BCelebridad bCelebridad = new BCelebridad();
+                bCelebridad.setNombre(rs.getString(1));
+                listarActor.add(bCelebridad);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listarActor;
+    }
+
 
     public ArrayList<BCelebridad> listarCelebridad(String nombreCompleto, boolean limit, int cantResul, int pagina) {
         ArrayList<BCelebridad> listaCelebridad = new ArrayList<>();
@@ -538,6 +596,38 @@ public class AdminDao extends BaseDao{
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<BSala> listasala() {
+
+        ArrayList<BSala> listasala = new ArrayList<>();
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "select aforo, numero from sala;";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            while (rs.next()) {
+                BSala bSala = new BSala();
+                bSala.setAforo(rs.getInt(1));
+                bSala.setNumero(rs.getInt(2));
+                listasala.add(bSala);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listasala;
     }
 
 

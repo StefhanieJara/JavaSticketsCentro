@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BPersonal" %><%--
   Created by IntelliJ IDEA.
   User: Niurka
   Date: 06/06/2022
@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="listaPersonal" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersonal>" />
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -78,7 +80,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="registrarCelebridad.html" class="btn-float">
+<a href="<%=request.getContextPath()%>/personalServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -211,11 +213,17 @@
         <table>
             <thead>
             <tr>
-                <th>ID</th><th>Nombre</th><th>Apellido</th><th>Opciones</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Sede</th>
+                <th>Opciones</th>
             </tr>
             </thead>
+                <%for (BPersonal personal : listaPersonal) { %>
             <tr>
-                <td>12345</td><td>Mario</td><td>Montaneda</td>
+                <td><%=personal.getNombre()%></td>
+                <td><%=personal.getApellido()%></td>
+                <td><%=personal.getNombre_sede()%></td>
                 <td style="width: 100px;">
                     <a href="editaOperador.html">
                         <i class="far fa-edit btn-tele p-2 rounded"></i>
@@ -230,6 +238,8 @@
                         <i class="fas fa-times-circle"></i>
                     </button>
     </div>
+    <!--Icono para eliminar-->
+
     <div class="d-flex justify-content-center my-2 d-md-none">
         <a href="editaOperador.html">
             <i class="far fa-edit btn-tele p-1 rounded"></i>
@@ -244,6 +254,7 @@
             <i class="fas fa-times-circle"></i>
         </button>
         </td>
+        <%} %>
         </tr>
 
         </table>

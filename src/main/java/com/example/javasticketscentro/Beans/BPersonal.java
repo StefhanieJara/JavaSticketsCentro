@@ -6,9 +6,17 @@ public class BPersonal {
     private int idPersonal;
     private String nombre;
     private String apellido;
-    private int grupo;
     private int idSede;
-    private Date fecha;
+    private String nombre_sede;
+
+
+    public String getNombre_sede() {
+        return nombre_sede;
+    }
+
+    public void setNombre_sede(String nombre_sede) {
+        this.nombre_sede = nombre_sede;
+    }
 
     public int getIdPersonal() {
         return idPersonal;
@@ -34,14 +42,6 @@ public class BPersonal {
         this.apellido = apellido;
     }
 
-    public int getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(int grupo) {
-        this.grupo = grupo;
-    }
-
     public int getIdSede() {
         return idSede;
     }
@@ -50,11 +50,4 @@ public class BPersonal {
         this.idSede = idSede;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 }

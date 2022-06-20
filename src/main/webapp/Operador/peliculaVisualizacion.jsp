@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %><%--
   Created by IntelliJ IDEA.
   User: Niurka
   Date: 06/06/2022
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar producto-->
-<a href="<%=request.getContextPath()%>/RegistrarPeliculaServlet" class="btn-float">
+<a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -132,106 +133,61 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><h2>Lista de Peliculas</h2></a
+            ><h1>Lista de Peliculas</h1></a
             >
         </li>
     </ul>
 
     <!--Barra de búsqueda producto-->
     <form class="mb-4">
-        <div class="input-group justify-content-center"style="">
+        <div class="input-group justify-content-center">
             <div class="form-outline" style="width: 36%">
                 <input
                         type="search"
                         id="form1"
                         class="form-control"
-                        placeholder="Buscar producto"
-                />
+                        placeholder="Buscar producto"/>
             </div>
             <button type="button" class="btn btn-tele border-start-1">
                 <i class="fas fa-search"></i>
             </button>
         </div>
-
-        <div class="input-group justify-content-center"style="">
-            <div class="form-outline" style="width: 36%">
-                <input
-                        type="search"
-                        id="form1"
-                        class="form-control"
-                        placeholder="Filtrar por genero"
-                />
-            </div>
-            <button type="button" class="btn btn-tele border-start-1">
-                <i class="fas fa-search"></i>
-            </button>
-        </div>
+        <br>
     </form>
 
     <!--Productos-->
+    <%for (BPelicula pelicula : listapeliculas ) {%>
     <hr class="mx-md-5 mx-sm-3" />
     <!--Producto 1-->
     <div class="row justify-content-center align-items-start">
         <!--Nombre del producto e imagen referencial-->
+        <tr>
         <div class="col-md-2 text-center mt-2">
-            <h4>Doctor Strange</h4>
+            <h4><%=pelicula.getNombre()%></h4>
             <img
                     class="w-100"
                     src="img\doctorStrange.jpg"
-                    style="max-height: 400px; max-width: 250px"
-            />
+                    style="max-height: 400px; max-width: 250px"/>
         </div>
         <!--Precio y Stock-->
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
             <h6>Precio de ticket</h6>
-            <p style="font-size: larger">s/ 36.00</p>
+            <p style="font-size: larger">s/ <%=pelicula.getPrecio_peli()%></p>
             <h6>Stock</h6>
-            <p style="font-size: larger">24</p>
-        </div>
-        <div class="d-flex justify-content-around align-items-center d-md-none">
-            <h6 style="display: inline">
-                Precio de ticket:
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;s/ 36.00
-                </p>
-            </h6>
-            <h6 style="display: inline">
-                Stock:
-                <p style="display: inline; font-size: large; font-weight: normal">
-                    &nbsp;24
-                </p>
-            </h6>
+            <p style="font-size: larger"><%=pelicula.getStock()%></p>
         </div>
         <!--Descripción del producto-->
         <div class="col-md-6 mt-5 d-none d-md-block">
             <h6>Sinopsis</h6>
             <p>
-                Dr. Stephen Strange cuya vida cambia para siempre luego de un
-                accidente automovilístico que lo deja sin poder mover sus manos.
-                Cuando la medicina tradicional falla, se ve obligado a buscar una
-                cura y esperanzas en un lugar impensado: una comunidad aislada
-                llamada Kamar-Taj. Rápidamente descubre que éste no es sólo un
-                centro de recuperación, sino también la primera línea de una batalla
-                en contra de fuerzas oscuras y ocultas empeñadas en destruir nuestra
-                realidad.
+                <%=pelicula.getSinopsis()%>
             </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
-        </div>
-        <div class="d-flex flex-column mt-1 d-md-none px-5">
-            <h6>Sinopsis</h6>
+            <h6>Restriccion de Edad</h6>
             <p>
-                Dr. Stephen Strange cuya vida cambia para siempre luego de un
-                accidente automovilístico que lo deja sin poder mover sus manos.
-                Cuando la medicina tradicional falla, se ve obligado a buscar una
-                cura y esperanzas en un lugar impensado: una comunidad aislada
-                llamada Kamar-Taj. Rápidamente descubre que éste no es sólo un
-                centro de recuperación, sino también la primera línea de una batalla
-                en contra de fuerzas oscuras y ocultas empeñadas en destruir nuestra
-                realidad.
+                <%=pelicula.getRestricconEdad()%>
             </p>
-            <h6 class="mt-1">Hora<b> 17:30 pm</b></h6>
-            <h6 class="mt-1">Fecha<b> 20/05/2022</b></h6>
+            <h6 class="mt-1">Hora: <b><%=pelicula.getHoraInicio()%></b></h6>
+            <h6 class="mt-1">Fecha: <b><%=pelicula.getFecha()%></b></h6>
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
@@ -247,22 +203,10 @@
                 <i class="fas fa-times-circle"></i>
             </button>
         </div>
-        <div class="d-flex justify-content-center my-2 d-md-none">
-            <a href="<%=request.getContextPath()%>/editarPeliculaServlet">
-                <i class="far fa-edit btn-tele p-3 rounded"></i>
-            </a>
-            <div class="mx-3"></div>
-            <button
-                    class="btn btn-danger py-2 px-3"
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#error"
-            >
-                <i class="fas fa-times-circle"></i>
-            </button>
-        </div>
+
     </div>
     <hr class="mx-md-5 mx-sm-3" />
+    <%}%>
 
 
     <!--Paginación-->
@@ -317,45 +261,6 @@
                             data-bs-dismiss="modal"
                     >
                         Ok
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Modal eliminar producto: Producto no pendiente para pedido-->
-    <div
-            class="modal fade"
-            id="confirmacion"
-            tabindex="-1"
-            aria-labelledby="conf_eliminar"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content border-0">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="conf_eliminar">Eliminar Función</h5>
-                    <button
-                            type="button"
-                            class="btn-close btn-close-white"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                    ></button>
-                </div>
-                <div class="modal-body">
-                    Esta función será eliminada y ya no se podrá recuperar.<br />
-                    ¿Está seguro que desea eliminarlo del catálogo?
-                </div>
-                <div class="modal-footer">
-                    <button
-                            type="button"
-                            class="btn btn-light"
-                            data-bs-dismiss="modal"
-                    >
-                        Cancelar
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                        Eliminar Función
                     </button>
                 </div>
             </div>
