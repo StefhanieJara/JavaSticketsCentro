@@ -5,8 +5,52 @@ public class BFuncion {
     private double precio;
     private int stock;
     private String fecha;
+    private BPelicula bPelicula;
+    private BSala bSala;
     private String horaInicio;
-    private float asistencia;
+    private float Asistencia;
+    private int cancelado;
+    private int carrito;
+
+    public int getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(int cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public int getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(int carrito) {
+        this.carrito = carrito;
+    }
+
+    public float getAsistencia() {
+        return Asistencia;
+    }
+
+    public void setAsistencia(float asistencia) {
+        Asistencia = asistencia;
+    }
+
+    public BSala getbSala() {
+        return bSala;
+    }
+
+    public void setbSala(BSala bSala) {
+        this.bSala = bSala;
+    }
+
+    public BPelicula getbPelicula() {
+        return bPelicula;
+    }
+
+    public void setbPelicula(BPelicula bPelicula) {
+        this.bPelicula = bPelicula;
+    }
 
     public int getId() {
         return id;
@@ -48,11 +92,5 @@ public class BFuncion {
         this.horaInicio = horaInicio;
     }
 
-    public float getAsistencia() {
-        return asistencia;
-    }
 
-    public void setAsistencia(float asistencia) {
-        this.asistencia = asistencia;
-    }
 }

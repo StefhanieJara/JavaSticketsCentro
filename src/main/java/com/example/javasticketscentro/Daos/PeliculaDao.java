@@ -85,4 +85,42 @@ public class PeliculaDao extends BaseDao {
         }
         return listaFunciones;
     }
+
+    public BFuncion detectarFuncionEscogida(String idPeli, String idCliente, int pagado, int carrito){
+        BFuncion bFuncion= null;
+        try{
+            int id_Peli=Integer.parseInt(idPeli);
+            int id_Client= Integer.parseInt(idCliente);
+            String sql="select f.idFuncion, f.fecha, f.horaInicio, f.precio, f.stock, c.cancelado, t.carrito " +
+                    "from persona p " +
+                    "inner join compra c on (p.idPersona = c.persona_idPersona) " +
+                    "inner join ticket t on (c.idCompra = t.Compra_idCompra) " +
+                    "inner join funcion f on (t.Funcion_idFuncion = f.idFuncion) " +
+                    "inner join pelicula p2 on (f.Pelicula_idPelicula = p2.idPelicula) " +
+                    "where p.idPersona= ? and p2.idPelicula=? and (c.cancelado= ? or t.carrito=?)";
+            try(Connection conn= this.getConnection();
+                PreparedStatement pstmt= conn.prepareStatement(sql)){
+                pstmt.setInt(1,id_Client);
+                pstmt.setInt(2, id_Peli);
+                pstmt.setInt(3, pagado);
+                pstmt.setInt(4, carrito);
+                try(ResultSet resultSet= pstmt.executeQuery()){
+                    if(resultSet.next()){
+                        bFuncion= new BFuncion();
+                        //Por ahora, solo nos interesa el id
+                        bFuncion.setId(resultSet.getInt(1));
+                        bFuncion.setCancelado(resultSet.getInt(6));
+                        bFuncion.setCarrito(resultSet.getInt(7));
+                    }
+                }
+            }catch(SQLException e) {
+                System.out.println("Hubo un error en la conexión!");
+                e.printStackTrace();
+            }
+        }catch (NumberFormatException e){
+            System.out.println("Debe ingresar un tipo int");;
+        }
+
+        return bFuncion;
+    }
 }

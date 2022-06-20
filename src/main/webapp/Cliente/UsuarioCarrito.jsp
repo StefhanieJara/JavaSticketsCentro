@@ -126,7 +126,7 @@
                 <div>
                     <!--Nombre cabecera-->
                     <h3 class="cart-header px-4 py-3">
-                        <span>Checkout</span>
+                        <span>Funciones Seleccionadas</span>
                     </h3>
                     <!--Producto-->
                     <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">

@@ -1,5 +1,8 @@
 package com.example.javasticketscentro.Daos;
-import com.example.javasticketscentro.Beans.*;
+import com.example.javasticketscentro.Beans.BCelebridad;
+import com.example.javasticketscentro.Beans.BPersona;
+import com.example.javasticketscentro.Beans.BSala;
+import com.example.javasticketscentro.Beans.BSede;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -109,7 +112,7 @@ public class AdminDao extends BaseDao{
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona,direccionCliente from persona where rol = 'Operador'");) {
+             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona from persona where rol = 'Operador'");) {
 
             while (rs.next()) {
                 BPersona bPersona = new BPersona();
@@ -260,23 +263,13 @@ public class AdminDao extends BaseDao{
     }
 
     // Gestión de Celebridades
-    public static ArrayList<BCelebridad> listarDirector() {
+    public ArrayList<BCelebridad> listarDirector() {
 
         ArrayList<BCelebridad> listarDirector = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='director';";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql);) {
 
@@ -290,23 +283,14 @@ public class AdminDao extends BaseDao{
         }
         return listarDirector;
     }
-    public static ArrayList<BCelebridad> listarActor() {
+    public ArrayList<BCelebridad> listarActor() {
 
         ArrayList<BCelebridad> listarActor = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='actor';";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql);) {
 
@@ -599,23 +583,13 @@ public class AdminDao extends BaseDao{
         }
     }
 
-    public static ArrayList<BSala> listasala() {
+    public ArrayList<BSala> listasala() {
 
         ArrayList<BSala> listasala = new ArrayList<>();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "select aforo, numero from sala;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection =this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql);) {
 

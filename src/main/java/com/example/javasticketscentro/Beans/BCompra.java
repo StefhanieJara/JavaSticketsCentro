@@ -4,6 +4,15 @@ public class BCompra {
     private String idCompra;
     private int IdPer;
     private Double montoTotal;
+    private int cancelado;
+
+    public int getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(int cancelado) {
+        this.cancelado = cancelado;
+    }
 
     public String getIdCompra() {
         return idCompra;

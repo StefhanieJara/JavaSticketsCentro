@@ -19,8 +19,8 @@ import java.util.Date;
 public class UsuarioCarritoIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String action = request.getParameter("a") == null ? "listar" : request.getParameter("a");
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        int idClient = Integer.parseInt(request.getParameter("id"));
         switch (action){
             case "listar"->{
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioCarrito.jsp");
@@ -29,7 +29,6 @@ public class UsuarioCarritoIndex extends HttpServlet {
             case "pagar"->{
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/Usuariopayment.jsp");
                 requestDispatcher.forward(request,response);
-
             }
 
         }
@@ -57,10 +56,6 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 carritoDao.ingresarTarjeta(numeroTarjeta,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,id_cliente);
 
                 response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
-
-
-
-
             }
         }
     }
