@@ -14,31 +14,30 @@ public class Calificar1Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listarA" : request.getParameter("action");
-
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula")==null?"6":request.getParameter("idPelicula");
-
-        String idPersonaStr =  request.getParameter("idPersona")==null?"12":request.getParameter("idPersona");
+        String idPeliculaStr =  request.getParameter("idPelicula");
+        String idPersonaStr =  request.getParameter("idPersona");
 
         int idPelicula, idCelebridad, idPersona;
         switch (action) {
-
             case "listarA":
                 try {
                     idPersona = Integer.parseInt(idPersonaStr);
                     idPelicula = Integer.parseInt(idPeliculaStr);
                     ArrayList<BCelebridad> listaActor = calificacionDao.listarActorPorID(idPersona, idPelicula);
-                    if (listaActor.get(0) != null) {
-                        request.setAttribute("idPersona",idPersona);
-                        request.setAttribute("idPelicula",idPelicula);
-                        request.setAttribute("listaActores", listaActor);
-                        RequestDispatcher listarA = request.getRequestDispatcher("Cliente/CalificarActor.jsp");
-                        listarA.forward(request, response);
+                    if (listaActor == null) {
+                        System.out.println(listaActor.get(1).getNombre());
+                        listaActor= new ArrayList<>();
                     }
+                    request.setAttribute("idPersona",idPersona);
+                    request.setAttribute("idPelicula",idPelicula);
+                    request.setAttribute("listaActores", listaActor);
+                    RequestDispatcher view = request.getRequestDispatcher("Cliente/CalificarActor.jsp");
+                    view.forward(request, response);
                 } catch (NumberFormatException e) {
                     System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/calificarActor?action=listarA&idPersona="+idPersonaStr+"&idPelicula="+idPeliculaStr);
                 }
-                response.sendRedirect(request.getContextPath() + "/calificarActor");
                 break;
 
         }

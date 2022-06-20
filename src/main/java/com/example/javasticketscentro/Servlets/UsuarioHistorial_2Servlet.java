@@ -14,24 +14,28 @@ import java.util.ArrayList;
 public class UsuarioHistorial_2Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String action = request.getParameter("a") == null ? "listar" : request.getParameter("a");
+        String idCLientSr= request.getParameter("idCliente");
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         HistorialDao historialDao = new HistorialDao();
         switch (action){
-
             case "listar" -> {
-                ArrayList<Bhistorial> listadetickets = historialDao.listaTickets();
-                request.setAttribute("lista", listadetickets);
-
-                ArrayList<ArrayList<Bhistorial_detalle>> listaHistoriales = new ArrayList<>();
-                for(Bhistorial ticket : listadetickets){
-                    ArrayList<Bhistorial_detalle> historial = historialDao.buscarFuncionesDeTicket(ticket.getCodigo());
-                    listaHistoriales.add(historial);
+                try{
+                    int idClient = Integer.parseInt(idCLientSr);
+                    ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(idClient);
+                    request.setAttribute("lista", listadetickets);
+                    ArrayList<ArrayList<Bhistorial_detalle>> listaHistoriales = new ArrayList<>();
+                    for(Bhistorial ticket : listadetickets){
+                        ArrayList<Bhistorial_detalle> historial = historialDao.buscarFuncionesDeTicket(ticket.getCodigo());
+                        listaHistoriales.add(historial);
+                    }
+                    request.setAttribute("listaHistoriales", listaHistoriales);
+                    request.setAttribute("idClient", idClient);
+                    RequestDispatcher view = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
+                    view.forward(request, response);
+                }catch (NumberFormatException e){
+                    System.out.println("Error en el id del Cliente");
+                    response.sendRedirect(request.getContextPath()+"/");
                 }
-                request.setAttribute("listaHistoriales", listaHistoriales);
-
-                RequestDispatcher view = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
-                view.forward(request, response);
             }
             case "borrar" -> {
                 String id = request.getParameter("id");
