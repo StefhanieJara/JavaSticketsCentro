@@ -68,7 +68,7 @@
             <a
                     class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex"
+                    href="<%=request.getContextPath()+"/UsuarioCarritoIndex?id=12&action=listar"%>"
             >
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
