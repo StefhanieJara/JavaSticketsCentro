@@ -179,9 +179,13 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th class="col-2">Fecha de compra</th>
+                                                <th class="col-2"></th>
                                                 <th class="col-1">Codigo</th>
+                                                <th class="col-2"></th>
                                                 <th class="col-2">Total</th>
+                                                <th class="col-2"></th>
                                                 <th class="col-2">Detalles</th>
+                                                <th class="col-2"></th>
                                             </tr>
                                         </thead>
                                         <!--Pedidos-->
@@ -191,8 +195,11 @@
                                             <%for(Bhistorial ticket : lista) {%>
                                             <tr class="cell-1">
                                                 <td name="FechaCompra" id="FechaCompra"><%=ticket.getFecha_compra()%></td>
+                                                <td></td>
                                                 <td name="CodigoTicket" id="CodigoTicket"><%=ticket.getCodigo()%></td>
+                                                <td></td>
                                                 <td name="CostoTotal" id="CostoTotal">S/<%=ticket.getTotal()%></td>
+                                                <td></td>
                                                 <td name="ObtenerFunciones" id="ObtenerFunciones"
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
@@ -200,6 +207,7 @@
                                                 >
                                                     <a href="#" class="fas fa-ellipsis-h text-black-50"></a>
                                                 </td>
+                                                <td></td>
                                             </tr>
                                             <!--Detalles pedido 1 (dt-1)-->
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
@@ -220,7 +228,7 @@
                                                 <td colspan="0.7"><%=funcion.getSede()%></td>
                                                 <td colspan="0.7"><%=funcion.getFecha()%></td>
                                                 <td colspan="0.7">S/<%=funcion.getPrecio()%></td>
-                                                <td colspan="0.7">S/<%=(funcion.getUnidades()*funcion.getPrecio())%></td>
+                                                <td colspan="0.7">S/<%=String.format("%.2f",(funcion.getUnidades()*funcion.getPrecio()))%></td>
                                                 <% String datetime1 = funcion.getFecha();
                                                     String[] separados = datetime1.split(" - ");
                                                     String datetime2 = separados[0]+'T'+separados[1];
