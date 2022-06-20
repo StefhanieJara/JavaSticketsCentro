@@ -16,9 +16,9 @@ public class Calificar2Servlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarD" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula")==null?"4":request.getParameter("idPelicula");
+        String idPeliculaStr =  request.getParameter("idPelicula")==null?"6":request.getParameter("idPelicula");
 
-        String idPersonaStr =  request.getParameter("idPersona")==null?"3":request.getParameter("idPersona");
+        String idPersonaStr =  request.getParameter("idPersona")==null?"12":request.getParameter("idPersona");
 
         int idPelicula, idCelebridad, idPersona;
         switch (action) {

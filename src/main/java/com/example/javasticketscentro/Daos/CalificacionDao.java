@@ -34,7 +34,7 @@ public class CalificacionDao extends BaseDao {
     public ArrayList<BCelebridad> listarDirectorPorID(int idPersona, int idPelicula) {
         ArrayList<BCelebridad> celebridades = new ArrayList<>();
         String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad,  cc.puntaje, cc.Persona_idPersona from pelicula pe \n" +
-                "\t\t\tinner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
+                "            inner join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula\n" +
                 "            inner join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "            inner join calificacion_celebridad cc on cc.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "where pe.idPelicula = ? and cc.Persona_idPersona = ? and ce.rol = 'director' ";
