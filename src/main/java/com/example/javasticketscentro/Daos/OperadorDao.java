@@ -21,7 +21,7 @@ public class OperadorDao {
             throw new RuntimeException(e);
         }
 
-        String sql = "select nombre, restriccionEdad, sinopsis,duracion,genero, fu.precio, fu.stock, fu.horaInicio,fu.fecha from pelicula pe\n" +
+        String sql = "select pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto, fu.precio, fu.stock, fu.horaInicio,fu.fecha from pelicula pe\n" +
                 "\tinner join funcion fu on pe.idPelicula=fu.Pelicula_idPelicula;";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
@@ -35,10 +35,11 @@ public class OperadorDao {
                 bPelicula.setSinopsis(rs.getString(3));
                 bPelicula.setDuracion(rs.getString(4));
                 bPelicula.setGenero(rs.getString(5));
-                bPelicula.setPrecio_peli(rs.getDouble(6));
-                bPelicula.setStock(rs.getInt(7));
-                bPelicula.setHoraInicio(rs.getString(8));
-                bPelicula.setFecha(rs.getString(9));
+                bPelicula.setFoto(rs.getString(6));
+                bPelicula.setPrecio_peli(rs.getDouble(7));
+                bPelicula.setStock(rs.getInt(8));
+                bPelicula.setHoraInicio(rs.getString(9));
+                bPelicula.setFecha(rs.getString(10));
                 listapeliculas.add(bPelicula);
             }
         } catch (SQLException e) {

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.Bticket" %><%--
   Created by IntelliJ IDEA.
   User: Kevin
   Date: 05/06/2022
@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="carrito" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bticket>"/>
+<jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,27 +130,28 @@
                     <h3 class="cart-header px-4 py-3">
                         <span>Funciones Seleccionadas</span>
                     </h3>
+                    <%for(Bticket bticket: carrito){%>
                     <!--Producto-->
                     <div class="d-sm-flex justify-content-between my-4 px-lg-2 px-xl-5 pb-4 border-bottom">
                         <!--Bloque 1-->
                         <div class="d-sm-flex">
                             <!--Imagen del producto-->
                             <div class="cart-item-thumb mx-auto">
-                                <img src="img/doctorStrange.jpg"
+                                <img src="<%=bticket.getbFuncion().getbPelicula().getFoto()%>"
                                      class="img-carrito">
                             </div>
                             <!--Info del producto-->
                             <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
                                 <!--Nombre-->
-                                <h5 class="mb-sm-3 mb-1">Doctor Strange</h5>
+                                <h5 class="mb-sm-3 mb-1"><%=bticket.getbFuncion().getbPelicula().getNombre()%></h5>
                                 <!--Precios-->
                                 <div>
                                     <span class="text-muted">Precio:</span>
-                                    <span class="font-size-lgr ms-sm-2 ms-0 ">s/ 30</span>
+                                    <span class="font-size-lgr ms-sm-2 ms-0 ">s/ <%=bticket.getbFuncion().getPrecio()%></span>
                                 </div>
                                 <div>
                                     <span class="text-muted">Hora:</span>
-                                    <span class="font-size-lgr ms-sm-2 ms-0 ">14:30</span>
+                                    <span class="font-size-lgr ms-sm-2 ms-0 "><%=bticket.getbFuncion().getHoraInicio()%></span>
                                 </div>
 
                             </div>
@@ -157,23 +160,27 @@
                                 <!--Fecha-->
                                 <div>
                                     <span class="text-muted">Fecha:</span>
-                                    <span class="ms-sm-2 ms-0 ">17/02/2023</span>
+                                    <span class="ms-sm-2 ms-0 "><%=bticket.getbFuncion().getFecha()%></span>
                                 </div>
                                 <!--Sede-->
                                 <div>
                                     <span class="text-muted">Sede:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span class="font-size-lgr ms-sm-2 ms-0 ">Lince</span>
+                                    <span class="font-size-lgr ms-sm-2 ms-0 "><%=bticket.getbFuncion().getbSede().getNombre()%></span>
                                 </div>
                                 <!--Sala-->
                                 <div>
                                     <span class="text-muted">Sala:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                    <span class="font-size-lgr ms-sm-2 ms-0 ">2</span>
+                                    <span class="font-size-lgr ms-sm-2 ms-0 "><%=bticket.getbFuncion().getbSala().getNumero()%></span>
                                 </div>
                             </div>
                         </div>
                         <!--Bloque 2-->
                         <div class="pt-sm-0 pt-2 pe-md-3 pe-0 mx-sm-0 mx-auto text-sm-left text-center"
                              style="max-width: 10rem;">
+                            <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
+                                <input type="hidden" name="idClient" value="<%=idClient%>">
+                                <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
+                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
                             <!--Cantidad-->
                             <div class="form-group mt-sm-4 mt-0">
                                 <!--Label-->
@@ -186,7 +193,7 @@
                                     </button>
                                     <input class="form-control border-start-0 border-end-0 text-center"
                                            type="number" style="width:46px;" id="contador"
-                                           value="1" min="1"/>
+                                           value="<%=bticket.getCantButaca()==0 ? "1": bticket.getCantButaca()%>" name="butacas" min="1"/>
                                     <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                                             class="btn btn-tele" id="mas" type="button">
                                         <i class="fas fa-plus fa-xs"></i>
@@ -194,15 +201,22 @@
                                 </div>
                             </div>
                             <!--Botón agregar-->
-                            <button class="btn btn-success btn-sm mt-sm-4 mt-2 w-100" type="button">
+                            <button class="btn btn-success btn-sm mt-sm-4 mt-2 w-100" type="submit">
                                 Agregar
                             </button>
+                            </form>
+                            <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=borrar">
+                                <input type="hidden" name="idClient" value="<%=idClient%>">
+                                <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
+                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
                             <!--Botón borrar-->
-                            <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="button">
+                            <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="submit">
                                 <i class="far fa-trash-alt"></i>
                             </button>
+                            </form>
                         </div>
                     </div>
+                    <%}%>
                 </div>
             </div>
             <!--Costo total-->
@@ -222,37 +236,23 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <%double costoTotal=0;%>
+                            <%for(Bticket bticket: carrito){%>
                             <tr>
-                                <td class="text-center">3</td>
-                                <td>Doctor Strange</td>
-                                <td>Lince</td>
-                                <td>s/ 60</td>
+                                <td class="text-center"><%=bticket.getCantButaca()%></td>
+                                <td><%=bticket.getbFuncion().getbPelicula().getNombre()%></td>
+                                <td><%=bticket.getbFuncion().getbSede().getNombre()%></td>
+                                <td>s/ <%=bticket.getCantButaca()*bticket.getbFuncion().getPrecio()%></td>
+                                <%costoTotal+=(bticket.getCantButaca()*bticket.getbFuncion().getPrecio());%>
                             </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td>Lina de Lima</td>
-                                <td>Miraflores</td>
-                                <td>s/ 120</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">15</td>
-                                <td>Taxi Driver</td>
-                                <td>Chacarilla</td>
-                                <td>s/ 60</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td>El Padrino</td>
-                                <td>Lince</td>
-                                <td>s/ 60</td>
-                            </tr>
+                            <%}%>
                             </tbody>
                         </table>
                     </div>
                     <!--Total-->
                     <div class="h4 text-center py-2">
                         <span class="font-size-lg">Total:</span>
-                        <span>&nbsp;s/ 325.00</span>
+                        <span>&nbsp;s/ <%=costoTotal%></span>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=pagar" class="btn btn-danger"

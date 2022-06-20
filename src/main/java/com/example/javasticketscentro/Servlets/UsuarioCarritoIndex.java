@@ -1,19 +1,10 @@
 package com.example.javasticketscentro.Servlets;
-
-import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.CarritoDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @WebServlet(name = "UsuarioCarritoIndex", value = "/UsuarioCarritoIndex")
 public class UsuarioCarritoIndex extends HttpServlet {
@@ -21,8 +12,11 @@ public class UsuarioCarritoIndex extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         int idClient = Integer.parseInt(request.getParameter("id"));
+        CarritoDao carritoDao= new CarritoDao();
         switch (action){
             case "listar"->{
+                request.setAttribute("idClient", idClient);
+                request.setAttribute("carrito", carritoDao.listarCarrito(idClient));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioCarrito.jsp");
                 requestDispatcher.forward(request,response);
             }
@@ -37,10 +31,13 @@ public class UsuarioCarritoIndex extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("a") == null ? "listar" : request.getParameter("a");
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        String idClient = request.getParameter("idClient");
+        CarritoDao carritoDao= new CarritoDao();
+        String idCompraStr= request.getParameter("idCompra");
+        String idFuncionStr= request.getParameter("idFuncion");
         switch (action){
-            case "guardar"->{
-
+            case "guardar":
                 String numeroTarjetaStr = request.getParameter("numeroTarjeta");
                 String cvvStr = request.getParameter("cvv");
                 String fechaVencimientoStr = request.getParameter("fechaVencimiento");
@@ -52,11 +49,30 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 int cvv = Integer.parseInt(cvvStr);
 
 
-                CarritoDao carritoDao = new CarritoDao();
+                carritoDao = new CarritoDao();
                 carritoDao.ingresarTarjeta(numeroTarjeta,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,id_cliente);
 
                 response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
-            }
+                break;
+            case "listar":
+                try{
+                    int butacas=Integer.parseInt(request.getParameter("butacas"));
+                    int idFuncion= Integer.parseInt(idFuncionStr);
+                    carritoDao.cambiarButacasTicket(butacas, idFuncion, idCompraStr);
+                }catch (NumberFormatException e){
+                    System.out.println("Error al convertir id | doPost UsuarioCarrotpIndex");
+                }
+                response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?id="+idClient+"&action=listar");
+                break;
+            case "borrar":
+                try{
+                    int idFuncion= Integer.parseInt(idFuncionStr);
+                    carritoDao.borrarTicket(idFuncion, idCompraStr);
+                }catch (NumberFormatException e){
+                    System.out.println("Error al convertir id | doPost UsuarioCarrotpIndex");
+                }
+                response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?id="+idClient+"&action=listar");
+                break;
         }
     }
 }

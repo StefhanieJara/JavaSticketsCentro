@@ -123,7 +123,7 @@
                             </a>
                         </div>
                         <div class="p-2">
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=13" class="text-dark text-decoration-none">
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=12" class="text-dark text-decoration-none">
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Historial de tickets</span>
                             </a>
@@ -176,7 +176,7 @@
                 <div class="row container-pelicula">
                     <% for (int i=j*4; i<j+4; i++) { %>
                     <div class="col-pelicula1">
-                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=Listapeliculas.get(i).getIdPelicula()%>&idCliente=5"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
+                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=Listapeliculas.get(i).getIdPelicula()%>&idCliente=12"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
                         <div class="textoPeliculas"><%=Listapeliculas.get(i).getNombre()%></div>
                     </div>
                     <%}%>

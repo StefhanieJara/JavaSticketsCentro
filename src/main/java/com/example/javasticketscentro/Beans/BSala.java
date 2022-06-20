@@ -6,6 +6,15 @@ public class BSala {
     private int aforo;
     private int numero;
     private String nombre;
+    private BSede bSede;
+
+    public BSede getbSede() {
+        return bSede;
+    }
+
+    public void setbSede(BSede bSede) {
+        this.bSede = bSede;
+    }
 
     public String getNombre() {
         return nombre;
