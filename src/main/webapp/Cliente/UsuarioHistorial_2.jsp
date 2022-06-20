@@ -235,7 +235,7 @@
                                                     LocalDateTime fechayhora = LocalDateTime.parse(datetime2);
                                                     if(fechayhora.isAfter(LocalDateTime.now())){ %>
                                                 <td><span class="badge bg-success">Vigente</span></td>
-                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
                                                 <%}else{%>
                                                 <td><span class="badge bg-secondary">Asistido</span></td>
                                                 <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-warning">Calificar</a></td>

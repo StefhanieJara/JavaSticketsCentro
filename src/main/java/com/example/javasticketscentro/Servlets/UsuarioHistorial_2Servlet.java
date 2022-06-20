@@ -17,10 +17,12 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
         String idCLientSr= request.getParameter("idCliente");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         HistorialDao historialDao = new HistorialDao();
+        System.out.println(idCLientSr);
         switch (action){
             case "listar" -> {
                 try{
-                    int idClient = Integer.parseInt(idCLientSr);
+                    //int idClient = Integer.parseInt(idCLientSr);
+                    int idClient = 13;
                     ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(idClient);
                     request.setAttribute("lista", listadetickets);
                     ArrayList<ArrayList<Bhistorial_detalle>> listaHistoriales = new ArrayList<>();
