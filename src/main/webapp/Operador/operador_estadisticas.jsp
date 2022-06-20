@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %><%--
   Created by IntelliJ IDEA.
   User: Niurka
   Date: 05/06/2022
@@ -6,16 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="asistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="busqueda" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="genero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="vista1" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="vista2" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="calificada" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="busqueda" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="actor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="director" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-
+<jsp:useBean id="listaAsistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="masVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="menosVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
+<jsp:useBean id="peliculaMejorCalificada" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
+<jsp:useBean id="actorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
+<jsp:useBean id="directorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,7 +58,7 @@
         }
 
         tr:hover td{
-            background-color: #369681;
+            background-color: #a35353;
             color: white;
         }
     </style>
@@ -78,25 +75,11 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexOperador.html"><img src="assets/img/logo.png" /></a>
+                <a href="indexOperador.html"><img src="img/logo.png" /></a>
             </a>
         </div>
 
-        <!--<div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0">
-            <div class="input-group">
-                <div class="form-outline" style="width: 50%">
-                    <input
-                            type="search"
-                            id="form1"
-                            class="form-control"
-                            placeholder="Buscar película"
-                    />
-                </div>
-                <button type="button" class="btn btn-tele border-start-1">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>-->
+
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         ></div>
@@ -127,7 +110,7 @@
     <div class="d-flex align-items-center flex-column mb-3 vh-100">
         <div class="p-2 w-100">
             <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Administrador</h5>
+                <h5 class="mb-0">Menú de Operador</h5>
                 <button
                         type="button"
                         class="btn-close text-reset"
@@ -142,7 +125,7 @@
                     <div class="my-2">
                         <h4 class="mb-3">Rex Campos Díaz</h4>
                         <img
-                                src="assets/img/images.png"
+                                src="img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -197,9 +180,9 @@
             <div class="responsive_tabs">
                 <div id="horizontalTab">
                     <ul class="resp-tabs-list">
-                        <li>Pelicula </li>
+                        <li>Funciones</li>
                         <li>Vistas</li>
-                        <li>Calificaciones</li>
+                        <li>Pelicula</li>
                         <li>Actores y Directores</li>
                     </ul>
                     <div class="resp-tabs-container">
@@ -223,6 +206,15 @@
                                                 <form>
                                                     <label> Fecha de fin </label>
                                                     <input type="date">
+                                                </form><br>
+                                                <form >
+                                                    <label> Sede</label>
+                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                        <option selected>Seleccione la sede</option>
+                                                        <option value="1">Lima</option>
+                                                        <option value="2">Comas</option>
+                                                        <option value="3">San Juan de Lurigancho</option>
+                                                    </select>
                                                 </form><br>
                                                 <button type="button" class="btn btn-danger">Inspeccionar</button>
 
@@ -254,55 +246,23 @@
                                             </div>
                                         </div><br>
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
-                                            Películas más buscadas
+                                            Genero por pelicula
                                         </FONT></br>
-                                        <div class="row justify-content-start">
-                                            <div class="col-2">
-                                                <br>
-                                                <form >
-                                                    <label> Fecha de inicio </label>
-                                                    <input type="date">
-                                                </form><br>
-                                                <form>
-                                                    <label> Fecha de fin </label>
-                                                    <input type="date">
-                                                </form><br>
-                                                <button type="button" class="btn btn-danger">Inspeccionar</button>
+                                        <table >
+                                            <thead>
+                                            <tr>
+                                                <td><h2>Pelicula</h2></td><td><h2>Género</h2></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <%for (BFuncion genero: listaGenero){%>
+                                            <tr>
+                                                <td><h3><%=genero.getbPelicula().getNombre()%></h3></td><td><h3><%=genero.getbPelicula().getGenero()%></h3></td>
+                                            </tr>
+                                            <%}%>
+                                            </tbody>
 
-                                            </div>
-                                            <div class="col-5">
-                                                <section class="container_grafico">
-                                                    <div class= "grafico" style="background-image: conic-gradient(var(--color_twitter) 30%,
-									var(--color_facebook) 30% 40%,
-									var(--color_pinterest) 40% 68%,
-									var(--color_instagram) 68%);"></div>
-                                                    <div class= "container_leyenda">
-															<span class="leyenda_all">
-																<span class="color_instagram"></span>
-																<p class = "social"> 32% Matrix 4</p>
-															</span>
-                                                        <span class = "leyenda_all">
-																<span class="color_twitter"></span>
-																<p class = "social">30% Lina de Lima</p>
-															</span>
-
-                                                        <span class="leyenda_all">
-																<span class="color_pinterest"></span>
-																<p class = "social"> 28% Largas distancias </p>
-															</span>
-
-                                                        <span class="leyenda_all">
-																<span class="color_facebook"></span>
-																<p class = "social"> 10% Benedetta </p>
-															</span>
-
-
-
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </div><br>
-
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -348,13 +308,21 @@
                                         <button type="button" class="btn btn-danger">Inspeccionar</button>
 
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-8">
                                         <table >
+                                            <thead>
+                                                <tr>
+                                                    <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
+                                                </tr>
+                                            </thead>
 
+                                            <tbody>
+                                            <%for (BFuncion vista: masVista){%>
                                             <tr>
-                                                <td><h2>Cannes</h2></td><td><h2>2</h2></td>
+                                                <td><h2><%=vista.getbPelicula().getNombre()%></h2></td><td><h2><%=vista.getbSede().getNombre()%></h2></td><td><h2><%=vista.getbSala().getNumero()%></h2></td>
                                             </tr>
-
+                                            <%}%>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -396,13 +364,21 @@
                                         <button type="button" class="btn btn-danger">Inspeccionar</button>
 
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-8">
                                         <table >
-
+                                            <thead>
                                             <tr>
-                                                <td><h2>Cannes</h2></td><td><h2>2</h2></td>
+                                                <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
                                             </tr>
+                                            </thead>
 
+                                            <tbody>
+                                            <%for (BFuncion vista: menosVista){%>
+                                            <tr>
+                                                <td><h2><%=vista.getbPelicula().getNombre()%></h2></td><td><h2><%=vista.getbSede().getNombre()%></h2></td><td><h2><%=vista.getbSala().getNumero()%></h2></td>
+                                            </tr>
+                                            <%}%>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -434,22 +410,22 @@
                                             </div>
                                         </div><br><br>
                                         <table >
-
+                                            <thead>
                                             <tr>
-                                                <td><h2>Lina de Lima</h2></td><td>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                            </td>
+                                                <td><h2>Pelicula</h2></td><td><h2>Calificación</h2></td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><h2><%=peliculaMejorCalificada.getNombre()%></h2></td><td><h2><%=peliculaMejorCalificada.getCalificacionPelicula()%></h2></td>
                                             </tr>
 
+                                            </tbody>
                                         </table>
 
                                     </div>
                                     <div class ="col-4">
-                                        <img src="img/s1.jpg" style="height: 400px; width: 250px">
+                                        <img src="<%=peliculaMejorCalificada.getFoto()%>" style="height: 400px; width: 250px">
                                     </div>
                                     <div class="col-2">
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
@@ -494,60 +470,41 @@
                                 </FONT><br> <br>
 
                                 <label>Película</label>
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option selected>Selecciona la pelicula</option>
-                                    <option value="1">Doctor Strange</option>
-                                    <option value="2">Larga distancia</option>
-                                    <option value="3">Lina de Lima</option>
-                                </select>
+                                <div class="row align-items-start">
+                                    <div class="col-2">
+                                        <form >
+                                            <label> Fecha de inicio </label>
+                                            <input type="date">
+                                        </form><br>
+
+                                    </div>
+                                    <div class="col-2">
+                                        <form>
+                                            <label> Fecha de fin </label>
+                                            <input type="date">
+                                        </form><br>
+
+                                    </div>
 
 
+                                    <div class="col-8">
+                                        <table >
+                                            <thead>
+                                            <tr>
+                                                <td><h2>Actor</h2></td><td><h2>Calificación</h2></td><td>Foto</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><h2><%=actorMejorCalificado.getNombre()%></h2></td><td><h2><%=actorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
+                                            </tr>
 
-                                <br> <br>
-                                <table >
+                                            </tbody>
 
-                                    <tr>
-                                        <td><h4>Benedict Cumberbatch</h4></td>
-                                        <td>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star "></span>
-                                            <span class="fa fa-star "></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4>Patrick Stewart</h4></td>
-                                        <td>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star "></span>
-                                            <span class="fa fa-star "></span>
-                                            <span class="fa fa-star"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4>Tobey Maguire</h4></td>
-                                        <td>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star "></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><h4>Elizabeth Olsen</h4></td>
-                                        <td>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                        </td>
-                                    </tr>
+                                        </table>
+                                    </div>
+                                </div>
 
-                                </table>
 
 
                                 <br><br>
@@ -571,36 +528,26 @@
                                         </form><br>
 
                                     </div>
-                                    <div class="col-3">
-                                        <label>Película</label>
-                                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option selected>Selecciona la pelicula</option>
-                                            <option value="1">Doctor Strange</option>
-                                            <option value="2">Larga distancia</option>
-                                            <option value="3">Lina de Lima</option>
-                                        </select>
-                                    </div>
-                                    <br>
-                                </div>
 
-                                <div class="row justify-content-start">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <table >
-
+                                            <thead>
                                             <tr>
-                                                <td><h2>Lina de Lima</h2></td><td>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                                <span class="fa fa-star checked"></span>
-                                            </td>
+                                                <td><h2>Director</h2></td><td><h2>Calificación</h2></td><td>Foto</td>
                                             </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><h2><%=directorMejorCalificado.getNombre()%></h2></td><td><h2><%=directorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=directorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
+                                            </tr>
+
+                                            </tbody>
 
                                         </table>
                                     </div>
                                 </div>
-                                <br><br>
+
+
 
 
                             </div>

@@ -63,7 +63,7 @@ public class CalificacionDao extends BaseDao {
     }
 
     public ArrayList<BCelebridad> listarActorPorID(int idPersona, int idPelicula) {
-        ArrayList<BCelebridad> celebridades = null;
+        ArrayList<BCelebridad> celebridades = new ArrayList<>();
         String sql = "select ce.nombre, ce.apellido, ce.foto, ce.idCelebridad from pelicula pe " +
                 "                               left join celebridad_por_pelicula cp on pe.idPelicula = cp.Pelicula_idPelicula " +
                 "  left join celebridad ce on cp.Celebridad_idCelebridad = ce.idCelebridad " +
