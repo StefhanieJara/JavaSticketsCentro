@@ -62,7 +62,8 @@ public class HistorialDao extends BaseDao{
                 "                    se.nombre as Sede, " +
                 "                    concat(f.fecha,' - ',f.horaInicio) as FechaDeLaFuncion, " +
                 "                    f.precio as PrecioPorTicket,  " +
-                "                    pel.idPelicula as IdPelicula " +
+                "                    pel.idPelicula as IdPelicula, " +
+                "                    f.idFuncion as idFuncion " +
                 "                FROM persona p  " +
                 "                    inner join compra c on (p.idPersona = c.Persona_idPersona) " +
                 "                    inner join ticket t on (c.idCompra = t.Compra_idCompra) " +
@@ -87,6 +88,7 @@ public class HistorialDao extends BaseDao{
                     bhistorial_detalle.setFecha(rs.getString(4));
                     bhistorial_detalle.setPrecio(rs.getDouble(5));
                     bhistorial_detalle.setIdPelicula(rs.getInt(6));
+                    bhistorial_detalle.setIdFuncion(rs.getInt(7));
                     funcionesTicket.add(bhistorial_detalle);
                 }
             }
@@ -98,26 +100,15 @@ public class HistorialDao extends BaseDao{
 
     }
 
-    public void borrar(String ticketId) {
+    public void borrar(String ticketId, int funcionId) {
 
-        String sql = "delete from ticket where Compra_idCompra = ?";
+        String sql = "delete from ticket where (Compra_idCompra = ? and Funcion_idFuncion = ?)";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
 
             pstmt.setString(1, ticketId);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        String sql2 = "delete from compra where idCompra = ?";
-
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql2);) {
-
-            pstmt.setString(1, ticketId);
+            pstmt.setInt(2, funcionId);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

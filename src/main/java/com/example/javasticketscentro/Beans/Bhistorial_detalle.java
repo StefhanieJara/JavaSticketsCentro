@@ -9,6 +9,7 @@ public class Bhistorial_detalle {
     private String estado;
     private Double total;
     private int idPelicula;
+    private int idFuncion;
 
     public int getUnidades() {
         return unidades;
@@ -73,4 +74,9 @@ public class Bhistorial_detalle {
     public void setIdPelicula(int idPelicula) {
         this.idPelicula = idPelicula;
     }
+
+
+    public int getIdFuncion() { return idFuncion; }
+
+    public void setIdFuncion(int idFuncion) { this.idFuncion = idFuncion; }
 }

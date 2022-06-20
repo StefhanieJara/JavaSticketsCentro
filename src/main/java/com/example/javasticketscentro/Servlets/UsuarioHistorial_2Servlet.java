@@ -38,8 +38,9 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                 }
             }
             case "borrar" -> {
-                String id = request.getParameter("id");
-                historialDao.borrar(id);
+                String idTicket = request.getParameter("idTicket");
+                String idFuncion = request.getParameter("idFuncion");
+                historialDao.borrar(idTicket,Integer.parseInt(idFuncion));
                 response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
             }
         }

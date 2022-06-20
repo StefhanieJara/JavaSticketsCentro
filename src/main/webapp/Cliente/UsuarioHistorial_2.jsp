@@ -1,6 +1,7 @@
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
 <jsp:useBean id="listaHistoriales" scope="request" type="java.util.ArrayList<java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>>" />
@@ -191,7 +192,7 @@
                                             <tr class="cell-1">
                                                 <td name="FechaCompra" id="FechaCompra"><%=ticket.getFecha_compra()%></td>
                                                 <td name="CodigoTicket" id="CodigoTicket"><%=ticket.getCodigo()%></td>
-                                                <td name="CostoTotal" id="CostoTotal"><%=ticket.getTotal()%></td>
+                                                <td name="CostoTotal" id="CostoTotal">S/<%=ticket.getTotal()%></td>
                                                 <td name="ObtenerFunciones" id="ObtenerFunciones"
                                                         class="table-elipse"
                                                         data-bs-toggle="collapse"
@@ -207,27 +208,32 @@
                                                 <td colspan="0.7">Sede</td>
                                                 <td colspan="0.7">Fecha</td>
                                                 <td colspan="0.7">Precio </td>
-                                                <td colspan="0.7">Estado</td>
                                                 <td colspan="0.7">Subtotal</td>
-                                                <td colspan="0.7">Calificar</td>
+                                                <td colspan="0.7">Estado</td>
+                                                <td colspan="0.7">Opcion</td>
                                             </tr>
 
                                             <%for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
-                                                <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
-                                                    <td colspan="0.7"><%=funcion.getUnidades()%></td>
-                                                    <td colspan="0.7"><%=funcion.getPelicula()%></td>
-                                                    <td colspan="0.7"><%=funcion.getSede()%></td>
-                                                    <td colspan="0.7"><%=funcion.getFecha()%></td>
-                                                    <td colspan="0.7"><%=funcion.getPrecio()%></td>
-                                                    <td><span class="badge bg-success">Vigente</span></td>
-                                                    <td colspan="0.7">S/99.00</td>
-                                                    <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Pelicula</a></td>
-                                                </tr>
-                                            <%}%>
-                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
-                                                <td colspan="7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=borrar&id=<%=ticket.getCodigo() %>" class="btn btn-danger">Cancelar ticket</a>
-                                                </td>
+                                            <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
+                                                <td colspan="0.7"><%=funcion.getUnidades()%></td>
+                                                <td colspan="0.7"><%=funcion.getPelicula()%></td>
+                                                <td colspan="0.7"><%=funcion.getSede()%></td>
+                                                <td colspan="0.7"><%=funcion.getFecha()%></td>
+                                                <td colspan="0.7">S/<%=funcion.getPrecio()%></td>
+                                                <td colspan="0.7">S/<%=(funcion.getUnidades()*funcion.getPrecio())%></td>
+                                                <% String datetime1 = funcion.getFecha();
+                                                    String[] separados = datetime1.split(" - ");
+                                                    String datetime2 = separados[0]+'T'+separados[1];
+                                                    LocalDateTime fechayhora = LocalDateTime.parse(datetime2);
+                                                    if(fechayhora.isAfter(LocalDateTime.now())){ %>
+                                                <td><span class="badge bg-success">Vigente</span></td>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?a=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
+                                                <%}else{%>
+                                                <td><span class="badge bg-secondary">Asistido</span></td>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-warning">Calificar</a></td>
+                                                <%}%>
                                             </tr>
+                                            <%}%>
                                             <%i++;%>
                                             <%}%>
                                         </tbody>
