@@ -225,18 +225,14 @@
                 <td><%=personal.getApellido()%></td>
                 <td><%=personal.getNombre_sede()%></td>
                 <td style="width: 100px;">
-                    <a href="editaOperador.html">
-                        <i class="far fa-edit btn-tele p-2 rounded"></i>
-                    </a>
-                    <hr class="my-1" style="background-color: white" />
-                    <button
-                            class="btn btn-danger py-1 px-2"
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#confirmacion"
-                    >
-                        <i class="fas fa-times-circle"></i>
-                    </button>
+                    <div class="col-sm-1 d-none d-md-block text-around">
+                        <a href="<%=request.getContextPath()%>/personalServlet?action=editar&id=<%=personal.getIdPersonal()%>">
+                            <i class="far fa-edit btn-tele p-1 rounded"></i>
+                        </a>
+                        <a href="<%=request.getContextPath()%>/personalServlet?action=eliminar&id=<%=personal.getIdPersonal()%>">
+                            <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                        </a>
+                    </div>
     </div>
     <!--Icono para eliminar-->
 

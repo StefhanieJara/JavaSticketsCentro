@@ -60,7 +60,7 @@ public class OperadorDao {
             throw new RuntimeException(e);
         }
 
-        String sql = "select per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per\n" +
+        String sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per\n" +
                 "\tinner join sede se on per.Sede_idSede= se.idSede;";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
@@ -69,10 +69,11 @@ public class OperadorDao {
 
             while (rs.next()) {
                 BPersonal bPersonal = new BPersonal();
-                bPersonal.setNombre(rs.getString(1));
-                bPersonal.setApellido(rs.getString(2));
-                bPersonal.setIdSede(rs.getInt(3));
-                bPersonal.setNombre_sede(rs.getString(4));
+                bPersonal.setIdPersonal(rs.getInt(1));
+                bPersonal.setNombre(rs.getString(2));
+                bPersonal.setApellido(rs.getString(3));
+                bPersonal.setIdSede(rs.getInt(4));
+                bPersonal.setNombre_sede(rs.getString(5));
                 listapersonal.add(bPersonal);
             }
         } catch (SQLException e) {
@@ -106,6 +107,65 @@ public class OperadorDao {
         }
     }
 
+    public BPersonal buscarPorId(int id) {
+        BPersonal bPersonal  = new BPersonal();
 
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "select * from personal where idPersonal= ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
+            pstmt.setInt(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery();) {
+
+                if (rs.next()) {
+                    bPersonal.setIdPersonal(rs.getInt(1));
+                    bPersonal.setNombre(rs.getString(2));
+                    bPersonal.setApellido(rs.getString(3));
+                    bPersonal.setIdSede(rs.getInt(4));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return bPersonal;
+    }
+    public void actualizarPersonal(int idPersonal, String nombre, String apellido, int Sede_idSede) {
+
+        String user = "root";
+        String pass = "root";
+        String url = "jdbc:mysql://localhost:3306/centro1";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String sql = "update personal set nombre = ?, apellido= ?, Sede_idSede= ? where idPersonal= ?;";
+
+        try (Connection connection = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt= connection.prepareStatement(sql)){
+            pstmt.setString(1,nombre);
+            pstmt.setString(2,apellido);
+            pstmt.setInt(3,Sede_idSede);
+            pstmt.setInt(4,idPersonal);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
