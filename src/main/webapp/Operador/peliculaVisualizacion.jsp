@@ -166,7 +166,7 @@
             <h4><%=pelicula.getNombre()%></h4>
             <img
                     class="w-100"
-                    src="img\doctorStrange.jpg"
+                    src="<%=pelicula.getFoto()%>"
                     style="max-height: 400px; max-width: 250px"/>
         </div>
         <!--Precio y Stock-->
