@@ -209,6 +209,7 @@
                                                 <td colspan="0.7">Precio </td>
                                                 <td colspan="0.7">Estado</td>
                                                 <td colspan="0.7">Subtotal</td>
+                                                <td colspan="0.7">Calificar</td>
                                             </tr>
 
                                             <%for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
@@ -220,6 +221,7 @@
                                                     <td colspan="0.7"><%=funcion.getPrecio()%></td>
                                                     <td><span class="badge bg-success">Vigente</span></td>
                                                     <td colspan="0.7">S/99.00</td>
+                                                    <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=12&idPelicula=<%=funcion.getPrecio()%>" type="button" class="btn btn-success">Calificar Pelicula</a></td>
                                                 </tr>
                                             <%}%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">

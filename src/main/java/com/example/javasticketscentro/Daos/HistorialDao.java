@@ -43,7 +43,7 @@ public class HistorialDao{
                 "    inner join funcion_has_sala fs on (f.idFuncion = fs.Funcion_idFuncion) " +
                 "    inner join sala sa on (fs.Sala_idSala = sa.idSala) " +
                 "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
-                "WHERE p.idPersona = 12) AS subquery;";
+                "WHERE p.idPersona = 14) AS subquery;";
 
         try (Connection connection = DriverManager.getConnection(url, user, pass);
              Statement stmt = connection.createStatement();
