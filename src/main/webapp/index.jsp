@@ -1,4 +1,5 @@
-<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: CARLOS
   Date: 5/06/2022
@@ -7,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="Listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>"/>
+<jsp:useBean id="ListaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -188,48 +190,21 @@
             <div class="container px-5 py-2" id="custom-cards-san-miguel">
                 <h4 class="dist-name" style="color:#E72D4B; font-weight: bold; margin-top: 30px">Nuestras Sedes</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-4 py-3">
-                    <!--SEDE 1-->
+                    <% for (BSede sede : ListaSedes) {%>
                     <div class="col">
                         <div onclick="" class="card card-farmacia f1">
-                            <a href="https://www.google.com/maps/place/Chacarilla+420,+San+Isidro+15046/@-12.1010132,-77.0318613,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8696d016bd3:0xaa6210c576067e77!8m2!3d-12.1010185!4d-77.0296726" style="text-decoration:none ; color:white"  target="_blank">
-                            <h2>Chacarilla</h2>
+                            <a href="https://www.google.com/maps/place/<%=sede.getNombre()%>,<%=sede.getDireccion()%>" style="text-decoration:none ; color:white"  target="_blank">
+                            <h2><%=sede.getNombre()%></h2>
                             </a>
                             <ul>
                                 <li>
                                     <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <a href="https://www.google.com/maps/place/Chacarilla+420,+San+Isidro+15046/@-12.1010132,-77.0318613,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8696d016bd3:0xaa6210c576067e77!8m2!3d-12.1010185!4d-77.0296726" style="text-decoration:none ; color:white" target="_blank"><small>Calle Los Volados #420</small></a>
+                                    <a href="https://www.google.com/maps/place/<%=sede.getNombre()%>,<%=sede.getDireccion()%>" style="text-decoration:none ; color:white" target="_blank"><small><%=sede.getDireccion()%></small></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <!--SEDE 2-->
-                    <div class="col">
-                        <div onclick="href=''" class="card card-farmacia f2">
-                            <a href="https://www.google.com/maps/place/Av.+Gral.+Antonio+Alvarez+de+Arenales+310,+Jes%C3%BAs+Mar%C3%ADa+15072/@-12.0678789,-77.0403835,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8ebeea94ad9:0x729b8d1c7b119d9!8m2!3d-12.0678842!4d-77.0381948" style="text-decoration:none ; color:white"target="_blank">
-                            <h2>Lince</h2>
-                            </a>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <a href="https://www.google.com/maps/place/Av.+Gral.+Antonio+Alvarez+de+Arenales+310,+Jes%C3%BAs+Mar%C3%ADa+15072/@-12.0678789,-77.0403835,17z/data=!3m1!4b1!4m5!3m4!1s0x9105c8ebeea94ad9:0x729b8d1c7b119d9!8m2!3d-12.0678842!4d-77.0381948" style="text-decoration:none ; color:white" target="_blank"><small>Av.Arenales #310</small></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--SEDE 3-->
-                    <div onclick="href=''" class="col">
-                        <div class="card card-farmacia f3">
-                            <a href="https://www.google.com/maps/place/Larcomar/@-12.1319449,-77.0327036,17z/data=!3m1!4b1!4m5!3m4!1s0x9105b7e1b4b5a533:0xa549043226dcfb18!8m2!3d-12.1319502!4d-77.0305149" style="text-decoration:none ; color:white" target="_blank">
-                            <h2>Miraflores</h2>
-                            </a>
-                            <ul>
-                                <li>
-                                    <i class="fas fa-map-marker-alt fa-xs"></i>
-                                    <a href="https://www.google.com/maps/place/Larcomar/@-12.1319449,-77.0327036,17z/data=!3m1!4b1!4m5!3m4!1s0x9105b7e1b4b5a533:0xa549043226dcfb18!8m2!3d-12.1319502!4d-77.0305149" style="text-decoration:none ; color:white"target="_blank"><small>Jirón Los Desdes #123</small></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <%}%>
                 </div>
             </div>
         </div>
