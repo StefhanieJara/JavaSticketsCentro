@@ -249,9 +249,9 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Sede</th>
+                                <th scope="col"># Butacas</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                             </thead>
@@ -259,9 +259,9 @@
                             <%double costoTotal=0;%>
                             <%for(Bticket bticket: carrito){%>
                             <tr>
-                                <td class="text-center"><%=bticket.getCantButaca()%></td>
                                 <td><%=bticket.getbFuncion().getbPelicula().getNombre()%></td>
                                 <td><%=bticket.getbFuncion().getbSede().getNombre()%></td>
+                                <td class="text-center"><%=bticket.getCantButaca()%></td>
                                 <td>s/ <%=bticket.getCantButaca()*bticket.getbFuncion().getPrecio()%></td>
                                 <%costoTotal+=(bticket.getCantButaca()*bticket.getbFuncion().getPrecio());%>
                             </tr>
