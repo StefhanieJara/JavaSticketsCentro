@@ -51,7 +51,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="index.html"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Buscador de productos-->
@@ -287,24 +287,21 @@
                             </div>
                             <%}%>
                             <%}%>
+                        <br><br>
                         <select class="form-select" name="funcionEscogida">
                             <option value="Funciones" <%=funcionElegida.getId()==0 ? "selected": ""%> disabled>Funciones</option>
                             <%for(BFuncion bFuncion: funciones){%>
                                 <option value="<%=bFuncion.getId()%>" <%=funcionElegida.getId()==bFuncion.getId()? "selected" : ""%> <%=funcionElegida.getId()==0 ? "" : "disabled"%> ><%="Hora de Inicio: "+bFuncion.getHoraInicio()%>pm <%=" Fecha:"+bFuncion.getFecha()%></option>
                             <%}%>
                         </select>
-                        <br>
                         <table>
                         </br>
                         <table ALIGN="right">
-
                             <tr>
                                 <td class="text-end">
                                     <button type="<%=funcionElegida.getId()==0 ? "submit" : "button"%>" class="btn btn-tele btn-md mr-1 mb-2">
                                         <i class="fas fa-shopping-cart"></i> Añadir al carrito
                                     </button>
-
-
                                 </td>
                             </tr>
                         </table>

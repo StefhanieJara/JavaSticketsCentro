@@ -91,7 +91,7 @@ public class CarritoDao extends BaseDao{
     }
 
     public ArrayList<Bticket> listarCarrito(int idClient){
-        ArrayList<Bticket> carrito= null;
+        ArrayList<Bticket> carrito= new ArrayList<>();
         String sql = "select p.nombre,p.codigoPUCP,t.cantidadButaca,f.precio,f.fecha,f.horaInicio,s.numero, s2.nombre, " +
                 "       p2.foto, p2.nombre, t.Compra_idCompra, t.Funcion_idFuncion " +
                 "from persona p " +
@@ -148,14 +148,6 @@ public class CarritoDao extends BaseDao{
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        if(carrito==null){
-            carrito= new ArrayList<>();
-            Bticket bticket= new Bticket();
-            BFuncion bFuncion= new BFuncion();
-            bFuncion.setId(0);
-            bticket.setbFuncion(bFuncion);
-            carrito.add(bticket);
         }
         return carrito;
     }
