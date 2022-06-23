@@ -251,7 +251,7 @@
                             <tr>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Sede</th>
-                                <th scope="col"># Butacas</th>
+                                <th scope="col">Butacas</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                             </thead>

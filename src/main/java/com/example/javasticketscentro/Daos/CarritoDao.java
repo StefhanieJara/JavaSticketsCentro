@@ -36,7 +36,7 @@ public class CarritoDao extends BaseDao{
             idCompra= generarCodigoCompra();
             crearCompra(idCompra, idClient);
         }
-        String sql="insert into ticket (Compra_idCompra, Funcion_idFuncion, qr, cantidadButaca, carrito) values (?,?,'xd',0,1)";
+        String sql="insert into ticket (Compra_idCompra, Funcion_idFuncion, qr, cantidadButaca, carrito) values (?,?,'xd',1,1)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, idCompra);
