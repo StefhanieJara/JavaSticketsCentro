@@ -167,7 +167,7 @@
 
     </div>
     <!-- -->
-    <% for (int j=0; j<Math.ceil(Listapeliculas.size()/4);j++) {%>
+    <% for (int j=0; j<Math.ceil((double) Listapeliculas.size()/4);j++) {%>
         <div class="container px-6 py-2">
             <div class="row">
                 <% if (j==0) {%>
