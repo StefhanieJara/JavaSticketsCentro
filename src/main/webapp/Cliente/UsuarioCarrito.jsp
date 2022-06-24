@@ -34,17 +34,6 @@
         <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
             <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
         </div>
-        <!--Buscador de productos-->
-        <div class="col-md-7 d-none d-md-block ps-0"> <!--desaparece en menores a medium-->
-            <div class="input-group">
-                <div style="width: 40%">
-                    <input type="search" id="buscador_producto" class="form-control" placeholder="Busca un producto"/>
-                </div>
-                <a role="button" class="btn btn-tele border-start-1" href="usuarioProductoBuscado.html">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-        </div>
         <!--Carrito-->
         <div class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
             <a class="btn btn-tele-inverso" role="button" href="UsuarioCarritoIndex">

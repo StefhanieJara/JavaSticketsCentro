@@ -54,27 +54,6 @@
                 <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
-        <!--Buscador de productos-->
-        <div class="col-md-7 d-none d-md-block ps-0">
-            <!--desaparece en menores a medium-->
-            <div class="input-group">
-                <div style="width: 50%">
-                    <input
-                            type="search"
-                            id="buscador_producto"
-                            class="form-control"
-                            placeholder="Busca una pelicula"
-                    />
-                </div>
-                <a
-                        role="button"
-                        class="btn btn-tele border-start-1"
-                        href="usuarioProductoBuscado.html"
-                >
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-        </div>
         <!--Carrito-->
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
@@ -195,52 +174,43 @@
                         <br>
                         <br>
                         <tr>
-                            <b class="text-dark">Descripcion:</b>
+                            <p class="text-dark"><b class="text-dark">Descripcion: </b><%=pelicula.getSinopsis()%></p>
                         </tr>
                         <tr>
-                            <p class="text-dark"><%=pelicula.getSinopsis()%></p>
-                        </tr>
-                        <tr>
-                            <b class="text-dark">Genero:</b>
-                        </tr>
-                        <tr>
-                            <p class="text-dark"><%=pelicula.getGenero()%></p>
-                        </tr>
-                        <tr>
-                            <b class="text-dark">Duracion:</b>
+                            <p class="text-dark"><b class="text-dark">Genero: </b><%=pelicula.getGenero()%></p>
                         </tr>
                         <tr>
                             <%String[] horario= pelicula.getDuracion().split(":");%>
                             <%String hora= horario[0], minuto=horario[1];%>
-                            <h6 class="text-dark"><%=hora%> h<%=" "+minuto%> m</h6>
-                        </tr>
-                        <tr>
-                            <b class="text-dark">Directores:</b>
+                            <h6 class="text-dark"><b class="text-dark">Duracion: </b><%=hora%> h<%=" "+minuto%> m</h6>
                         </tr>
                         <tr>
                             <h6 class="text-dark">
+                                <b class="text-dark">Directores: </b>
                                 <%int i=1;%>
                                 <% for(BCelebridad bCelebridad: pelicula.getDirectores()){%>
+                                    <%if(i<=3){%>
                                     <%if(i<pelicula.getDirectores().size()){%>
                                         <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()+", "%>
                                     <%}else{%>
                                         <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()%>
                                     <%}%>
+                                    <%}%>
                                 <% i++;}%>
                             </h6>
                         </tr>
                         <tr>
-                            <b class="text-dark">Actores:</b>
-                        </tr>
-                        <tr>
                             <ul>
                                 <li type="circle"><h6 class="text-dark">
+                                    <b class="text-dark">Actores:</b>
                                     <%i=1;%>
                                     <%for(BCelebridad bCelebridad: pelicula.getActores()){%>
+                                        <%if(i<=3){%>
                                         <%if(i<pelicula.getDirectores().size()){%>
                                             <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()+", "%>
                                         <%}else{%>
                                             <%=bCelebridad.getNombre()+" "+bCelebridad.getApellido()%>
+                                        <%}%>
                                         <%}%>
                                     <%i++;}%>
                                 </h6></li>
@@ -248,12 +218,13 @@
                         </tr>
                     </table>
                 </div>
+                <br><br><br><br><br>
                 <div class="main-container">
                 <form method="POST" action="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=anadirCarro">
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
-                        <br><br><br><br>
+                        <br><br><br><br><br>
                         <input type="hidden" name="idClient" value="<%=idClient%>">
                         <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
                             <!--Señal de alerta-->
@@ -287,11 +258,14 @@
                             </div>
                             <%}%>
                             <%}%>
-                        <br><br>
                         <select class="form-select" name="funcionEscogida">
+                            <%if(funciones.size()==0){%>
+                            <option>< No hay funciones disponibles ></option>
+                            <%}else{%>
                             <option value="Funciones" <%=funcionElegida.getId()==0 ? "selected": ""%> disabled>Funciones</option>
                             <%for(BFuncion bFuncion: funciones){%>
-                                <option value="<%=bFuncion.getId()%>" <%=funcionElegida.getId()==bFuncion.getId()? "selected" : ""%> <%=funcionElegida.getId()==0 ? "" : "disabled"%> ><%="Hora de Inicio: "+bFuncion.getHoraInicio()%>pm <%=" Fecha:"+bFuncion.getFecha()%></option>
+                            <option value="<%=bFuncion.getId()%>" <%=funcionElegida.getId()==bFuncion.getId()? "selected" : ""%> <%=funcionElegida.getId()==0 ? "" : "disabled"%> ><%="Hora de Inicio: "+bFuncion.getHoraInicio()%>pm <%=" Fecha:"+bFuncion.getFecha()%></option>
+                            <%}%>
                             <%}%>
                         </select>
                         <table>
@@ -299,7 +273,7 @@
                         <table ALIGN="right">
                             <tr>
                                 <td class="text-end">
-                                    <button type="<%=funcionElegida.getId()==0 ? "submit" : "button"%>" class="btn btn-tele btn-md mr-1 mb-2">
+                                    <button type="<%=(funcionElegida.getId()!=0 || funciones.size()==0) ? "button" : "submit"%>" class="btn btn-tele btn-md mr-1 mb-2">
                                         <i class="fas fa-shopping-cart"></i> Añadir al carrito
                                     </button>
                                 </td>

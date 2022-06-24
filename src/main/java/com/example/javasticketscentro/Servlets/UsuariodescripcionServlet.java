@@ -39,7 +39,6 @@ public class UsuariodescripcionServlet extends HttpServlet {
                     request.setAttribute("funciones", peliculaDao.detectarFunciones(idPeli));
                     request.setAttribute("idClient", idClient);
                     request.setAttribute("funcionElegida", funcionElegida);
-                    System.out.println("id= "+pelicula.getIdPelicula());
                     requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
                     requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){

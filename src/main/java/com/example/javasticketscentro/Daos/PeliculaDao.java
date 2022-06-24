@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class PeliculaDao extends BaseDao {
 
     public BPelicula devolverPelicula(String id) {
-        BPelicula pelicula = null;
+        BPelicula pelicula = new BPelicula();
 
         try{
             int id_int=Integer.parseInt(id);
-            String sql="select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p inner join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) inner join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
+            String sql="select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p left join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) left join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
             try(Connection conn= this.getConnection();
                 PreparedStatement pstmt= conn.prepareStatement(sql)){
                 pstmt.setInt(1,id_int);

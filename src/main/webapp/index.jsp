@@ -167,18 +167,20 @@
 
     </div>
     <!-- -->
-    <% for (int j=0; j<=Math.ceil(Listapeliculas.size()/4);j++) {%>
+    <% for (int j=0; j<Math.ceil(Listapeliculas.size()/4);j++) {%>
         <div class="container px-6 py-2">
             <div class="row">
                 <% if (j==0) {%>
                 <h3 class="dist-name title-peliculas">Películas en cartelera</h3>
                 <%}%>
                 <div class="row container-pelicula">
-                    <% for (int i=j*4; i<j+4; i++) { %>
+                    <% for (int i=j*4; i<(j+1)*4; i++) { %>
+                    <%if(i<Listapeliculas.size()){%>
                     <div class="col-pelicula1">
                         <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=Listapeliculas.get(i).getIdPelicula()%>&idCliente=<%=idClient%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
                         <div class="textoPeliculas"><%=Listapeliculas.get(i).getNombre()%></div>
                     </div>
+                    <%}%>
                     <%}%>
                 </div>
             </div>
