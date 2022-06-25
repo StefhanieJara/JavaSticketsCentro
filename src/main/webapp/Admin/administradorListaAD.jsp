@@ -52,7 +52,7 @@
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
             <a class="navbar-brand py-0" href="usuario.html">
-                <a href="indexAdmin.html"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/AdminIndexServlet?action=index"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Espacio-->
@@ -82,52 +82,86 @@
 </nav>
 
 <!--Menú cine-->
-<div
-        class="offcanvas offcanvas-end text-center"
-        tabindex="-1"
-        id="offcanvasWithBackdrop"
-        aria-labelledby="offcanvasWithBackdropLabel"
->
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Centro Cultural</h5>
-                <button
-                        type="button"
-                        class="btn-close text-reset"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                ></button>
+    <div
+            class="offcanvas offcanvas-end text-center"
+            tabindex="-1"
+            id="offcanvasWithBackdrop"
+            aria-labelledby="offcanvasWithBackdropLabel"
+    >
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Administrador</h5>
+                    <button
+                            type="button"
+                            class="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                    ></button>
+                </div>
             </div>
-        </div>
-        <!--Foto cine-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Rex Quispe Medina</h4>
-                        <img
-                                src="img/images.png"
-                                class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                alt="profile image"
-                        />
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3">Rex Campos Díaz</h4>
+                            <img
+                                    src="img/images.png"
+                                    class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
+                                    alt="profile image"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Salas</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionCelebridad"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Actores y Directores</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionOperadores"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Operadores</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionClientes"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Lista de Clientes</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="#" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 <!--Contenido página-->
 <main>
     <!--Alinear cabecera con contenido-->
