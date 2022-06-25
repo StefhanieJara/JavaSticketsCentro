@@ -629,7 +629,7 @@ public class AdminDao extends BaseDao{
     public  BSala buscarSala(int idSala) {
         BSala bsala = null;
 
-        String sql = "select * from sala where idSala = ?";
+        String sql = "select * from sala inner join sede s on sala.Sede_idSede = s.idSede where idSala = ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -643,6 +643,9 @@ public class AdminDao extends BaseDao{
                     bsala.setIdSala(rs.getInt(3));
                     bsala.setAforo(rs.getInt(2));
                     bsala.setNumero(rs.getInt(4));
+                    BSede bsede= new BSede();
+                    bsede.setNombre(rs.getString(6));
+                    bsala.setbSede(bsede);
                 }
             }
         } catch (SQLException e) {

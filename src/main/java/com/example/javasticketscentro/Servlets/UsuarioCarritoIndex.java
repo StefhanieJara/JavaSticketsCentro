@@ -15,6 +15,14 @@ public class UsuarioCarritoIndex extends HttpServlet {
         CarritoDao carritoDao= new CarritoDao();
         switch (action){
             case "listar"->{
+                try{
+                    int idPeli= Integer.parseInt(request.getParameter("idPeli"));
+                    request.setAttribute("idPeli", idPeli);
+                    request.setAttribute("vieneDePeli", true);
+                }catch (NumberFormatException e){
+                    request.setAttribute("idPeli", 0);
+                    request.setAttribute("vieneDePeli", false);
+                }
                 request.setAttribute("idClient", idClient);
                 request.setAttribute("carrito", carritoDao.listarCarrito(idClient));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioCarrito.jsp");

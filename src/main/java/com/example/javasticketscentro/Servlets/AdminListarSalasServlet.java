@@ -103,11 +103,11 @@ public class AdminListarSalasServlet extends HttpServlet {
                     }
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir tipo de dato");
+                    request.setAttribute("bSala", adminDao.buscarSala(idSala));
+                    request.setAttribute("sedes", adminDao.listarSedes());
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorEditarSala.jsp");
+                    requestDispatcher.forward(request,response);
                 }
-                request.setAttribute("bSala", adminDao.buscarSala(idSala));
-                request.setAttribute("sedes", adminDao.listarSedes());
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorEditarSala.jsp");
-                requestDispatcher.forward(request,response);
             }
             case "filtrar"->{
                 String filtro= request.getParameter("filtro");

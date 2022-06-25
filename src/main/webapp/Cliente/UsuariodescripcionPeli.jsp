@@ -61,7 +61,7 @@
             <input type="hidden" name="idCliente" value="<%=idClient%>">
             <a class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar&id=<%=idClient%>">
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar&id=<%=idClient%>&idPeli=<%=pelicula.getIdPelicula()%>">
             <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i></div></a>
@@ -83,8 +83,7 @@
     </div>
     <!--Boton retornar-->
     <div
-            class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
-    >
+            class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex">
         <a
                 class="btn btn-tele-inverso"
                 role="button"
@@ -96,7 +95,6 @@
             </div>
         </a>
     </div>
-
 
 </nav>
 

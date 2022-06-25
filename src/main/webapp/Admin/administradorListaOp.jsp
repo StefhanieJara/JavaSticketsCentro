@@ -105,8 +105,8 @@
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button class="btn" type="button" style=" color: white">
                 <div style="font-size: 0.62rem">
-                    <a href="<%=request.getContextPath()%>/AdminIndexServlet"></a>
-                    <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                    <a href="<%=request.getContextPath()%>/AdminIndexServlet">
+                    <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                 </div>
             </button>
         </div>

@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="carrito" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bticket>"/>
 <jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="idPeli" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="vieneDePeli" scope="request" type="java.lang.Boolean"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +53,20 @@
                 </div>
             </button>
         </div>
+    </div>
+    <!--Boton retornar-->
+    <div
+            class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex">
+        <a
+                class="btn btn-tele-inverso"
+                role="button"
+                href="<%=request.getContextPath()%>/<%=vieneDePeli ? "UsuariodescripcionServlet?id="+idPeli+"&idCliente="+idClient : ""%>"
+        >
+            <div style="font-size: 0.6rem">
+                <!--para cambios más precisos del tamaño-->
+                <i class="fa fa-caret-square-o-left fa-3x"></i>
+            </div>
+        </a>
     </div>
 </nav>
 

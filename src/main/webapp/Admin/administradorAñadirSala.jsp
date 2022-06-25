@@ -41,25 +41,10 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexAdmin.html"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/AdminIndexServlet?action=index"><img src="img/logo.png" /></a>
             </a>
         </div>
 
-        <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0">
-            <div class="input-group">
-                <div class="form-outline" style="width: 50%">
-                    <input
-                            type="search"
-                            id="form1"
-                            class="form-control"
-                            placeholder="Buscar película"
-                    />
-                </div>
-                <button type="button" class="btn btn-tele border-start-1">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         ></div>
@@ -76,6 +61,16 @@
             >
                 <div style="font-size: 0.62rem">
                     <i class="fas fa-user-circle fa-3x"></i>
+                </div>
+            </button>
+        </div>
+
+        <!--Boton atras-->
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <button class="btn" type="button" style=" color: white">
+                <div style="font-size: 0.62rem">
+                    <a href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                 </div>
             </button>
         </div>
@@ -187,7 +182,7 @@
                                                     name="numeroSala"
                                                     id="farmaName"
                                                     class="form-control"
-                                                    placeholder="Ingrese numero de sala"/>
+                                                    placeholder="Ingrese numero de sala" max="10" min="1" required="required"/>
                                         </div>
                                     </div>
 
@@ -198,7 +193,7 @@
                                                     id="farmaMail"
                                                     name="aforo"
                                                     class="form-control"
-                                                    placeholder="Ingrese el aforo"/>
+                                                    placeholder="Ingrese el aforo" required="required" max="200" min="50"/>
                                         </div>
                                     </div>
                                 </div>
@@ -206,11 +201,10 @@
                                 <div class="row mb-3">
 
                                     <div class="form-outline mb-4 py-4">
-                                        <label class="form-label" for="productName">Elija la sede</label>
+                                        <label class="form-label" for="country1">Elija la sede</label>
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
-                                            <option value="Selecciona" selected>Selecciona</option>
                                             <%for(BSede bSede : sedes){%>
                                             <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
