@@ -63,6 +63,8 @@
                 </a>
             </div>
         </div>
+
+
         <!--Carrito-->
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
@@ -78,6 +80,7 @@
                 </div>
             </a>
         </div>
+
         <!--Menú usuario-->
         <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button
@@ -93,9 +96,26 @@
             </button>
         </div>
     </div>
+    <!--Boton retornar-->
+    <div
+            class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
+    >
+        <a
+                class="btn btn-tele-inverso"
+                role="button"
+                href="<%=request.getContextPath()%>/"
+        >
+            <div style="font-size: 0.6rem">
+                <!--para cambios más precisos del tamaño-->
+                <i class="fa fa-caret-square-o-left fa-3x"></i>
+            </div>
+        </a>
+    </div>
+
+
 </nav>
 
-<!--Menú de usuario-->
+<!--Menú de usuario2-->
 <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario" aria-labelledby="menuDeUsuario">
     <div class="d-flex align-items-center flex-column mb-3 vh-100">
         <!--Título y botón-->

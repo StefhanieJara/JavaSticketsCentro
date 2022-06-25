@@ -81,6 +81,23 @@
             </button>
         </div>
     </div>
+    <!--Boton retornar-->
+    <div
+            class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
+    >
+        <a
+                class="btn btn-tele-inverso"
+                role="button"
+                href="<%=request.getContextPath()%>/"
+        >
+            <div style="font-size: 0.6rem">
+                <!--para cambios más precisos del tamaño-->
+                <i class="fa fa-caret-square-o-left fa-3x"></i>
+            </div>
+        </a>
+    </div>
+
+
 </nav>
 
 <!--Menú de usuario-->

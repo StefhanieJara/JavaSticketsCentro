@@ -93,14 +93,26 @@
 
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
         </div>
+
+        <!--Boton atras-->
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
                     aria-controls="offcanvasWithBackdrop" style="color: #fff">
                 <div style="font-size: 0.62rem">
-                    <i class="fas fa-user-circle fa-3x"></i>
+                    <i class="fas fa-user-circle fa-3x "></i>
                 </div>
             </button>
         </div>
+
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <button class="btn" type="button" style=" color: white">
+                <div style="font-size: 0.62rem">
+                    <a href="<%=request.getContextPath()%>/AdminIndexServlet"</a>
+                    <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                </div>
+            </button>
+        </div>
+
     </div>
 </nav>
     <div
