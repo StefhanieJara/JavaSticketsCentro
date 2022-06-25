@@ -13,14 +13,29 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ListarOperadorServlet", value = "/ListarOperadorServlet")
 public class ListarOperadorServlet extends HttpServlet {
+    private static int cant_resultClientes=5;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
-        int idOperador = 0;
+        ArrayList<String> filtros= new ArrayList<>();
+        filtros.add("");
+        filtros.add("");
+        filtros.add("");
+        filtros.add("");
+        int pagina= request.getParameter("pagina") == null ? 1 :Integer.parseInt(request.getParameter("pagina"));
+
         switch (action){
             case "listar":
-                request.setAttribute("listaOperadores",adminDao.listarOperador());
+                String nombreBuscar = request.getParameter("nombreBuscar")==null ? "" :  request.getParameter("nombreBuscar");
+                String apellidoBuscar = request.getParameter("apellidoBuscar")==null ? "" : request.getParameter("apellidoBuscar");
+                String dniBuscar = request.getParameter("dniBuscar")==null ? "" : request.getParameter("dniBuscar");
+                String emailBuscar= request.getParameter("emailBuscar")==null ? "" : request.getParameter("emailBuscar");
+                request.setAttribute("listaOperadores",adminDao.listarOperador(emailBuscar,nombreBuscar,apellidoBuscar,dniBuscar,pagina,cant_resultClientes, true));
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarOperador(emailBuscar,nombreBuscar, apellidoBuscar, dniBuscar, pagina, cant_resultClientes, false).size()/cant_resultClientes);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("filtros", filtros);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
                 requestDispatcher.forward(request,response);
                 break;
@@ -35,9 +50,8 @@ public class ListarOperadorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-
         AdminDao adminDao = new AdminDao();
-
+        ArrayList<String> filtros= new ArrayList<>();
         switch (action){
             case "crear":
                 String nombre = request.getParameter("nombreOperador");
@@ -56,6 +70,22 @@ public class ListarOperadorServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath()+"/ListarOperadorServlet");
                 break;
             case "buscar":
+                String nombreBuscar = request.getParameter("nombreBuscar");
+                filtros.add(nombreBuscar);
+                String apellidoBuscar = request.getParameter("apellidoBuscar");
+                filtros.add(apellidoBuscar);
+                String dniBuscar = request.getParameter("dniBuscar");
+                filtros.add(dniBuscar);
+                String emailBuscar =request.getParameter("emailBuscar");
+                filtros.add(emailBuscar);
+                int pagina= Integer.parseInt(request.getParameter("pagina"));
+                int cant_paginas=(int)Math.ceil((double)adminDao.listarOperador(emailBuscar,nombreBuscar, apellidoBuscar, dniBuscar, pagina, cant_resultClientes, false).size()/cant_resultClientes);
+                request.setAttribute("listaOperadores",adminDao.listarOperador(emailBuscar,nombreBuscar,apellidoBuscar,dniBuscar,pagina,cant_resultClientes, true));
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("pagina", pagina);
+                request.setAttribute("filtros", filtros);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
+                requestDispatcher.forward(request,response);
                 break;
         }
     }

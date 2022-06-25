@@ -3,6 +3,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaOperadores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersona>" />
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="filtros" scope="request" type="java.util.ArrayList<java.lang.String>"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -196,56 +199,75 @@
     <div class="caja2">
     </div>
     <div class="caja1">
-        <div class="row g-3 align-items-center mt-2 ">
-            <div class="rows-auto">
-                <h4><center>FILTROS</center></h4>
-                <label for="inputtext6" class="col-form-label">Nombre</label>
+        <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=buscar">
+            <div class="row g-3 align-items-center mt-2 ">
+                <div class="rows-auto">
+                    <h4>FILTROS</h4>
+                    <input type="hidden" name="pagina" value="1">
+                    <label for="inputtext6" class="col-form-label">Nombre</label>
+                </div>
+                <div class="rows-auto">
+                    <%if(filtros.get(0).equals("")){%>
+                    <input type="text" id="inputtext6" name="nombreBuscar" class="form-control" aria-label="Filtrar por nombre" placeholder="Filtrar por nombre">
+                    <%}else{%>
+                    <input type="text" id="inputtext6" name="nombreBuscar" class="form-control" aria-label="Filtrar por nombre" placeholder="Filtrar por nombre" value="<%=filtros.get(0)%>">
+                    <%}%>
+                </div>
             </div>
-            <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <div class="row g-3 align-items-center mt-2 ">
+                <div class="rows-auto">
+                    <label for="inputtext6" class="col-form-label">Apellido</label>
+                </div>
+                <div class="rows-auto">
+                    <%if(filtros.get(1).equals("")){%>
+                    <input type="text" id="inputtext6" name="apellidoBuscar" class="form-control" aria-label="Filtrar por apellido" placeholder="Filtrar por apellido">
+                    <%}else{%>
+                    <input type="text" id="inputtext6" name="apellidoBuscar" class="form-control" aria-label="Filtrar por apellido" placeholder="Filtrar por apellido" value="<%=filtros.get(1)%>">
+                    <%}%>
+                </div>
             </div>
-        </div>
-        <div class="row g-3 align-items-center mt-2 ">
-            <div class="rows-auto">
-                <label for="inputtext6" class="col-form-label">Apellido</label>
+            <div class="row g-3 align-items-center mt-2">
+                <div class="rows-auto ">
+                    <label for="inputtext6" class="col-form-label"> DNI</label>
+                </div>
+                <div class="rows-auto">
+                    <%if(filtros.get(2).equals("")){%>
+                    <input type="text" id="inputtext6" name="dniBuscar" class="form-control" aria-label="Filtrar por DNI" placeholder="Filtrar por DNI">
+                    <%}else{%>
+                    <input type="text" id="inputtext6" name="dniBuscar" class="form-control" aria-label="Filtrar por DNI" placeholder="Filtrar por DNI" value="<%=filtros.get(2)%>">
+                    <%}%>
+                </div>
             </div>
-            <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+            <div class="row g-3 align-items-center mt-2">
+                <div class="rows-auto">
+                    <label for="inputtext6" class="col-form-label">Email</label>
+                </div>
+                <div class="rows-auto">
+                    <%if(filtros.get(3).equals("")){%>
+                    <input type="text" id="inputtext6" name="emailBuscar" class="form-control" aria-label="Filtrar por email" placeholder="Filtrar por email">
+                    <%}else{%>
+                    <input type="text" id="inputtext6" name="emailBuscar" class="form-control" aria-label="Filtrar por email" placeholder="Filtrar por email" value="<%=filtros.get(3)%>">
+                    <%}%>
+                </div>
             </div>
-        </div>
-        <div class="row g-3 align-items-center mt-2">
-            <div class="rows-auto ">
-                <label for="inputtext6" class="col-form-label">DNI</label>
+            <div class="row g-3 align-items-center mt-2">
+                <div class="rows-auto">
+                    <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar filtros</button>
+                </div>
             </div>
-            <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-            </div>
-        </div>
-
-        <div class="row g-3 align-items-center mt-2">
-            <div class="rows-auto">
-                <label for="inputtext6" class="col-form-label">Correo</label>
-            </div>
-            <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-            </div>
-        </div>
-        <div class="row g-3 align-items-center mt-2">
-            <div class="rows-auto">
-                <label for="inputtext6" class="col-form-label">Telefono</label>
-            </div>
-            <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
-            </div>
-        </div>
-
+        </form>
     </div>
 
     <div id="main-container">
         <table>
             <thead>
             <tr>
-                <th>Foto</th><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Telefono</th><th>Direccion</th><th>X</th>
+                <th>Foto</th>
+                <th>Nombres</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+                <th></th>
             </tr>
             </thead>
                 <% int a = 1;
@@ -254,8 +276,9 @@
                 <td><img
                     class="w-100"
                     src="img\magaly.jpg"
-                    style="max-height: 200px; max-width: 100px"
-            /></td><td><%=operador.getNombre()%></td><td><%=operador.getApellido()%></td><td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
+                    style="max-height: 200px; max-width: 100px"/></td>
+                <td><%=operador.getNombre()+" "+operador.getApellido()%></td>
+                <td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
                 <td>
                     <a href="<%=request.getContextPath()%>/EditarOperadorServlet?&id=<%=operador.getIdPer()%>">
                         <i class="far fa-edit btn-tele p-2 rounded"></i>
@@ -330,17 +353,53 @@
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
+                        <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
+                        <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
+                        <input type="hidden" name="emailBuscar" value="<%=filtros.get(3)%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+
+                    <%for(int i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
+                        <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
+                        <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
+                        <input type="hidden" name="emailBuscar" value="<%=filtros.get(3)%>">
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=buscar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <input type="hidden" name="nombreBuscar" value="<%=filtros.get(0)%>">
+                        <input type="hidden" name="apellidoBuscar" value="<%=filtros.get(1)%>">
+                        <input type="hidden" name="dniBuscar" value="<%=filtros.get(2)%>">
+                        <input type="hidden" name="emailBuscar" value="<%=filtros.get(3)%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>

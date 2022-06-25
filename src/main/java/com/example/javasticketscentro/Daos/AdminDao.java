@@ -108,71 +108,43 @@ public class AdminDao extends BaseDao{
     }
 
     // Gestión de Operadores
-    public ArrayList<BPersona> listarOperador() {
+    public ArrayList<BPersona> listarOperador(String email,String nombre, String apellido,String dni,int pagina,int cant_result, boolean limit) {
         ArrayList<BPersona> listaOperadores = new ArrayList<>();
+        String sql;
+        if(limit){
+            sql="Select * from persona where rol='operador' and (nombre like ? and dni like ? and apellido like ? and email like ? ) limit ?,"+cant_result;
+        }else{
+            sql="Select * from persona where rol='operador' and (nombre like ? and dni like ? and apellido like ? and email like ?)";
+        }
+        int posicion=(pagina-1)*cant_result;
         try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("select nombre,apellido,numeroCelular,fechaDeNacimiento,email,rol,idPersona,direccionCliente from persona where rol = 'Operador'");) {
-
-            while (rs.next()) {
-                BPersona bPersona = new BPersona();
-
-                bPersona.setNombre(rs.getString(1));
-                bPersona.setApellido(rs.getString(2));
-                bPersona.setNumCel(rs.getInt(3));
-                bPersona.setFecha_Nc(rs.getString(4));
-                bPersona.setEmail(rs.getString(5));
-                bPersona.setRol(rs.getString(6));
-                bPersona.setIdPer(rs.getInt(7));
-                bPersona.setDireccion(rs.getString(8));
-                listaOperadores.add(bPersona);
-
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1,"%"+nombre+"%");
+            pstmt.setString(2, "%"+dni+"%");
+            pstmt.setString(3,"%"+apellido+"%");
+            pstmt.setString(4, "%"+email+"%");
+            if(limit){
+                pstmt.setInt(5,posicion);
             }
-
+            try(ResultSet rs= pstmt.executeQuery()){
+                while (rs.next()) {
+                    BPersona bPersona = new BPersona();
+                    bPersona.setIdPer(rs.getInt(1));
+                    bPersona.setDni(rs.getInt(2));
+                    bPersona.setNombre(rs.getString(3));
+                    bPersona.setApellido(rs.getString(4));
+                    bPersona.setFoto(rs.getString(5));
+                    bPersona.setNumCel(rs.getInt(6));
+                    bPersona.setFecha_Nc(rs.getString(7));
+                    bPersona.setEmail(rs.getString(8));
+                    bPersona.setDireccion(rs.getString(11));
+                    listaOperadores.add(bPersona);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return listaOperadores;
-    }
-
-    //Métodos internos para filtrar Operadores
-    public String generarSQL_filtrosOpe(String tabla, String rol,String nombre, String apellido, int id,int cantidadResul){
-        String sql, sql0,sql1,sql2;
-        if(nombre!=null){
-            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like ? ";
-        }else{
-            sql0="Select * from "+tabla+" where rol= '"+rol+"' and(nombre like '%' ";
-        }
-        if(id!=0){
-            sql1="and idPersona like ? ";
-        }else{
-            sql1="and idPersona like '%' ";
-        }
-        if(apellido!=null){
-            sql2="and apellido like ?) limit ?,"+cantidadResul;
-        }else{
-            sql2=") limit ?,"+cantidadResul;
-        }
-        sql=sql0+sql1+sql2;
-        return sql;
-    }
-    public void enviar_PstmtOpe(PreparedStatement pstmt, int posicion, String nombre, String apellido, int id) throws SQLException {
-        int contador=0;
-        if(nombre!=null){
-            contador++;
-            pstmt.setString(contador,"%"+nombre+"%");
-        }
-        if(id!=0){
-            contador++;
-            pstmt.setString(contador,"%"+id+"%");
-        }
-        if(apellido!=null){
-            contador++;
-            pstmt.setString(contador,"%"+apellido+"%");
-        }
-        contador++;
-        pstmt.setInt(contador, posicion);
     }
 
     public void anadirOperadores(String nombre, int dni, String apellido,  int numCel, String foto,
