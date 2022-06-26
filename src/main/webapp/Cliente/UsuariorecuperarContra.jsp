@@ -6,8 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="conf" scope="request" type="java.lang.String"/>
-<jsp:useBean id="email" scope="request" type="java.lang.String"/>
+<jsp:useBean id="conf" scope="session" type="java.lang.String" class="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -71,24 +70,30 @@
                                             </div>
                                             <br>
                                             <label class="mb-2">Ingresa tu correo:</label>
-                                            <input type="email" name="email" class="form-control" value="<%=email.equals("") ? "" : email%>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Email" required="required">
+                                            <input type="email" name="email" class="form-control" value="<%=session.getAttribute("email")==null ? "" : session.getAttribute("email")%>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Email" required="required">
+                                            <%if(conf.equals("no")){ session.removeAttribute("email"); session.removeAttribute("conf");}%>
                                             <br>
                                             <div class="text-center"><button type="submit" class="btn mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 Enviar clave al correo
                                             </button></div>
                                             </form>
-                                            <br><br><br><br>
-                                            <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra0" >
+                                            <%if(conf.equals("no")){%>
+                                                <div class="text-danger mb-2">No existe una cuenta con este correo</div>
+                                            <%}%>
+                                            <%if(conf.equals("yes")){%>
+                                            <div style="color: limegreen" class="mb-2">La clave de recuperación se envió exitosamente!</div>
+                                            <%}%>
+                                            <br><br><br>
                                             <label class="mb-2">Ingrese su clave de recuperacion:</label>
                                             <input <%=conf.equals("yes") ? "" : "disabled"%> type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Clave" required="required">
                                             <br>
-                                            <input value="<%=email%>" type="hidden" name="email">
                                             <div class="text-center">
-                                                <button type="submit"  class="btn mb-4 botones" <%=conf.equals("yes") ? "" : "disabled"%> style="color: white; background:#E72D4B; border-color:#E72D4B" >
+                                                <a type="submit" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra0" class="btn mb-4 botones <%=(conf.equals("no") || conf.equals("")) ? "disabled" : ""%>"  style="color: white; background:#E72D4B; border-color:#E72D4B" >
                                                 Cambiar contraseña
-                                                </button>
+                                                </a>
                                             </div>
-                                            </form>
+
+                                            <p style="text-align: center"><a href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a></p>
                                         </div>
                                     </div>
                                 </div>

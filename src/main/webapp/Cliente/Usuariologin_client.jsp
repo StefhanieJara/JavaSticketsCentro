@@ -74,10 +74,11 @@
                                             <input class="form-control" type="password" name="password"
                                                    placeholder="Contraseña" required="required">
                                         </div>
-                                        <%if(request.getParameter("error")!=null){%>
+                                        <%if(session.getAttribute("error")!=null){%>
                                             <div class="text-danger mb-2">Error en usuario o contraseña</div>
                                         <%}%>
-                                        <div class="mb-3"><button  class="btn btn-primary d-block mb-3" type="submit"
+                                        <%session.removeAttribute("error"); session.invalidate();%>
+                                        <div class="mb-3"><button class="btn btn-primary d-block mb-3" type="submit"
                                        style="background:#E72D4B; border-color:#E72D4B">
                                         <strong>Ingresar</strong>
                                         </button></div>

@@ -35,10 +35,12 @@ public class UsuarioregistrorealServlet extends HttpServlet {
         String dnistr= request.getParameter("dni");
         String numeroTelefonostr= request.getParameter("numeroTelefono");
         String fechaNacimiento= request.getParameter("fechaNacimiento");
+        HttpSession session= request.getSession();
         switch (action){
             case "registrar":
                 if(loginDao.existeEmail(email)){
-                    response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=emailExiste");
+                    session.setAttribute("error","emailExiste");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                 }else{
                     if(pass.equals(pass0)){
                         int dni= Integer.parseInt(dnistr);
@@ -49,35 +51,43 @@ public class UsuarioregistrorealServlet extends HttpServlet {
                                     int codigo=0;
                                     try {
                                         loginDao.crearCliente(nombre,apellido,email,pass,codigo, dni,numTele,fechaNacimiento);
+                                        session.invalidate();
                                         view= request.getRequestDispatcher("Cliente/UsuarioconfirmarRegistro.jsp");
                                         view.forward(request, response);
                                     } catch (SQLException e) {
                                         e.printStackTrace();
-                                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=errorSQL");
+                                        session.setAttribute("error","errorSQL");
+                                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                                     }
                                 }else{
                                     int codigo= Integer.parseInt(codigostr);
                                     if(((int)Math.log10(codigo)+1)==8){
                                         try {
                                             loginDao.crearCliente(nombre,apellido,email,pass,codigo, dni,numTele,fechaNacimiento);
+                                            session.invalidate();
                                             view= request.getRequestDispatcher("Cliente/UsuarioconfirmarRegistro.jsp");
                                             view.forward(request, response);
                                         } catch (SQLException e) {
                                             e.printStackTrace();
-                                            response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=errorSQL");
+                                            session.setAttribute("error","errorSQL");
+                                            response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                                         }
                                     }else{
-                                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=codigoIncorrecto");
+                                        session.setAttribute("error","codigoIncorrecto");
+                                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                                     }
                                 }
                             }else{
-                                response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=telefoIncorrecto");
+                                session.setAttribute("error","telefoIncorrecto");
+                                response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                             }
                         }else{
-                            response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=dniIncorrecto");
+                            session.setAttribute("error","dniIncorrecto");
+                            response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                         }
                     }else{
-                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet?error=passNoCoinciden");
+                        session.setAttribute("error","passNoCoinciden");
+                        response.sendRedirect(request.getContextPath()+"/UsuarioregistrorealServlet");
                     }
                 }
                 break;

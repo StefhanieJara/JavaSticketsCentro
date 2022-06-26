@@ -64,7 +64,7 @@
                             <div class="container w-75" style="color: white">
                                 <div class="row my-4" >
                                     <form  method="post" action="<%=request.getContextPath()%>/UsuarioregistrorealServlet?action=registrar">
-                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("errorSQL")){%>
+                                        <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("errorSQL")){%>
                                         <div class="text-danger mb-2">Ups! Hubo un error en su registro, vuelva a intentar.</div>
                                         <%}%>
                                         <div class="row">
@@ -87,7 +87,7 @@
                                         <div class="mb-3">
                                             <input class="form-control" type="password" name="pass" placeholder="Confirmar contraseña" required="required">
                                         </div>
-                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("passNoCoinciden")){%>
+                                        <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("passNoCoinciden")){%>
                                         <div class="text-danger mb-2">Las contraseñas no coinciden!</div>
                                         <%}%>
                                         <div class="row">
@@ -98,10 +98,10 @@
                                                 <input class="form-control" type="number" name="numeroTelefono" required="required" placeholder="Teléfono">
                                             </div>
                                         </div>
-                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("dniIncorrecto")){%>
+                                        <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("dniIncorrecto")){%>
                                         <div class="text-danger mb-2">Dni debe tener 8 dígitos!</div>
                                         <%}%>
-                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("telefoIncorrecto")){%>
+                                        <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("telefoIncorrecto")){%>
                                         <div class="text-danger mb-2">Teléfono debe tener 9 dígitos!</div>
                                         <%}%>
                                         <br>
@@ -128,7 +128,7 @@
                                         <div class="mb-3">
                                             <input class="form-control" type="number" name="codigo_PUCP" placeholder="Código PUCP">
                                         </div>
-                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("codigoIncorrecto")){%>
+                                        <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("codigoIncorrecto")){%>
                                         <div class="text-danger mb-2">El código debe tener 8 dígitos!</div>
                                         <%}%>
                                         <div class="mb-3">
@@ -137,10 +137,12 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <%if(request.getParameter("error")!=null && request.getParameter("error").equals("emailExiste")){%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("emailExiste")){%>
                                     <div class="text-danger mb-2">Ya existe una cuenta con este correo!</div>
                                     <%}%>
-                                    <a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=olvidoContra">Recuperar Contraseña</a>
+                                    <p style="text-align: center"><a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a>
+                                    <a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=olvidoContra">Recuperar Contraseña</a></p>
+                                    <%session.removeAttribute("error");%>
                                 </div>
                             </div>
                         </div>

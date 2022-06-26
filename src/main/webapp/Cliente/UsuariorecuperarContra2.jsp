@@ -6,8 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="email" scope="request" type="java.lang.String"/>
-<jsp:useBean id="error" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -76,13 +74,13 @@
                                             <label class="mb-2">Confirme su nueva contraseña:</label>
                                             <input type="password" name="pass2" class="form-control" placeholder="Confirme Contraseña" required="required">
                                             <br><br><br>
-                                            <input type="hidden" name="email" value="<%=email%>">
-                                            <%if(!error.equals("")){%>
-                                            <%if(error.equals("noIgual")){%>
+                                            <%if(session.getAttribute("error")!=null){%>
+                                            <%if(session.getAttribute("error").equals("noIgual")){%>
                                             <div class="text-danger mb-2">Las contraseñas no coinciden!</div>
                                             <%}else{%>
                                             <div class="text-danger mb-2">Ups! Ocurrió un problema al cambiar la contraseña, vuelve a intentarlo!</div>
                                             <%}%>
+                                            <%session.removeAttribute("error");session.invalidate();%>
                                             <%}%>
                                             <br><br><br>
                                             <div class="text-center"><button href="#" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
@@ -92,6 +90,7 @@
                                     </div>
                                 </div>
                                 </form>
+                                <p style="text-align: center"><a href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a></p>
                             </div>
 
                         </div>
