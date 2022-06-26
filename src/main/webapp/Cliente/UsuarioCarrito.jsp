@@ -284,9 +284,7 @@
                         <span>&nbsp;s/ <%=costoTotal%></span>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=pagar" class="btn btn-danger"
-                        >Pagar</a
-                        >
+                        <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar&id=<%=idClient%>" class="btn btn-danger">Pagar</a>
                     </div>
                 </div>
             </div>

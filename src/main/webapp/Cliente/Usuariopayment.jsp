@@ -43,27 +43,7 @@
                         <a href="index.html"><img src="img/logo.png" /></a>
                     </a>
                 </div>
-                <!--Buscador de peliculas-->
-                <div class="col-md-7 d-none d-md-block ps-0">
 
-                    <div class="input-group">
-                        <div style="width: 50%">
-                            <input
-                                    type="search"
-                                    id="buscador_pelicula"
-                                    class="form-control"
-                                    placeholder="Busca una pelicula"
-                            />
-                        </div>
-                        <a
-                                role="button"
-                                class="btn btn-tele border-start-1"
-                                href="usuarioPeliculaBuscada.html"
-                        >
-                            <i class="fas fa-search"></i>
-                        </a>
-                    </div>
-                </div>
                 <!--Carrito-->
                 <div
                         class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
@@ -169,16 +149,14 @@
                         <div class="col-12 col-lg-9 col-xl-7">
                             <div
                                     class="card shadow-2-strong card-registration"
-                                    style="border-radius: 15px"
-                            >
+                                    style="border-radius: 15px">
                                 <div
                                         class="card-header"
-                                        style="background-color: #e72d4b; color: white"
-                                >
+                                        style="background-color: #e72d4b; color: white">
                                     <h4 class="my-2">Realice el pago:</h4>
                                 </div>
                                 <div class="card-body p-4 p-md-5">
-                                    <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?a=guardar">
+                                    <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=guardar">
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-outline">
