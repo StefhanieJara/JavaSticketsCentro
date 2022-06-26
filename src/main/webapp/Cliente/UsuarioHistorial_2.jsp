@@ -159,13 +159,14 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th class="col-2">Fecha de compra</th>
-                                                <th class="col-2"></th>
-                                                <th class="col-1">Codigo</th>
-                                                <th class="col-2"></th>
-                                                <th class="col-2">Total</th>
-                                                <th class="col-2"></th>
-                                                <th class="col-2">Detalles</th>
-                                                <th class="col-2"></th>
+                                                <th class="col-1"></th>
+                                                <th class="col-2">Codigo</th>
+                                                <th class="col-1"></th>
+                                                <th class="col-1">Total</th>
+                                                <th class="col-1"></th>
+                                                <th class="col-1">Detalles</th>
+                                                <th class="col-1"></th>
+
                                             </tr>
                                         </thead>
                                         <!--AÑADO ADVERTENCIAS-->
@@ -194,45 +195,58 @@
                                                 <td name="CostoTotal" id="CostoTotal">S/<%=ticket.getTotal()%></td>
                                                 <td></td>
                                                 <td name="ObtenerFunciones" id="ObtenerFunciones"
-                                                        class="table-elipse"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#dt-<%=i%>"
+                                                    class="table-elipse"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#dt-<%=i%>"
                                                 >
                                                     <a href="#" class="fas fa-ellipsis-h text-black-50"></a>
                                                 </td>
-                                                <td></td>
+                                                <td>
+                                                </td>
+
                                             </tr>
                                             <!--Detalles pedido 1 (dt-1)-->
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child">
-                                                <td colspan="0.7">Unidades</td>
                                                 <td colspan="0.7">Película</td>
                                                 <td colspan="0.7">Sede</td>
                                                 <td colspan="0.7">Fecha</td>
-                                                <td colspan="0.7">Precio </td>
-                                                <td colspan="0.7">Subtotal</td>
                                                 <td colspan="0.7">Estado</td>
+                                                <td colspan="0.7">Precio </td>
+                                                <td colspan="0.7">Unidades</td>
+                                                <td colspan="0.7">Subtotal</td>
                                                 <td colspan="0.7">Opcion</td>
                                             </tr>
 
                                             <%for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
-                                                <td colspan="0.7"><%=funcion.getUnidades()%></td>
                                                 <td colspan="0.7"><%=funcion.getPelicula()%></td>
                                                 <td colspan="0.7"><%=funcion.getSede()%></td>
                                                 <td colspan="0.7"><%=funcion.getFecha()%></td>
-                                                <td colspan="0.7">S/<%=funcion.getPrecio()%></td>
-                                                <td colspan="0.7">S/<%=String.format("%.2f",(funcion.getUnidades()*funcion.getPrecio()))%></td>
+
                                                 <% String datetime1 = funcion.getFecha();
                                                     String[] separados = datetime1.split(" - ");
                                                     String datetime2 = separados[0]+'T'+separados[1];
                                                     LocalDateTime fechayhora = LocalDateTime.parse(datetime2);
                                                     if(fechayhora.isAfter(LocalDateTime.now())){ %>
                                                 <td><span class="badge bg-success">Vigente</span></td>
-                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
                                                 <%}else{%>
                                                 <td><span class="badge bg-secondary">Asistido</span></td>
+                                                <%}%>
+
+                                                <td colspan="0.7">S/<%=funcion.getPrecio()%></td>
+                                                <td colspan="0.7"><%=funcion.getUnidades()%></td>
+                                                <td colspan="0.7">S/<%=String.format("%.2f",(funcion.getUnidades()*funcion.getPrecio()))%></td>
+
+                                                <% String datetime1_2 = funcion.getFecha();
+                                                    String[] separados_2 = datetime1_2.split(" - ");
+                                                    String datetime2_2 = separados_2[0]+'T'+separados_2[1];
+                                                    LocalDateTime fechayhora_2 = LocalDateTime.parse(datetime2_2);
+                                                    if(fechayhora_2.isAfter(LocalDateTime.now())){ %>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
+                                                <%}else{%>
                                                 <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-warning">Calificar</a></td>
                                                 <%}%>
+
                                             </tr>
                                             <%}%>
                                             <%i++;%>

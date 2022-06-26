@@ -14,27 +14,30 @@ public class HistorialDao extends BaseDao{
         ArrayList<Bhistorial> tickets = new ArrayList<>();
 
 
-        String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', " +
-                " subquery.Codigo as 'Codigo', " +
-                " subquery.Total as 'Total' " +
-                "FROM (SELECT p.idPersona as Usuario, " +
-                "   c.fechaCompra as FechaDeCompra, " +
-                "   c.idCompra as Codigo, " +
-                "   se.nombre as Sede, " +
-                "        concat(f.fecha,' - ',f.horaInicio) as FechaDeLaFuncion, " +
-                "        c.montoTotal as Total, " +
-                "        t.cantidadButaca as Unidades, " +
-                "        pel.nombre as Pelicula, " +
-                "        f.precio as PrecioPorTicket " +
-                "FROM persona p " +
-                "    inner join compra c on (p.idPersona = c.Persona_idPersona)" +
-                "    inner join ticket t on (c.idCompra = t.Compra_idCompra) " +
-                "    inner join funcion f on (t.Funcion_idFuncion = f.idFuncion) " +
-                "    inner join pelicula pel on (f.Pelicula_idPelicula = pel.idPelicula) " +
-                "    inner join funcion_has_sala fs on (f.idFuncion = fs.Funcion_idFuncion) " +
-                "    inner join sala sa on (fs.Sala_idSala = sa.idSala) " +
-                "    inner join sede se on (sa.Sede_idSede = se.idSede) " +
-                "WHERE p.idPersona = ?) AS subquery;";
+        String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', \n" +
+                "                 subquery.Codigo as 'Codigo', \n" +
+                "                 subquery.Total as 'Total',\n" +
+                "                 subquery.EstaCancelado as 'Cancelado'\n" +
+                "                FROM (SELECT p.idPersona as Usuario, \n" +
+                "                   c.fechaCompra as FechaDeCompra, \n" +
+                "                   c.idCompra as Codigo,\n" +
+                "                   se.nombre as Sede, \n" +
+                "                        concat(f.fecha,' - ',f.horaInicio) as FechaDeLaFuncion, \n" +
+                "                        c.montoTotal as Total, \n" +
+                "                        t.cantidadButaca as Unidades, \n" +
+                "                        pel.nombre as Pelicula, \n" +
+                "                        f.precio as PrecioPorTicket,\n" +
+                "                        c.cancelado as EstaCancelado\n" +
+                "                FROM persona p \n" +
+                "                    inner join compra c on (p.idPersona = c.Persona_idPersona)\n" +
+                "                    inner join ticket t on (c.idCompra = t.Compra_idCompra) \n" +
+                "                    inner join funcion f on (t.Funcion_idFuncion = f.idFuncion) \n" +
+                "                    inner join pelicula pel on (f.Pelicula_idPelicula = pel.idPelicula) \n" +
+                "                    inner join funcion_has_sala fs on (f.idFuncion = fs.Funcion_idFuncion) \n" +
+                "                    inner join sala sa on (fs.Sala_idSala = sa.idSala) \n" +
+                "                    inner join sede se on (sa.Sede_idSede = se.idSede) \n" +
+                "                WHERE p.idPersona = ?) AS subquery\n" +
+                "                WHERE subquery.EstaCancelado = 1;";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
