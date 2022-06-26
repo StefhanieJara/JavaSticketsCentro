@@ -27,7 +27,7 @@
             rel="stylesheet"
     />
 </head>
-<body">
+<body background="img/banner3.jpg">
 <section
         class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
         style="min-height: 700px;">

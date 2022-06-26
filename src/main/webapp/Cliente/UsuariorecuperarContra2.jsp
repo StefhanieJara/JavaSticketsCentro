@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="email" scope="request" type="java.lang.String"/>
+<jsp:useBean id="error" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,7 +29,7 @@
                 rel="stylesheet"
         />
     </head>
-    <body">
+    <body background="img/banner3.jpg">
     <section
             class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
             style="min-height: 700px;">
@@ -60,6 +62,7 @@
                         </div>
                         <div class="col-md-6 d-flex flex-column justify-content-center align-content-center">
                             <div class="card-body">
+                                <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra" >
                                 <div class="container w-75">
                                     <div class="row my-4">
                                         <div class="form-group" style="color:white">
@@ -68,17 +71,27 @@
                                             </div>
                                             <br>
                                             <label class="mb-2">Ingrese su nueva contraseña:</label>
-                                            <input type="password" class="form-control">
+                                            <input type="password" name="pass" placeholder="Nueva Contraseña" required="required" class="form-control">
                                             <br>
                                             <label class="mb-2">Confirme su nueva contraseña:</label>
-                                            <input type="password" class="form-control">
-                                            <br><br><br><br><br><br>
-                                            <div class="text-center"><a href="<%=request.getContextPath()%>/UsuarioConfContraServlet" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <input type="password" name="pass2" class="form-control" placeholder="Confirme Contraseña" required="required">
+                                            <br><br><br>
+                                            <input type="hidden" name="email" value="<%=email%>">
+                                            <%if(!error.equals("")){%>
+                                            <%if(error.equals("noIgual")){%>
+                                            <div class="text-danger mb-2">Las contraseñas no coinciden!</div>
+                                            <%}else{%>
+                                            <div class="text-danger mb-2">Ups! Ocurrió un problema al cambiar la contraseña, vuelve a intentarlo!</div>
+                                            <%}%>
+                                            <%}%>
+                                            <br><br><br>
+                                            <div class="text-center"><button href="#" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 Confirmar
-                                            </a></div>
+                                            </button></div>
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
 
                         </div>

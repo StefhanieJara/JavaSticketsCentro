@@ -30,4 +30,28 @@ public class LoginDao extends BaseDao{
         }
         return bPersona;
     }
+    public boolean existeEmail(String email){
+        boolean existe= false;
+        String sql="select * from persona where email=?";
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1, email);
+            try(ResultSet rs= pstmt.executeQuery()){
+                if(rs.next()){
+                    existe=true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
+    public void cambiarContra(String email, String pass) throws SQLException {
+        String sql="update persona set contrasenia= sha2(?,256) where email=?;";
+        Connection conn=this.getConnection();
+        PreparedStatement pstmt= conn.prepareStatement(sql);
+        pstmt.setString(1, pass);
+        pstmt.setString(2,email);
+        pstmt.executeUpdate();
+    }
 }

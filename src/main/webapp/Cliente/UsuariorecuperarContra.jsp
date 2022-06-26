@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="conf" scope="request" type="java.lang.String"/>
+<jsp:useBean id="email" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,7 +29,7 @@
                 rel="stylesheet"
         />
     </head>
-    <body">
+    <body background="img/banner3.jpg">
     <section
             class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
             style="min-height: 700px;">
@@ -63,28 +65,34 @@
                                 <div class="container w-75">
                                     <div class="row my-4">
                                         <div class="form-group" style="color:white">
+                                            <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=validarEmail" >
                                             <div class="titles text-center">
                                                 <h5>Recuperar Contraseña</h5>
                                             </div>
                                             <br>
                                             <label class="mb-2">Ingresa tu correo:</label>
-                                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
+                                            <input type="email" name="email" class="form-control" value="<%=email.equals("") ? "" : email%>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Email" required="required">
                                             <br>
-                                            <div class="text-center"><a type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <div class="text-center"><button type="submit" class="btn mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 Enviar clave al correo
-                                            </a></div>
+                                            </button></div>
+                                            </form>
                                             <br><br><br><br>
+                                            <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra0" >
                                             <label class="mb-2">Ingrese su clave de recuperacion:</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" required="">
+                                            <input <%=conf.equals("yes") ? "" : "disabled"%> type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Clave" required="required">
                                             <br>
-                                            <div class="text-center"><a href="<%=request.getContextPath()%>/UsuarioRecContra2Servlet" type="submit" class="btn submit mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <input value="<%=email%>" type="hidden" name="email">
+                                            <div class="text-center">
+                                                <button type="submit"  class="btn mb-4 botones" <%=conf.equals("yes") ? "" : "disabled"%> style="color: white; background:#E72D4B; border-color:#E72D4B" >
                                                 Cambiar contraseña
-                                            </a></div>
+                                                </button>
+                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,7 @@
             rel="stylesheet"
     />
   </head>
-  <body">
+  <body background="img/banner3.jpg">
   <section
           class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
           style="min-height: 700px;">
@@ -64,7 +64,7 @@
                   <div class="row my-4">
                     <div class="text-center" style="transform: translateY(110%)">
                       <h2  style="color:white">¡Se cambio la contraseña exitosamente!</h2>
-                      <a  href="index.html">Volver a ingresar</a>
+                      <a  href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=loginform">Volver a ingresar</a>
                     </div>
                   </div>
                 </div>

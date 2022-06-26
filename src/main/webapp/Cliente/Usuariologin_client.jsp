@@ -65,7 +65,7 @@
                             <br><br>
                             <div class="flex-row justify-content-center align-content-center">
                                 <div class="d-flex flex-column px-md-5 justify-content-center align-content-center">
-                                    <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet" >
+                                    <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=login" >
                                         <div class="mb-3">
                                             <input class="form-control" type="text" name="user"
                                                    placeholder="Usuario" required="required">
@@ -84,7 +84,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <a class="text-center" href="<%=request.getContextPath()%>/UsuariorecuperarContraServlet">¿Olvidó su contraseña?</a>
+                            <a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=olvidoContra">¿Olvidó su contraseña?</a>
                             <a class="text-center" href="<%=request.getContextPath()%>/UsuarioregistrorealServlet">¿Es nuevo aquí? Regístrese</a>
                         </div>
                     </div>
