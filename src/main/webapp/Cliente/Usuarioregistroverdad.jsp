@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -58,99 +59,88 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-6 d-flex flex-column justify-content-center align-content-center">
+                    <div class=" col-md-6 d-flex flex-column justify-content-center align-content-center">
                         <div class="card-body">
-                            <div class="container w-75">
-                                <div class="row my-4">
-                                    <form>
+                            <div class="container w-75" style="color: white">
+                                <div class="row my-4" >
+                                    <form  method="post" action="<%=request.getContextPath()%>/UsuarioregistrorealServlet?action=registrar">
+                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("errorSQL")){%>
+                                        <div class="text-danger mb-2">Ups! Hubo un error en su registro, vuelva a intentar.</div>
+                                        <%}%>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <input class="form-control mb-3" type="text" name="nombre" placeholder="Nombre">
+                                            <div class="col-md-6" >
+                                                <input class="form-control mb-3" type="text"  name="nombre" placeholder="Nombre" required="required">
                                             </div>
                                             <div class="col-md-6">
-                                                <input class="form-control mb-3" type="text" name="apellido" placeholder="Apellido">
+                                                <input class="form-control mb-3" type="text" name="apellido" placeholder="Apellido" required="required">
                                             </div>
                                         </div>
+                                        <div class="mb-3">
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                <input type="email" name="email" placeholder="Correo" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input class="form-control" type="password" name="pass0" placeholder="Contraseña" required="required">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input class="form-control" type="password" name="pass" placeholder="Confirmar contraseña" required="required">
+                                        </div>
+                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("passNoCoinciden")){%>
+                                        <div class="text-danger mb-2">Las contraseñas no coinciden!</div>
+                                        <%}%>
                                         <div class="row">
-                                            <div class="col-md-5 mb-3">
-                                                <input class="form-control" type="text" name="dni" placeholder="DNI">
+                                            <div class="col-md-6" >
+                                                <input class="form-control" type="number" name="dni" placeholder="DNI" required="required">
                                             </div>
-                                            <div class="col-md-7 mb-3">
-                                                <select class="form-select" name="Distrito">
-                                                    <option value="" selected disabled>Distrito</option>
-                                                    <option value="Ancon">Ancón</option>
-                                                    <option value="AteVitarte">Ate</option>
-                                                    <option value="Barranco">Barranco</option>
-                                                    <option value="Brena">Breña</option>
-                                                    <option value="Carabayllo">Carabayllo</option>
-                                                    <option value="Chaclacayo">Chaclacayo</option>
-                                                    <option value="Chorrillos">Chorrillos</option>
-                                                    <option value="Cieneguilla">Cieneguilla</option>
-                                                    <option value="Comas">Comas</option>
-                                                    <option value="ElAgustino">El Agustino</option>
-                                                    <option value="Independencia">Independencia</option>
-                                                    <option value="JesusMaria">Jesús María</option>
-                                                    <option value="LaMolina">La Molina</option>
-                                                    <option value="LaVictoria">La Victoria</option>
-                                                    <option value="CercadoLima">Cercado de Lima</option>
-                                                    <option value="Lince">Lince</option>
-                                                    <option value="LosOlivos">Los Olivos</option>
-                                                    <option value="Chosica">Chosica</option>
-                                                    <option value="Lurin">Lurín</option>
-                                                    <option value="Magdalena">Magdalena del Mar</option>
-                                                    <option value="Miraflores">Miraflores</option>
-                                                    <option value="Pachacamac">Pachacamac</option>
-                                                    <option value="Pucusana">Pucusana</option>
-                                                    <option value="PuebloLibre">Pueblo Libre</option>
-                                                    <option value="PuentePiedra">Puente Piedra</option>
-                                                    <option value="PuntaHermosa">Punta Hermosa</option>
-                                                    <option value="PuntaNegra">Punta Negra</option>
-                                                    <option value="Rimac">Rímac</option>
-                                                    <option value="SanBartolo">San Bartolo</option>
-                                                    <option value="SanBorja">San Borja</option>
-                                                    <option value="SanIsidro">San Isidro</option>
-                                                    <option value="SanJuanLurigancho">San Juan de Lurigancho</option>
-                                                    <option value="SanJuanMiraflores">San Juan de Miraflores</option>
-                                                    <option value="SanLuis">San Luis</option>
-                                                    <option value="SanMartinPorres">San Martín de Porres</option>
-                                                    <option value="SanMiguel">San Miguel</option>
-                                                    <option value="SantaAnita">Santa Anita</option>
-                                                    <option value="SantaMaria">Santa María del Mar</option>
-                                                    <option value="SantaRosa">Santa Rosa</option>
-                                                    <option value="SantiagoSurco">Santiago de Surco</option>
-                                                    <option value="Surquillo">Surquillo</option>
-                                                    <option value="VillaSalvador">Villa el Salvador</option>
-                                                    <option value="VillaMariaTriunfo">Villa María del Triunfo</option>
-                                                </select>
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="number" name="numeroTelefono" required="required" placeholder="Teléfono">
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <input class="form-control" type="email" name="email" placeholder="Correo">
+                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("dniIncorrecto")){%>
+                                        <div class="text-danger mb-2">Dni debe tener 8 dígitos!</div>
+                                        <%}%>
+                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("telefoIncorrecto")){%>
+                                        <div class="text-danger mb-2">Teléfono debe tener 9 dígitos!</div>
+                                        <%}%>
+                                        <br>
+                                        <label class="mb-2">Fecha de Nacimiento:</label>
+                                        <%//OBTENEMOS FECHA
+                                            int dia= Calendar.getInstance().get(Calendar.DATE);
+                                        int mes= Calendar.getInstance().get(Calendar.MONTH)+1;
+                                        int year= Calendar.getInstance().get(Calendar.YEAR);
+                                        String mes1,dia1;
+                                        if(((int)Math.log10(mes)+1)!=2){
+                                            mes1= "0"+mes;
+                                        }else{
+                                            mes1= ""+mes;
+                                        }
+                                        if(((int)Math.log10(dia)+1)!=2){
+                                            dia1= "0"+dia;
+                                        }else{
+                                            dia1= ""+dia;
+                                        }%>
+                                        <div class="mb-3" >
+                                            <input class="form-control" type="date" min="<%=(year-100)+"-"+mes1+"-"+dia1%>" max="<%=(year-18)+"-"+mes1+"-"+dia1%>" name="fechaNacimiento" required="required">
                                         </div>
+                                        <label> ¿Es alumno? (opcional):</label>
                                         <div class="mb-3">
-                                            <input class="form-control" type="password" name="password" placeholder="Contraseña">
+                                            <input class="form-control" type="number" name="codigo_PUCP" placeholder="Código PUCP">
                                         </div>
+                                        <%if(request.getParameter("error")!=null && request.getParameter("error").equals("codigoIncorrecto")){%>
+                                        <div class="text-danger mb-2">El código debe tener 8 dígitos!</div>
+                                        <%}%>
                                         <div class="mb-3">
-                                            <input class="form-control" type="password" name="password" placeholder="Confirmar contraseña">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input class="form-control" type="text" name="codigo_PUCP" placeholder="Ingrese su codigo PUCP">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input class="form-control" type="text" name="numeroTelefono" placeholder="Numero de contacto">
-                                        </div>
-
-                                        <label class="mb-2" style="color: white">Fecha de Nacimiento:</label>
-                                        <div class="mb-3" style="color:">
-                                            <input class="form-control" type="date" name="fechaNacimiento">
-                                        </div>
-                                        <div class="mb-3">
-                                            <a href="confirmarRegistro.html" class="btn btn-primary d-block w-100" type="submit" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <button class="btn btn-primary d-block w-100" type="submit" style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 <strong>Registrarse</strong>
-                                            </a>
+                                            </button>
                                         </div>
                                     </form>
-                                    <a class="text-center" href="index.html">¿Ya tiene una cuenta? Ingrese</a>
+                                    <%if(request.getParameter("error")!=null && request.getParameter("error").equals("emailExiste")){%>
+                                    <div class="text-danger mb-2">Ya existe una cuenta con este correo!</div>
+                                    <%}%>
+                                    <a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=olvidoContra">Recuperar Contraseña</a>
                                 </div>
                             </div>
                         </div>

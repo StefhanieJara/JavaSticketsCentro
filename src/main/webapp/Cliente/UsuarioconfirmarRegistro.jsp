@@ -27,7 +27,7 @@
                 rel="stylesheet"
         />
     </head>
-    <body">
+    <body background="img/banner3.jpg">
     <section
             class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
             style="min-height: 700px;">
@@ -39,13 +39,13 @@
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="assets/img/s1.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s1.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s2.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s2.jpg" class="d-block w-100" alt="...">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="assets/img/s8.jpg" class="d-block w-100" alt="...">
+                                        <img src="img/s8.jpg" class="d-block w-100" alt="...">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -58,13 +58,16 @@
                                 </button>
                             </div>
                         </div>
+
                         <div class="col-md-6 d-flex flex-column justify-content-center align-content-center">
                             <div class="card-body">
                                 <div class="container w-75">
                                     <div class="row my-4">
-                                        <div class="text-center" style="transform: translateY(110%)">
-                                            <h2  style="color:white">¡Se realizo su registro exitosamente!</h2>
-                                            <a  href="login_client.html">Volver a ingresar</a>
+                                        <div class="text-center" style="transform: translateY(50%)">
+                                            <h2  style="color:white">¡Se realizó su registro exitosamente!</h2>
+                                            <a  href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=loginform">Volver a ingresar</a>
+                                            <br><br><br><br><br>
+                                            <font size="2"><p  style="color:white">Para ingresar, utilice su correo como usuario. (Puede cambiarlo al editar su perfil)</p></font>
                                         </div>
                                     </div>
                                 </div>

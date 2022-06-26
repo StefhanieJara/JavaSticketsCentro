@@ -1,11 +1,10 @@
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.BPersona;
+import com.google.protobuf.DescriptorProtos;
+import com.google.protobuf.Type;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.prefs.AbstractPreferences;
 
 public class LoginDao extends BaseDao{
@@ -52,6 +51,27 @@ public class LoginDao extends BaseDao{
         PreparedStatement pstmt= conn.prepareStatement(sql);
         pstmt.setString(1, pass);
         pstmt.setString(2,email);
+        pstmt.executeUpdate();
+    }
+
+    public void crearCliente(String nombre,String apellido,String email,String pass,int codigo,int dni,int numTele,String fechaNacimiento) throws SQLException {
+        String sql= "INSERT INTO persona (dni, nombre, apellido, foto, numeroCelular, fechaDeNacimiento, email, usuario, contrasenia, direccionCliente, rol,codigoPUCP) " +
+             "values (?,?, ?, '', ?, ?, ?, ?, sha2(?,256), '', 'Cliente', ?);";
+        Connection conn= this.getConnection();
+        PreparedStatement pstmt= conn.prepareStatement(sql);
+        pstmt.setInt(1,dni);
+        pstmt.setString(2,nombre);
+        pstmt.setString(3, apellido);
+        pstmt.setInt(4,numTele);
+        pstmt.setString(5,fechaNacimiento);
+        pstmt.setString(6,email);
+        pstmt.setString(7,email);
+        pstmt.setString(8,pass);
+        if(codigo==0){
+            pstmt.setNull(9, Types.INTEGER);
+        }else{
+            pstmt.setInt(9,codigo);
+        }
         pstmt.executeUpdate();
     }
 }
