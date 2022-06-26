@@ -9,9 +9,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="img/favicon.png">
-    <link rel="icon" type="image/png" href="img/favicon.png"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"

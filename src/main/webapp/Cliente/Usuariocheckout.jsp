@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
     <head>
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
         <title>Centro Cultural PUCP- Checkout</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charset="utf-8" />

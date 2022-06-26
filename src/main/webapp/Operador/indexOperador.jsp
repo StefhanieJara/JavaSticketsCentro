@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8" />
     <meta
             name="viewport"

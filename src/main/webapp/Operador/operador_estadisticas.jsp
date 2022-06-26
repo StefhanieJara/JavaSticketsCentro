@@ -15,6 +15,7 @@
 <jsp:useBean id="directorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
 <html>
 <head>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PUCP - Estadisticas</title>
     <meta charset="utf-8">

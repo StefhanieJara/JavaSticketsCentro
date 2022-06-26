@@ -14,6 +14,7 @@
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lista de clientes</title>
