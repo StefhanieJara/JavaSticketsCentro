@@ -9,7 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="Listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>"/>
 <jsp:useBean id="ListaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
-<%int idClient=15;%>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona" class="com.example.javasticketscentro.Beans.BPersona"/>
+<%int idClient= clienteLog.getIdPer();%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,17 +85,20 @@
 
         <!--Menú usuario-->
         <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <%if(idClient!=0){%>
             <button
                     class="btn btn-tele-inverso"
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#menuDeUsuario"
-                    aria-controls="menuDeUsuario"
-            >
+                    aria-controls="menuDeUsuario">
                 <div style="font-size: 0.62rem">
                     <i class="fas fa-user-circle fa-3x"></i>
                 </div>
             </button>
+            <%}else{%>
+            <a class="btn btn-light" href="<%=request.getContextPath()%>/UsuariologinclientServlet">(Iniciar Sesión)</a>
+            <%}%>
         </div>
     </div>
     <!--Boton retornar-->
@@ -132,7 +136,7 @@
             <div class="offcanvas-body p-3">
                 <div class="d-flex flex-column">
                     <div class="my-2">
-                        <h4 class="mb-3">Paco Perez</h4>
+                        <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                         <img src="img/images.png"
                              class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                     </div>
@@ -156,7 +160,7 @@
         <!--Footer cerrar sesión-->
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
+                <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
                     <span><i class="fas fa-sign-out-alt"></i></span>
                     <span>Cerrar sesión</span>
                 </a>
