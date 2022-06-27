@@ -762,4 +762,24 @@ public class AdminDao extends BaseDao{
         return operador;
     }
 
+    public void editarUsuario(BPersona usuario){
+        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, email = ?, direccionCliente = ?,usuario = ?,codigoPUCP = ? where idPersona = ?";
+
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1,usuario.getNombre());
+            pstmt.setString(2,usuario.getApellido());
+            pstmt.setInt(3, usuario.getNumCel());
+            pstmt.setString(4, usuario.getEmail());
+            pstmt.setString(5, usuario.getDireccion());
+            pstmt.setString(6, usuario.getUsuario());
+            pstmt.setInt(7, usuario.getCodigoPUCP());
+            pstmt.setInt(8, usuario.getIdPer());
+            pstmt.executeUpdate();
+        }catch(SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+    }
+
 }

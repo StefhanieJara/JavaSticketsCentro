@@ -1,11 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Kevin
-  Date: 05/06/2022
-  Time: 08:36 p. m.
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="Usuario" scope="request" type="com.example.javasticketscentro.Beans.BPersona" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,125 +37,8 @@
                 <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
-        <!--Buscador de productos-->
-        <div class="col-md-7 d-none d-md-block ps-0">
-            <!--desaparece en menores a medium-->
-            <div class="input-group">
-                <div style="width: 50%">
-                    <input
-                            type="search"
-                            id="buscador_producto"
-                            class="form-control"
-                            placeholder="Busca una pelicula"
-                    />
-                </div>
-                <a
-                        role="button"
-                        class="btn btn-tele border-start-1"
-                        href="usuarioProductoBuscado.html"
-                >
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-        </div>
-        <!--Carrito-->
-        <div
-                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
-        >
-            <a
-                    class="btn btn-tele-inverso"
-                    role="button"
-                    href="usuarioCarrito.html"
-            >
-                <div style="font-size: 0.6rem">
-                    <!--para cambios más precisos del tamaño-->
-                    <i class="fas fa-cart-plus fa-3x"></i>
-                </div>
-            </a>
-        </div>
-        <!--Menú usuario-->
-        <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
-            <button
-                    class="btn btn-tele-inverso"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#menuDeUsuario"
-                    aria-controls="menuDeUsuario"
-            >
-                <div style="font-size: 0.62rem">
-                    <i class="fas fa-user-circle fa-3x"></i>
-                </div>
-            </button>
-        </div>
     </div>
 </nav>
-
-<!--Menú de usuario-->
-<div
-        class="offcanvas offcanvas-end text-center"
-        tabindex="-1"
-        id="menuDeUsuario"
-        aria-labelledby="menuDeUsuario"
->
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Usuario</h5>
-                <button
-                        type="button"
-                        class="btn-close text-reset"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                ></button>
-            </div>
-        </div>
-        <!--Foto usuario y opciones-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Paco Perez</h4>
-                        <img
-                                src="img/images.png"
-                                class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                alt="profile image"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a
-                                    href="usuarioEditar.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-user-edit"></i></span>
-                                <span>Editar usuario</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="usuarioHistorial.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Historial de compras</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!--Contenido-->
 <main>
@@ -190,7 +68,7 @@
                                         id="inputtext6"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="71834998"
+                                        placeholder="<%=Usuario.getDni()%>"
                                         readonly
                                 />
                             </div>
@@ -198,133 +76,109 @@
                         <div class="row g-3 align-items-center mt-2">
 
                             <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
+                                <label for="codigo" class="col-form-label"
                                 >Código</label
                                 >
                             </div>
                             <div class="rows-auto">
-                                <input
+                                <input  name="codigo"
                                         type="number"
-                                        id="inputtext6"
+                                        id="codigo"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="20108992"
-                                        readonly
+                                        value="<%=Usuario.getCodigoPUCP()%>"
+                                        placeholder="Ingrese su codigo pucp"
                                 />
                             </div>
                         </div>
                         <div class="row g-3 align-items-center mt-2">
 
                             <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
+                                <label for="nombre" class="col-form-label"
                                 >Nombre</label
                                 >
                             </div>
                             <div class="rows-auto">
-                                <input
+                                <input  name="nombre"
                                         type="text"
-                                        id="inputtext6"
+                                        id="nombre"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="Olivia"
+                                        value="<%=Usuario.getNombre()%>"
+                                        placeholder="Ingrese su nombre"
                                 />
                             </div>
                         </div>
                         <div class="row g-3 align-items-center mt-2">
 
                             <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
+                                <label for="apellido" class="col-form-label"
                                 >Apellido</label
                                 >
                             </div>
                             <div class="rows-auto">
-                                <input
+                                <input  name="apellido"
                                         type="text"
-                                        id="inputtext6"
+                                        id="apellido"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="Rodrigo"
+                                        value="<%=Usuario.getApellido()%>"
+                                        placeholder="Ingrese su apellido"
                                 />
                             </div>
+                            <div class="rows-auto">
+                                <label for="usuario" class="col-form-label"
+                                >Usuario</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input  name="usuario"
+                                        type="text"
+                                        id="usuario"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        value="<%=Usuario.getUsuario()%>"
+                                        placeholder="Ingrese su usuario"
+                                />
+                            </div>
+
                         </div>
                         <div class="row g-3 align-items-center mt-2">
 
                             <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
+                                <label for="numCel" class="col-form-label"
                                 >Teléfono</label
                                 >
                             </div>
                             <div class="rows-auto">
-                                <input
+                                <input  name="numCel"
                                         type="number"
-                                        id="inputtext6"
+                                        id="numCel"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="975575955"
+                                        value="<%=Usuario.getNumCel()%>"
+                                        placeholder="Ingrese su numero de celular"
                                 />
                             </div>
                         </div>
                         <div class="row g-3 align-items-center mt-2">
                             <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
-                                >Fecha de Nacimiento</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input
-                                        type="date"
-                                        id="inputtext6"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-
-                                />
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center mt-2">
-                            <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
+                                <label for="direccion" class="col-form-label"
                                 >Dirección</label
                                 >
                             </div>
                             <div class="rows-auto">
-                                <input
+                                <input  name="direccion"
                                         type="text"
-                                        id="inputtext6"
+                                        id="direccion"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
-                                        placeholder="Av La Alameda 256 SMP"
+                                        value="<%=Usuario.getDireccion()%>"
+                                        placeholder="Ingrese su direccion"
                                 />
                             </div>
                         </div>
-                        <div class="row g-3 align-items-center mt-2">
-                            <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
-                                >Email de Respaldo</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input
-                                        type="email"
-                                        id="inputtext6"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        placeholder="david@gmail.com"
-                                />
-                            </div>
 
-                            <div class="rows-auto">
-                                <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        style="
-                        background-color: orange;
-                        border-color: orange;
-                        color: white;
-                      "
-                                >
-                                    Guardar
-                                </button>
-                            </div>
                         </div>
                     </div>
                     <div style="margin-top: 80px" class="col-md-6 mb-4 text-center">
@@ -345,6 +199,7 @@
                 </div>
             </div>
         </div>
+        <button type="submit" class="btn btn-tele">Guardar Edicion</button>
     </form>
 </main>
 
