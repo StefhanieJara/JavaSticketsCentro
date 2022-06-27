@@ -50,33 +50,22 @@
     <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?a=actualizar">
         <div style="margin-bottom: 50px" class="contenerdor_perfil">
             <div class="container">
+                <h2>Editar perfil</h2>
                 <div class="row">
                     <div class="col-md-6 mb-1">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="idPer"></label>
-                            <input name="idPer"
-                                   type="hidden"
-                                   id="idPer"
-                                   class="form-control"
-                                   value="<%=Usuario.getIdPer()%>"
-                                           /></div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="usuario">Usuario</label>
-                            <input name="usuario"
-                                   type="text"
-                                   id="usuario"
-                                   class="form-control"
-                                   value="<%=Usuario.getUsuario()%>"
-                                   placeholder=<%=Usuario.getUsuario()%>
-                            /></div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="codigo">Codigo PUCP</label>
+                        <input name="usuario" type="hidden" value="<%=Usuario.getUsuario()%>">
+                        <div style="margin-top: 10px" class="form-outline mb-4">
+                            <label class="form-label" for="codigo">Código PUCP</label>
                             <input name="codigo"
                                    type="text"
                                    id="codigo"
                                    class="form-control"
+                                   <%if (Usuario.getCodigoPUCP() == 0) {%>
+                                   value="Sin Código PUCP"
+                                   <%}else{%>
                                    value="<%=Usuario.getCodigoPUCP()%>"
-                                   placeholder=<%=Usuario.getCodigoPUCP()%>
+                                   <%}%>
+                                   placeholder="Ingrese su código PUCP"
                             /></div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="nombre">Nombre</label>
@@ -110,17 +99,16 @@
                             >
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="direccion">Direccion</label>
+                            <label class="form-label" for="direccion">Dirección</label>
                             <input  name ="direccion"
                                     type="text"
                                     id="direccion"
                                     class="form-control"
                                     value="<%=Usuario.getDireccion()%>"
-                                    placeholder="Ingrese su direccion"
-                            >
+                                    placeholder="Ingrese su direccion">
                         </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="numCel">Numero de contacto</label>
+                            <label class="form-label" for="numCel">Número de contacto</label>
                             <input  name ="numCel"
                                     type="text"
                                     id="numCel"
@@ -132,24 +120,21 @@
 
                     </div>
 
-                    <div class="col-md-6 mb-4 text-center">
-                        <label for="formFile" class="form-label">Imagen referencial</label>
+                    <div style="margin-top: 10px" class="col-md-6 mb-4 text-center">
+                        <h4 class="form-label" >Imagen de perfil</h4>
                         <div class="text-center mt-2 mb-3">
-                            <img
-                                    src="img/benedict.jpg"
-                                    class="img-thumbnail"
-                                    width="200x"
-                                    height="400px"
-                                    alt="medicamento"
-                            />
+                            <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
                         </div>
-                        <input class="form-control" type="file" id="formFile" />
-
+                        <div class="d-flex justify-content-center my-3">
+                            <input type="file" id="img-uploader">
+                        </div>
+                        <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
+                                  style="width: 100%"></progress>
+                        <input type="hidden" name="photoUrl" id="photoUrl" />
                     </div>
                 </div>
-
+                <button type="submit" class="btn btn-tele">Guardar Edicion</button>
             </div>
-        <button type="submit" class="btn btn-tele">Guardar Edicion</button>
     </form>
 </main>
 

@@ -78,6 +78,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=crear");
                     }else{
                         operadorDao.crearFuncion(nombre, genero, fecha, duracionConFormato, restriccion, idsala, sinopsis, URLFoto, stock, precio, idSede, idDirector,idActor1, horaInicio);
+                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
                     }
                 }catch (NumberFormatException e){
                     e.printStackTrace();

@@ -138,12 +138,12 @@ public class OperadorDao extends BaseDao{
         int IDpeli = obtenerIdPelicula(nombre);
         asignarFuncion(precio, stock, IDpeli, fecha, horaInicio);
         int IDFuncion = obtenerIDFuncion(IDpeli, fecha, horaInicio);
-        asignarSala(IDFuncion, idsala);
         asignarCelebridad(IDpeli, idDirector);
         asignarCelebridad(IDpeli, idActor1);
+        asignarSala(IDFuncion, idsala);
     }
     public int obtenerIdPelicula(String nombre){
-        String sql = "Select idPelicula from pelicula where nombre=?";
+        String sql = "Select idPelicula from pelicula where nombre = ?";
         int IDPeli=0;
         try(Connection conn = this.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
