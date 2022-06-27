@@ -170,25 +170,18 @@
                                                class="form-control"
                                                placeholder="Ingrese su contraseña"/>
                                     </div>
-                                    <label for="formFile" class="form-label">Imagen referencial</label>
-                                    <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="img/benedict.jpg"
-                                                class="img-thumbnail"
-                                                width="200x"
-                                                height="400px"
-                                                alt="medicamento"
-                                        />
+                                    <label class="form-label">Foto Operador</label>
+                                    <div class="col-md-6 mb-4 text-center">
+                                        <div class="text-center mt-2 mb-3">
+                                            <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
+                                        </div>
                                     </div>
-                                    <input class="form-control" type="file" id="formFile" />
-
                                     <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
+                                        <input type="file" id="img-uploader">
                                     </div>
+                                    <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
+                                              style="width: 100%"></progress>
+                                    <input type="hidden" name="photoUrl" id="photoUrl" />
                                 </div>
                             </div>
 
@@ -286,5 +279,7 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>

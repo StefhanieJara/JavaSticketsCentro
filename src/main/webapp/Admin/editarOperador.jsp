@@ -155,19 +155,17 @@
 
                                 </div>
 
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label">Imagen referencial</label>
+                                <div style="margin-top: 10px" class="col-md-6 mb-4 text-center">
+                                    <h4 class="form-label" >Foto Operador</h4>
                                     <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="img/benedict.jpg"
-                                                class="img-thumbnail"
-                                                width="200x"
-                                                height="400px"
-                                                alt="medicamento"
-                                        />
+                                        <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
                                     </div>
-                                    <input class="form-control" type="file" id="formFile" />
-
+                                    <div class="d-flex justify-content-center my-3">
+                                        <input type="file" id="img-uploader">
+                                    </div>
+                                    <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
+                                              style="width: 100%"></progress>
+                                    <input type="hidden" name="photoUrl" id="photoUrl" />
                                 </div>
                             </div>
 
@@ -262,6 +260,7 @@
     </div>
 </main>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>

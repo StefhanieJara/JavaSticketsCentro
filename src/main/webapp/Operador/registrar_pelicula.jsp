@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listarsala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>"/>
+<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
 <jsp:useBean id="listarsede" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 <jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
@@ -135,15 +136,21 @@
             </div>
         </div>
     </div>
-<body>
+
 <section class="vh-100 py-5">
     <div class="container py-2 h-50">
+
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
                 <div
                         class="card shadow-2-strong card-registration"
                         style="border-radius: 15px; margin-top: 100px"
                 >
+                    <%if (!mensaje.equals("")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                       ¡Datos incompletos!
+                    </div>
+                    <%}%>
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
@@ -256,6 +263,8 @@
                                         <input
                                                 name="stock"
                                                 type="number"
+                                                min="20"
+                                                max="200"
                                                 id="productStock"
                                                 class="form-control"
                                                 placeholder="0"
@@ -286,7 +295,7 @@
                                                 name="sede"
                                                 class="frm-field required sect"
                                         >
-                                            <option value="null">Seleccionar</option>
+                                            <option>Seleccionar</option>
                                             <%for(BSede bSede : listarsede){%>
                                             <option value="<%=bSede.getIdSede()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
@@ -316,7 +325,7 @@
                                         name="director"
                                         class="frm-field required sect"
                                 >
-                                    <option value="null">Seleccionar</option>
+                                    <option>Seleccionar</option>
                                     <%for(BCelebridad bCelebridad : listarDirector){%>
                                     <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
                                     <%}%>
@@ -330,7 +339,7 @@
                                         name="actor1"
                                         class="frm-field required sect"
                                 >
-                                    <option value="null">Seleccionar</option>
+                                    <option>Seleccionar</option>
                                     <%for(BCelebridad bCelebridad : listarActor){%>
                                     <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
                                     <%}%>

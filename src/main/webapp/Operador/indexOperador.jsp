@@ -255,7 +255,7 @@
                                         class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
                                 >
                                     <ul class="">
-                                        <p>Visualice las estadisticas de la las funciones.</p>
+                                        <p>Visualice las estadísticas de la las funciones</p>
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">

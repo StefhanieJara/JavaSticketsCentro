@@ -185,7 +185,7 @@
                                 >
                                     <ul class="">
                                         <p>
-                                            Configure el numero de salas y la cantidad de personas
+                                            Configure el número de salas y la cantidad de personas
                                             que puedan asistir a la función
                                         </p>
                                     </ul>
@@ -211,7 +211,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Añada Actores y Directores
+                                    Gestione Actores y Directores
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -219,7 +219,7 @@
                                         class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
                                 >
                                     <ul class="">
-                                        <p>Añadir actores y directores de una película</p>
+                                        <p>Agregue, elimine y visualice los operadores que están trabajando</p>
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
@@ -244,7 +244,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Visualizar operadores
+                                    Gestione operadores
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -253,7 +253,7 @@
                                 >
                                     <ul class="">
                                         <p>
-                                            Visualice los trabajadores que estan operando en un
+                                            Visualice los trabajadores que están operando en un
                                             rango de días y su historial
                                         </p>
                                     </ul>
@@ -281,7 +281,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Visualizar lista de Clientes
+                                    Visualizar la lista de Clientes
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -290,8 +290,7 @@
                                 >
                                     <ul class="">
                                         <p>
-                                            Visualice la lista de clientes presentes en cada
-                                            función
+                                            Visualice la lista de clientes presentes en el sistema
                                         </p>
                                     </ul>
                                 </div>
