@@ -6,13 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaAsistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="masVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="menosVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="peliculaMejorCalificada" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
-<jsp:useBean id="actorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
-<jsp:useBean id="directorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
+<jsp:useBean id="listaAsistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
+<jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
+<jsp:useBean id="masVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
+<jsp:useBean id="menosVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
+<jsp:useBean id="peliculaMejorCalificada" scope="request" type="com.example.javasticketscentro.Beans.BPelicula" class="com.example.javasticketscentro.Beans.BPelicula"/>
+<jsp:useBean id="actorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" class="com.example.javasticketscentro.Beans.BCelebridad"/>
+<jsp:useBean id="directorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" class="com.example.javasticketscentro.Beans.BCelebridad"/>
 <html>
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -145,7 +145,7 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="personal.html"
+                                    href="<%=request.getContextPath()%>/personalServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -154,7 +154,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="peliculaVisualizacion.html"
+                                    href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -163,7 +163,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionOperadores.html"
+                                    href="<%=request.getContextPath()%>/ListarOperadorServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -293,10 +293,10 @@
                                         <br>
                                         <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
                                             <label> Fecha de inicio</label>
-                                            <input type="date" name="date1" >
+                                            <input type="date" name="date3" >
 
                                             <label> Fecha de fin </label>
-                                            <input type="date" name="date2" >
+                                            <input type="date" name="date4" >
 
                                             <button type="submit" class="btn btn-danger">Filtrar</button>
                                         </form>
@@ -329,10 +329,10 @@
                                     <div class="col-3">
                                         <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
                                             <label> Fecha de inicio</label>
-                                            <input type="date" name="date1">
+                                            <input type="date" name="date5">
 
                                             <label> Fecha de fin </label>
-                                            <input type="date" name="date2">
+                                            <input type="date" name="date6">
 
                                             <button type="submit" class="btn btn-danger">Filtrar</button>
                                         </form>
@@ -372,10 +372,10 @@
                                             <div class="col-3">
                                                 <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
                                                     <label> Fecha de inicio</label>
-                                                    <input type="date" name="date1">
+                                                    <input type="date" name="date7">
 
                                                     <label> Fecha de fin </label>
-                                                    <input type="date" name="date2">
+                                                    <input type="date" name="date8">
 
                                                     <button type="submit" class="btn btn-danger">Filtrar</button>
                                                 </form>
@@ -448,10 +448,10 @@
                                     <div class="col-2">
                                         <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
                                             <label> Fecha de inicio</label>
-                                            <input type="date" name="date1">
+                                            <input type="date" name="date9">
 
                                             <label> Fecha de fin </label>
-                                            <input type="date" name="date2" >
+                                            <input type="date" name="date10" >
 
                                             <button type="submit" class="btn btn-danger">Filtrar</button>
                                         </form>
@@ -490,10 +490,10 @@
                                     <div class="col-3">
                                         <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
                                             <label> Fecha de inicio</label>
-                                            <input type="date" name="date1">
+                                            <input type="date" name="date11">
 
                                             <label> Fecha de fin </label>
-                                            <input type="date" name="date2">
+                                            <input type="date" name="date12">
 
                                             <button type="submit" class="btn btn-danger">Filtrar</button>
                                         </form>
