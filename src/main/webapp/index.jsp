@@ -32,9 +32,7 @@
 </head>
 <body>
 <!--Cabecera Principal cliente-->
-<nav
-        class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
->
+<nav class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger">
     <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
         <!--Logo Centro Cultural PUCP-->
         <div
@@ -69,13 +67,11 @@
 
         <!--Carrito-->
         <div
-                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
-        >
+                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
             <a
                     class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?id=<%=idClient%>&action=listar"
-            >
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?id=<%=idClient%>&action=listar">
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i>
@@ -84,23 +80,18 @@
         </div>
 
         <div
-                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
-        >
+                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
             <a
                     class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuariologinclientServlet"
-            >
+                    href="<%=request.getContextPath()%>/UsuariologinclientServlet">
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fa fa-user-circle fa-3x"></i>
                 </div>
             </a>
         </div>
-
-
-
-
+    </div>
 </nav>
 
 <!--Menú de usuario2-->
