@@ -179,7 +179,6 @@
                                     </div>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productName">Ingrese la duración de la pelicula</label>
-                                        <label class="form-label" for="productName">Tiempo de duración</label>
                                         <input
                                                 type="time"
                                                 name="tiempo"
@@ -187,7 +186,6 @@
                                                 placeholder="Ingrese la duracion de la pelicula"/> </div>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productName">Ingrese la hora de inicio de la película</label>
-                                        <label class="form-label" for="productName">Tiempo de inicio</label>
                                         <input
                                                 type="time"
                                                 name="tiempoInicio"

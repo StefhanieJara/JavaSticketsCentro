@@ -137,6 +137,10 @@ public class OperadorDao extends BaseDao{
         }
         int IDpeli = obtenerIdPelicula(nombre);
         asignarFuncion(precio, stock, IDpeli, fecha, horaInicio);
+        int IDFuncion = obtenerIDFuncion(IDpeli, fecha, horaInicio);
+        asignarSala(IDFuncion, idsala);
+        asignarCelebridad(IDpeli, idDirector);
+        asignarCelebridad(IDpeli, idActor1);
     }
     public int obtenerIdPelicula(String nombre){
         String sql = "Select idPelicula from pelicula where nombre=?";
@@ -154,6 +158,26 @@ public class OperadorDao extends BaseDao{
         }
         return IDPeli;
     }
+
+    public int obtenerIDFuncion(int idPeli, String fecha, String horainicio){
+        int IDfuncion = 0;
+        String sql = "SELECT idFuncion from funcion where (Pelicula_idPelicula = ? AND fecha = ? AND horaInicio = ?)";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1, idPeli);
+            pstmt.setString(2, fecha);
+            pstmt.setString(3, horainicio);
+            try(ResultSet rs = pstmt.executeQuery();){
+                if(rs.next()){
+                    IDfuncion = rs.getInt(1);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return IDfuncion;
+    }
+
     public void asignarFuncion(float precio, int stock, int IDPelicula, String fecha, String horaInicio){
         String sql = "INSERT INTO centro1.funcion (precio, stock, Pelicula_idPelicula, fecha, horaInicio)\n" +
                 "values ( ? , ? , ? , ? , ?);";
@@ -164,6 +188,28 @@ public class OperadorDao extends BaseDao{
             pstmt.setInt(3, IDPelicula);
             pstmt.setString(4, fecha);
             pstmt.setString(5, horaInicio);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void asignarSala(int IDFuncion, int idsala){
+        String sql = "INSERT INTO funcion_has_sala (Funcion_idFuncion, Sala_idSala) VALUES (?,?)";
+        try(Connection connection = this.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1, IDFuncion);
+            pstmt.setInt(2, idsala);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void asignarCelebridad(int IDpeli, int idCelebridad){
+        String sql = "INSERT INTO celebridad_por_pelicula (Celebridad_idCelebridad, Pelicula_idPelicula) VALUES (?,?)";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1, idCelebridad);
+            pstmt.setInt(2, IDpeli);
             pstmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
