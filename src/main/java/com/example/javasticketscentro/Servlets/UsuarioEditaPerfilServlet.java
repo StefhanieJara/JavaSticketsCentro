@@ -14,7 +14,7 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         AdminDao adminDao = new AdminDao();
-        BPersona usuario = adminDao.buscarOperadorPorId_editar(id);
+        BPersona usuario = adminDao.buscarUsuarioPorId(id);
         request.setAttribute("Usuario", usuario);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioEditaPerfil_Usuario.jsp");
         requestDispatcher.forward(request,response);
@@ -30,7 +30,7 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
             case "actualizar" -> {
                 BPersona usuario = leerParametrosRequest(request);
                 adminDao.editarUsuario(usuario);
-                response.sendRedirect(request.getContextPath() + "/");
+                response.sendRedirect(request.getContextPath()+" ");
             }
 
         }

@@ -47,158 +47,108 @@
         <header></header>
     </div>
 
-    <form>
+    <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?a=actualizar">
         <div style="margin-bottom: 50px" class="contenerdor_perfil">
             <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="mt-2">
-                            <h1>Mi Perfil</h1>
+                    <div class="col-md-6 mb-1">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="idPer"></label>
+                            <input name="idPer"
+                                   type="hidden"
+                                   id="idPer"
+                                   class="form-control"
+                                   value="<%=Usuario.getIdPer()%>"
+                                           /></div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="usuario">Usuario</label>
+                            <input name="usuario"
+                                   type="text"
+                                   id="usuario"
+                                   class="form-control"
+                                   value="<%=Usuario.getUsuario()%>"
+                                   placeholder=<%=Usuario.getUsuario()%>
+                            /></div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="codigo">Codigo PUCP</label>
+                            <input name="codigo"
+                                   type="text"
+                                   id="codigo"
+                                   class="form-control"
+                                   value="<%=Usuario.getCodigoPUCP()%>"
+                                   placeholder=<%=Usuario.getCodigoPUCP()%>
+                            /></div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input
+                                    name ="nombre"
+                                    type="text"
+                                    id="nombre"
+                                    class="form-control"
+                                    value="<%=Usuario.getNombre()%>"
+                                    placeholder="Ingrese su Nombre"
+                            >
                         </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
-                                >DNI</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input
-                                        type="number"
-                                        id="inputtext6"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        placeholder="<%=Usuario.getDni()%>"
-                                        readonly
-                                />
-                            </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="apellido">Apellidos</label>
+                            <input  name ="apellido"
+                                    type="text"
+                                    id="apellido"
+                                    class="form-control"
+                                    value="<%=Usuario.getApellido()%>"
+                                    placeholder="Ingrese su Apellido"
+                            >
                         </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="codigo" class="col-form-label"
-                                >Código</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="codigo"
-                                        type="number"
-                                        id="codigo"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getCodigoPUCP()%>"
-                                        placeholder="Ingrese su codigo pucp"
-                                />
-                            </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="email">Correo</label>
+                            <input  name ="email"
+                                    type="text"
+                                    id="email"
+                                    class="form-control"
+                                    value="<%=Usuario.getEmail()%>"
+                                    placeholder="Ingrese su email"
+                            >
                         </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="nombre" class="col-form-label"
-                                >Nombre</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="nombre"
-                                        type="text"
-                                        id="nombre"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getNombre()%>"
-                                        placeholder="Ingrese su nombre"
-                                />
-                            </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="direccion">Direccion</label>
+                            <input  name ="direccion"
+                                    type="text"
+                                    id="direccion"
+                                    class="form-control"
+                                    value="<%=Usuario.getDireccion()%>"
+                                    placeholder="Ingrese su direccion"
+                            >
                         </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="apellido" class="col-form-label"
-                                >Apellido</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="apellido"
-                                        type="text"
-                                        id="apellido"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getApellido()%>"
-                                        placeholder="Ingrese su apellido"
-                                />
-                            </div>
-                            <div class="rows-auto">
-                                <label for="usuario" class="col-form-label"
-                                >Usuario</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="usuario"
-                                        type="text"
-                                        id="usuario"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getUsuario()%>"
-                                        placeholder="Ingrese su usuario"
-                                />
-                            </div>
-
-                        </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="numCel" class="col-form-label"
-                                >Teléfono</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="numCel"
-                                        type="number"
-                                        id="numCel"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getNumCel()%>"
-                                        placeholder="Ingrese su numero de celular"
-                                />
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center mt-2">
-                            <div class="rows-auto">
-                                <label for="direccion" class="col-form-label"
-                                >Dirección</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input  name="direccion"
-                                        type="text"
-                                        id="direccion"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        value="<%=Usuario.getDireccion()%>"
-                                        placeholder="Ingrese su direccion"
-                                />
-                            </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="numCel">Numero de contacto</label>
+                            <input  name ="numCel"
+                                    type="text"
+                                    id="numCel"
+                                    class="form-control"
+                                    value="<%=Usuario.getNumCel()%>"
+                                    placeholder="Ingrese su numero de celular"
+                            >
                         </div>
 
-                        </div>
-                    </div>
-                    <div style="margin-top: 80px" class="col-md-6 mb-4 text-center">
-                        <h4 class="form-label" >Imagen de perfil</h4>
-
-                            <div class="text-center mt-2 mb-3">
-                                <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
-                            </div>
-                            <div class="d-flex justify-content-center my-3">
-                                <input type="file" id="img-uploader">
-                            </div>
-                            <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
-                                  style="width: 100%"></progress>
-
-                        <input type="hidden" name="photoUrl" id="photoUrl" />
                     </div>
 
+                    <div class="col-md-6 mb-4 text-center">
+                        <label for="formFile" class="form-label">Imagen referencial</label>
+                        <div class="text-center mt-2 mb-3">
+                            <img
+                                    src="img/benedict.jpg"
+                                    class="img-thumbnail"
+                                    width="200x"
+                                    height="400px"
+                                    alt="medicamento"
+                            />
+                        </div>
+                        <input class="form-control" type="file" id="formFile" />
+
+                    </div>
                 </div>
+
             </div>
-        </div>
         <button type="submit" class="btn btn-tele">Guardar Edicion</button>
     </form>
 </main>

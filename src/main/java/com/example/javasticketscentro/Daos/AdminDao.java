@@ -782,4 +782,32 @@ public class AdminDao extends BaseDao{
         }
     }
 
+    public BPersona buscarUsuarioPorId(int id){
+        BPersona usuario = null;
+        String sql = "select * from centro1.persona where idPersona=?";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    usuario = new BPersona();
+                    usuario.setIdPer(rs.getInt(1));
+                    usuario.setDni(rs.getInt(2));
+                    usuario.setNombre(rs.getString(3));
+                    usuario.setApellido(rs.getString(4));
+                    usuario.setFoto(rs.getString(5));
+                    usuario.setNumCel(rs.getInt(6));
+                    usuario.setFecha_Nc(rs.getString(7));
+                    usuario.setEmail(rs.getString(8));
+                    usuario.setUsuario(rs.getString(9));
+                    usuario.setContrasenia(rs.getString(10));
+                    usuario.setDireccion(rs.getString(11));
+                    usuario.setCodigoPUCP(rs.getInt(13));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuario;
+    }
 }

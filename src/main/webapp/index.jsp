@@ -129,7 +129,7 @@
                     </div>
                     <div class="mb-3">
                         <div class="p-2">
-                            <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet" class="text-dark text-decoration-none">
+                            <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=clienteLog.getIdPer()%>" class="text-dark text-decoration-none">
                                 <span><i class="fas fa-user-edit"></i></span>
                                 <span>Editar perfil</span>
                             </a>
