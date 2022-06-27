@@ -26,24 +26,33 @@
     <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
 
     <STYLE TYPE="text/css">
-
+        div.scrollmenu {
+            overflow: auto;
+            white-space: nowrap;
+        }
         body{
             font-family: Arial;
         }
         #main-container{
-            margin: 52px ;
-            width: 1200px;
+            text-align: left;
+            border-collapse: collapse;
+            width: 70%;
+            position: static;
+            left: 90%;
+            margin-left: 380px;
+            top: 300%;
+            margin-top: 10px;
         }
         table{
             background-color: white;
             text-align: left;
             border-collapse: collapse;
-            width: 86%;
+            width: 100%;
             position: static;
-            left: 90%;
-            margin-left: 355px;
-            top: 300%;
-            margin-top: -20px;
+            left: 100%;
+            margin-left: 20px;
+            top: 0%;
+            margin-top: 0px;
         }
         th, td{
             padding: 20px;
@@ -268,7 +277,7 @@
     </div>
     </form>
 </div>
-<div id="main-container">
+<div id="main-container" class="scrollmenu">
     <table>
         <thead>
         <tr>
