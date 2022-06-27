@@ -78,9 +78,19 @@
                 </div>
             </a>
         </div>
-
-        <div
-                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
+        <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <%if(idClient!=0){%>
+            <button
+                    class="btn btn-tele-inverso"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#menuDeUsuario"
+                    aria-controls="menuDeUsuario">
+                <div style="font-size: 0.62rem">
+                    <i class="fas fa-user-circle fa-3x"></i>
+                </div>
+            </button>
+            <%}else{%>
             <a
                     class="btn btn-tele-inverso"
                     role="button"
@@ -90,7 +100,10 @@
                     <i class="fa fa-user-circle fa-3x"></i>
                 </div>
             </a>
+            <%}%>
         </div>
+
+
     </div>
 </nav>
 
