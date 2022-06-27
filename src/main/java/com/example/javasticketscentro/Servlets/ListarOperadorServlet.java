@@ -69,6 +69,11 @@ public class ListarOperadorServlet extends HttpServlet {
                 adminDao.anadirOperadores(nombre, dni,apellido, numCel, foto, fecha_Nc, email, usuario, contrasenia, direccion, rol);
                 response.sendRedirect(request.getContextPath()+"/ListarOperadorServlet");
                 break;
+            case "borrar":
+                String id = request.getParameter("id");
+                adminDao.eliminarOperador(Integer.parseInt(id));
+                response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
+                break;
             case "buscar":
                 String nombreBuscar = request.getParameter("nombreBuscar");
                 filtros.add(nombreBuscar);

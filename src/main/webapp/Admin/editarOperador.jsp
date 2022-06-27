@@ -93,9 +93,9 @@
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="idPer">ID</label>
+                                        <label class="form-label" for="idPer"></label>
                                         <input name="idPer"
-                                               type="text"
+                                               type="hidden"
                                                id="idPer"
                                                class="form-control"
                                                value="<%=Operador.getIdPer()%>"
