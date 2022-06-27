@@ -179,7 +179,7 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Actores y Directores</b></a
+            ><h2>Lista de Actores y Directores</h2></a
             >
         </li>
     </ul>
