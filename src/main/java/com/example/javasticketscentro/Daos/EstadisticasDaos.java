@@ -7,21 +7,21 @@ import java.util.ArrayList;
 
 public class EstadisticasDaos extends BaseDao{
 
-    public ArrayList<BFuncion> listarAsistencia(String fecha1, String fecha2, String sede) {
+    public ArrayList<BFuncion> listarAsistencia(String fecha1, String fecha2) {
         ArrayList<BFuncion> funciones = new ArrayList<>();
-        String sql = "select truncate(sum(cantidadButaca)*100/stock, 2), idFuncion , p.nombre, sa.numero  from sede se\n" +
+        String sql = "select truncate(sum(cantidadButaca)*100/stock, 2), idFuncion , p.nombre, sa.numero, se.nombre  from sede se\n" +
                 "\tinner join sala sa on se.idSede = sa.Sede_idSede\n" +
                 "    inner join funcion_has_sala fs on sa.idSala = fs.Sala_idSala\n" +
                 "    inner join funcion f on fs.Funcion_idFuncion = f.idFuncion\n" +
                 "    inner join pelicula p on p.idPelicula = f.Pelicula_idPelicula\n" +
                 "    inner join ticket t on f.idFuncion = t.Funcion_idFuncion\n" +
-                "where f.fecha > ? and f.fecha < ? and se.nombre = ?\n" +
+                "where f.fecha > ? and f.fecha < ?\n" +
                 "group by f.idFuncion";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, fecha1);
             pstmt.setString(2, fecha2);
-            pstmt.setString(3, sede);
+
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
@@ -33,6 +33,9 @@ public class EstadisticasDaos extends BaseDao{
                     BSala sala = new BSala();
                     sala.setNumero(resultSet.getInt(4));
                     funcion.setbSala(sala);
+                    BSede sede = new BSede();
+                    sede.setNombre(resultSet.getString(5));
+                    funcion.setbSede(sede);
                     funciones.add(funcion);
                 }
             }
@@ -267,13 +270,13 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarAsistencia1() {
         ArrayList<BFuncion> funciones = new ArrayList<>();
-        String sql = "select truncate(sum(cantidadButaca)*100/stock, 2), idFuncion , p.nombre, sa.numero  from sede se\n" +
+        String sql = "select truncate(sum(cantidadButaca)*100/stock, 2), idFuncion , p.nombre, sa.numero, se.nombre  from sede se\n" +
                 "\tinner join sala sa on se.idSede = sa.Sede_idSede\n" +
                 "    inner join funcion_has_sala fs on sa.idSala = fs.Sala_idSala\n" +
                 "    inner join funcion f on fs.Funcion_idFuncion = f.idFuncion\n" +
                 "    inner join pelicula p on p.idPelicula = f.Pelicula_idPelicula\n" +
                 "    inner join ticket t on f.idFuncion = t.Funcion_idFuncion\n" +
-                "where f.fecha > '2022-06-01' and f.fecha < '2022-07-01' and se.nombre = 'Lince'\n" +
+                "where f.fecha > '2022-06-01' and f.fecha < '2022-07-01' \n" +
                 "group by f.idFuncion";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
@@ -288,6 +291,9 @@ public class EstadisticasDaos extends BaseDao{
                 BSala sala = new BSala();
                 sala.setNumero(resultSet.getInt(4));
                 funcion.setbSala(sala);
+                BSede sede = new BSede();
+                sede.setNombre(resultSet.getString(5));
+                funcion.setbSede(sede);
                 funciones.add(funcion);
             }
 

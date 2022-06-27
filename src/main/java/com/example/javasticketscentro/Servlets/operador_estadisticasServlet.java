@@ -58,6 +58,38 @@ public class operador_estadisticasServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        EstadisticasDaos estadisticasDaos = new EstadisticasDaos();
+        switch (action){
+            case "filtrar":
+                String fecha1 = request.getParameter("date1");
+                String fecha2 = request.getParameter("date2");
+                try {
+                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada(fecha1,fecha2);
+                    BCelebridad actor = estadisticasDaos.actorMejorCalificado(fecha1,fecha2);
+                    BCelebridad director = estadisticasDaos.directorMejorCalificado(fecha1,fecha2);
+                    ArrayList<BFuncion> menosVista = estadisticasDaos.listarMenosVista(fecha1,fecha2);
+                    ArrayList<BFuncion> masVista = estadisticasDaos.listarMasVista(fecha1,fecha2);
+                    ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+                    ArrayList<BFuncion> asistencia = estadisticasDaos.listarAsistencia(fecha1,fecha2);
+                    if (pelicula != null) {
+                        request.setAttribute("listaAsistencia", asistencia);
+                        request.setAttribute("listaGenero", generos);
+                        request.setAttribute("masVista", masVista);
+                        request.setAttribute("menosVista", menosVista);
+                        request.setAttribute("peliculaMejorCalificada", pelicula);
+                        request.setAttribute("actorMejorCalificado", actor);
+                        request.setAttribute("directorMejorCalificado", director);
+                        RequestDispatcher listar = request.getRequestDispatcher("Operador/operador_estadisticas.jsp");
+                        listar.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                }
+                break;
+        }
     }
 }

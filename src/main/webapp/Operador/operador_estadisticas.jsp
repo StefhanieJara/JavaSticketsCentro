@@ -19,6 +19,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PUCP - Estadisticas</title>
     <meta charset="utf-8">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="assets/css_2/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
     <link href="assets/css_2/bootstrap.css" rel='stylesheet' type='text/css' />
     <link href="assets/css_2/style.css" rel='stylesheet' type='text/css' />
@@ -104,7 +106,7 @@
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button class="btn" type="button" style=" color: white">
                 <div style="font-size: 0.62rem">
-                    <a href="<%=request.getContextPath()%>/indexOperadorServlet"</a>
+                    <a href="<%=request.getContextPath()%>/indexOperadorServlet"></a>
                     <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
                 </div>
             </button>
@@ -207,52 +209,54 @@
                                         </FONT></br>
 
                                         <div class="row justify-content-start">
-                                            <div class="col-2">
+                                            <div class="col-3">
                                                 <br>
-                                                <form >
-                                                    <label> Fecha de inicio </label>
-                                                    <input type="date">
-                                                </form><br>
-                                                <form>
+                                                <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                                    <label> Fecha de inicio</label>
+                                                    <input type="date" name="date1">
+
                                                     <label> Fecha de fin </label>
-                                                    <input type="date">
-                                                </form><br>
-                                                <form >
-                                                    <label> Sede</label>
-                                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                        <option selected>Seleccione la sede</option>
-                                                        <option value="1">Lima</option>
-                                                        <option value="2">Comas</option>
-                                                        <option value="3">San Juan de Lurigancho</option>
-                                                    </select>
-                                                </form><br>
-                                                <button type="button" class="btn btn-danger">Inspeccionar</button>
+                                                    <input type="date" name="date2">
+
+                                                    <button type="submit" class="btn btn-danger">Filtrar</button>
+                                                </form>
+
+
 
                                             </div>
-                                            <div class="col-5">
-                                                <section class="container_grafico">
-                                                    <div class= "grafico"></div>
-                                                    <div class= "container_leyenda">
-                                                      <span class = "leyenda_all">
-                                                        <span class="color_facebook"></span>
-                                                        <p class = "social">40% Lina de Lima</p>
-                                                      </span>
-                                                        <span class="leyenda_all">
-                                                        <span class="color_twitter"></span>
-                                                        <p class = "social"> 30% Benedetta </p>
-                                                      </span>
-                                                        <span class="leyenda_all">
-                                                        <span class="color_instagram"></span>
-                                                        <p class = "social"> 18% Largas distancias </p>
-                                                      </span>
-                                                        <span class="leyenda_all">
-                                                        <span class="color_pinterest"></span>
-                                                        <p class = "social"> 12% Matrix 4</p>
-                                                      </span>
+                                            <%int cont = 0;%>
+                                            <div class="col-6">
+                                                <table >
+                                                    <thead>
+                                                    <tr>
+                                                        <td><h2>Porcentaje</h2></td><td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                <%for(BFuncion funcion: listaAsistencia){
+                                                  %>
 
+                                                    <tr>
+                                                        <td>
+                                                            <div class="progress">
+                                                                <div
 
-                                                    </div>
-                                                </section>
+                                                                        class="progress-bar bg-danger"
+                                                                        role="progressbar"
+                                                                        style="width: <%=funcion.getAsistencia()%>%"
+                                                                        aria-valuenow="<%=funcion.getAsistencia()%>"
+                                                                        aria-valuemin="0"
+                                                                        aria-valuemax="100"
+                                                                ><%=funcion.getAsistencia()%>
+                                                                </div>
+                                                            </div>
+                                                        </td><td><%=funcion.getbPelicula().getNombre()%></td><td><%=funcion.getbSede().getNombre()%></td><td><%=funcion.getbSala().getNumero()%></td>
+
+                                                    </tr>
+                                               <% }%>
+                                                    </tbody>
+
+                                                </table>
                                             </div>
                                         </div><br>
                                         <FONT FACE="impact" SIZE=6 COLOR="red">
@@ -287,43 +291,24 @@
                                 <div class="row justify-content-start">
                                     <div class="col-3">
                                         <br>
-                                        <form >
-                                            <label> Fecha de inicio </label>
-                                            <input type="date">
-                                        </form><br>
-                                        <form>
+                                        <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                            <label> Fecha de inicio</label>
+                                            <input type="date" name="date1" >
+
                                             <label> Fecha de fin </label>
-                                            <input type="date">
-                                        </form><br>
-                                        <form >
-                                            <label> Sede</label>
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                <option selected>Seleccione la sede</option>
-                                                <option value="1">Lima</option>
-                                                <option value="2">Comas</option>
-                                                <option value="3">San Juan de Lurigancho</option>
-                                            </select>
-                                        </form><br>
-                                        <form>
-                                            <label> Sala </label>
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                <option selected>Seleccione la sala</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </form><br>
+                                            <input type="date" name="date2" >
 
+                                            <button type="submit" class="btn btn-danger">Filtrar</button>
+                                        </form>
 
-                                        <button type="button" class="btn btn-danger">Inspeccionar</button>
 
                                     </div>
                                     <div class="col-8">
                                         <table >
                                             <thead>
-                                                <tr>
-                                                    <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
-                                                </tr>
+                                            <tr>
+                                                <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
+                                            </tr>
                                             </thead>
 
                                             <tbody>
@@ -342,36 +327,15 @@
                                 </FONT></br>
                                 <div class="row justify-content-start">
                                     <div class="col-3">
-                                        <br>
-                                        <form >
-                                            <label> Fecha de inicio </label>
-                                            <input type="date">
-                                        </form><br>
-                                        <form>
+                                        <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                            <label> Fecha de inicio</label>
+                                            <input type="date" name="date1">
+
                                             <label> Fecha de fin </label>
-                                            <input type="date">
-                                        </form><br>
-                                        <form >
-                                            <label> Sede</label>
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                <option selected>Seleccione la sede</option>
-                                                <option value="1">Lima</option>
-                                                <option value="2">Comas</option>
-                                                <option value="3">San Juan de Lurigancho</option>
-                                            </select>
-                                        </form><br>
-                                        <form>
-                                            <label> Sala </label>
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                                <option selected>Seleccione la sala</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </form><br>
+                                            <input type="date" name="date2">
 
-
-                                        <button type="button" class="btn btn-danger">Inspeccionar</button>
+                                            <button type="submit" class="btn btn-danger">Filtrar</button>
+                                        </form>
 
                                     </div>
                                     <div class="col-8">
@@ -405,20 +369,20 @@
                                         </FONT></br>
 
                                         <div class="row justify-content-start">
-                                            <div class="col-4">
-                                                <form >
-                                                    <label> Fecha de inicio </label>
-                                                    <input type="date">
-                                                </form>
-                                            </div>
                                             <div class="col-3">
-                                                <form>
-                                                    <label> Fecha de fin </label>
-                                                    <input type="date">
-                                                </form>
+                                                <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                                    <label> Fecha de inicio</label>
+                                                    <input type="date" name="date1">
 
+                                                    <label> Fecha de fin </label>
+                                                    <input type="date" name="date2">
+
+                                                    <button type="submit" class="btn btn-danger">Filtrar</button>
+                                                </form>
                                             </div>
-                                        </div><br><br>
+
+                                        </div>
+
                                         <table >
                                             <thead>
                                             <tr>
@@ -482,19 +446,18 @@
                                 <label>Película</label>
                                 <div class="row align-items-start">
                                     <div class="col-2">
-                                        <form >
-                                            <label> Fecha de inicio </label>
-                                            <input type="date">
-                                        </form><br>
+                                        <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                            <label> Fecha de inicio</label>
+                                            <input type="date" name="date1">
 
-                                    </div>
-                                    <div class="col-2">
-                                        <form>
                                             <label> Fecha de fin </label>
-                                            <input type="date">
-                                        </form><br>
+                                            <input type="date" name="date2" >
+
+                                            <button type="submit" class="btn btn-danger">Filtrar</button>
+                                        </form>
 
                                     </div>
+
 
 
                                     <div class="col-8">
@@ -524,20 +487,18 @@
                                 </FONT><br><br>
 
                                 <div class="row align-items-start">
-                                    <div class="col-2">
-                                        <form >
-                                            <label> Fecha de inicio </label>
-                                            <input type="date">
-                                        </form><br>
+                                    <div class="col-3">
+                                        <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar" >
+                                            <label> Fecha de inicio</label>
+                                            <input type="date" name="date1">
 
-                                    </div>
-                                    <div class="col-2">
-                                        <form>
                                             <label> Fecha de fin </label>
-                                            <input type="date">
-                                        </form><br>
+                                            <input type="date" name="date2">
 
+                                            <button type="submit" class="btn btn-danger">Filtrar</button>
+                                        </form>
                                     </div>
+
 
                                     <div class="col-8">
                                         <table >
