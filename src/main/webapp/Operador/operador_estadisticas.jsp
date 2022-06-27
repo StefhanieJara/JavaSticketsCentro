@@ -391,7 +391,7 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td><h2><%=peliculaMejorCalificada.getNombre()%></h2></td><td><h2><%=peliculaMejorCalificada.getCalificacionPelicula()%></h2></td>
+                                                <td><h2><%=peliculaMejorCalificada.getNombre()%> </h2></td><td><h2><%=peliculaMejorCalificada.getCalificacionPelicula()%></h2></td>
                                             </tr>
 
                                             </tbody>
@@ -469,7 +469,7 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td><h2><%=actorMejorCalificado.getNombre()%></h2></td><td><h2><%=actorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
+                                                <td><h2><%=actorMejorCalificado.getNombre()%> <%=actorMejorCalificado.getApellido()%></h2></td><td><h2><%=actorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
                                             </tr>
 
                                             </tbody>
@@ -509,7 +509,7 @@
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <td><h2><%=directorMejorCalificado.getNombre()%></h2></td><td><h2><%=directorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=directorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
+                                                <td><h2><%=directorMejorCalificado.getNombre()%> <%=directorMejorCalificado.getApellido()%></h2></td><td><h2><%=directorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=directorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
                                             </tr>
 
                                             </tbody>
