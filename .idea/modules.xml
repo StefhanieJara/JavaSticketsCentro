@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JavaSticketsCentro.iml" filepath="$PROJECT_DIR$/JavaSticketsCentro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ProyectoJavaSticketIweb.iml" filepath="$PROJECT_DIR$/.idea/ProyectoJavaSticketIweb.iml" />
     </modules>
   </component>
 </project>

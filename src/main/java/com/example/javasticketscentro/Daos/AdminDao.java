@@ -233,7 +233,7 @@ public class AdminDao extends BaseDao{
 
         ArrayList<BCelebridad> listarDirector = new ArrayList<>();
 
-        String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='director';";
+        String sql = "select concat(nombre,' ', apellido), idCelebridad from celebridad where rol ='director';";
 
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -242,6 +242,7 @@ public class AdminDao extends BaseDao{
             while (rs.next()) {
                 BCelebridad bCelebridad = new BCelebridad();
                 bCelebridad.setNombre(rs.getString(1));
+                bCelebridad.setIdCelebridad(rs.getInt(2));
                 listarDirector.add(bCelebridad);
             }
         } catch (SQLException e) {
@@ -254,7 +255,7 @@ public class AdminDao extends BaseDao{
         ArrayList<BCelebridad> listarActor = new ArrayList<>();
 
 
-        String sql = "select concat(nombre,\" \", apellido) from celebridad where rol ='actor';";
+        String sql = "select concat(nombre, ' ', apellido), idCelebridad from celebridad where rol ='actor';";
 
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -263,6 +264,7 @@ public class AdminDao extends BaseDao{
             while (rs.next()) {
                 BCelebridad bCelebridad = new BCelebridad();
                 bCelebridad.setNombre(rs.getString(1));
+                bCelebridad.setIdCelebridad(rs.getInt(2));
                 listarActor.add(bCelebridad);
             }
         } catch (SQLException e) {
@@ -553,7 +555,7 @@ public class AdminDao extends BaseDao{
 
         ArrayList<BSala> listasala = new ArrayList<>();
 
-        String sql = "select aforo, numero from sala;";
+        String sql = "select aforo, numero, idSala from sala;";
 
         try (Connection connection =this.getConnection();
              Statement stmt = connection.createStatement();
@@ -563,6 +565,7 @@ public class AdminDao extends BaseDao{
                 BSala bSala = new BSala();
                 bSala.setAforo(rs.getInt(1));
                 bSala.setNumero(rs.getInt(2));
+                bSala.setIdSala(rs.getInt(3));
                 listasala.add(bSala);
             }
         } catch (SQLException e) {

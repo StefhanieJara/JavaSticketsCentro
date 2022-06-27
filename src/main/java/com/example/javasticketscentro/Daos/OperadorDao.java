@@ -5,26 +5,16 @@ import com.example.javasticketscentro.Beans.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class OperadorDao {
+public class OperadorDao extends BaseDao{
 
-    public static ArrayList<BPelicula> listapeliculas() {
+    public ArrayList<BPelicula> listapeliculas() {
 
         ArrayList<BPelicula> listapeliculas = new ArrayList<>();
-
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "select pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto, fu.precio, fu.stock, fu.horaInicio,fu.fecha from pelicula pe\n" +
                 "\tinner join funcion fu on pe.idPelicula=fu.Pelicula_idPelicula;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql);) {
 
@@ -47,24 +37,14 @@ public class OperadorDao {
         }
         return listapeliculas;
     }
-    public static ArrayList<BPersonal> listapersonal() {
+    public ArrayList<BPersonal> listapersonal() {
 
         ArrayList<BPersonal> listapersonal = new ArrayList<>();
-
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         String sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per\n" +
                 "\tinner join sede se on per.Sede_idSede= se.idSede;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql);) {
 
@@ -85,19 +65,9 @@ public class OperadorDao {
 
     public void añadirPersonal(String nombre, String apellido, int Sede_idSede) {
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "insert into personal (nombre, apellido, Sede_idSede) values (?,?,?);";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt= connection.prepareStatement(sql)){
              pstmt.setString(1,nombre);
             pstmt.setString(2,apellido);
@@ -111,19 +81,9 @@ public class OperadorDao {
     public BPersonal buscarPorId(int id) {
         BPersonal bPersonal  = new BPersonal();
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "select * from personal where idPersonal= ?";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
 
             pstmt.setInt(1, id);
@@ -145,19 +105,9 @@ public class OperadorDao {
     }
     public void actualizarPersonal(int idPersonal, String nombre, String apellido, int Sede_idSede) {
 
-        String user = "root";
-        String pass = "root";
-        String url = "jdbc:mysql://localhost:3306/centro1";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         String sql = "update personal set nombre = ?, apellido= ?, Sede_idSede= ? where idPersonal= ?;";
 
-        try (Connection connection = DriverManager.getConnection(url, user, pass);
+        try (Connection connection = this.getConnection();
              PreparedStatement pstmt= connection.prepareStatement(sql)){
             pstmt.setString(1,nombre);
             pstmt.setString(2,apellido);
@@ -166,6 +116,57 @@ public class OperadorDao {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    public void crearFuncion(String nombre, String genero, String fecha, String duracion, String restriccion,
+                             int idsala, String sinopsis, String URLFoto, int stock, float precio, int idSede, int idDirector, int idActor1, String horaInicio){
+        String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero)\n" +
+                "values (?, ?, ?, ?, ?,?,?);";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, restriccion);
+            pstmt.setString(3, sinopsis);
+            pstmt.setString(4, duracion);
+            pstmt.setString(5, URLFoto);
+            pstmt.setDouble(6, 0.0);
+            pstmt.setString(7, genero);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        int IDpeli = obtenerIdPelicula(nombre);
+        asignarFuncion(precio, stock, IDpeli, fecha, horaInicio);
+    }
+    public int obtenerIdPelicula(String nombre){
+        String sql = "Select idPelicula from pelicula where nombre=?";
+        int IDPeli=0;
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, nombre);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    IDPeli = rs.getInt(1);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return IDPeli;
+    }
+    public void asignarFuncion(float precio, int stock, int IDPelicula, String fecha, String horaInicio){
+        String sql = "INSERT INTO centro1.funcion (precio, stock, Pelicula_idPelicula, fecha, horaInicio)\n" +
+                "values ( ? , ? , ? , ? , ?);";
+        try (Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setFloat(1, precio);
+            pstmt.setInt(2, stock);
+            pstmt.setInt(3, IDPelicula);
+            pstmt.setString(4, fecha);
+            pstmt.setString(5, horaInicio);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 

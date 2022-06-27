@@ -50,42 +50,8 @@
                 <a href="index.html"><img src="img/logo.png" /></a>
             </a>
         </div>
-        <!--Buscador de productos-->
-        <div class="col-md-7 d-none d-md-block ps-0">
-            <!--desaparece en menores a medium-->
-            <div class="input-group">
-                <div style="width: 50%">
-                    <input
-                            type="search"
-                            id="buscador_producto"
-                            class="form-control"
-                            placeholder="Busca una pelicula"
-                    />
-                </div>
-                <a
-                        role="button"
-                        class="btn btn-tele border-start-1"
-                        href="usuarioProductoBuscado.html"
-                >
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-        </div>
-        <!--Carrito-->
-        <div
-                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
-        >
-            <a
-                    class="btn btn-tele-inverso"
-                    role="button"
-                    href="usuarioCarrito.html"
-            >
-                <div style="font-size: 0.6rem">
-                    <!--para cambios más precisos del tamaño-->
-                    <i class="fas fa-cart-plus fa-3x"></i>
-                </div>
-            </a>
-        </div>
+        <div class="col-md-7 d-none d-md-block ps-0"></div>
+        <div class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"></div>
         <!--Menú usuario-->
         <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button
@@ -130,7 +96,7 @@
                     <div class="my-2">
                         <h4 class="mb-3">Paco Perez</h4>
                         <img
-                                src="assets/img/images.png"
+                                src="img/images.png"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -217,7 +183,14 @@
                                         <input
                                                 type="time"
                                                 name="tiempo"
-                                                id="productName"
+                                                class="form-control"
+                                                placeholder="Ingrese la duracion de la pelicula"/> </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName">Ingrese la hora de inicio de la película</label>
+                                        <label class="form-label" for="productName">Tiempo de inicio</label>
+                                        <input
+                                                type="time"
+                                                name="tiempoInicio"
                                                 class="form-control"
                                                 placeholder="Ingrese la duracion de la pelicula"/> </div>
                                     <div class="form-outline mb-4">
@@ -229,7 +202,6 @@
                                                 name="fecha"
                                                 id="productName"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
@@ -239,10 +211,9 @@
                                         <select
                                                 id="country1"
                                                 name="restriccionEdad"
-                                                onchange="change_country(this.value)"
                                                 class="frm-field required sect"
                                         >
-                                            <option>Seleccionar</option>
+                                            <option disabled="disabled" selected="true">Seleccionar</option>
                                             <option>Para todo publico (AA)</option>
                                             <option>+12 (B)</option>
                                             <option>+15(B15)</option>
@@ -255,60 +226,37 @@
                                         >Elija el numero de sala</label
                                         >
                                         <select
-                                                id="country1"
-                                                onchange="change_country(this.value)"
+                                                name="sala"
                                                 class="frm-field required sect"
                                         >
                                             <option>Seleccionar</option>
                                             <%for(BSala bsalas : listarsala){%>
-                                            <option value="<%=bsalas.getNumero()%>"><%=bsalas.getNumero()%></option>
+                                            <option value="<%=bsalas.getIdSala()%>"><%=bsalas.getNumero()%></option>
                                             <%}%>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label"
-                                    >Imagen Referencial</label
-                                    >
-                                    <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="img/doctorStrange.jpg"
-                                                class="img-thumbnail"
-                                                width="100px"
-                                                height="100px"
-                                                alt="pelicula"
-                                        />
-                                    </div>
-                                    <input class="form-control" type="file" id="formFile" />
 
+                                <div class="col-md-6 mb-4 text-center">
+                                    <label class="form-label">Imagen</label>
+                                    <div class="text-center mt-2 mb-3">
+                                        <img id="img-preview" style="max-width: 300px; resize: both; max-width: 300px" />
+                                    </div>
                                     <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
+                                        <input type="file" id="img-uploader">
+
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Desea Cambiar el aforo: </label
-                                        >
-                                        <select
-                                                id="country1"
-                                                name="restriccionEdad"
-                                                onchange="change_country(this.value)"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Si</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
+                                    <progress id="img-upload-bar" width="10px" value="0" max="100"
+                                              style="width: 100%"></progress>
+                                    <input type="hidden" name="photoUrl" id="photoUrl" />
 
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productStock"
                                         >Stock de tickets disponible</label
                                         >
                                         <input
+                                                name="stock"
                                                 type="number"
                                                 id="productStock"
                                                 class="form-control"
@@ -320,7 +268,11 @@
                                         >Precio por ticket</label
                                         >
                                         <input
-                                                type="price"
+                                                name="precio"
+                                                type="number"
+                                                min="0.0"
+                                                step="0.1"
+                                                max="60"
                                                 id="productPrice"
                                                 class="form-control"
                                                 placeholder="S/."
@@ -333,12 +285,12 @@
                                         >
                                         <select
                                                 id="country1"
-                                                onchange="change_country(this.value)"
+                                                name="sede"
                                                 class="frm-field required sect"
                                         >
                                             <option value="null">Seleccionar</option>
                                             <%for(BSede bSede : listarsede){%>
-                                            <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
+                                            <option value="<%=bSede.getIdSede()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
@@ -351,24 +303,24 @@
                                         <label class="form-label" for="productoDescription"
                                         >Sinopsis</label
                                         >
-                                        <textarea
-                                                type="tel"
+                                        <input
+                                                type="text"
+                                                name="sinopsis"
                                                 id="productoDescription"
                                                 class="form-control"
-                                        ></textarea>
+                                        >
                                     </div>
                                 </div>
                             </div>
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="productName">Director</label>
                                 <select
-                                        id="country1"
-                                        onchange="change_country(this.value)"
+                                        name="director"
                                         class="frm-field required sect"
                                 >
                                     <option value="null">Seleccionar</option>
                                     <%for(BCelebridad bCelebridad : listarDirector){%>
-                                    <option value="<%=bCelebridad.getNombre()%>"><%=bCelebridad.getNombre()%></option>
+                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
                                     <%}%>
                                 </select>
                             </div>
@@ -377,68 +329,16 @@
                                 >Actor/actriz protagonista 1</label
                                 >
                                 <select
-                                        id="country1"
-                                        onchange="change_country(this.value)"
+                                        name="actor1"
                                         class="frm-field required sect"
                                 >
                                     <option value="null">Seleccionar</option>
                                     <%for(BCelebridad bCelebridad : listarActor){%>
-                                    <option value="<%=bCelebridad.getNombre()%>"><%=bCelebridad.getNombre()%></option>
+                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
                                     <%}%>
                                 </select>
                             </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="productName"
-                                >Actor/actriz protagonista 2</label
-                                >
-                                <select
-                                        id="country1"
-                                        onchange="change_country(this.value)"
-                                        class="frm-field required sect"
-                                >
-                                    <option value="null">Seleccionar</option>
-                                    <%for(BCelebridad bCelebridad : listarActor){%>
-                                    <option value="<%=bCelebridad.getNombre()%>"><%=bCelebridad.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="productName"
-                                >Actor/actriz protagonista 3</label
-                                >
-                                <select
-                                        id="country1"
-                                        onchange="change_country(this.value)"
-                                        class="frm-field required sect"
-                                >
-                                    <option value="null">Seleccionar</option>
-                                    <%for(BCelebridad bCelebridad : listarActor){%>
-                                    <option value="<%=bCelebridad.getNombre()%>"><%=bCelebridad.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="productName"
-                                >Actor/actriz protagonista 4</label
-                                >
-                                <select
-                                        id="country1"
-                                        onchange="change_country(this.value)"
-                                        class="frm-field required sect"
-                                >
-                                    <option value="null">Seleccionar</option>
-                                    <%for(BCelebridad bCelebridad : listarActor){%>
-                                    <option value="<%=bCelebridad.getNombre()%>"><%=bCelebridad.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                            </div>
-
-                            <div class="">
-                                <a
-                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
-                                        class="btn btn-danger" type="submit"
-                                >Registrar Funcion</a>
-                            </div>
+                            <button type="submit" id="enviar" class="btn btn-danger">Registrar Función</button>
                         </form>
                     </div>
                 </div>
@@ -448,6 +348,8 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>
 

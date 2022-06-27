@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Locale;
 
 
 @WebServlet(name = "peliculaVisualizacionServlet", urlPatterns = {"/peliculaVisualizacionServlet"})
@@ -36,9 +37,6 @@ public class peliculaVisualizacionServlet extends HttpServlet {
 
             }
 
-
-
-
         }
 
 
@@ -46,7 +44,46 @@ public class peliculaVisualizacionServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        OperadorDao operadorDao = new OperadorDao();
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        switch (action){
+            case "guardar":
+                try {
+                    String nombre = request.getParameter("nombrePeli");
+                    String genero = request.getParameter("genero");
+                    String fecha = request.getParameter("fecha");
+                    String tiempoDuracion = request.getParameter("tiempo");
+                    String duracionConFormato = tiempoDuracion + ":00";
+                    String tiempoInicio = request.getParameter("tiempoInicio");
+                    String horaInicio = tiempoInicio + ":00";
+                    String restriccion = request.getParameter("restriccionEdad");
+                    if (nombre.equals("") || genero.equals("") || fecha.equals("") || tiempoDuracion.equals("") || restriccion.equals("")) {
+                        response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=crear");
+                    }
+                    String sinopsis = request.getParameter("sinopsis")==null?"":request.getParameter("sinopsis");
+                    String URLFoto = request.getParameter("photoUrl");
+                    if  (URLFoto == null){
+                        URLFoto=" https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
+                    }else if (URLFoto.equals("")){
+                        URLFoto="https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
+                    }
+                    int idsala = Integer.parseInt(request.getParameter("sala")==null?"0":request.getParameter("sala"));
+                    int stock = Integer.parseInt(request.getParameter("stock")==null?"0":request.getParameter("stock"));
+                    float precio = Float.parseFloat(request.getParameter("precio")==null?"0":request.getParameter("precio"));
+                    int idSede = Integer.parseInt(request.getParameter("sede")==null?"0":request.getParameter("sede"));
+                    int idDirector = Integer.parseInt(request.getParameter("director")==null?"0":request.getParameter("director"));
+                    int idActor1 = Integer.parseInt(request.getParameter("actor1")==null?"0":request.getParameter("actor1"));
+                    if (stock==0 || precio==0.0 || idSede == 0 || idDirector==0 || idActor1==0 || idsala==0){
+                        response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=crear");
+                    }else{
+                        operadorDao.crearFuncion(nombre, genero, fecha, duracionConFormato, restriccion, idsala, sinopsis, URLFoto, stock, precio, idSede, idDirector,idActor1, horaInicio);
+                    }
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
 }

@@ -113,24 +113,4 @@ public class ADServlet extends HttpServlet {
                 break;
         }
     }
-
-   /* public BCelebridad leerParametros(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("id"));
-        String nombre = request.getParameter("nombresCeleb");
-        String apellido = request.getParameter("apellidosCeleb");
-        String rol = request.getParameter("rol");
-        String URLFoto = request.getParameter("photoUrl");
-        if  (URLFoto == null){
-            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
-        }else if (URLFoto.equals("")){
-            URLFoto="https://p16-va-default.akamaized.net/img/musically-maliva-obj/1665282759496710~c5_720x720.jpeg";
-        }
-        BCelebridad celebr = new BCelebridad();
-        celebr.setIdCelebridad(id);
-        celebr.setNombre(nombre);
-        celebr.setApellido(apellido);
-        celebr.setRol(rol);
-        celebr.setFoto(URLFoto);
-        return celebr;
-    }*/
 }

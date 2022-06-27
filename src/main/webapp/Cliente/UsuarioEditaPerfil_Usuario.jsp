@@ -39,7 +39,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="index.html"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Buscador de productos-->
@@ -170,12 +170,48 @@
     </div>
 
     <form>
-        <div class="contenerdor_perfil">
+        <div style="margin-bottom: 50px" class="contenerdor_perfil">
             <div class="container">
                 <div class="row">
                     <div class="col">
                         <div class="mt-2">
                             <h1>Mi Perfil</h1>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >DNI</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="number"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="71834998"
+                                        readonly
+                                />
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mt-2">
+
+                            <div class="rows-auto">
+                                <label for="inputtext6" class="col-form-label"
+                                >Código</label
+                                >
+                            </div>
+                            <div class="rows-auto">
+                                <input
+                                        type="number"
+                                        id="inputtext6"
+                                        class="form-control"
+                                        aria-describedby="textHelpInline"
+                                        placeholder="20108992"
+                                        readonly
+                                />
+                            </div>
                         </div>
                         <div class="row g-3 align-items-center mt-2">
 
@@ -215,43 +251,7 @@
 
                             <div class="rows-auto">
                                 <label for="inputtext6" class="col-form-label"
-                                >DNI</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input
-                                        type="number"
-                                        id="inputtext6"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        placeholder="71834998"
-                                        readonly
-                                />
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
-                                >Codigo</label
-                                >
-                            </div>
-                            <div class="rows-auto">
-                                <input
-                                        type="number"
-                                        id="inputtext6"
-                                        class="form-control"
-                                        aria-describedby="textHelpInline"
-                                        placeholder="20108992"
-                                        readonly
-                                />
-                            </div>
-                        </div>
-                        <div class="row g-3 align-items-center mt-2">
-
-                            <div class="rows-auto">
-                                <label for="inputtext6" class="col-form-label"
-                                >Telefono</label
+                                >Teléfono</label
                                 >
                             </div>
                             <div class="rows-auto">
@@ -283,7 +283,7 @@
                         <div class="row g-3 align-items-center mt-2">
                             <div class="rows-auto">
                                 <label for="inputtext6" class="col-form-label"
-                                >Direccion</label
+                                >Dirección</label
                                 >
                             </div>
                             <div class="rows-auto">
@@ -304,7 +304,7 @@
                             </div>
                             <div class="rows-auto">
                                 <input
-                                        type="text"
+                                        type="email"
                                         id="inputtext6"
                                         class="form-control"
                                         aria-describedby="textHelpInline"
@@ -327,29 +327,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4 text-center">
-                        <label for="formFile" class="form-label"
-                        >Imagen de perfil</label
-                        >
-                        <div class="text-center mt-2 mb-3">
-                            <img
-                                    src="img/benedict.jpg"
-                                    class="img-thumbnail"
-                                    width="200px"
-                                    height="400px"
+                    <div style="margin-top: 80px" class="col-md-6 mb-4 text-center">
+                        <h4 class="form-label" >Imagen de perfil</h4>
 
-                            />
-                        </div>
-                        <input class="form-control" type="file" id="formFile" />
+                            <div class="text-center mt-2 mb-3">
+                                <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
+                            </div>
+                            <div class="d-flex justify-content-center my-3">
+                                <input type="file" id="img-uploader">
+                            </div>
+                            <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
+                                  style="width: 100%"></progress>
 
-                        <div class="d-flex justify-content-center my-3">
-                            <input
-                                    class="btn btn-tele"
-                                    type="submit"
-                                    value="Cambiar imagen"
-                            />
-                        </div>
+                        <input type="hidden" name="photoUrl" id="photoUrl" />
                     </div>
+
                 </div>
             </div>
         </div>
@@ -358,5 +350,7 @@
 
 <!--JS-->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>
