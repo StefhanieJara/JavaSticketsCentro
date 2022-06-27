@@ -37,26 +37,34 @@
     ></script>
 </head>
 <body>
-<nav class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
-     style="background-color: #e72d4b">
-    <div class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2">
-        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2">
-            <a href="indexAdmin.html"><img src="img/logo.png" /></a>
-        </div>
+    <nav class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
+         style="background-color: #e72d4b">
+        <div class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2">
+                <a href="indexAdmin.html"><img src="img/logo.png" /></a>
+            </div>
 
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
+            </div>
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
+                        aria-controls="offcanvasWithBackdrop" style="color: #fff">
+                    <div style="font-size: 0.62rem">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                </button>
+            </div>
+            <!--Boton atras-->
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+                <button class="btn" type="button" style=" color: white">
+                    <div style="font-size: 0.62rem">
+                        <a href="<%=request.getContextPath()%>/personalServlet"</a>
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                    </div>
+                </button>
+            </div>
         </div>
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
-            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
-                    aria-controls="offcanvasWithBackdrop" style="color: #fff">
-                <div style="font-size: 0.62rem">
-                    <i class="fas fa-user-circle fa-3x"></i>
-                </div>
-            </button>
-        </div>
-
-    </div>
-</nav>
+    </nav>
 <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="offcanvasWithBackdrop"
      aria-labelledby="offcanvasWithBackdropLabel">
     <div class="d-flex align-items-center flex-column mb-3 vh-100">
