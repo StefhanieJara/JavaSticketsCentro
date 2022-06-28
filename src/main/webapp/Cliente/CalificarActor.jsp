@@ -6,10 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaActores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+<jsp:useBean id="listaActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="puntajes" scope="request" type="java.util.ArrayList<java.lang.Integer>"/>
+<jsp:useBean id="puntaje" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 
 <html lang="en">
 <head>
@@ -43,7 +44,6 @@
 
             }
 
-
             .star_rating{
                 user-select: none;
                 background-color: azure;
@@ -75,31 +75,31 @@
                         <h4 class="my-2">Calificar Actores</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <%int i=0, contador;%>
-                        <%for (BCelebridad actor: listaActores){%>
+
                         <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=calificarA">
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
-                                        <p style="font-size:25px; color: red;"><em>Actor</em></p>
+                                        <p style="font-size:25px; color: red;"><em>Actor <%=pagina%></em></p>
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <p style="font-size:30px; color: black;"><em><%=actor.getNombre()%> <%=actor.getApellido()%></em></p>
-                                        <img src="<%=actor.getFoto()%>" style="max-width:200px; max-height: 400px;">
+                                        <p style="font-size:30px; color: black;"><em><%=listaActor.get(pagina-1).getNombre()%> <%=listaActor.get(pagina-1).getApellido()%></em></p>
+                                        <img src="<%=listaActor.get(pagina-1).getFoto()%>" style="max-width:200px; max-height: 400px;">
                                     </div>
                                     <div class="star_rating">
-                                        <%for (contador=0; contador<puntajes.get(i); contador++){%>
+                                        <%for (int contador=0; contador<puntaje; contador++){%>
                                         <button class="star" type="button" name="star5" id="star5">&#9733;</button>
                                         <%}%>
-                                        <%for (contador=0; contador<5-puntajes.get(i); contador++){%>
+                                        <%for (int contador=0; contador<5-puntaje; contador++){%>
                                         <button class="star" type="button" name="star1" id="star1">&#9734;</button>
                                         <%}%>
-                                        <p class="current_rating"><%=puntajes.get(i)%> de 5</p>
+                                        <p class="current_rating"><%=puntaje%> de 5</p>
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
-                                    <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=actor.getIdCelebridad()%>"/>
-                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
-                                    <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
+                                    <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=listaActor.get(pagina-1).getIdCelebridad()%>"/>
+                                    <input type="hidden"  name="idPersona"  value="<%=idPersona%>"/>
+                                    <input type="hidden"  name="idPelicula"  value="<%=idPelicula%>"/>
+                                    <input type="hidden" name="pagina" value="<%=pagina%>">
                                     <div class="form-outline mb-4">
                                         <input class="btn btn-tele"
                                                 type="submit"
@@ -108,8 +108,47 @@
                                 </div>
                             </div>
                         </form>
-                        <% i++;
-                        }%>
+                        <%if(listaActor.size()>1){%>
+                        <!--Paginación-->
+                        <div class="container">
+                            <div class="d-flex justify-content-center my-3">
+                                <nav aria-label="paginacion_productos">
+                                    <ul class="pagination">
+                                        <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=paginacion">
+                                            <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                                            <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
+                                            <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
+                                            <%if(pagina==1){%>
+                                            <li class="page-item disabled">
+                                                <a class="page-link">Anterior</a>
+                                            </li>
+                                            <%}else{%>
+                                            <li class="page-item">
+                                                <button type="submit" class="page-link">Anterior</button>
+                                            </li>
+                                            <%}%>
+                                        </form>
+
+                                        <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=paginacion">
+                                            <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                                            <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
+                                            <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
+                                            <%if(pagina==listaActor.size()){%>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#">Siguiente</a>
+                                            </li>
+                                            <%}else{%>
+                                            <li class="page-item">
+                                                <button type="submit" class="page-link" href="#">Siguiente</button>
+                                            </li>
+                                            <%}%>
+                                        </form>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <%}%>
+
                         <div>
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
@@ -125,7 +164,7 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script>
+    <script>
         const allStars = document.querySelectorAll('.star');
         let current_rating = document.querySelector('.current_rating');
         allStars.forEach((star, i) =>{
@@ -143,6 +182,8 @@
                 })
             }
         })
+
     </script>
+
 </body>
 </html>
