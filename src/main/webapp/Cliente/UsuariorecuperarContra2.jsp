@@ -69,10 +69,10 @@
                                             </div>
                                             <br>
                                             <label class="mb-2">Ingrese su nueva contraseña:</label>
-                                            <input type="password" name="pass" placeholder="Nueva Contraseña" required="required" class="form-control">
+                                            <input type="password" name="pass" minlength="8" placeholder="Nueva Contraseña" required="required" class="form-control">
                                             <br>
                                             <label class="mb-2">Confirme su nueva contraseña:</label>
-                                            <input type="password" name="pass2" class="form-control" placeholder="Confirme Contraseña" required="required">
+                                            <input type="password" name="pass2" minlength="8" class="form-control" placeholder="Confirme Contraseña" required="required">
                                             <br><br><br>
                                             <%if(session.getAttribute("error")!=null){%>
                                             <%if(session.getAttribute("error").equals("noIgual")){%>

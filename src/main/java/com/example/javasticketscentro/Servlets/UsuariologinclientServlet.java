@@ -4,6 +4,7 @@ import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.LoginDao;
 import com.mysql.cj.Session;
 
+import javax.mail.MessagingException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -31,6 +32,8 @@ public class UsuariologinclientServlet extends HttpServlet {
                 view.forward(request,response);
                 break;
             case "cambioContraexitoso":
+                //Eliminamos la session temporal
+                session.invalidate();
                 view= request.getRequestDispatcher("Cliente/UsuarioconfirmarContra.jsp");
                 view.forward(request,response);
                 break;
@@ -90,12 +93,28 @@ public class UsuariologinclientServlet extends HttpServlet {
                 email= request.getParameter("email");
                 session= request.getSession();
                 if(loginDao.existeEmail(email)){
-                    session.setAttribute("conf", "yes");
+                    try {
+                        String codigo=loginDao.enviarCodRecupe(email);
+                        session.setAttribute("codigoConfirmacion", codigo);
+                        session.setAttribute("conf", "yes");
+                    } catch (MessagingException e) {
+                        session.setAttribute("conf", "antiVirusError");
+                    }
                 }else{
                     session.setAttribute("conf", "no");
                 }
                 session.setAttribute("email", email);
                 response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet?action=olvidoContra");
+                break;
+            case "cambiarContra0":
+                session= request.getSession();
+                if(request.getParameter("codigo").equals(session.getAttribute("codigoConfirmacion"))){
+                    session.removeAttribute("codigoConfirmacion");
+                    response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet?action=cambiarContra0");
+                }else{
+                    session.setAttribute("msg", "Código inválido");
+                    response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet?action=olvidoContra");
+                }
                 break;
         }
 

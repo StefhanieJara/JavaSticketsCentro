@@ -1,11 +1,10 @@
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.BPersona;
-import com.google.protobuf.DescriptorProtos;
-import com.google.protobuf.Type;
+import com.example.javasticketscentro.JavaMail;
 
+import javax.mail.MessagingException;
 import java.sql.*;
-import java.util.prefs.AbstractPreferences;
 
 public class LoginDao extends BaseDao{
     public BPersona validarUsuario(String user, String pass){
@@ -53,7 +52,6 @@ public class LoginDao extends BaseDao{
         pstmt.setString(2,email);
         pstmt.executeUpdate();
     }
-
     public void crearCliente(String nombre,String apellido,String email,String pass,int codigo,int dni,int numTele,String fechaNacimiento) throws SQLException {
         String sql= "INSERT INTO persona (dni, nombre, apellido, foto, numeroCelular, fechaDeNacimiento, email, usuario, contrasenia, direccionCliente, rol,codigoPUCP) " +
              "values (?,?, ?, '', ?, ?, ?, ?, sha2(?,256), '', 'Cliente', ?);";
@@ -73,5 +71,25 @@ public class LoginDao extends BaseDao{
             pstmt.setInt(9,codigo);
         }
         pstmt.executeUpdate();
+    }
+
+    public String enviarCodRecupe(String email) throws MessagingException {
+        JavaMail mail= new JavaMail();
+        String codigoConfirmacion=generarCodigo(7);
+        String asunto="RECUPERAR CONTRASEÑA! ID: "+ generarCodigo(5);
+        String mensaje="Estimado cliente,\n"+
+                "Su código de recuperación es el siguiente: \n"+
+                codigoConfirmacion+"\n\nIngréselo para continuar con la recuperación de su cuenta.";
+        mail.sendMessage(email,mensaje, asunto);
+        return codigoConfirmacion;
+    }
+    private String generarCodigo(int tam){
+        String codigo="";
+        String[] letters = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F",
+                "a","b","c","d","e","d","@","-","*","#","=","?","!","&",":", "_", ";", "$", "%", "+"};
+        for (int i = 0; i < tam; i++ ) {
+            codigo += letters[(int) Math.round(Math.random() * (letters.length-1))];
+        }
+        return codigo;
     }
 }

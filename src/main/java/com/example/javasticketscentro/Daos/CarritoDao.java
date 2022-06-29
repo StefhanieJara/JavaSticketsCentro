@@ -64,7 +64,6 @@ public class CarritoDao extends BaseDao{
         for (int i = 0; i < 7; i++ ) {
             codigo += letters[(int) Math.round(Math.random() * 15)];
         }
-        System.out.println(codigo);
         return codigo;
     }
     public BCompra detectarCompraActiva(int idClient){

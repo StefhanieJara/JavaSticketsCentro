@@ -70,29 +70,45 @@
                                             </div>
                                             <br>
                                             <label class="mb-2">Ingresa tu correo:</label>
-                                            <input type="email" name="email" class="form-control" value="<%=session.getAttribute("email")==null ? "" : session.getAttribute("email")%>" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Email" required="required">
-                                            <%if(conf.equals("no")){ session.removeAttribute("email"); session.removeAttribute("conf");}%>
+
+                                            <input type="email" name="email" class="form-control" value="<%=session.getAttribute("email")==null ? "" : session.getAttribute("email")%>"
+                                                   id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Email"
+                                                   required="required">
+                                            <%if(conf.equals("no") || conf.equals("antiVirusError")){ session.removeAttribute("email"); session.removeAttribute("conf");}%>
                                             <br>
-                                            <div class="text-center"><button type="submit" class="btn mb-4 botones" style="color: white; background:#E72D4B; border-color:#E72D4B">
+                                            <div class="text-center"><button type="submit" class="btn mb-4 botones"
+                                                 style="color: white; background:#E72D4B; border-color:#E72D4B">
                                                 Enviar clave al correo
                                             </button></div>
+
                                             </form>
                                             <%if(conf.equals("no")){%>
-                                                <div class="text-danger mb-2">No existe una cuenta con este correo</div>
+                                            <div class="text-danger mb-2">No existe una cuenta con este correo</div>
+                                            <%}%>
+                                            <%if(conf.equals("antiVirusError")){%>
+                                                <div class="text-warning mb-2">Porfavor, desactive su antivirus para enviar el código
+                                                    a su correo.</div>
                                             <%}%>
                                             <%if(conf.equals("yes")){%>
                                             <div style="color: limegreen" class="mb-2">La clave de recuperación se envió exitosamente!</div>
                                             <%}%>
+
                                             <br><br><br>
+                                            <form class="form-signin" method="post" action="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra0" >
                                             <label class="mb-2">Ingrese su clave de recuperacion:</label>
-                                            <input <%=conf.equals("yes") ? "" : "disabled"%> type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Clave" required="required">
+
+                                                <input name="codigo" <%=conf.equals("yes") ? "" : "disabled"%> type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Clave" required="required">
+                                                <%if(session.getAttribute("msg")!=null){%>
+                                                <div class="text-danger mb-2"><%=session.getAttribute("msg")%></div>
+                                                <%session.removeAttribute("msg");%>
+                                                <%}%>
                                             <br>
                                             <div class="text-center">
-                                                <a type="submit" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=cambiarContra0" class="btn mb-4 botones <%=(conf.equals("no") || conf.equals("")) ? "disabled" : ""%>"  style="color: white; background:#E72D4B; border-color:#E72D4B" >
+                                                <button type="submit" class="btn mb-4 botones" <%=(conf.equals("no") || conf.equals("")) ? "disabled" : ""%>  style="color: white; background:#E72D4B; border-color:#E72D4B" >
                                                 Cambiar contraseña
-                                                </a>
+                                                </button>
                                             </div>
-
+                                            </form>
                                             <p style="text-align: center"><a href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a></p>
                                         </div>
                                     </div>
