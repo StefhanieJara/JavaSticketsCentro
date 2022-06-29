@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaDirectores" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+<jsp:useBean id="director" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
 <%int i = 1;
@@ -74,7 +74,6 @@
                         <h4 class="my-2">Calificar Directores</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <%for (BCelebridad director: listaDirectores){%>
                         <form method="post" action="<%=request.getContextPath()%>/calificarDirector?action=calificarD">
                             <div class="row" >
                                 <div class="col" align="center">
@@ -112,9 +111,11 @@
                                 </div>
                             </div>
                         </form>
-                        <%}%>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
+                        </div>
+                        <div>
+                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
                         </div>
 
                     </div>

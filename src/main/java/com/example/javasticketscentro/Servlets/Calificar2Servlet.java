@@ -30,14 +30,14 @@ public class Calificar2Servlet extends HttpServlet {
                     if (listaDirector.get(0) != null) {
                         request.setAttribute("idPersona",idPersona);
                         request.setAttribute("idPelicula",idPelicula);
-                        request.setAttribute("listaDirectores", listaDirector);
+                        request.setAttribute("director", listaDirector.get(0));
                         RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
                         listarD.forward(request, response);
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/calificarDirector");
                 }
-                response.sendRedirect(request.getContextPath() + "/calificarDirector");
                 break;
         }
     }

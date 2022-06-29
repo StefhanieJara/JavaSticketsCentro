@@ -152,9 +152,6 @@
                         <div>
                             <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
-                        <div>
-                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Director</a>
-                        </div>
 
                     </div>
                 </div>
