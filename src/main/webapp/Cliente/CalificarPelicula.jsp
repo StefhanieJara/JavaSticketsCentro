@@ -116,7 +116,6 @@
                             <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a>
                         </div>
 
-
                     </div>
                 </div>
             </div>
