@@ -55,7 +55,7 @@ public class LoginDao extends BaseDao{
     }
     public void crearCliente(String nombre,String apellido,String email,String pass,int codigo,int dni,int numTele,String fechaNacimiento) throws SQLException {
         String sql= "INSERT INTO persona (dni, nombre, apellido, foto, numeroCelular, fechaDeNacimiento, email, usuario, contrasenia, direccionCliente, rol,codigoPUCP) " +
-             "values (?,?, ?, '', ?, ?, ?, ?, sha2(?,256), '', 'Cliente', ?);";
+             "values (?,?, ?, 'https://th.bing.com/th/id/R.eb691d29845dfbc97cd4f6545cd51ba8?rik=SntRktYYmk%2f6zA&riu=http%3a%2f%2fwww.cubiertasparacocina.com%2fimages%2fsinfoto.jpg&ehk=yAsKFdHTMSQezgFDs3RZvJU7iN02F9gvSGo5sEY7AgU%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1', ?, ?, ?, ?, sha2(?,256), '', 'Cliente', ?);";
         Connection conn= this.getConnection();
         PreparedStatement pstmt= conn.prepareStatement(sql);
         pstmt.setInt(1,dni);

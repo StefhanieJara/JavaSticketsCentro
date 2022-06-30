@@ -115,7 +115,7 @@
                         <div class="d-flex flex-column">
                             <div class="my-2">
                                 <h4 class="mb-3"><%=usuario.getNombre()+" "+usuario.getApellido()%></h4>
-                                <img src="img/images.png"
+                                <img src="<%=usuario.getFoto()%>"
                                      class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                             </div>
                             <div class="mb-3">

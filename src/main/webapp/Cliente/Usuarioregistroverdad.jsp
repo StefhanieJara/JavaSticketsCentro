@@ -82,10 +82,10 @@
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <input class="form-control" type="password" name="pass0" placeholder="Contraseña" required="required">
+                                            <input class="form-control" minlength="8" type="password" name="pass0" placeholder="Contraseña" required="required">
                                         </div>
                                         <div class="mb-3">
-                                            <input class="form-control" type="password" name="pass" placeholder="Confirmar contraseña" required="required">
+                                            <input class="form-control" minlength="8" type="password" name="pass" placeholder="Confirmar contraseña" required="required">
                                         </div>
                                         <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("passNoCoinciden")){%>
                                         <div class="text-danger mb-2">Las contraseñas no coinciden!</div>

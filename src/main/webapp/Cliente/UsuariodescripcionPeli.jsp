@@ -70,17 +70,28 @@
         </div>
         <!--Menú usuario-->
         <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <%if(clienteLog.getIdPer()!=0 && clienteLog!=null){%>
             <button
                     class="btn btn-tele-inverso"
                     type="button"
                     data-bs-toggle="offcanvas"
                     data-bs-target="#menuDeUsuario"
-                    aria-controls="menuDeUsuario"
-            >
+                    aria-controls="menuDeUsuario">
                 <div style="font-size: 0.62rem">
                     <i class="fas fa-user-circle fa-3x"></i>
                 </div>
             </button>
+            <%}else{%>
+            <a
+                    class="btn btn-tele-inverso"
+                    role="button"
+                    href="<%=request.getContextPath()%>/UsuariologinclientServlet">
+                <div style="font-size: 0.6rem">
+                    <!--para cambios más precisos del tamaño-->
+                    <i class="fa fa-user-circle fa-3x"></i>
+                </div>
+            </a>
+            <%}%>
         </div>
     </div>
     <!--Boton retornar-->
@@ -117,7 +128,7 @@
                     <div class="d-flex flex-column">
                         <div class="my-2">
                             <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
-                            <img src="img/images.png"
+                            <img src="<%=clienteLog.getFoto()%>"
                                  class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                         </div>
                         <div class="mb-3">
