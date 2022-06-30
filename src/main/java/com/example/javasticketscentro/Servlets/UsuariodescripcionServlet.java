@@ -29,7 +29,6 @@ public class UsuariodescripcionServlet extends HttpServlet {
             case "describir":
                 try{
                     int idPeli= Integer.parseInt(idPelistr);
-
                     //Buscamos una funcion que se halla comprado anteriormente o este en el carrito (pagado==1 or carrito==1)
                     BFuncion funcionElegida = peliculaDao.detectarFuncionEscogida(idPeli,usuario.getIdPer(), 1, 1);
                     if(funcionElegida==null){
@@ -62,7 +61,7 @@ public class UsuariodescripcionServlet extends HttpServlet {
         CarritoDao carritoDao= new CarritoDao();
         PeliculaDao peliculaDao= new PeliculaDao();
         RequestDispatcher requestDispatcher;
-        BFuncion funcionElegida= new BFuncion();
+        BFuncion funcionElegida;
 
         HttpSession session= request.getSession();
         BPersona usuario=(BPersona)session.getAttribute("clienteLog");

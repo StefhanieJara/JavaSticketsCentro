@@ -266,8 +266,6 @@
                             </tr>
                             <%}%>
 
-
-
                             </tbody>
                         </table>
                     </div>
@@ -276,9 +274,11 @@
                         <span class="font-size-lg">Total:</span>
                         <span>&nbsp;s/ <%=costoTotal%></span>
                     </div>
+                    <%if(carrito.size()!=0){%>
                     <div class="d-flex justify-content-center">
                         <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar" class="btn btn-danger">Pagar</a>
                     </div>
+                    <%}%>
                 </div>
             </div>
         </div>

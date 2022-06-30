@@ -5,30 +5,46 @@ import com.example.javasticketscentro.Beans.*;
 import java.lang.invoke.StringConcatException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CarritoDao extends BaseDao{
 
-    public void ingresarTarjeta(int numeroTarjeta, int cvv, String fechaVencimiento, String bancoNombre, String tipoTarjeta, String id_cliente){
-
+    public int ingresarTarjeta(String numeroTarjeta, int cvv, String fechaVencimiento, String bancoNombre, String tipoTarjeta, int id_cliente){
+        int key;
         String sql = "insert into tarjeta (numerotarjeta, fechavencimiento, cvv, banco,Persona_idPersona, tipo) value (?,?,?,?,?,?)";
-
+        ResultSet rskey;
         try (Connection connection = this.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-             preparedStatement.setInt(1,numeroTarjeta);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
+             preparedStatement.setString(1,numeroTarjeta);
              preparedStatement.setString(2, fechaVencimiento);
              preparedStatement.setInt(3,cvv);
              preparedStatement.setString(4,bancoNombre);
-            preparedStatement.setString(5,id_cliente);
+            preparedStatement.setInt(5,id_cliente);
              preparedStatement.setString(6,tipoTarjeta);
              preparedStatement.executeUpdate();
-
-
+             rskey= preparedStatement.getGeneratedKeys();
+             rskey.next();
+            key=rskey.getInt(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return key;
+    }
 
-
-        }
+    public boolean fVen_valido(String a){
+       boolean valido= false;
+       String[] a2= a.split("/");
+       if(a2.length==2){
+           try{
+               Integer.parseInt(a2[0]);
+               Integer.parseInt(a2[1]);
+               valido=true;
+           }catch(NumberFormatException e){
+               return false;
+           }
+       }
+       return valido;
+    }
 
     public void anadirTicket(int idFuncion, int idClient){
         String idCompra=detectarCompraActiva(idClient).getIdCompra();
@@ -150,6 +166,7 @@ public class CarritoDao extends BaseDao{
         }
         return carrito;
     }
+
     public void cambiarButacasTicket(int butacas, int idFuncion, String idCompra){
         String sql = "update ticket set cantidadButaca=? where Compra_idCompra=? and Funcion_idFuncion=?;";
         try (Connection connection = this.getConnection();
@@ -175,5 +192,105 @@ public class CarritoDao extends BaseDao{
             System.out.println("Error en CarritoDao CambiarButacasTicket");
             throw new RuntimeException(e);
         }
+    }
+
+    public ArrayList<BTarjeta> listarTarjetas(int idClient){
+        ArrayList<BTarjeta> listar= new ArrayList<>();
+        String sql="select  t.numeroTarjeta, t.fechaVencimiento, " +
+                "       t.CVV, t.banco, t.tipo, t.idTarjeta from persona " +
+                "inner join tarjeta t on persona.idPersona = t.persona_idPersona where idPersona=?";
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setInt(1, idClient);
+            try(ResultSet rs= pstmt.executeQuery()){
+                while(rs.next()){
+                    BTarjeta tarjeta= new BTarjeta();
+                    tarjeta.setNumerTar(rs.getString(1));
+                    tarjeta.setFechaV(rs.getString(2));
+                    tarjeta.setCVV(rs.getInt(3));
+                    tarjeta.setBanco(rs.getString(4));
+                    tarjeta.setTipo(rs.getString(5));
+                    tarjeta.setIdTarjeta(rs.getInt(6));
+                    listar.add(tarjeta);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listar;
+    }
+    public BTarjeta buscarTarjeta(int idTarjeta){
+        String sql="select * from tarjeta where idTarjeta= ?";
+        BTarjeta tarjeta=new BTarjeta();
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setInt(1, idTarjeta);
+            try(ResultSet rs= pstmt.executeQuery()){
+                if(rs.next()){
+                    tarjeta.setIdTarjeta(rs.getInt(1));
+                    tarjeta.setNumerTar(rs.getString(2));
+                    tarjeta.setFechaV(rs.getString(3));
+                    tarjeta.setCVV(rs.getInt(4));
+                    tarjeta.setBanco(rs.getString(5));
+                    tarjeta.setTipo(rs.getString(6));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tarjeta;
+    }
+
+    public void cancelarCompra(int idPersona){
+        BCompra compra=detectarCompraActiva(idPersona);
+        cancelarTickets(compra);
+        ArrayList<Bticket> btickets= listarCarrito(idPersona);
+        double total=0;
+        for(Bticket bticket: btickets){
+            total+= (bticket.getbFuncion().getPrecio()*bticket.getCantButaca());
+        }
+        String fechaActual =obtenerFechaActual();
+        String sql="update compra set cancelado=1, montoTotal=?, fechaCompra=? where idCompra=?";
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setDouble(1, total);
+            pstmt.setString(2, fechaActual);
+            pstmt.setString(3, compra.getIdCompra());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al comprar la compra");
+            e.printStackTrace();
+        }
+    }
+    public void cancelarTickets(BCompra compra){
+        String sql="update ticket set carrito=0 where Compra_idCompra= ?";
+
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1, compra.getIdCompra());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error al comprar los tickets");
+            e.printStackTrace();
+        }
+    }
+    public String obtenerFechaActual(){
+        //OBTENEMOS FECHA
+        int dia= Calendar.getInstance().get(Calendar.DATE);
+        int mes= Calendar.getInstance().get(Calendar.MONTH)+1;
+        int year= Calendar.getInstance().get(Calendar.YEAR);
+
+        String mes1,dia1;
+        if(((int)Math.log10(mes)+1)!=2){
+            mes1= "0"+mes;
+        }else{
+            mes1= ""+mes;
+        }
+        if(((int)Math.log10(dia)+1)!=2){
+            dia1= "0"+dia;
+        }else{
+            dia1= ""+dia;
+        }
+        return year+"-"+mes1+"-"+dia1;
     }
 }
