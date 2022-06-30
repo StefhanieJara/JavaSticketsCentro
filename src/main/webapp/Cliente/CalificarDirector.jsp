@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="director" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="puntaje" scope="request" type="java.lang.Integer"/>
 <%int contador;%>
 <html>
 <head>
@@ -85,14 +86,14 @@
                                         <img src="<%=director.getFoto()%>" style="max-width:200px; max-height: 400px;">
                                     </div>
                                     <div class="star_rating">
-                                        <%for (contador=0; contador<director.getPuntaje(); contador++){%>
+                                        <%for (contador=0; contador<puntaje; contador++){%>
                                         <button class="star" type="button" name="star5" id="star5">&#9733;</button>
                                         <%}%>
 
-                                        <%for (contador=0; contador<5-director.getPuntaje(); contador++){%>
+                                        <%for (contador=0; contador<5-puntaje; contador++){%>
                                         <button class="star" type="button" name="star1" id="star1">&#9734;</button>
                                         <%}%>
-                                        <p class="current_rating"><%=director.getPuntaje()%> de 5</p>
+                                        <p class="current_rating"><%=puntaje%> de 5</p>
                                         <input type="hidden" name="puntaje" id="puntaje"/>
 
                                     </div>

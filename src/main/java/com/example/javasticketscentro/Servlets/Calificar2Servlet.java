@@ -27,10 +27,12 @@ public class Calificar2Servlet extends HttpServlet {
                     session=request.getSession();
                     usuario=(BPersona) session.getAttribute("clienteLog");
                     idPelicula = Integer.parseInt(idPeliculaStr);
-                    ArrayList<BCelebridad> listaDirector = calificacionDao.listarDirectorPorID(usuario.getIdPer(), idPelicula);
+                    ArrayList<BCelebridad> listaDirector = calificacionDao.listarCelebridadPorID(usuario.getIdPer(), idPelicula, "director");
                     if (listaDirector.get(0) != null) {
                         request.setAttribute("idPelicula",idPelicula);
                         request.setAttribute("director", listaDirector.get(0));
+                        int puntaje=calificacionDao.puntajeCelebridadPorId(usuario.getIdPer(),listaDirector.get(0).getIdCelebridad());
+                        request.setAttribute("puntaje", puntaje);
                         RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
                         listarD.forward(request, response);
                     }else{
@@ -56,14 +58,16 @@ public class Calificar2Servlet extends HttpServlet {
         BPersona usuario;
         switch (action){
             case "calificarD" -> {
+                System.out.println(puntajePelicula+" "+idCelebridadS);
                 try{
                     session=request.getSession();
                     usuario= (BPersona)session.getAttribute("clienteLog");
                     int puntaje = Integer.parseInt(puntajePelicula);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
-                    calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje);
+                    calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje, false);
                     response.sendRedirect(request.getContextPath()+"/calificarDirector?action=listarD&idPelicula="+idPeliculaS);
                 }catch (NumberFormatException e){
+                    System.out.println("Error Calificar Director");
                     response.sendRedirect(request.getContextPath());
                 }
             }

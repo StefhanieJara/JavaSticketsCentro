@@ -37,7 +37,7 @@
         </div>
         <!--Carrito-->
         <div class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
-            <a class="btn btn-tele-inverso" role="button" href="UsuarioCarritoIndex">
+            <a class="btn btn-tele-inverso" role="button" href="<%=request.getContextPath()%>/UsuarioCarritoIndex">
                 <div style="font-size: 0.60rem"> <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i>
                 </div>

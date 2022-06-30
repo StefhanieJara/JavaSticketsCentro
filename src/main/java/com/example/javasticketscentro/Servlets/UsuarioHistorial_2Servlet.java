@@ -42,8 +42,12 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
             case "borrar" -> {
                 String idTicket = request.getParameter("idTicket");
                 String idFuncion = request.getParameter("idFuncion");
-                historialDao.borrar(idTicket,Integer.parseInt(idFuncion));
-                response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
+                try{
+                    historialDao.borrar(idTicket,Integer.parseInt(idFuncion));
+                    response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
+                }catch (NumberFormatException e){
+                    response.sendRedirect(request.getContextPath());
+                }
             }
         }
 

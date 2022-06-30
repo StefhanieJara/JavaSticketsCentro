@@ -10,9 +10,7 @@ import java.util.ArrayList;
 public class HistorialDao extends BaseDao{
 
     public ArrayList<Bhistorial> listaTickets(int idCliente) {
-
         ArrayList<Bhistorial> tickets = new ArrayList<>();
-
 
         String sql = "SELECT distinct subquery.FechaDeCompra as 'Fecha de compra', \n" +
                 "                 subquery.Codigo as 'Codigo', \n" +
@@ -104,20 +102,29 @@ public class HistorialDao extends BaseDao{
     }
 
     public void borrar(String ticketId, int funcionId) {
-
         String sql = "delete from ticket where (Compra_idCompra = ? and Funcion_idFuncion = ?)";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
-
             pstmt.setString(1, ticketId);
             pstmt.setInt(2, funcionId);
             pstmt.executeUpdate();
-
+            borrarCompra(ticketId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    private void borrarCompra(String idCompra){
+        String sql = "delete from compra where idCompra = ?";
+
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, idCompra);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

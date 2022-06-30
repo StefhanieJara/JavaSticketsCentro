@@ -29,7 +29,7 @@ public class Calificar1Servlet extends HttpServlet {
                     session= request.getSession();
                     usuario=(BPersona) session.getAttribute("clienteLog");
                     idPelicula = Integer.parseInt(idPeliculaStr);
-                    ArrayList<BCelebridad> listaActor = calificacionDao.listarActorPorID(usuario.getIdPer(), idPelicula);
+                    ArrayList<BCelebridad> listaActor = calificacionDao.listarCelebridadPorID(usuario.getIdPer(), idPelicula, "actor");
                     if (listaActor == null) {
                         listaActor= new ArrayList<>();
                     }
@@ -60,21 +60,22 @@ public class Calificar1Servlet extends HttpServlet {
         CalificacionDao calificacionDao = new CalificacionDao();
         String idCelebridadS = request.getParameter("idCelebridad");
         String idPeliculaS = request.getParameter("idPelicula");
-        String puntajePelicula = request.getParameter("puntaje");
+        String puntajeActor = request.getParameter("puntaje");
         HttpSession session;
         BPersona usuario;
-        int pagina= 1;
+        int pagina;
         switch (action){
             case "calificarA" -> {
                 try{
-                    int puntaje = Integer.parseInt(puntajePelicula);
+                    int puntaje = Integer.parseInt(puntajeActor);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
                     session= request.getSession();
                     usuario=(BPersona)session.getAttribute("clienteLog");
                     pagina= Integer.parseInt(request.getParameter("pagina"));
-                    calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje);
+                    calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje, false);
                     response.sendRedirect(request.getContextPath()+"/calificarActor?action=listarA&idPelicula="+idPeliculaS+"&pagina="+pagina);
                 }catch (NumberFormatException e){
+                    System.out.println("Error");
                     response.sendRedirect(request.getContextPath());
                 }
             }
