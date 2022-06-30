@@ -1,7 +1,9 @@
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.*;
+import com.example.javasticketscentro.JavaMail;
 
+import javax.mail.MessagingException;
 import java.lang.invoke.StringConcatException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -241,13 +243,18 @@ public class CarritoDao extends BaseDao{
         return tarjeta;
     }
 
-    public void cancelarCompra(int idPersona){
-        BCompra compra=detectarCompraActiva(idPersona);
+    public void cancelarCompra(BPersona usuario) throws MessagingException {
+        BCompra compra=detectarCompraActiva(usuario.getIdPer());
         cancelarTickets(compra);
-        ArrayList<Bticket> btickets= listarCarrito(idPersona);
+        ArrayList<Bticket> btickets= listarCarrito(usuario.getIdPer());
+        String listaTickets="";
         double total=0;
         for(Bticket bticket: btickets){
             total+= (bticket.getbFuncion().getPrecio()*bticket.getCantButaca());
+            listaTickets+="Función: "+bticket.getbFuncion().getbPelicula().getNombre()+" | Fecha: "+
+                        bticket.getbFuncion().getFecha() +" | Hora: "+bticket.getbFuncion().getHoraInicio() +" | Sede: "+bticket.getbFuncion().getbSede().getNombre()+
+                        " | Sala: "+bticket.getbFuncion().getbSala().getNumero()+" | Butacas: "+bticket.getCantButaca()+
+                        " | Precio por Butacas: S/"+bticket.getbFuncion().getPrecio()+"\n";
         }
         String fechaActual =obtenerFechaActual();
         String sql="update compra set cancelado=1, montoTotal=?, fechaCompra=? where idCompra=?";
@@ -257,6 +264,14 @@ public class CarritoDao extends BaseDao{
             pstmt.setString(2, fechaActual);
             pstmt.setString(3, compra.getIdCompra());
             pstmt.executeUpdate();
+            JavaMail javaMail= new JavaMail();
+            String asunto="JavaSticket: Recibo de Compra";
+            String msg="Enhorabuena!\n\n"+
+                    "Tu compra ha sido realizada!\n"+
+                    "Código de Compra: "+compra.getIdCompra()+"\n\n"+
+                    listaTickets;
+
+            javaMail.sendMessage(usuario.getEmail(),msg,asunto);
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
             e.printStackTrace();
@@ -293,4 +308,5 @@ public class CarritoDao extends BaseDao{
         }
         return year+"-"+mes1+"-"+dia1;
     }
+
 }

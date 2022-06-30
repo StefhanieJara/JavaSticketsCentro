@@ -3,6 +3,7 @@ import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BTarjeta;
 import com.example.javasticketscentro.Daos.CarritoDao;
 
+import javax.mail.MessagingException;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -71,7 +72,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
                         if(idTarjeta==-1){
                             carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
                         }
-                        carritoDao.cancelarCompra(usuario.getIdPer());
+                        carritoDao.cancelarCompra(usuario);
                         response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
                     }else{
                         session.setAttribute("msg", "errorFV");
@@ -79,6 +80,9 @@ public class UsuarioCarritoIndex extends HttpServlet {
                     }
                 }catch (NumberFormatException e){
                     session.setAttribute("msg", "numTaroCVV");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                } catch (MessagingException e) {
+                    session.setAttribute("msg", "errorAntivirus");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 }
 

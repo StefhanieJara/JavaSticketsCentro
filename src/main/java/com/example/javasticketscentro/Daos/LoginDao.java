@@ -21,6 +21,7 @@ public class LoginDao extends BaseDao{
                     bPersona.setApellido(rs.getString(4));
                     bPersona.setFoto(rs.getString(5));
                     bPersona.setRol(rs.getString(12));
+                    bPersona.setEmail(rs.getString(8));
                 }
             }
         } catch (SQLException e) {

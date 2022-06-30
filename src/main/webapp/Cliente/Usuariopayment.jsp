@@ -260,6 +260,9 @@
                                         <%if(session.getAttribute("msg").equals("numTaroCVV")){%>
                                         <div class="text-danger mb-2">El CVV o el número de Tarjeta es inválido</div>
                                         <%}%>
+                                        <%if(session.getAttribute("msg").equals("errorAntivirus")){%>
+                                        <div class="text-warning mb-2">Porfavor, desactive su antivirus para realizar la compra y recibir un correo de confirmación!</div>
+                                        <%}%>
                                         <%session.removeAttribute("msg");%>
                                         <%}%>
                                         <div class="row row-cols-3 justify-content-center">

@@ -261,7 +261,7 @@
                                 <td><%=bticket.getbFuncion().getbPelicula().getNombre()%></td>
                                 <td><%=bticket.getbFuncion().getbSede().getNombre()%></td>
                                 <td class="text-center"><%=bticket.getCantButaca()%></td>
-                                <td>s/ <%=bticket.getCantButaca()*bticket.getbFuncion().getPrecio()%></td>
+                                <td>s/ <%=(Math.round(bticket.getCantButaca()*bticket.getbFuncion().getPrecio()*100.0)/100.0)%></td>
                                 <%costoTotal+=(bticket.getCantButaca()*bticket.getbFuncion().getPrecio());%>
                             </tr>
                             <%}%>
@@ -272,7 +272,7 @@
                     <!--Total-->
                     <div class="h4 text-center py-2">
                         <span class="font-size-lg">Total:</span>
-                        <span>&nbsp;s/ <%=costoTotal%></span>
+                        <span>&nbsp;s/ <%=(Math.round(costoTotal*100.0)/100.0)%></span>
                     </div>
                     <%if(carrito.size()!=0){%>
                     <div class="d-flex justify-content-center">
