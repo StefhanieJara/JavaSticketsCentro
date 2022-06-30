@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="Pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
 <jsp:useBean id="puntaje" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="Persona" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 
 <%int contador;%>
 <html lang="en">
@@ -102,18 +102,17 @@
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
                                 <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=Pelicula.getIdPelicula()%>"/>
-                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=Persona%>"/>
                                     <input  class="btn btn-tele" type="submit" value="Calificar" />
                                 </div>
                             </div>
                         </form>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=Persona%>" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPersona=<%=Persona%>&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a>
+                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a>
                         </div>
 
                     </div>

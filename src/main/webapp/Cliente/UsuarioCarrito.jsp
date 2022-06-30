@@ -7,9 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="carrito" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bticket>"/>
-<jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="idPeli" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="vieneDePeli" scope="request" type="java.lang.Boolean"/>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,8 +59,7 @@
         <a
                 class="btn btn-tele-inverso"
                 role="button"
-                href="<%=request.getContextPath()%>/<%=vieneDePeli ? "UsuariodescripcionServlet?id="+idPeli+"&idCliente="+idClient : ""%>"
-        >
+                href="<%=request.getContextPath()%>/<%=(Boolean)session.getAttribute("vieneDePeli") ? "UsuariodescripcionServlet?action=describir&id="+session.getAttribute("idPeli") : ""%>">
             <div style="font-size: 0.6rem">
                 <!--para cambios más precisos del tamaño-->
                 <i class="fa fa-caret-square-o-left fa-3x"></i>
@@ -71,56 +68,54 @@
     </div>
 </nav>
 
-<!--Menú de usuario-->
-<div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario"
-     aria-labelledby="menuDeUsuario">
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Usuario</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+    <!--Menú de usuario2-->
+    <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario" aria-labelledby="menuDeUsuario">
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <!--Título y botón-->
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Usuario</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
             </div>
-        </div>
-        <!--Foto usuario y opciones-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Paco Perez</h4>
-                        <img src="img/images.png"
-                             class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a href="UsuarioEditaPerfilServlet" class="text-dark text-decoration-none">
-                                <span><i class="fas fa-user-edit"></i></span>
-                                <span>Editar usuario</span>
-                            </a>
+            <!--Foto usuario y opciones-->
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img src="img/images.png"
+                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                         </div>
-                        <div class="p-2">
-                            <a href="UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Historial de compras</span>
-                            </a>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=clienteLog.getIdPer()%>" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-user-edit"></i></span>
+                                    <span>Editar perfil</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Historial de tickets</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="indexServlet" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <!--Footer cerrar sesión-->
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 <!--Contenido-->
 <main>
     <!--Alinear cabecera con contenido-->
@@ -197,7 +192,6 @@
                         <div class="pt-sm-0 pt-2 pe-md-3 pe-0 mx-sm-0 mx-auto text-sm-left text-center"
                              style="max-width: 10rem;">
                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
-                                <input type="hidden" name="idClient" value="<%=idClient%>">
                                 <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
                                 <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
                             <!--Cantidad-->
@@ -225,7 +219,6 @@
                             </button>
                             </form>
                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=borrar">
-                                <input type="hidden" name="idClient" value="<%=idClient%>">
                                 <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
                                 <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
                             <!--Botón borrar-->
@@ -284,7 +277,7 @@
                         <span>&nbsp;s/ <%=costoTotal%></span>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar&id=<%=idClient%>" class="btn btn-danger">Pagar</a>
+                        <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar" class="btn btn-danger">Pagar</a>
                     </div>
                 </div>
             </div>

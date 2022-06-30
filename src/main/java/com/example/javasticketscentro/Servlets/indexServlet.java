@@ -15,6 +15,13 @@ import java.util.ArrayList;
 public class indexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //Borramos caché
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setDateHeader("Expires", 0);
+        //Borramos caché
+
         IndexDao indexDao = new IndexDao();
         AdminDao adminDao = new AdminDao();
         ArrayList<BPelicula> listapeliculas = indexDao.listaPeliculas();

@@ -1,4 +1,3 @@
-<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
 <%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: CARLOS
@@ -38,7 +37,7 @@
         <div
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
-            <a class="navbar-brand py-0" href="#">
+            <a class="navbar-brand py-0">
                 <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
@@ -68,10 +67,9 @@
         <!--Carrito-->
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
-            <a
-                    class="btn btn-tele-inverso"
+            <a class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?id=<%=idClient%>&action=listar">
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i>
@@ -102,59 +100,57 @@
             </a>
             <%}%>
         </div>
-
-
     </div>
 </nav>
-
-<!--Menú de usuario2-->
-<div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario" aria-labelledby="menuDeUsuario">
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Usuario</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+    <!--Menú de usuario2-->
+    <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario" aria-labelledby="menuDeUsuario">
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <!--Título y botón-->
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Usuario</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
             </div>
-        </div>
-        <!--Foto usuario y opciones-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
-                        <img src="img/images.png"
-                             class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=clienteLog.getIdPer()%>" class="text-dark text-decoration-none">
-                                <span><i class="fas fa-user-edit"></i></span>
-                                <span>Editar perfil</span>
-                            </a>
+            <!--Foto usuario y opciones-->
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img src="img/images.png"
+                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                         </div>
-                        <div class="p-2">
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idClient%>" class="text-dark text-decoration-none">
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Historial de tickets</span>
-                            </a>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=clienteLog.getIdPer()%>" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-user-edit"></i></span>
+                                    <span>Editar perfil</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Historial de tickets</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <!--Footer cerrar sesión-->
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
 
 <!--Contenido de página-->
 <main>
@@ -178,7 +174,9 @@
         </ul>
 
     </div>
+    <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
     <!-- -->
+    <%session.setAttribute("vieneDePeli", false);%>
     <% for (int j=0; j<Math.ceil((double) Listapeliculas.size()/4);j++) {%>
         <div class="container px-6 py-2">
             <div class="row">
@@ -189,7 +187,7 @@
                     <% for (int i=j*4; i<(j+1)*4; i++) { %>
                     <%if(i<Listapeliculas.size()){%>
                     <div class="col-pelicula1">
-                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?id=<%=Listapeliculas.get(i).getIdPelicula()%>&idCliente=<%=idClient%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
+                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=describir&id=<%=Listapeliculas.get(i).getIdPelicula()%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
                         <div class="textoPeliculas"><%=Listapeliculas.get(i).getNombre()%></div>
                     </div>
                     <%}%>

@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="puntaje" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 
@@ -97,7 +96,6 @@
                                         <input type="hidden" name="puntaje" id="puntaje"/>
                                     </div>
                                     <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=listaActor.get(pagina-1).getIdCelebridad()%>"/>
-                                    <input type="hidden"  name="idPersona"  value="<%=idPersona%>"/>
                                     <input type="hidden"  name="idPelicula"  value="<%=idPelicula%>"/>
                                     <input type="hidden" name="pagina" value="<%=pagina%>">
                                     <div class="form-outline mb-4">
@@ -116,7 +114,6 @@
                                     <ul class="pagination">
                                         <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=paginacion">
                                             <input type="hidden" name="pagina" value="<%=pagina-1%>">
-                                            <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
                                             <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                             <%if(pagina==1){%>
                                             <li class="page-item disabled">
@@ -131,7 +128,6 @@
 
                                         <form method="post" action="<%=request.getContextPath()%>/calificarActor?action=paginacion">
                                             <input type="hidden" name="pagina" value="<%=pagina+1%>">
-                                            <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
                                             <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                             <%if(pagina==listaActor.size()){%>
                                             <li class="page-item disabled">
@@ -150,7 +146,7 @@
                         <%}%>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
 
                     </div>

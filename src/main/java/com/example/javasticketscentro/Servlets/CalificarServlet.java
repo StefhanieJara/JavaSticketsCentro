@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPelicula;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.CalificacionDao;
 
 import javax.servlet.*;
@@ -17,29 +18,27 @@ public class CalificarServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarP" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula");
-
-        String idPersonaStr =  request.getParameter("idPersona");
-
-        int idPelicula, idCelebridad, idPersona;
+        String idPeliculaStr =  request.getParameter("id");
+        HttpSession session;
+        BPersona usuario;
+        int idPelicula;
      switch (action) {
          case "listarP":
              try {
-                 idPersona = Integer.parseInt(idPersonaStr);
+                 session= request.getSession();
+                 usuario= (BPersona) session.getAttribute("clienteLog");
                  idPelicula = Integer.parseInt(idPeliculaStr);
                  BPelicula pelicula = calificacionDao.listarPelicula(idPelicula);
                  if (pelicula != null) {
-                     request.setAttribute("Persona", idPersona);
                      request.setAttribute("Pelicula", pelicula);
-                     request.setAttribute("puntaje", calificacionDao.puntajePeliculaPorId(idPersona, idPelicula));
+                     request.setAttribute("puntaje", calificacionDao.puntajePeliculaPorId(usuario.getIdPer(), idPelicula));
                      RequestDispatcher listarP = request.getRequestDispatcher("Cliente/CalificarPelicula.jsp");
                      listarP.forward(request, response);
                  }else{
-                     response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
+                     response.sendRedirect(request.getContextPath());
                  }
              } catch (NumberFormatException e) {
-                 System.out.println("Error al convertir tipo de dato");
-                 response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
+                 response.sendRedirect(request.getContextPath());
              }
              break;
      }
@@ -51,22 +50,27 @@ public class CalificarServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listarP" : request.getParameter("action");
         CalificacionDao calificacionDao = new CalificacionDao();
+        HttpSession session;
+        BPersona usuario;
 
         switch (action){
             case "calificarP" -> {
-                String idPersonaS = request.getParameter("idPersona");
+                session=request.getSession();
+                usuario=(BPersona) session.getAttribute("clienteLog");
                 String idPeliculaS= request.getParameter("idPelicula");
                 String puntajePelicula = request.getParameter("puntaje");
                 try{
                     int puntaje = Integer.parseInt(puntajePelicula);
-                    System.out.println(puntaje);
                     int idPelicula = Integer.parseInt(idPeliculaS);
-                    int idPersona = Integer.parseInt(idPersonaS);
-                    calificacionDao.anadirPuntajePorPelicula(idPersona, idPelicula, puntaje);
-                    }catch (NumberFormatException e){
-                    System.out.println("Error al convertir");
+                    if(calificacionDao.listarPelicula(idPelicula)!=null){
+                        calificacionDao.anadirPuntajePorPelicula(usuario.getIdPer(), idPelicula, puntaje);
+                        response.sendRedirect(request.getContextPath()+"/calificarPelicula?action=listarP&id="+idPeliculaS);
+                    }else{
+                        response.sendRedirect(request.getContextPath());
                     }
-                response.sendRedirect(request.getContextPath()+"/calificarPelicula?action=listarP&idPersona="+idPersonaS+"&idPelicula="+idPeliculaS);
+                }catch (NumberFormatException e){
+                    response.sendRedirect(request.getContextPath());
+                }
             }
 
 

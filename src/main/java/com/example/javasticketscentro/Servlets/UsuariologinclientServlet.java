@@ -15,32 +15,50 @@ import java.sql.SQLException;
 public class UsuariologinclientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Borramos caché
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setDateHeader("Expires", 0);
+        //Borramos caché
+
         String action= request.getParameter("action")==null? "loginform" : request.getParameter("action");
         RequestDispatcher view;
         HttpSession session= request.getSession();
-        switch (action){
-            case "loginform":
-                view= request.getRequestDispatcher("Cliente/Usuariologin_client.jsp");
-                view.forward(request,response);
-                break;
-            case "logout":
-                session.invalidate();
-                response.sendRedirect(request.getContextPath());
-                break;
-            case "olvidoContra":
-                view= request.getRequestDispatcher("Cliente/UsuariorecuperarContra.jsp");
-                view.forward(request,response);
-                break;
-            case "cambioContraexitoso":
-                //Eliminamos la session temporal
-                session.invalidate();
-                view= request.getRequestDispatcher("Cliente/UsuarioconfirmarContra.jsp");
-                view.forward(request,response);
-                break;
-            case "cambiarContra0":
-                view= request.getRequestDispatcher("Cliente/UsuariorecuperarContra2.jsp");
-                view.forward(request,response);
-                break;
+
+        BPersona usuario= (BPersona) session.getAttribute("clienteLog");
+
+        //Filtro distinto
+        if(usuario==null || usuario.getIdPer()==0){
+            switch (action){
+                case "loginform":
+                    view= request.getRequestDispatcher("Cliente/Usuariologin_client.jsp");
+                    view.forward(request,response);
+                    break;
+                case "olvidoContra":
+                    view= request.getRequestDispatcher("Cliente/UsuariorecuperarContra.jsp");
+                    view.forward(request,response);
+                    break;
+                case "cambioContraexitoso":
+                    //Eliminamos la session temporal
+                    session.invalidate();
+                    view= request.getRequestDispatcher("Cliente/UsuarioconfirmarContra.jsp");
+                    view.forward(request,response);
+                    break;
+                case "cambiarContra0":
+                    view= request.getRequestDispatcher("Cliente/UsuariorecuperarContra2.jsp");
+                    view.forward(request,response);
+                    break;
+            }
+        }else{
+            switch (action){
+                case "logout":
+                    session.invalidate();
+                    response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet");
+                    break;
+                case "loginform":
+                    response.sendRedirect(request.getContextPath());
+                    break;
+            }
         }
     }
 
@@ -55,6 +73,12 @@ public class UsuariologinclientServlet extends HttpServlet {
         RequestDispatcher view;
         switch (action){
             case "login":
+                //Borramos caché
+                response.setHeader("Pragma", "No-cache");
+                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                response.setDateHeader("Expires", 0);
+                //Borramos caché
+
                 BPersona usuario= loginDao.validarUsuario(user,password);
                 if(usuario.getIdPer()!=0){
                     //Encontramos si había una sesión

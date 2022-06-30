@@ -1,4 +1,5 @@
 package com.example.javasticketscentro.Servlets;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.CarritoDao;
 
 import javax.servlet.*;
@@ -11,20 +12,14 @@ public class UsuarioCarritoIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-        int idClient = Integer.parseInt(request.getParameter("id"));
+        HttpSession session;
+        BPersona usuario;
         CarritoDao carritoDao= new CarritoDao();
         switch (action){
             case "listar"->{
-                try{
-                    int idPeli= Integer.parseInt(request.getParameter("idPeli"));
-                    request.setAttribute("idPeli", idPeli);
-                    request.setAttribute("vieneDePeli", true);
-                }catch (NumberFormatException e){
-                    request.setAttribute("idPeli", 0);
-                    request.setAttribute("vieneDePeli", false);
-                }
-                request.setAttribute("idClient", idClient);
-                request.setAttribute("carrito", carritoDao.listarCarrito(idClient));
+                session=request.getSession();
+                usuario= (BPersona) session.getAttribute("clienteLog");
+                request.setAttribute("carrito", carritoDao.listarCarrito(usuario.getIdPer()));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/UsuarioCarrito.jsp");
                 requestDispatcher.forward(request,response);
             }
@@ -44,6 +39,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
         CarritoDao carritoDao= new CarritoDao();
         String idCompraStr= request.getParameter("idCompra");
         String idFuncionStr= request.getParameter("idFuncion");
+
         switch (action){
             case "guardar":
                 String numeroTarjetaStr = request.getParameter("numeroTarjeta");
@@ -55,7 +51,6 @@ public class UsuarioCarritoIndex extends HttpServlet {
 
                 int numeroTarjeta = Integer.parseInt(numeroTarjetaStr);
                 int cvv = Integer.parseInt(cvvStr);
-
 
                 carritoDao = new CarritoDao();
                 carritoDao.ingresarTarjeta(numeroTarjeta,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,id_cliente);

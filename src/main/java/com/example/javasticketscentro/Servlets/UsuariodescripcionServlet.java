@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BFuncion;
 import com.example.javasticketscentro.Beans.BPelicula;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.Bticket;
 import com.example.javasticketscentro.Daos.CarritoDao;
 import com.example.javasticketscentro.Daos.PeliculaDao;
@@ -17,35 +18,37 @@ public class UsuariodescripcionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PeliculaDao peliculaDao= new PeliculaDao();
-        String idPeli = request.getParameter("id") == null ? "determinado" : request.getParameter("id");
-        String idCliente = request.getParameter("idCliente") == null ? "12" : request.getParameter("idCliente");
-        //Buscamos una funcion que se halla comprado anteriormente o este en el carrito (pagado==1 or carrito==1)
-        BFuncion funcionElegida = peliculaDao.detectarFuncionEscogida(idPeli,idCliente, 1, 1);
-        if(funcionElegida==null){
-            funcionElegida= new BFuncion();
-            funcionElegida.setId(0);
-        }
+        String idPelistr = request.getParameter("id");
+        String action= request.getParameter("action");
+
+        HttpSession session= request.getSession();
+        BPersona usuario=(BPersona)session.getAttribute("clienteLog");
+    
         RequestDispatcher requestDispatcher;
-        switch (idPeli){
-            case "determinado":
-                requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
-                requestDispatcher.forward(request,response);
-                break;
-            default:
+        switch (action){
+            case "describir":
                 try{
-                    int idClient= Integer.parseInt(idCliente);
+                    int idPeli= Integer.parseInt(idPelistr);
+
+                    //Buscamos una funcion que se halla comprado anteriormente o este en el carrito (pagado==1 or carrito==1)
+                    BFuncion funcionElegida = peliculaDao.detectarFuncionEscogida(idPeli,usuario.getIdPer(), 1, 1);
+                    if(funcionElegida==null){
+                        funcionElegida= new BFuncion();
+                        funcionElegida.setId(0);
+                    }
                     BPelicula pelicula = peliculaDao.devolverPelicula(idPeli);
                     request.setAttribute("pelicula", pelicula);
                     request.setAttribute("funciones", peliculaDao.detectarFunciones(idPeli));
-                    request.setAttribute("idClient", idClient);
+                    request.setAttribute("idClient", usuario.getIdPer());
                     request.setAttribute("funcionElegida", funcionElegida);
                     requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
                     requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){
-                    System.out.println("ID de cliente erróneo");
+                    response.sendRedirect(request.getContextPath());
                 }
-                //Debe redireccionar al login (ingreso)
-                //response.sendRedirect(request.getContextPath()+"/");
+                break;
+            default:
+                response.sendRedirect(request.getContextPath());
                 break;
         }
 
@@ -54,33 +57,35 @@ public class UsuariodescripcionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action= request.getParameter("action");
+        String idPelistr= request.getParameter("idPeli");
         String idStrFuncionEscogida= request.getParameter("funcionEscogida");
-        String idClientStr= request.getParameter("idClient");
         CarritoDao carritoDao= new CarritoDao();
         PeliculaDao peliculaDao= new PeliculaDao();
-        int idClient;
         RequestDispatcher requestDispatcher;
         BFuncion funcionElegida= new BFuncion();
+
+        HttpSession session= request.getSession();
+        BPersona usuario=(BPersona)session.getAttribute("clienteLog");
         switch (action){
             case "anadirCarro":
                 try{
                     int idFuncionesco= Integer.parseInt(idStrFuncionEscogida);
-                    idClient= Integer.parseInt(idClientStr);
-                    carritoDao.anadirTicket(idFuncionesco, idClient);
-                    request.setAttribute("idClient", idClient);
-                    funcionElegida = peliculaDao.detectarFuncionEscogida(request.getParameter("idPeli"),idClientStr, 1, 1);
+                    int idPeli= Integer.parseInt(idPelistr);
+                    carritoDao.anadirTicket(idFuncionesco, usuario.getIdPer());
+                    request.setAttribute("idClient", usuario.getIdPer());
+                    funcionElegida = peliculaDao.detectarFuncionEscogida(idPeli,usuario.getIdPer(), 1, 1);
                     if(funcionElegida==null){
                         funcionElegida= new BFuncion();
                         funcionElegida.setId(0);
                     }
+                    request.setAttribute("pelicula", peliculaDao.devolverPelicula(idPeli));
+                    request.setAttribute("funciones", peliculaDao.detectarFunciones(idPeli));
+                    request.setAttribute("funcionElegida", funcionElegida);
+                    requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
+                    requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){
-                    System.out.println("Error de parseo!");
+                    response.sendRedirect(request.getContextPath());
                 }
-                request.setAttribute("pelicula", peliculaDao.devolverPelicula(request.getParameter("idPeli")));
-                request.setAttribute("funciones", peliculaDao.detectarFunciones(request.getParameter("idPeli")));
-                request.setAttribute("funcionElegida", funcionElegida);
-                requestDispatcher = request.getRequestDispatcher("Cliente/UsuariodescripcionPeli.jsp");
-                requestDispatcher.forward(request,response);
                 break;
         }
     }

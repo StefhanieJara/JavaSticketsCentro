@@ -10,7 +10,7 @@
 <jsp:useBean id="pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
 <jsp:useBean id="funciones" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
 <jsp:useBean id="funcionElegida" scope="request" type="com.example.javasticketscentro.Beans.BFuncion"/>
-<jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,14 +55,15 @@
                 <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
+        <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
         <!--Carrito-->
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
+            <%session.setAttribute("vieneDePeli", true);session.setAttribute("idPeli", pelicula.getIdPelicula());%>
 
-            <input type="hidden" name="idCliente" value="<%=idClient%>">
             <a class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar&id=<%=idClient%>&idPeli=<%=pelicula.getIdPelicula()%>">
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
             <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i></div></a>
@@ -99,72 +100,54 @@
 
 </nav>
 
-<!--Menú de usuario-->
-<div
-        class="offcanvas offcanvas-end text-center"
-        tabindex="-1"
-        id="menuDeUsuario"
-        aria-labelledby="menuDeUsuario"
->
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Usuario</h5>
-                <button
-                        type="button"
-                        class="btn-close text-reset"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                ></button>
+    <!--Menú de usuario2-->
+    <div class="offcanvas offcanvas-end text-center" tabindex="-1" id="menuDeUsuario" aria-labelledby="menuDeUsuario">
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <!--Título y botón-->
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Usuario</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
             </div>
-        </div>
-        <!--Foto usuario y opciones-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Paco Perez</h4>
-                        <img
-                                src="img/images.png"
-                                class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                alt="profile image"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a
-                                    href="usuarioEditar.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-user-edit"></i></span>
-                                <span>Editar usuario</span>
-                            </a>
+            <!--Foto usuario y opciones-->
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img src="img/images.png"
+                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                         </div>
-                        <div class="p-2">
-                            <a
-                                    href="usuarioHistorial.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Historial de compras</span>
-                            </a>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=clienteLog.getIdPer()%>" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-user-edit"></i></span>
+                                    <span>Editar perfil</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Historial de tickets</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="index.html" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <!--Footer cerrar sesión-->
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <main>
     <br><br>
     <div class="main-container">
@@ -176,7 +159,9 @@
                         <thead>
                         <br>
                         <tr>
-                            <center><h1 class="text-dark" ><%=pelicula.getNombre()%></h1><center>
+                            <center>
+                                <h1 class="text-dark" ><%=pelicula.getNombre()%></h1>
+                            </center>
                         </tr>
                         </thead>
                         <br>
@@ -240,7 +225,6 @@
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
-                        <input type="hidden" name="idClient" value="<%=idClient%>">
                         <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
                             <!--Señal de alerta-->
                             <%if(funcionElegida.getId()!=0){%>
@@ -292,9 +276,7 @@
                             <%}%>
                         </select>
                         <%}%>
-
-                        <table>
-                        </br>
+                        <br>
                         <table ALIGN="right">
                             <tr>
                                 <td class="text-end">
@@ -308,8 +290,6 @@
                 </form>
                 </div>
             <h2 class="text-dark"> </h2>
-
-
         </div>
     </div>
     </div>

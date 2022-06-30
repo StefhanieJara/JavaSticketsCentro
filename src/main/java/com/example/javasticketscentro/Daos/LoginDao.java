@@ -86,7 +86,7 @@ public class LoginDao extends BaseDao{
     private String generarCodigo(int tam){
         String codigo="";
         String[] letters = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F",
-                "a","b","c","d","e","d","@","-","*","#","=","?","!","&",":", "_", ";", "$", "%", "+"};
+                "a","b","c","d","e","d","@","-","*","#","=","?","!","&",":", "_", "$", "%", "+"};
         for (int i = 0; i < tam; i++ ) {
             codigo += letters[(int) Math.round(Math.random() * (letters.length-1))];
         }

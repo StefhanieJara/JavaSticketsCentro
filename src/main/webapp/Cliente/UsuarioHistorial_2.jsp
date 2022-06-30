@@ -1,12 +1,12 @@
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial" %>
 <%@ page import="com.example.javasticketscentro.Beans.Bhistorial_detalle" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
 <jsp:useBean id="listaHistoriales" scope="request" type="java.util.ArrayList<java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>>" />
-<jsp:useBean id="idClient" scope="request" type="java.lang.Integer"/>
 
+<% BPersona usuario=(BPersona)session.getAttribute("clienteLog");%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -72,6 +72,20 @@
                     </button>
                 </div>
             </div>
+            <!--Boton retornar-->
+            <div
+                    class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex">
+                <a
+                        class="btn btn-tele-inverso"
+                        role="button"
+                        href="<%=request.getContextPath()%>/"
+                >
+                    <div style="font-size: 0.6rem">
+                        <!--para cambios más precisos del tamaño-->
+                        <i class="fa fa-caret-square-o-left fa-3x"></i>
+                    </div>
+                </a>
+            </div>
         </nav>
 
         <!--Menú de usuario-->
@@ -81,6 +95,7 @@
                 id="menuDeUsuario"
                 aria-labelledby="menuDeUsuario"
         >
+
             <div class="d-flex align-items-center flex-column mb-3 vh-100">
                 <!--Título y botón-->
                 <div class="p-2 w-100">
@@ -99,30 +114,21 @@
                     <div class="offcanvas-body p-3">
                         <div class="d-flex flex-column">
                             <div class="my-2">
-                                <h4 class="mb-3">Paco Perez</h4>
-                                <img
-                                        src="img/images.png"
-                                        class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                        alt="profile image"
-                                />
+                                <h4 class="mb-3"><%=usuario.getNombre()+" "+usuario.getApellido()%></h4>
+                                <img src="img/images.png"
+                                     class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                             </div>
                             <div class="mb-3">
                                 <div class="p-2">
-                                    <a
-                                            href="usuarioEditar.html"
-                                            class="text-dark text-decoration-none"
-                                    >
+                                    <a href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?id=<%=usuario.getIdPer()%>" class="text-dark text-decoration-none">
                                         <span><i class="fas fa-user-edit"></i></span>
-                                        <span>Editar usuario</span>
+                                        <span>Editar perfil</span>
                                     </a>
                                 </div>
                                 <div class="p-2">
-                                    <a
-                                            href="usuarioHistorial.html"
-                                            class="text-dark text-decoration-none"
-                                    >
+                                    <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
                                         <span><i class="fas fa-list"></i></span>
-                                        <span>Historial de compras</span>
+                                        <span>Historial de tickets</span>
                                     </a>
                                 </div>
                             </div>
@@ -132,7 +138,7 @@
                 <!--Footer cerrar sesión-->
                 <div class="mt-auto p-2 w-100">
                     <div class="offcanvas-body border-top pt-4">
-                        <a href="index.html" class="text-dark text-decoration-none">
+                        <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
                             <span><i class="fas fa-sign-out-alt"></i></span>
                             <span>Cerrar sesión</span>
                         </a>
@@ -244,7 +250,7 @@
                                                     if(fechayhora_2.isAfter(LocalDateTime.now())){ %>
                                                 <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
                                                 <%}else{%>
-                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&idPersona=<%=idClient%>&idPelicula=<%=funcion.getIdPelicula()%>" type="button" class="btn btn-warning">Calificar</a></td>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&id=<%=funcion.getIdPelicula()%> " type="button" class="btn btn-warning">Calificar</a></td>
                                                 <%}%>
 
                                             </tr>
@@ -258,7 +264,7 @@
                                     <div class="alert alert-secondary" role="alert">
                                         <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>Todavía no has comprado nada!</h4>
                                         <hr>
-                                        <p class="mb-0">Para completar tu primera compra, debes redirigirte al carrito de compras y cancelar tus pedidos! <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?id=<%=idClient%>&action=listar" class="alert-link">Ir al carrito</a>.</p>
+                                        <p class="mb-0">Para completar tu primera compra, debes redirigirte al carrito de compras y cancelar tus pedidos! <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar" class="alert-link">Ir al carrito</a>.</p>
                                     </div>
                                     <%}%>
                                 </div>

@@ -8,9 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="director" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad"/>
 <jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="idPersona" scope="request" type="java.lang.Integer"/>
-<%int i = 1;
-    int contador;%>
+<%int contador;%>
 <html>
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -99,7 +97,6 @@
 
                                     </div>
                                     <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=director.getIdCelebridad()%>"/>
-                                    <input type="hidden"  name="idPersona" id="idPersona" value="<%=idPersona%>"/>
                                     <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                     <div class="form-outline mb-4">
                                         <input
@@ -112,10 +109,10 @@
                             </div>
                         </form>
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar&idCliente=<%=idPersona%>" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPersona=<%=idPersona%>&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
+                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
                         </div>
 
                     </div>

@@ -1,6 +1,7 @@
 package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BCelebridad;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.CalificacionDao;
 
 import javax.servlet.*;
@@ -16,27 +17,27 @@ public class Calificar2Servlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarD" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula")==null?"6":request.getParameter("idPelicula");
-
-        String idPersonaStr =  request.getParameter("idPersona")==null?"12":request.getParameter("idPersona");
-
-        int idPelicula, idCelebridad, idPersona;
+        String idPeliculaStr =  request.getParameter("idPelicula");
+        HttpSession session;
+        BPersona usuario;
+        int idPelicula;
         switch (action) {
             case "listarD":
                 try {
-                    idPersona = Integer.parseInt(idPersonaStr);
+                    session=request.getSession();
+                    usuario=(BPersona) session.getAttribute("clienteLog");
                     idPelicula = Integer.parseInt(idPeliculaStr);
-                    ArrayList<BCelebridad> listaDirector = calificacionDao.listarDirectorPorID(idPersona, idPelicula);
+                    ArrayList<BCelebridad> listaDirector = calificacionDao.listarDirectorPorID(usuario.getIdPer(), idPelicula);
                     if (listaDirector.get(0) != null) {
-                        request.setAttribute("idPersona",idPersona);
                         request.setAttribute("idPelicula",idPelicula);
                         request.setAttribute("director", listaDirector.get(0));
                         RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
                         listarD.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath());
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Error al convertir tipo de dato");
-                    response.sendRedirect(request.getContextPath() + "/calificarDirector");
+                    response.sendRedirect(request.getContextPath());
                 }
                 break;
         }
@@ -47,21 +48,24 @@ public class Calificar2Servlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listarD" : request.getParameter("action");
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPersonaS = request.getParameter("idPersona");
+
         String idCelebridadS = request.getParameter("idCelebridad");
         String idPeliculaS = request.getParameter("idPelicula");
         String puntajePelicula = request.getParameter("puntaje");
+        HttpSession session;
+        BPersona usuario;
         switch (action){
             case "calificarD" -> {
                 try{
+                    session=request.getSession();
+                    usuario= (BPersona)session.getAttribute("clienteLog");
                     int puntaje = Integer.parseInt(puntajePelicula);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
-                    int idPersona = Integer.parseInt(idPersonaS);
-                    calificacionDao.anadirPuntajePorCelebridad(idPersona, idCelebridad, puntaje);
+                    calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje);
+                    response.sendRedirect(request.getContextPath()+"/calificarDirector?action=listarD&idPelicula="+idPeliculaS);
                 }catch (NumberFormatException e){
-                    System.out.println("Error al convertir");
+                    response.sendRedirect(request.getContextPath());
                 }
-                response.sendRedirect(request.getContextPath()+"/calificarDirector?action=listarD&idPersona="+idPersonaS+"&idPelicula="+idPeliculaS);
             }
         }
     }

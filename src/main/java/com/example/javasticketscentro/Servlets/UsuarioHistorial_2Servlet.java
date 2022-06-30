@@ -1,5 +1,6 @@
 package com.example.javasticketscentro.Servlets;
 
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.Bhistorial;
 import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 import com.example.javasticketscentro.Daos.HistorialDao;
@@ -14,15 +15,16 @@ import java.util.ArrayList;
 public class UsuarioHistorial_2Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idCLientSr= request.getParameter("idCliente");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        HttpSession session;
+        BPersona usuario;
         HistorialDao historialDao = new HistorialDao();
         switch (action){
             case "listar" -> {
                 try{
-                    //int idClient = Integer.parseInt(idCLientSr);
-                    int idClient = Integer.parseInt(idCLientSr);
-                    ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(idClient);
+                    session= request.getSession();
+                    usuario= (BPersona) session.getAttribute("clienteLog");
+                    ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(usuario.getIdPer());
                     request.setAttribute("lista", listadetickets);
                     ArrayList<ArrayList<Bhistorial_detalle>> listaHistoriales = new ArrayList<>();
                     for(Bhistorial ticket : listadetickets){
@@ -30,7 +32,6 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                         listaHistoriales.add(historial);
                     }
                     request.setAttribute("listaHistoriales", listaHistoriales);
-                    request.setAttribute("idClient", idClient);
                     RequestDispatcher view = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
                     view.forward(request, response);
                 }catch (NumberFormatException e){
