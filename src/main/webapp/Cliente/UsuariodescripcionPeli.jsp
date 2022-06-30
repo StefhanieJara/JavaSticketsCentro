@@ -258,6 +258,7 @@
                             </div>
                             <%}%>
                             <%}%>
+
                         <%if(funciones.size()==0){%>
                         <%if(pelicula.getSinopsis().length()<250){%>
                             <br><br><br><br><br>
@@ -277,6 +278,13 @@
                         </select>
                         <%}%>
                         <br>
+                                <%if(clienteLog.getIdPer()==0 || clienteLog==null){%>
+                            <div class="alert alert-secondary" role="alert">
+                                <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>¿Te interesa comprar un ticket?</h4>
+                                <hr>
+                                <p class="mb-0">Para comprar, debes ingresar con tu cuenta. Si no tienes, puedes registrarte.<a href="<%=request.getContextPath()%>/UsuariologinclientServlet" class="alert-link">Ir al login</a>.</p>
+                            </div>
+                                <%}%>
                         <table ALIGN="right">
                             <tr>
                                 <td class="text-end">
