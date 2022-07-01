@@ -12,7 +12,6 @@ public class AdminIndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "index" : request.getParameter("action");
-        AdminDao adminDao = new AdminDao();
         switch (action) {
             case "index":
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/adminIndex.jsp");
