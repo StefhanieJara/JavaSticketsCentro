@@ -1,6 +1,6 @@
-<%@ page import="com.example.javasticketscentro.Beans.BPersona" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="Usuario" scope="request" type="com.example.javasticketscentro.Beans.BPersona" />
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +39,21 @@
         </div>
         <!--Espacio-->
         <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
+        <!--Carrito-->
+        <div
+                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
+        >
+            <a
+                    class="btn btn-tele-inverso"
+                    role="button"
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex"
+            >
+                <div style="font-size: 0.6rem">
+                    <!--para cambios más precisos del tamaño-->
+                    <i class="fas fa-cart-plus fa-3x"></i>
+                </div>
+            </a>
+        </div>
         <!--Boton atras-->
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button class="btn" type="button" style=" color: white">
@@ -63,56 +78,62 @@
         <header></header>
     </div>
 
-    <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?a=actualizar">
+    <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizar">
         <div style="margin-bottom: 50px" class="contenerdor_perfil">
             <div class="container">
                 <h2>Editar perfil</h2>
                 <div class="row">
                     <div class="col-md-6 mb-1">
-                        <input name="usuario" type="hidden" value="<%=Usuario.getUsuario()%>">
-                        <div style="margin-top: 10px" class="form-outline mb-4">
-                            <label class="form-label" for="codigo">Código PUCP</label>
-                            <input name="codigo"
-                                   type="text"
-                                   id="codigo"
-                                   class="form-control"
-                                   <%if (Usuario.getCodigoPUCP() == 0) {%>
-                                   value="Sin Código PUCP"
-                                   <%}else{%>
-                                   value="<%=Usuario.getCodigoPUCP()%>"
-                                   <%}%>
-                                   placeholder="Ingrese su código PUCP"
-                            /></div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="nombre">Nombre</label>
-                            <input
-                                    name ="nombre"
-                                    type="text"
-                                    id="nombre"
-                                    class="form-control"
-                                    value="<%=Usuario.getNombre()%>"
-                                    placeholder="Ingrese su Nombre"
-                            >
+                        <div class="row mb-4">
+                            <div class="col-md-6" >
+                                <label class="form-label" for="nombre">Nombre</label>
+                                <input required
+                                        name ="nombre"
+                                        type="text"
+                                        id="nombre"
+                                        class="form-control"
+                                        value="<%=clienteLog.getNombre()%>"
+                                        placeholder="Ingrese su Nombre">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="apellido">Apellidos</label>
+                                <input  required name ="apellido"
+                                        type="text"
+                                        id="apellido"
+                                        class="form-control"
+                                        value="<%=clienteLog.getApellido()%>"
+                                        placeholder="Ingrese su Apellido">
+                            </div>
                         </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="apellido">Apellidos</label>
-                            <input  name ="apellido"
-                                    type="text"
-                                    id="apellido"
-                                    class="form-control"
-                                    value="<%=Usuario.getApellido()%>"
-                                    placeholder="Ingrese su Apellido"
-                            >
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="email">Correo</label>
-                            <input  name ="email"
-                                    type="text"
-                                    id="email"
-                                    class="form-control"
-                                    value="<%=Usuario.getEmail()%>"
-                                    placeholder="Ingrese su email"
-                            >
+
+                        <div class="row mb-4">
+                            <div class="col-md-6" >
+                                <label class="form-label" for="numCel">Usuario</label>
+                                <input required name ="usuario"
+                                        type="text"
+                                        class="form-control"
+                                        value="<%=clienteLog.getUsuario()%>"
+                                        placeholder="Usuario">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="numCel">Número de contacto</label>
+                                <input  required name ="numCel"
+                                        type="text"
+                                        minlength="9"
+                                        maxlength="9"
+                                        id="numCel"
+                                        class="form-control"
+                                        value="<%=clienteLog.getNumCel()%>"
+                                        placeholder="Ingrese su numero de celular">
+                                <%if(session.getAttribute("msg")!=null){%>
+                                <%if(session.getAttribute("msg").equals("errortexto")){%>
+                                <div class="text-danger mb-2">Número inválido</div>
+                                <%}else{%>
+                                <div class="text-danger mb-2">El número debe comenzar con 9.</div>
+                                <%}%>
+                                <%}%>
+                                <%session.removeAttribute("msg");%>
+                            </div>
                         </div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="direccion">Dirección</label>
@@ -120,37 +141,71 @@
                                     type="text"
                                     id="direccion"
                                     class="form-control"
-                                    value="<%=Usuario.getDireccion()%>"
+                                    value="<%=clienteLog.getDireccion()==null? "": clienteLog.getDireccion()%>"
                                     placeholder="Ingrese su direccion">
                         </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="numCel">Número de contacto</label>
-                            <input  name ="numCel"
-                                    type="text"
-                                    id="numCel"
-                                    class="form-control"
-                                    value="<%=Usuario.getNumCel()%>"
-                                    placeholder="Ingrese su numero de celular"
-                            >
+
+                        <div class="row mb-4">
+                            <div class="col-md-6" >
+                                <label class="form-label" for="email">Correo</label>
+                                <input disabled name ="email"
+                                       type="text"
+                                       id="email"
+                                       class="form-control"
+                                       value="<%=clienteLog.getEmail()%>"
+                                       placeholder="Ingrese su email">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="email">Edad</label>
+                                <input disabled name ="email"
+                                       type="text"
+                                       class="form-control"
+                                       value="<%=clienteLog.getEdad()%> años"
+                                       placeholder="Ingrese su email">
+                            </div>
                         </div>
 
+                        <div class="row mb-4">
+                            <div class="col-md-6" >
+                                <label class="form-label" for="codigo">Código PUCP</label>
+                                <input disabled name="codigo"
+                                       type="text"
+                                       id="codigo"
+                                       class="form-control"
+                                        <%if (clienteLog.getCodigoPUCP() == 0) {%>
+                                       value="No es alumno"
+                                        <%}else{%>
+                                       value="<%=clienteLog.getCodigoPUCP()%>"
+                                        <%}%>
+                                       placeholder="Ingrese su código PUCP"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="email">DNI</label>
+                                <input disabled name ="email"
+                                       type="text"
+                                       class="form-control"
+                                       value="<%=clienteLog.getDni()%>"
+                                       placeholder="Ingrese su email">
+                            </div>
+                        </div>
                     </div>
 
                     <div style="margin-top: 10px" class="col-md-6 mb-4 text-center">
                         <h4 class="form-label" >Imagen de perfil</h4>
                         <div class="text-center mt-2 mb-3">
-                            <img id="img-preview" src="img/benedict.jpg" style="max-width: 300px; resize: both; max-width: 300px" />
+                            <img id="img-preview" src="<%=clienteLog.getFoto()%>" style="max-width: 300px; resize: both; max-width: 300px" />
                         </div>
                         <div class="d-flex justify-content-center my-3">
                             <input type="file" id="img-uploader">
                         </div>
                         <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
                                   style="width: 100%"></progress>
-                        <input type="hidden" name="photoUrl" id="photoUrl" />
+                        <input type="hidden" value="<%=clienteLog.getFoto()%>" name="photoUrl" id="photoUrl" />
                     </div>
                 </div>
                 <button type="submit" class="btn btn-tele">Guardar Edicion</button>
             </div>
+        </div>
     </form>
 </main>
 

@@ -9,7 +9,7 @@ import java.sql.*;
 public class LoginDao extends BaseDao{
     public BPersona validarUsuario(String user, String pass){
         BPersona bPersona= new BPersona();
-        String sql="select * from persona where usuario= ? and contrasenia= sha2(?,256);";
+        String sql="select *, FLOOR((DATEDIFF(CURRENT_DATE(),p.fechaDeNacimiento))/365) from persona p where usuario= ? and contrasenia= sha2(?,256);";
         try(Connection conn=this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
             pstmt.setString(1, user);
@@ -17,11 +17,17 @@ public class LoginDao extends BaseDao{
             try(ResultSet rs= pstmt.executeQuery()){
                 if(rs.next()){
                     bPersona.setIdPer(rs.getInt(1));
+                    bPersona.setDni(rs.getInt(2));
                     bPersona.setNombre(rs.getString(3));
                     bPersona.setApellido(rs.getString(4));
                     bPersona.setFoto(rs.getString(5));
-                    bPersona.setRol(rs.getString(12));
+                    bPersona.setNumCel(rs.getInt(6));
                     bPersona.setEmail(rs.getString(8));
+                    bPersona.setUsuario(rs.getString(9));
+                    bPersona.setDireccion(rs.getString(11));
+                    bPersona.setRol(rs.getString(12));
+                    bPersona.setCodigoPUCP(rs.getInt(13));
+                    bPersona.setEdad(rs.getInt(14));
                 }
             }
         } catch (SQLException e) {

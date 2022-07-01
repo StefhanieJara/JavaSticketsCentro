@@ -9,13 +9,22 @@ public class BPersona {
     private String apellido;
     private int numCel;
     private String foto;
-    private String fecha_Nc;
+    private int edad;
     private String email;
     private String usuario;
     private String contrasenia;
     private String direccion;
     private String rol;
     private int codigoPUCP;
+    private String fecha_Nc;
+
+    public String getFecha_Nc() {
+        return fecha_Nc;
+    }
+
+    public void setFecha_Nc(String fecha_Nc) {
+        this.fecha_Nc = fecha_Nc;
+    }
 
     public String getFoto() {
         return foto;
@@ -65,13 +74,12 @@ public class BPersona {
         this.numCel = numCel;
     }
 
-
-    public String getFecha_Nc() {
-        return fecha_Nc;
+    public int getEdad() {
+        return edad;
     }
 
-    public void setFecha_Nc(String fecha_Nc) {
-        this.fecha_Nc = fecha_Nc;
+    public void setEdad(int edad) {
+        this.edad = edad;
     }
 
     public String getEmail() {
