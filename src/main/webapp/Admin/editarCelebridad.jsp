@@ -121,7 +121,6 @@
                                         <input
                                                 name = "apellidosCeleb"
                                                 type="text"
-                                                id="productName"
                                                 class="form-control"
                                                 value="<%=celebridad.getApellido()%>"
                                                 placeholder="Ingrese los apellidos"

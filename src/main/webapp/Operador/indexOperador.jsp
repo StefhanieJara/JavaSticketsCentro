@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,25 +42,9 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="indexOperadorServlet"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
             </a>
         </div>
-
-        <!--    <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0">
-            <div class="input-group">
-                <div class="form-outline" style="width: 50%">
-                    <input
-                            type="search"
-                            id="form1"
-                            class="form-control"
-                            placeholder="Buscar película"
-                    />
-                </div>
-                <button type="button" class="btn btn-tele border-start-1">
-                    <i class="fas fa-search"></i>
-                </button>
-            </div>
-        </div>-->
         <div
                 class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         ></div>
@@ -103,9 +88,9 @@
             <div class="offcanvas-body p-3">
                 <div class="d-flex flex-column">
                     <div class="my-2">
-                        <h4 class="mb-3">Rex Campos Díaz</h4>
+                        <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                         <img
-                                src="img/images.png"
+                                src="<%=clienteLog.getFoto()%>"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -144,7 +129,7 @@
         </div>
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
-                <a href="#" class="text-dark text-decoration-none">
+                <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
                     <span><i class="fas fa-sign-out-alt"></i></span>
                     <span>Cerrar sesión</span>
                 </a>

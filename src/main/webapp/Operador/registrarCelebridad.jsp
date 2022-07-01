@@ -55,7 +55,6 @@
                                         >
                                         <input
                                                 type="text"
-                                                id="productName"
                                                 class="form-control"
                                                 placeholder="Ingrese nombre"
                                         />

@@ -12,6 +12,7 @@
 <jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="filtros" scope="request" type="java.util.ArrayList<java.lang.String>"/>
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <html lang="en">
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -147,9 +148,9 @@
                 <div class="offcanvas-body p-3">
                     <div class="d-flex flex-column">
                         <div class="my-2">
-                            <h4 class="mb-3">Rex Campos Díaz</h4>
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                             <img
-                                    src="img/images.png"
+                                    src="<%=clienteLog.getFoto()%>"
                                     class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                     alt="profile image"
                             />
@@ -170,7 +171,7 @@
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-list"></i></span>
-                                    <span>Visualizar Actores y Directores</span>
+                                    <span>Añadir Actores y Directores</span>
                                 </a>
                             </div>
                             <div class="p-2">
@@ -197,7 +198,7 @@
             </div>
             <div class="mt-auto p-2 w-100">
                 <div class="offcanvas-body border-top pt-4">
-                    <a href="#" class="text-dark text-decoration-none">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
                         <span><i class="fas fa-sign-out-alt"></i></span>
                         <span>Cerrar sesión</span>
                     </a>

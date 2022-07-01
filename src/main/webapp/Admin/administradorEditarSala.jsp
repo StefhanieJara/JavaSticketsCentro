@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="bSala" scope="request" type="com.example.javasticketscentro.Beans.BSala"/>
 <jsp:useBean id="sedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,9 +100,9 @@
             <div class="offcanvas-body p-3">
                 <div class="d-flex flex-column">
                     <div class="my-2">
-                        <h4 class="mb-3">Rex Campos Díaz</h4>
+                        <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                         <img
-                                src="img/images.png"
+                                src="<%=clienteLog.getFoto()%>"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -109,7 +110,7 @@
                     <div class="mb-3">
                         <div class="p-2">
                             <a
-                                    href="gestionSalas.html"
+                                    href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -118,7 +119,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionActoresDirectores.html"
+                                    href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionCelebridad"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -127,7 +128,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="visualizacionOperadores.html"
+                                    href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionOperadores"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -136,7 +137,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="listaclientesV2.html"
+                                    href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionClientes"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
@@ -149,7 +150,7 @@
         </div>
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
-                <a href="#" class="text-dark text-decoration-none">
+                <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
                     <span><i class="fas fa-sign-out-alt"></i></span>
                     <span>Cerrar sesión</span>
                 </a>
@@ -206,7 +207,7 @@
                                 <div class="row mb-3">
 
                                     <div class="form-outline mb-4 py-4">
-                                        <label class="form-label" for="productName">Elija la sede</label>
+                                        <label class="form-label">Elija la sede</label>
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">

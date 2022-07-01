@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaPersonal" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersonal>" />
-
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <html lang="en">
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -89,99 +89,117 @@
      style="background-color: #e72d4b">
     <div class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2">
-            <a href="indexAdmin.html"><img src="img/logo.png" /></a>
+            <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
         </div>
 
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
-        </div>
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
-            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop"
-                    aria-controls="offcanvasWithBackdrop" style="color: #fff">
+        <!--Espacio-->
+        <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
+        <!--Espacio-->
+
+        <!--Menú cine-->
+        <div
+                class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0"
+        >
+            <button
+                    class="btn"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasWithBackdrop"
+                    aria-controls="offcanvasWithBackdrop"
+                    style="color: #fff"
+            >
                 <div style="font-size: 0.62rem">
                     <i class="fas fa-user-circle fa-3x"></i>
                 </div>
             </button>
         </div>
-        <!--Boton atras-->
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
-            <button class="btn" type="button" style=" color: white">
-                <div style="font-size: 0.62rem">
-                    <a href="<%=request.getContextPath()%>/indexOperadorServlet"</a>
-                    <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+        <!--Boton retornar-->
+        <div
+                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex">
+            <a
+                    class="btn btn-tele-inverso"
+                    role="button"
+                    href="<%=request.getContextPath()%>/indexOperadorServlet"
+            >
+                <div style="font-size: 0.6rem">
+                    <!--para cambios más precisos del tamaño-->
+                    <i class="fa fa-caret-square-o-left fa-3x"></i>
                 </div>
-            </button>
+            </a>
         </div>
     </div>
 </nav>
-<div class="offcanvas offcanvas-end text-center" tabindex="-1" id="offcanvasWithBackdrop"
-     aria-labelledby="offcanvasWithBackdropLabel">
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Administrador</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+    <div
+            class="offcanvas offcanvas-end text-center"
+            tabindex="-1"
+            id="offcanvasWithBackdrop"
+            aria-labelledby="offcanvasWithBackdropLabel"
+    >
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Operador</h5>
+                    <button
+                            type="button"
+                            class="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                    ></button>
+                </div>
             </div>
-        </div>
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Admin45</h4>
-                        <img src="img/images.png"
-                             class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a
-                                    href="gestionSalas.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Salas</span>
-                            </a>
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img
+                                    src="<%=clienteLog.getFoto()%>"
+                                    class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
+                                    alt="profile image"
+                            />
                         </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionActoresDirectores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Añadir Actores y Directores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionOperadores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Operadores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="listaclientesV2.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Lista de Clientes</span>
-                            </a>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/personalServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Personal</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Funciones</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/operador_estadisticasServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Estadísticas</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="#" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <main>
     <!--Alinear cabecera con contenido-->
     <div class="card-header mt-5 mb-4"></div>
@@ -212,7 +230,7 @@
                 <label for="inputtext6" class="col-form-label">Apellido</label>
             </div>
             <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+                <input type="text" class="form-control" aria-describedby="textHelpInline">
             </div>
         </div>
 

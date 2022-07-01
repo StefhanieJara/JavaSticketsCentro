@@ -56,7 +56,6 @@
                                         >
                                         <input
                                                 type="text"
-                                                id="productName"
                                                 class="form-control"
                                                 placeholder="Cambiar nombre"
                                         />

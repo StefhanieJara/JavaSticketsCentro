@@ -1,6 +1,7 @@
 package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BPelicula;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BSede;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.IndexDao;
@@ -21,15 +22,25 @@ public class indexServlet extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setDateHeader("Expires", 0);
         //Borramos caché
-
         IndexDao indexDao = new IndexDao();
         AdminDao adminDao = new AdminDao();
-        ArrayList<BPelicula> listapeliculas = indexDao.listaPeliculas();
-        ArrayList<BSede> listaSedes = adminDao.listarSedes();
-        request.setAttribute("Listapeliculas", listapeliculas);
-        request.setAttribute("ListaSedes", listaSedes);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(request,response);
+
+        BPersona usuario= (BPersona)request.getSession().getAttribute("clienteLog");
+        ArrayList<BPelicula> listapeliculas=indexDao.listaPeliculas();
+
+        if(usuario==null || usuario.getIdPer()==0 || usuario.getRol().equals("Cliente")){
+            ArrayList<BSede> listaSedes = adminDao.listarSedes();
+            request.setAttribute("Listapeliculas", listapeliculas);
+            request.setAttribute("ListaSedes", listaSedes);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+            requestDispatcher.forward(request,response);
+        }else{
+            if(usuario.getRol().equals("Operador")){
+                response.sendRedirect(request.getContextPath()+"/indexOperadorServlet");
+            }else{
+                response.sendRedirect(request.getContextPath()+"/AdminIndexServlet");
+            }
+        }
     }
 
     @Override

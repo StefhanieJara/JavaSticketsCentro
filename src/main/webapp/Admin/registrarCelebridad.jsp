@@ -59,7 +59,6 @@
                                         <input
                                                 name = "nombresCeleb"
                                                 type="text"
-                                                id="productName"
                                                 class="form-control"
                                                 placeholder="Ingrese los nombres"
                                         />

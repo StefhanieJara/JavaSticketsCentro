@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <html lang="en">
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -108,76 +109,86 @@
         </div>
     </div>
 </nav>
-<div class="offcanvas offcanvas-end text-center" tabindex="-1" id="offcanvasWithBackdrop"
-     aria-labelledby="offcanvasWithBackdropLabel">
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Administrador</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+    <div
+            class="offcanvas offcanvas-end text-center"
+            tabindex="-1"
+            id="offcanvasWithBackdrop"
+            aria-labelledby="offcanvasWithBackdropLabel"
+    >
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Administrador</h5>
+                    <button
+                            type="button"
+                            class="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                    ></button>
+                </div>
             </div>
-        </div>
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Admin45</h4>
-                        <img src="img/images.png"
-                             class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
-                    </div>
-                    <div class="mb-3">
-                        <div class="p-2">
-                            <a
-                                    href="gestionSalas.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Salas</span>
-                            </a>
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img
+                                    src="<%=clienteLog.getFoto()%>"
+                                    class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
+                                    alt="profile image"
+                            />
                         </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionActoresDirectores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Añadir Actores y Directores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="visualizacionOperadores.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Operadores</span>
-                            </a>
-                        </div>
-                        <div class="p-2">
-                            <a
-                                    href="listaclientesV2.html"
-                                    class="text-dark text-decoration-none"
-                            >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Visualizar Lista de Clientes</span>
-                            </a>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Salas</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionCelebridad"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Añadir Actores y Directores</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionOperadores"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Operadores</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionClientes"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Lista de Clientes</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="#" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 
 <!--Contenido página-->
 <main>
@@ -199,7 +210,7 @@
         <div class="row g-3 align-items-center mt-2 ">
             <div class="rows-auto">
                 <h4><center>FILTROS</center></h4>
-                <label for="inputtext6" class="col-form-label">Sede</label>
+                <label class="col-form-label">Sede</label>
             </div>
             <div class="rows-auto">
                 <select class="form-select form-select-sm" aria-label=".form-select-sm example">

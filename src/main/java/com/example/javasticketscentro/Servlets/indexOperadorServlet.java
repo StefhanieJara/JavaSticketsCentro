@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-    @WebServlet(name = "indexOperadorServlet", urlPatterns = {"/indexOperadorServlet"})
+    @WebServlet(name = "indexOperadorServlet", value = {"/indexOperadorServlet"})
     public class indexOperadorServlet extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

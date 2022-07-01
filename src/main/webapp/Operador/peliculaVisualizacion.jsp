@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" />
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +50,7 @@
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
             <a class="navbar-brand py-0" href="usuario.html">
-                <a href="indexOperadorServlet"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
             </a>
         </div>
         <!--Espacio-->
@@ -73,64 +74,94 @@
                 </div>
             </button>
         </div>
-        <!--Boton atras-->
-        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
-            <button class="btn" type="button" style=" color: white">
-                <div style="font-size: 0.62rem">
-                    <a href="<%=request.getContextPath()%>/indexOperadorServlet"</a>
-                    <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+        <!--Boton retornar-->
+        <div
+                class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex">
+            <a
+                    class="btn btn-tele-inverso"
+                    role="button"
+                    href="<%=request.getContextPath()%>/indexOperadorServlet"
+            >
+                <div style="font-size: 0.6rem">
+                    <!--para cambios más precisos del tamaño-->
+                    <i class="fa fa-caret-square-o-left fa-3x"></i>
                 </div>
-            </button>
+            </a>
         </div>
     </div>
 </nav>
 
-<!--Menú cine-->
-<div
-        class="offcanvas offcanvas-end text-center"
-        tabindex="-1"
-        id="offcanvasWithBackdrop"
-        aria-labelledby="offcanvasWithBackdropLabel"
->
-    <div class="d-flex align-items-center flex-column mb-3 vh-100">
-        <!--Título y botón-->
-        <div class="p-2 w-100">
-            <div class="offcanvas-header border-bottom">
-                <h5 class="mb-0">Menú de Operador</h5>
-                <button
-                        type="button"
-                        class="btn-close text-reset"
-                        data-bs-dismiss="offcanvas"
-                        aria-label="Close"
-                ></button>
+    <div
+            class="offcanvas offcanvas-end text-center"
+            tabindex="-1"
+            id="offcanvasWithBackdrop"
+            aria-labelledby="offcanvasWithBackdropLabel"
+    >
+        <div class="d-flex align-items-center flex-column mb-3 vh-100">
+            <div class="p-2 w-100">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="mb-0">Menú de Operador</h5>
+                    <button
+                            type="button"
+                            class="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                    ></button>
+                </div>
             </div>
-        </div>
-        <!--Foto cine-->
-        <div class="p-2">
-            <div class="offcanvas-body p-3">
-                <div class="d-flex flex-column">
-                    <div class="my-2">
-                        <h4 class="mb-3">Rex Quispe Medina</h4>
-                        <img
-                                src="img/images.png"
-                                class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                alt="profile image"
-                        />
+            <div class="p-2">
+                <div class="offcanvas-body p-3">
+                    <div class="d-flex flex-column">
+                        <div class="my-2">
+                            <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
+                            <img
+                                    src="<%=clienteLog.getFoto()%>"
+                                    class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
+                                    alt="profile image"
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/personalServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Personal</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Funciones</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/operador_estadisticasServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Visualizar Estadísticas</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Footer cerrar sesión-->
-        <div class="mt-auto p-2 w-100">
-            <div class="offcanvas-body border-top pt-4">
-                <a href="indexServlet" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
-                    <span>Cerrar sesión</span>
-                </a>
+            <div class="mt-auto p-2 w-100">
+                <div class="offcanvas-body border-top pt-4">
+                    <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
+                        <span><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Cerrar sesión</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <!--Contenido página-->
 <main>

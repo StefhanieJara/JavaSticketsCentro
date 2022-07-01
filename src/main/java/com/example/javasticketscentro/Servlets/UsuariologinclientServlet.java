@@ -56,7 +56,15 @@ public class UsuariologinclientServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet");
                     break;
                 case "loginform":
-                    response.sendRedirect(request.getContextPath());
+                    if(usuario.getRol().equals("Cliente")){
+                        response.sendRedirect(request.getContextPath());
+                    }else{
+                        if(usuario.getRol().equals("Operador")){
+                            response.sendRedirect(request.getContextPath()+"/indexOperadorServlet");
+                        }else{
+                            response.sendRedirect(request.getContextPath()+"/AdminIndexServlet");
+                        }
+                    }
                     break;
             }
         }
