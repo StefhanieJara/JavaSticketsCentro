@@ -61,6 +61,56 @@
     </head>
 </head>
 <body>
+    <nav
+            class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
+            style="background-color: #e72d4b"
+    >
+        <div
+                class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2"
+        >
+            <!--Logo Centro Cultural PUCP-->
+            <div
+                    class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
+            >
+                <a class="navbar-brand py-0" href="usuario.html">
+                    <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
+                </a>
+            </div>
+            <!--Espacio-->
+            <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
+            <!--Espacio-->
+
+            <!--Menú-->
+            <div
+                    class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0"
+            >
+                <button
+                        class="btn"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasWithBackdrop"
+                        aria-controls="offcanvasWithBackdrop"
+                        style="color: #fff"
+                >
+                    <div style="font-size: 0.62rem">
+                        <i class="fas fa-user-circle fa-3x"></i>
+                    </div>
+                </button>
+            </div>
+            <!--Boton atras-->
+            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+                <button class="btn" type="button" style=" color: white">
+                    <div style="font-size: 0.62rem">
+                        <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet">
+                            <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <br><br><br><br><br><br><br><br>
+
+
 <section class="vh-100">
     <div class="container py-4 h-100">
         <div class="row justify-content-center align-items-center h-100">
@@ -141,5 +191,8 @@
     })
 </script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
 </body>
 </html>

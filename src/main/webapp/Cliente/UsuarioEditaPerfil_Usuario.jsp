@@ -37,8 +37,24 @@
                 <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
             </a>
         </div>
+        <!--Espacio-->
+        <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
+        <!--Boton atras-->
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
+            <button class="btn" type="button" style=" color: white">
+                <div style="font-size: 0.62rem">
+                    <a href="<%=request.getContextPath()%>">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
+                </div>
+            </button>
+        </div>
     </div>
 </nav>
+    </div>
+</nav>
+
+
+
 
 <!--Contenido-->
 <main>

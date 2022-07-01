@@ -202,9 +202,10 @@
             <div class="container px-5 py-2" id="custom-cards-san-miguel">
                 <h4 class="dist-name" style="color:#E72D4B; font-weight: bold; margin-top: 30px">Nuestras Sedes</h4>
                 <div class="row row-cols-1 row-cols-lg-3 g-4 py-3">
+                    <%int i=1;%>
                     <% for (BSede sede : ListaSedes) {%>
                     <div class="col">
-                        <div onclick="" class="card card-farmacia f1">
+                        <div onclick="" class="card card-farmacia f<%=i%>">
                             <a href="https://www.google.com/maps/place/<%=sede.getNombre()%>,<%=sede.getDireccion()%>" style="text-decoration:none ; color:white"  target="_blank">
                             <h2><%=sede.getNombre()%></h2>
                             </a>
@@ -216,6 +217,7 @@
                             </ul>
                         </div>
                     </div>
+                    <%i++;%>
                     <%}%>
                 </div>
             </div>
