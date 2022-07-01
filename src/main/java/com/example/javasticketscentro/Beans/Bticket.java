@@ -6,6 +6,15 @@ public class Bticket {
     private String qr;
     private int cantButaca;
     private boolean descuento;
+    private boolean carrito;
+
+    public boolean getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(boolean carrito) {
+        this.carrito = carrito;
+    }
 
     public boolean isDescuento() {
         return descuento;

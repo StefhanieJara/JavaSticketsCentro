@@ -198,7 +198,7 @@
                                                 <td></td>
                                                 <td name="CodigoTicket" id="CodigoTicket"><%=ticket.getCodigo()%></td>
                                                 <td></td>
-                                                <td name="CostoTotal" id="CostoTotal">S/<%=ticket.getTotal()%></td>
+                                                <td name="CostoTotal" id="CostoTotal">S/<%=(Math.round(ticket.getTotal()*100.0)/100.0)%></td>
                                                 <td></td>
                                                 <td name="ObtenerFunciones" id="ObtenerFunciones"
                                                     class="table-elipse"

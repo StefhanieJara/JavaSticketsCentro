@@ -1,8 +1,6 @@
 package com.example.javasticketscentro.Daos;
 
-import com.example.javasticketscentro.Beans.BCelebridad;
-import com.example.javasticketscentro.Beans.BFuncion;
-import com.example.javasticketscentro.Beans.BPelicula;
+import com.example.javasticketscentro.Beans.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -55,9 +53,17 @@ public class PeliculaDao extends BaseDao {
     }
     public ArrayList<BFuncion> detectarFunciones(int id){
         ArrayList<BFuncion> listaFunciones= new ArrayList<>();
-        String sql="select * from funcion f " +
-                "inner join pelicula p on (p.idPelicula=f.Pelicula_idPelicula) " +
-                "where p.idPelicula=?";
+        String sql="select f.idFuncion, f.precio,f.stock,f.fecha, f.horaInicio, s2.nombre, s.numero, f.stock, sub.butacasRestantes from funcion f " +
+                "                                left join pelicula p on (p.idPelicula=f.Pelicula_idPelicula) " +
+                "                                left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
+                "                                left join sala s on fhs.Sala_idSala = s.idSala " +
+                "                                left join sede s2 on s.Sede_idSede = s2.idSede " +
+                "                                left join (select  f.stock-sum(t.cantidadButaca) as `butacasRestantes`, f.idFuncion " +
+                "                                            from funcion f " +
+                "                                                   inner join ticket t on f.idFuncion = t.Funcion_idFuncion " +
+                "                                                   inner join compra c on t.Compra_idCompra = c.idCompra " +
+                "                                           where c.cancelado=1 group by f.idFuncion) sub on sub.idFuncion=f.idFuncion " +
+                "                                where p.idPelicula=? and CURRENT_DATE<=f.fecha";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
             pstmt.setInt(1,id);
@@ -67,8 +73,15 @@ public class PeliculaDao extends BaseDao {
                     bFuncion.setId(resultSet.getInt(1));
                     bFuncion.setPrecio(resultSet.getDouble(2));
                     bFuncion.setStock(resultSet.getInt(3));
-                    bFuncion.setFecha(resultSet.getString(5));
-                    bFuncion.setHoraInicio(resultSet.getString(6));
+                    bFuncion.setFecha(resultSet.getString(4));
+                    bFuncion.setHoraInicio(resultSet.getString(5));
+                    BSala bSala= new BSala();
+                    BSede bSede= new BSede();
+                    bSede.setNombre(resultSet.getString(6));
+                    bSala.setNumero(resultSet.getInt(7));
+                    bFuncion.setStock(resultSet.getInt(9)==0? resultSet.getInt(8) : resultSet.getInt(9));
+                    bSala.setbSede(bSede);
+                    bFuncion.setbSala(bSala);
                     listaFunciones.add(bFuncion);
                 }
             }
@@ -79,34 +92,52 @@ public class PeliculaDao extends BaseDao {
         return listaFunciones;
     }
 
-    public BFuncion detectarFuncionEscogida(int idPeli, int idCliente, int pagado, int carrito){
-        BFuncion bFuncion= null;
-        String sql="select f.idFuncion, f.fecha, f.horaInicio, f.precio, f.stock, c.cancelado, t.carrito " +
-                "from persona p " +
-                "inner join compra c on (p.idPersona = c.persona_idPersona) " +
-                "inner join ticket t on (c.idCompra = t.Compra_idCompra) " +
-                "inner join funcion f on (t.Funcion_idFuncion = f.idFuncion) " +
-                "inner join pelicula p2 on (f.Pelicula_idPelicula = p2.idPelicula) " +
-                "where p.idPersona= ? and p2.idPelicula=? and (c.cancelado= ? or t.carrito=?)";
+    public ArrayList<Bticket> funcionesDelCliente(int idClient){
+        String sql= "select p.idPersona , c.idCompra,c.cancelado, " +
+                "                       t.cantidadButaca, t.carrito,f.idFuncion, f.fecha, f.horaInicio, s2.nombre, s.numero from persona p " +
+                "                left join compra c on p.idPersona = c.persona_idPersona " +
+                "                    left join ticket t on c.idCompra = t.Compra_idCompra " +
+                "                    left join funcion f on t.Funcion_idFuncion = f.idFuncion " +
+                "                    left join pelicula p2 on f.Pelicula_idPelicula = p2.idPelicula " +
+                "                    left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
+                "                    left join sala s on fhs.Sala_idSala = s.idSala " +
+                "                    left join sede s2 on s.Sede_idSede = s2.idSede " +
+                "                    where idPersona=?;";
+        ArrayList<Bticket> lista= new ArrayList<>();
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setInt(1,idCliente);
-            pstmt.setInt(2, idPeli);
-            pstmt.setInt(3, pagado);
-            pstmt.setInt(4, carrito);
+            pstmt.setInt(1,idClient);
             try(ResultSet resultSet= pstmt.executeQuery()){
-                if(resultSet.next()){
-                    bFuncion= new BFuncion();
-                    //Por ahora, solo nos interesa el id
-                    bFuncion.setId(resultSet.getInt(1));
-                    bFuncion.setCancelado(resultSet.getInt(6));
-                    bFuncion.setCarrito(resultSet.getInt(7));
+                while(resultSet.next()){
+                    Bticket ticket= new Bticket();
+                    BFuncion bFuncion= new BFuncion();
+                    bFuncion.setId(resultSet.getInt(6));
+                    bFuncion.setFecha(resultSet.getString(7));
+                    bFuncion.setHoraInicio(resultSet.getString(8));
+                    BSala bSala=new BSala();
+                    bSala.setNumero(resultSet.getInt(10));
+                    BSede bSede= new BSede();
+                    bSede.setNombre(resultSet.getString(9));
+                    bSala.setbSede(bSede);
+                    if(resultSet.getInt(5)==0){
+                        ticket.setCarrito(false);
+                    }else{
+                        ticket.setCarrito(true);
+                    }
+                    ticket.setCantButaca(resultSet.getInt(4));
+                    BCompra compra= new BCompra();
+                    compra.setCancelado(resultSet.getInt(3));
+                    compra.setIdCompra(resultSet.getString(2));
+                    bFuncion.setbSala(bSala);
+                    ticket.setbFuncion(bFuncion);
+                    ticket.setbCompra(compra);
+                    lista.add(ticket);
                 }
             }
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
-        return bFuncion;
+        return lista;
     }
 }

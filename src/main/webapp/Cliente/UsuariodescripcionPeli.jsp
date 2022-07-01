@@ -1,5 +1,6 @@
 <%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %>
-<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %>
+<%@ page import="com.example.javasticketscentro.Beans.Bticket" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -9,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
 <jsp:useBean id="funciones" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>"/>
-<jsp:useBean id="funcionElegida" scope="request" type="com.example.javasticketscentro.Beans.BFuncion"/>
+<jsp:useBean id="funcionesCliente" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bticket>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -236,9 +237,8 @@
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
-                        <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
                             <!--Señal de alerta-->
-                            <%if(funcionElegida.getId()!=0){%>
+                            <%if(session.getAttribute("msg")!=null){%>
                             <br><br><br><br><br>
                             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                 <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -251,7 +251,6 @@
                                     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                                 </symbol>
                             </svg>
-                            <%if(funcionElegida.getCarrito()==1){%>
                             <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
                                 <div>
@@ -259,15 +258,7 @@
                                 </div>
                                 <button type="button" data-bs-dismiss="alert" class="btn-close" aria-label="Close"></button>
                             </div>
-                            <%}else{%>
-                            <div class="alert alert-primary d-flex align-items-center alert-dismissible fade show" role="alert">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-                                <div>
-                                    Función comprada!
-                                </div>
-                                <button type="button" data-bs-dismiss="alert" class="btn-close" aria-label="Close"></button>
-                            </div>
-                            <%}%>
+                            <%session.removeAttribute("msg");%>
                             <%}%>
 
                         <%if(funciones.size()==0){%>
@@ -278,15 +269,66 @@
                             <option>< No hay funciones disponibles ></option>
                         </select>
                         <%}else{%>
-                        <%if(funcionElegida.getId()==0){%>
-                        <br><br><br><br><br>
-                        <%}%>
-                        <select class="form-select" name="funcionEscogida">
-                            <option value="Funciones" <%=funcionElegida.getId()==0 ? "selected": ""%> disabled>Funciones</option>
-                            <%for(BFuncion bFuncion: funciones){%>
-                            <option value="<%=bFuncion.getId()%>" <%=funcionElegida.getId()==bFuncion.getId()? "selected" : ""%> <%=funcionElegida.getId()==0 ? "" : "disabled"%> ><%="Hora de Inicio: "+bFuncion.getHoraInicio()%>pm <%=" Fecha:"+bFuncion.getFecha()%></option>
+                            <%if(clienteLog.getIdPer()==0 || clienteLog==null){%>
+                            <select class="form-select" name="funcionEscogida">
+                                <option value="Funciones" selected disabled>Funciones</option>
+                                <%for(BFuncion bFuncion: funciones){%>
+                                <option value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+" | Butacas Disponibles: "+bFuncion.getStock()%></option>
+                                <%}%>
+                            </select>
+                            <%}else{%>
+                            <select class="form-select" name="funcionEscogida">
+                                <option value="Funciones" selected disabled>Funciones</option>
+                                <%for(BFuncion bFuncion: funciones){%>
+                                    <%if(funcionesCliente.size()!=0){%>
+                                        <%boolean existeLista= false,mismaFechaSede=false;Bticket ticketEncontrado=new Bticket();
+                                        for(Bticket ticket: funcionesCliente){
+                                            if(ticket.getbFuncion().getId()==bFuncion.getId() ){
+                                                ticketEncontrado= ticket;
+                                                existeLista=true;
+                                                break;
+                                            }else{
+                                                //Si no es la función de esta película a analizar...buscamos si coincide con alguna otra función en hora, fecha y sede
+                                                if(ticket.getbFuncion().getFecha().equals(bFuncion.getFecha())&&ticket.getbFuncion().getHoraInicio().equals(bFuncion.getHoraInicio())&&ticket.getbFuncion().getbSala().getbSede().getNombre().equals(bFuncion.getbSala().getbSede().getNombre())){
+                                                    //Coincide la fecha, hora y sede
+                                                    mismaFechaSede=true;
+                                                }
+                                            }
+                                        }%>
+                                        <%if(existeLista){%>
+                                            <%if(ticketEncontrado.getbCompra().getCancelado()==0){%>
+                                            <option value="<%=bFuncion.getId()%>" <%=ticketEncontrado.getCarrito() ? "disabled" : ""%>><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                                <%if(ticketEncontrado.getCarrito()){%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                Añadido al carrito!<%}else{%>
+                                                <%=" | Butacas Disponibles: "+bFuncion.getStock()%>
+                                                <%}%>
+                                                </option>
+                                            <%}else{%>
+                                                <option value="<%=bFuncion.getId()%>" disabled><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    Ticket comprado!</option>
+                                            <%}%>
+                                        <%}else{%>
+                                            <%if(mismaFechaSede){%>
+                                                <option disabled value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    &nbsp;&nbsp;&nbsp;Horario incompatible!</option>
+                                            <%}else{%>
+                                               <option value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio() +" | Butacas Disponibles: "+bFuncion.getStock()%></option>
+                                            <%}%>
+                                        <%}%>
+                                    <%}else{%>
+                                        <option value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+" | Butacas Disponibles: "+bFuncion.getStock()%></option>
+                                    <%}%>
+                                <%}%>
+                            </select>
                             <%}%>
-                        </select>
                         <%}%>
                         <br>
                                 <%if(clienteLog.getIdPer()==0 || clienteLog==null){%>
@@ -299,7 +341,7 @@
                         <table ALIGN="right">
                             <tr>
                                 <td class="text-end">
-                                    <button type="<%=(funcionElegida.getId()!=0 || funciones.size()==0) ? "button" : "submit"%>" class="btn btn-tele btn-md mr-1 mb-2">
+                                    <button type="<%=(funciones.size()==0) ? "button" : "submit"%>" class="btn btn-tele btn-md mr-1 mb-2">
                                         <i class="fas fa-shopping-cart"></i> Añadir al carrito
                                     </button>
                                 </td>

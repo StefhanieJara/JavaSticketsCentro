@@ -112,13 +112,13 @@ public class CarritoDao extends BaseDao{
         String sql = "select p.nombre,p.codigoPUCP,t.cantidadButaca,f.precio,f.fecha,f.horaInicio,s.numero, s2.nombre, " +
                 "       p2.foto, p2.nombre, t.Compra_idCompra, t.Funcion_idFuncion " +
                 "from persona p " +
-                "inner join compra c on p.idPersona = c.persona_idPersona " +
-                "inner join ticket t on c.idCompra = t.Compra_idCompra " +
-                "inner join funcion f on t.Funcion_idFuncion = f.idFuncion " +
-                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
-                "inner join sala s on fhs.Sala_idSala = s.idSala " +
-                "inner join sede s2 on s.Sede_idSede = s2.idSede " +
-                "inner join pelicula p2 on f.Pelicula_idPelicula = p2.idPelicula " +
+                "left join compra c on p.idPersona = c.persona_idPersona " +
+                "left join ticket t on c.idCompra = t.Compra_idCompra " +
+                "left join funcion f on t.Funcion_idFuncion = f.idFuncion " +
+                "left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
+                "left join sala s on fhs.Sala_idSala = s.idSala " +
+                "left join sede s2 on s.Sede_idSede = s2.idSede " +
+                "left join pelicula p2 on f.Pelicula_idPelicula = p2.idPelicula " +
                 "where p.idPersona=? and c.cancelado=0 ";
         try (Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
@@ -266,11 +266,12 @@ public class CarritoDao extends BaseDao{
             pstmt.executeUpdate();
             JavaMail javaMail= new JavaMail();
             String asunto="JavaSticket: Recibo de Compra";
+
             String msg="Enhorabuena!\n\n"+
                     "Tu compra ha sido realizada!\n"+
-                    "Código de Compra: "+compra.getIdCompra()+"\n\n"+
-                    listaTickets;
-
+                    "Código de Compra: "+compra.getIdCompra()+"\n\n"
+                    +listaTickets;
+            System.out.println(msg);//No borrar
             javaMail.sendMessage(usuario.getEmail(),msg,asunto);
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
