@@ -143,6 +143,7 @@
                             <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                         </symbol>
                     </svg>
+                    <%boolean noHayVacantes=false;%>
                     <!---->
                     <%for(Bticket bticket: carrito){%>
                     <!--Producto-->
@@ -167,7 +168,11 @@
                                     <span class="text-muted">Hora:</span>
                                     <span class="font-size-lgr ms-sm-2 ms-0 "><%=bticket.getbFuncion().getHoraInicio()%></span>
                                 </div>
-
+                                <div>
+                                    <span class="text-muted">Cupos disponibles:</span>
+                                    <span class="font-size-lgr ms-sm-2 ms-0 "><%=bticket.getbFuncion().getStock()%></span>
+                                </div>
+                                <%if(bticket.getbFuncion().getStock()==0){noHayVacantes=true;}%>
                             </div>
                             <div class="pt-1 pt-md-3 ps-sm-3 ps-0 text-sm-start text-center">
                                 <br>
@@ -229,6 +234,13 @@
                         </div>
                     </div>
                     <%}%>
+                    <%if(noHayVacantes){%>
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>Lo sentimos!</h4>
+                        <hr>
+                        <p class="mb-0">Ya no hay cupos para una función que había escogido. Elimine el producto de su carrito para seguir la compra.</p>
+                    </div>
+                    <%}%>
                     <%if(carrito.size()==0){%>
                     <div class="alert alert-secondary" role="alert">
                         <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>El carrito de compras está vacío!</h4>
@@ -250,7 +262,7 @@
                             <tr>
                                 <th scope="col">Producto</th>
                                 <th scope="col">Sede</th>
-                                <th scope="col">Butacas</th>
+                                <th scope="col">Butacas:</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                             </thead>
@@ -274,7 +286,7 @@
                         <span class="font-size-lg">Total:</span>
                         <span>&nbsp;s/ <%=(Math.round(costoTotal*100.0)/100.0)%></span>
                     </div>
-                    <%if(carrito.size()!=0){%>
+                    <%if(carrito.size()!=0 && !noHayVacantes){%>
                     <div class="d-flex justify-content-center">
                         <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar" class="btn btn-danger">Pagar</a>
                     </div>

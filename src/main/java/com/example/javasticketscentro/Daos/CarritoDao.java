@@ -109,17 +109,22 @@ public class CarritoDao extends BaseDao{
 
     public ArrayList<Bticket> listarCarrito(int idClient){
         ArrayList<Bticket> carrito= new ArrayList<>();
-        String sql = "select p.nombre,p.codigoPUCP,t.cantidadButaca,f.precio,f.fecha,f.horaInicio,s.numero, s2.nombre, " +
-                "       p2.foto, p2.nombre, t.Compra_idCompra, t.Funcion_idFuncion " +
-                "from persona p " +
-                "left join compra c on p.idPersona = c.persona_idPersona " +
-                "left join ticket t on c.idCompra = t.Compra_idCompra " +
-                "left join funcion f on t.Funcion_idFuncion = f.idFuncion " +
-                "left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
-                "left join sala s on fhs.Sala_idSala = s.idSala " +
-                "left join sede s2 on s.Sede_idSede = s2.idSede " +
-                "left join pelicula p2 on f.Pelicula_idPelicula = p2.idPelicula " +
-                "where p.idPersona=? and c.cancelado=0 ";
+        String sql = "select p.nombre,p.codigoPUCP,t.cantidadButaca,f.precio,f.fecha,f.horaInicio,s.numero, s2.nombre,\n" +
+                "                       p2.foto, p2.nombre, t.Compra_idCompra, t.Funcion_idFuncion, sub.butacasRestantes, f.stock\n" +
+                "                from persona p\n" +
+                "            left join compra c on p.idPersona = c.persona_idPersona\n" +
+                "                left join ticket t on c.idCompra = t.Compra_idCompra\n" +
+                "                left join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
+                "                left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                "                left join sala s on fhs.Sala_idSala = s.idSala\n" +
+                "                left join sede s2 on s.Sede_idSede = s2.idSede\n" +
+                "            left join pelicula p2 on f.Pelicula_idPelicula = p2.idPelicula\n" +
+                "                left join (select  f.stock-sum(t.cantidadButaca) as `butacasRestantes`, f.idFuncion\n" +
+                "                           from funcion f\n" +
+                "                                    inner join ticket t on f.idFuncion = t.Funcion_idFuncion\n" +
+                "                                    inner join compra c on t.Compra_idCompra = c.idCompra\n" +
+                "                           where c.cancelado=1 group by f.idFuncion) sub on (sub.idFuncion=f.idFuncion)\n" +
+                "                where p.idPersona=? and c.cancelado=0;";
         try (Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setInt(1, idClient);
@@ -144,6 +149,7 @@ public class CarritoDao extends BaseDao{
                     bFuncion.setFecha(rs.getString(5));
                     bFuncion.setHoraInicio(rs.getString(6));
                     bFuncion.setId(rs.getInt(12));
+                    bFuncion.setStock(rs.getInt(13)==0? rs.getInt(14) : rs.getInt(13));
                     BSala bSala= new BSala();
                     bSala.setNumero(rs.getInt(7));
                     BSede bSede= new BSede();
