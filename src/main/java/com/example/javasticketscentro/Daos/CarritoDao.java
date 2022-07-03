@@ -269,16 +269,18 @@ public class CarritoDao extends BaseDao {
         ArrayList<Double> subtotal= new ArrayList<>();
         ArrayList<String> nombrePeli= new ArrayList<>();
         double total = 0;
+        //Obtenemos todos los detalles de los tickes a comprar
         for (Bticket bticket : btickets) {
-            nombrePeli.add(bticket.getbFuncion().getbPelicula().getNombre());
-            total += (bticket.getbFuncion().getPrecio() * bticket.getCantButaca());
+            nombrePeli.add(bticket.getbFuncion().getbPelicula().getNombre()); //Nombres de pelis
+            total += (bticket.getbFuncion().getPrecio() * bticket.getCantButaca());//Total de la compra
             detalleTicket.add("Función: " + bticket.getbFuncion().getbPelicula().getNombre() + " | Fecha: " +
                     bticket.getbFuncion().getFecha() + " | Hora: " + bticket.getbFuncion().getHoraInicio() + "\nSede: " + bticket.getbFuncion().getbSede().getNombre() +
                     " | Sala: " + bticket.getbFuncion().getbSala().getNumero() + " | Butacas: " + bticket.getCantButaca() +
                     " | Precio por Butacas: S/" + bticket.getbFuncion().getPrecio());
-            idFunciones.add(bticket.getbFuncion().getId());
-            subtotal.add(Math.round(bticket.getbFuncion().getPrecio()*bticket.getCantButaca()*100.0)/100.0);
+            idFunciones.add(bticket.getbFuncion().getId());//ID de funciones
+            subtotal.add(Math.round(bticket.getbFuncion().getPrecio()*bticket.getCantButaca()*100.0)/100.0);//Subtotales
         }
+        //Iniciamos el envío por correo
 
         JavaMail javaMail = new JavaMail();
         String asunto = "JavaSticket: Recibo de Compra";
@@ -288,14 +290,30 @@ public class CarritoDao extends BaseDao {
                 "Código de Compra: " + compra.getIdCompra() +"<br><br>Total: <b>S/"+Math.round(total*100.0)/100.0+"</b>" ;
 
         System.out.println(msg);//No borrar
+
         ArrayList<BufferedImage> bufferQrs= new ArrayList<>();
         for(int id: idFunciones){
             JavaQR qr = new JavaQR();
-            BufferedImage image = qr.downloadLocalQR(compra.getIdCompra(), id);
-            cancelarTickets(compra, image, id); //les añadimos buffer del qr generado, por ahora son iguales todos
+            BufferedImage image = qr.downloadLocalQR(compra.getIdCompra(), id);//Obtenemos los qr
             bufferQrs.add(image);
         }
+        JavaPDF pdf= new JavaPDF();
+        ArrayList<byte[]> listaPdfs= new ArrayList<>();
+        int contador=0;
+        //Generamos los pdf
+        for(BufferedImage buff: bufferQrs){
+            byte[] bytes = pdf.generaPDF(buff, detalleTicket.get(contador), subtotal.get(contador),compra.getIdCompra(), usuario.getNombre()+" "+usuario.getApellido(), nombrePeli.get(contador));
+            listaPdfs.add(bytes);
+            contador++;
+        }
+        javaMail.sendMessage(usuario.getEmail(),msg,asunto, listaPdfs, idFunciones);//Enviamos
 
+
+        int n=0;
+        for(int id: idFunciones){
+            cancelarTickets(compra, bufferQrs.get(n), id);//Una vez se envía el correo, procedemos a subirlo a la base de datos
+            n++;
+        }
         String fechaActual = obtenerFechaActual();
         String sql = "update compra set cancelado=1, montoTotal=?, fechaCompra=? where idCompra=?";
         try (Connection conn = this.getConnection();
@@ -304,17 +322,6 @@ public class CarritoDao extends BaseDao {
             pstmt.setString(2, fechaActual);
             pstmt.setString(3, compra.getIdCompra());
             pstmt.executeUpdate();
-
-            JavaPDF pdf= new JavaPDF();
-            ArrayList<byte[]> listaPdfs= new ArrayList<>();
-            int contador=0;
-            for(BufferedImage buff: bufferQrs){
-                byte[] bytes = pdf.generaPDF(buff, detalleTicket.get(contador), subtotal.get(contador),compra.getIdCompra(), usuario.getNombre()+" "+usuario.getApellido(), nombrePeli.get(contador));
-                listaPdfs.add(bytes);
-                contador++;
-            }
-            javaMail.sendMessage(usuario.getEmail(),msg,asunto, listaPdfs, idFunciones);
-
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
             e.printStackTrace();
