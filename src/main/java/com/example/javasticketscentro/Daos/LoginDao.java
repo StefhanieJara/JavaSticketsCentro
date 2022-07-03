@@ -87,7 +87,7 @@ public class LoginDao extends BaseDao{
         String mensaje="Estimado cliente,\n"+
                 "Su código de recuperación es el siguiente: \n"+
                 codigoConfirmacion+"\n\nIngréselo para continuar con la recuperación de su cuenta.";
-        mail.sendMessage(email,mensaje, asunto);
+        mail.sendMessage(email,mensaje, asunto, null, null);
         return codigoConfirmacion;
     }
     private String generarCodigo(int tam){

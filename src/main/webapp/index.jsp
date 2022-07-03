@@ -1,4 +1,5 @@
-<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %>
+<%@ page import="java.nio.file.Paths" %><%--
   Created by IntelliJ IDEA.
   User: CARLOS
   Date: 5/06/2022
@@ -61,7 +62,6 @@
             </div>
             </form>
         </div>
-
         <!--Carrito-->
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">

@@ -289,7 +289,7 @@
                                                 break;
                                             }else{
                                                 //Si no es la función de esta película a analizar...buscamos si coincide con alguna otra función en hora, fecha y sede
-                                                if(ticket.getbFuncion().getFecha().equals(bFuncion.getFecha())&&ticket.getbFuncion().getHoraInicio().equals(bFuncion.getHoraInicio())&&ticket.getbFuncion().getbSala().getbSede().getNombre().equals(bFuncion.getbSala().getbSede().getNombre())){
+                                                if(bFuncion.getFecha().equals(ticket.getbFuncion().getFecha())&&bFuncion.getHoraInicio().equals(ticket.getbFuncion().getHoraInicio())&&bFuncion.getbSala().getbSede().getNombre().equals(ticket.getbFuncion().getbSala().getbSede().getNombre())){
                                                     //Coincide la fecha, hora y sede
                                                     mismaFechaSede=true;
                                                 }

@@ -2,59 +2,64 @@ package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.*;
 import com.example.javasticketscentro.JavaMail;
+import com.example.javasticketscentro.JavaQR;
+import com.google.zxing.WriterException;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.lang.invoke.StringConcatException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CarritoDao extends BaseDao{
+public class CarritoDao extends BaseDao {
 
-    public int ingresarTarjeta(String numeroTarjeta, int cvv, String fechaVencimiento, String bancoNombre, String tipoTarjeta, int id_cliente){
+    public int ingresarTarjeta(String numeroTarjeta, int cvv, String fechaVencimiento, String bancoNombre, String tipoTarjeta, int id_cliente) {
         int key;
         String sql = "insert into tarjeta (numerotarjeta, fechavencimiento, cvv, banco,Persona_idPersona, tipo) value (?,?,?,?,?,?)";
         ResultSet rskey;
         try (Connection connection = this.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
-             preparedStatement.setString(1,numeroTarjeta);
-             preparedStatement.setString(2, fechaVencimiento);
-             preparedStatement.setInt(3,cvv);
-             preparedStatement.setString(4,bancoNombre);
-            preparedStatement.setInt(5,id_cliente);
-             preparedStatement.setString(6,tipoTarjeta);
-             preparedStatement.executeUpdate();
-             rskey= preparedStatement.getGeneratedKeys();
-             rskey.next();
-            key=rskey.getInt(1);
+            preparedStatement.setString(1, numeroTarjeta);
+            preparedStatement.setString(2, fechaVencimiento);
+            preparedStatement.setInt(3, cvv);
+            preparedStatement.setString(4, bancoNombre);
+            preparedStatement.setInt(5, id_cliente);
+            preparedStatement.setString(6, tipoTarjeta);
+            preparedStatement.executeUpdate();
+            rskey = preparedStatement.getGeneratedKeys();
+            rskey.next();
+            key = rskey.getInt(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return key;
     }
 
-    public boolean fVen_valido(String a){
-       boolean valido= false;
-       String[] a2= a.split("/");
-       if(a2.length==2){
-           try{
-               Integer.parseInt(a2[0]);
-               Integer.parseInt(a2[1]);
-               valido=true;
-           }catch(NumberFormatException e){
-               return false;
-           }
-       }
-       return valido;
+    public boolean fVen_valido(String a) {
+        boolean valido = false;
+        String[] a2 = a.split("/");
+        if (a2.length == 2) {
+            try {
+                Integer.parseInt(a2[0]);
+                Integer.parseInt(a2[1]);
+                valido = true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return valido;
     }
 
-    public void anadirTicket(int idFuncion, int idClient){
-        String idCompra=detectarCompraActiva(idClient).getIdCompra();
-        if(idCompra.equals("NoExiste")){
-            idCompra= generarCodigoCompra();
+    public void anadirTicket(int idFuncion, int idClient) {
+        String idCompra = detectarCompraActiva(idClient).getIdCompra();
+        if (idCompra.equals("NoExiste")) {
+            idCompra = generarCodigoCompra();
             crearCompra(idCompra, idClient);
         }
-        String sql="insert into ticket (Compra_idCompra, Funcion_idFuncion, qr, cantidadButaca, carrito) values (?,?,'xd',1,1)";
+        String sql = "insert into ticket (Compra_idCompra, Funcion_idFuncion, qr, cantidadButaca, carrito) values (?,?,'xd',1,1)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, idCompra);
@@ -64,35 +69,38 @@ public class CarritoDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-    public void crearCompra(String idCompra, int idClient){
+
+    public void crearCompra(String idCompra, int idClient) {
         //La fecha se asignará al momento de cancelar la compra
-        String sql="insert into compra (idCompra, montoTotal, persona_idPersona, fechaCompra, cancelado) values (?,0.0,?,'0000-00-00',0)";
+        String sql = "insert into compra (idCompra, montoTotal, persona_idPersona, fechaCompra, cancelado) values (?,0.0,?,'0000-00-00',0)";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, idCompra);
-            pstmt.setInt(2,idClient);
+            pstmt.setInt(2, idClient);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public String generarCodigoCompra(){
-        String codigo="";
-        String[] letters = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
-        for (int i = 0; i < 7; i++ ) {
+
+    public String generarCodigoCompra() {
+        String codigo = "";
+        String[] letters = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+        for (int i = 0; i < 7; i++) {
             codigo += letters[(int) Math.round(Math.random() * 15)];
         }
         return codigo;
     }
-    public BCompra detectarCompraActiva(int idClient){
-        BCompra bCompra=null;
+
+    public BCompra detectarCompraActiva(int idClient) {
+        BCompra bCompra = null;
         String sql = "select * from compra where persona_idPersona=? and cancelado=0";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setInt(1, idClient);
-            try(ResultSet rs= pstmt.executeQuery()){
-                if(rs.next()){
-                    bCompra= new BCompra();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    bCompra = new BCompra();
                     bCompra.setCancelado(rs.getInt(5));
                     bCompra.setIdCompra(rs.getString(1));
                 }
@@ -100,15 +108,15 @@ public class CarritoDao extends BaseDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(bCompra==null){
-            bCompra= new BCompra();
+        if (bCompra == null) {
+            bCompra = new BCompra();
             bCompra.setIdCompra("NoExiste");
         }
         return bCompra;
     }
 
-    public ArrayList<Bticket> listarCarrito(int idClient){
-        ArrayList<Bticket> carrito= new ArrayList<>();
+    public ArrayList<Bticket> listarCarrito(int idClient) {
+        ArrayList<Bticket> carrito = new ArrayList<>();
         String sql = "select p.nombre,p.codigoPUCP,t.cantidadButaca,f.precio,f.fecha,f.horaInicio,s.numero, s2.nombre,\n" +
                 "                       p2.foto, p2.nombre, t.Compra_idCompra, t.Funcion_idFuncion, sub.butacasRestantes, f.stock\n" +
                 "                from persona p\n" +
@@ -126,22 +134,22 @@ public class CarritoDao extends BaseDao{
                 "                           where c.cancelado=1 group by f.idFuncion) sub on (sub.idFuncion=f.idFuncion)\n" +
                 "                where p.idPersona=? and c.cancelado=0;";
         try (Connection connection = this.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);) {
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setInt(1, idClient);
-            try(ResultSet rs= pstmt.executeQuery()){
-                int contador=0;
-                while(rs.next()){
-                    if(contador==0){
-                        carrito= new ArrayList<>();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                int contador = 0;
+                while (rs.next()) {
+                    if (contador == 0) {
+                        carrito = new ArrayList<>();
                     }
-                    BCompra bCompra= new BCompra();
+                    BCompra bCompra = new BCompra();
                     bCompra.setIdCompra(rs.getString(11));
 
-                    BFuncion bFuncion= new BFuncion();
-                    Bticket bticket= new Bticket();
-                    if(rs.getInt(2)!=0){
+                    BFuncion bFuncion = new BFuncion();
+                    Bticket bticket = new Bticket();
+                    if (rs.getInt(2) != 0) {
                         bticket.setDescuento(true);
-                    }else{
+                    } else {
                         bticket.setDescuento(false);
                     }
                     bticket.setCantButaca(rs.getInt(3));
@@ -149,13 +157,13 @@ public class CarritoDao extends BaseDao{
                     bFuncion.setFecha(rs.getString(5));
                     bFuncion.setHoraInicio(rs.getString(6));
                     bFuncion.setId(rs.getInt(12));
-                    bFuncion.setStock(rs.getInt(13)==0? rs.getInt(14) : rs.getInt(13));
-                    BSala bSala= new BSala();
+                    bFuncion.setStock(rs.getInt(13) == 0 ? rs.getInt(14) : rs.getInt(13));
+                    BSala bSala = new BSala();
                     bSala.setNumero(rs.getInt(7));
-                    BSede bSede= new BSede();
+                    BSede bSede = new BSede();
                     bSede.setNombre(rs.getString(8));
 
-                    BPelicula bPelicula= new BPelicula();
+                    BPelicula bPelicula = new BPelicula();
                     bPelicula.setFoto(rs.getString(9));
                     bPelicula.setNombre(rs.getString(10));
 
@@ -175,13 +183,13 @@ public class CarritoDao extends BaseDao{
         return carrito;
     }
 
-    public void cambiarButacasTicket(int butacas, int idFuncion, String idCompra){
+    public void cambiarButacasTicket(int butacas, int idFuncion, String idCompra) {
         String sql = "update ticket set cantidadButaca=? where Compra_idCompra=? and Funcion_idFuncion=?;";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setInt(1, butacas);
-            pstmt.setString(2,idCompra);
-            pstmt.setInt(3,idFuncion);
+            pstmt.setString(2, idCompra);
+            pstmt.setInt(3, idFuncion);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error en CarritoDao CambiarButacasTicket");
@@ -189,12 +197,12 @@ public class CarritoDao extends BaseDao{
         }
     }
 
-    public void borrarTicket(int idFuncion, String idCompra){
+    public void borrarTicket(int idFuncion, String idCompra) {
         String sql = "delete from ticket where Compra_idCompra=? and Funcion_idFuncion=?";
         try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql);){
-            pstmt.setString(1,idCompra);
-            pstmt.setInt(2,idFuncion);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, idCompra);
+            pstmt.setInt(2, idFuncion);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error en CarritoDao CambiarButacasTicket");
@@ -202,17 +210,17 @@ public class CarritoDao extends BaseDao{
         }
     }
 
-    public ArrayList<BTarjeta> listarTarjetas(int idClient){
-        ArrayList<BTarjeta> listar= new ArrayList<>();
-        String sql="select  t.numeroTarjeta, t.fechaVencimiento, " +
+    public ArrayList<BTarjeta> listarTarjetas(int idClient) {
+        ArrayList<BTarjeta> listar = new ArrayList<>();
+        String sql = "select  t.numeroTarjeta, t.fechaVencimiento, " +
                 "       t.CVV, t.banco, t.tipo, t.idTarjeta from persona " +
                 "inner join tarjeta t on persona.idPersona = t.persona_idPersona where idPersona=?";
-        try(Connection conn=this.getConnection();
-            PreparedStatement pstmt= conn.prepareStatement(sql)){
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idClient);
-            try(ResultSet rs= pstmt.executeQuery()){
-                while(rs.next()){
-                    BTarjeta tarjeta= new BTarjeta();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    BTarjeta tarjeta = new BTarjeta();
                     tarjeta.setNumerTar(rs.getString(1));
                     tarjeta.setFechaV(rs.getString(2));
                     tarjeta.setCVV(rs.getInt(3));
@@ -227,14 +235,15 @@ public class CarritoDao extends BaseDao{
         }
         return listar;
     }
-    public BTarjeta buscarTarjeta(int idTarjeta){
-        String sql="select * from tarjeta where idTarjeta= ?";
-        BTarjeta tarjeta=new BTarjeta();
-        try(Connection conn=this.getConnection();
-            PreparedStatement pstmt= conn.prepareStatement(sql)){
+
+    public BTarjeta buscarTarjeta(int idTarjeta) {
+        String sql = "select * from tarjeta where idTarjeta= ?";
+        BTarjeta tarjeta = new BTarjeta();
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, idTarjeta);
-            try(ResultSet rs= pstmt.executeQuery()){
-                if(rs.next()){
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
                     tarjeta.setIdTarjeta(rs.getInt(1));
                     tarjeta.setNumerTar(rs.getString(2));
                     tarjeta.setFechaV(rs.getString(3));
@@ -249,71 +258,127 @@ public class CarritoDao extends BaseDao{
         return tarjeta;
     }
 
-    public void cancelarCompra(BPersona usuario) throws MessagingException {
-        BCompra compra=detectarCompraActiva(usuario.getIdPer());
-        cancelarTickets(compra);
-        ArrayList<Bticket> btickets= listarCarrito(usuario.getIdPer());
-        String listaTickets="";
-        double total=0;
-        for(Bticket bticket: btickets){
-            total+= (bticket.getbFuncion().getPrecio()*bticket.getCantButaca());
-            listaTickets+="Función: "+bticket.getbFuncion().getbPelicula().getNombre()+" | Fecha: "+
-                        bticket.getbFuncion().getFecha() +" | Hora: "+bticket.getbFuncion().getHoraInicio() +" | Sede: "+bticket.getbFuncion().getbSede().getNombre()+
-                        " | Sala: "+bticket.getbFuncion().getbSala().getNumero()+" | Butacas: "+bticket.getCantButaca()+
-                        " | Precio por Butacas: S/"+bticket.getbFuncion().getPrecio()+"\n";
+    public void cancelarCompra(BPersona usuario) throws MessagingException, WriterException, IOException {
+        BCompra compra = detectarCompraActiva(usuario.getIdPer());
+        ArrayList<Bticket> btickets = listarCarrito(usuario.getIdPer());
+        String listaTickets = "";
+
+        ArrayList<Integer> idFunciones= new ArrayList<>();//Almacenamos los id de las funciones
+        ArrayList<String> detalleTicket= new ArrayList<>();//Almacenamos detalles de los tickets
+        double total = 0;
+        int contador=0;
+        for (Bticket bticket : btickets) {
+            total += (bticket.getbFuncion().getPrecio() * bticket.getCantButaca());
+            detalleTicket.add("Función: " + bticket.getbFuncion().getbPelicula().getNombre() + " | Fecha: " +
+                    bticket.getbFuncion().getFecha() + " | Hora: " + bticket.getbFuncion().getHoraInicio() + " | Sede: " + bticket.getbFuncion().getbSede().getNombre() +
+                    " | Sala: " + bticket.getbFuncion().getbSala().getNumero() + " | Butacas: " + bticket.getCantButaca() +
+                    " | Precio por Butacas: S/" + bticket.getbFuncion().getPrecio() + "<br>");
+            listaTickets += detalleTicket.get(contador);
+            idFunciones.add(bticket.getbFuncion().getId());
+            contador++;
         }
-        String fechaActual =obtenerFechaActual();
-        String sql="update compra set cancelado=1, montoTotal=?, fechaCompra=? where idCompra=?";
-        try(Connection conn=this.getConnection();
-            PreparedStatement pstmt= conn.prepareStatement(sql)){
+
+        JavaMail javaMail = new JavaMail();
+        String asunto = "JavaSticket: Recibo de Compra";
+
+        String msg = "Enhorabuena!<br><br>"+
+                "Tu compra ha sido realizada!<br>" +
+                "Código de Compra: " + compra.getIdCompra() +"<br><br>"
+                + listaTickets;
+        System.out.println(msg);//No borrar
+        for(int id: idFunciones){
+            JavaQR qr = new JavaQR();
+            BufferedImage image = qr.downloadLocalQR(compra.getIdCompra(), id);
+            cancelarTickets(compra, image, id); //les añadimos buffer del qr generado, por ahora son iguales todos
+        }
+
+        String fechaActual = obtenerFechaActual();
+        String sql = "update compra set cancelado=1, montoTotal=?, fechaCompra=? where idCompra=?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setDouble(1, total);
             pstmt.setString(2, fechaActual);
             pstmt.setString(3, compra.getIdCompra());
             pstmt.executeUpdate();
-            JavaMail javaMail= new JavaMail();
-            String asunto="JavaSticket: Recibo de Compra";
+            ArrayList<byte[]> listaQRs= new ArrayList<>();
+            for(int id: idFunciones){
+                byte[] bytes = devolverBytesBD(compra.getIdCompra(), id);
+                listaQRs.add(bytes);
+            }
+            javaMail.sendMessage(usuario.getEmail(),msg,asunto, listaQRs, detalleTicket);
 
-            String msg="Enhorabuena!\n\n"+
-                    "Tu compra ha sido realizada!\n"+
-                    "Código de Compra: "+compra.getIdCompra()+"\n\n"
-                    +listaTickets;
-            System.out.println(msg);//No borrar
-            javaMail.sendMessage(usuario.getEmail(),msg,asunto);
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
             e.printStackTrace();
         }
     }
-    public void cancelarTickets(BCompra compra){
-        String sql="update ticket set carrito=0 where Compra_idCompra= ?";
 
-        try(Connection conn=this.getConnection();
-            PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setString(1, compra.getIdCompra());
+    public void cancelarTickets(BCompra compra, BufferedImage image, int idFuncion) throws IOException {
+        ByteArrayOutputStream baos = null;
+        try {
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);//Escribimos el buffer en el baos a byteArray[]
+        } finally {
+            try {
+                baos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        InputStream in= new ByteArrayInputStream(baos.toByteArray());//Obtenemos el InputStream
+        String sql = "update ticket set carrito=0, qr=? where Compra_idCompra= ? and Funcion_idFuncion=?";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(2, compra.getIdCompra());
+            pstmt.setBlob(1, in);
+            pstmt.setInt(3, idFuncion);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al comprar los tickets");
             e.printStackTrace();
         }
     }
-    public String obtenerFechaActual(){
-        //OBTENEMOS FECHA
-        int dia= Calendar.getInstance().get(Calendar.DATE);
-        int mes= Calendar.getInstance().get(Calendar.MONTH)+1;
-        int year= Calendar.getInstance().get(Calendar.YEAR);
 
-        String mes1,dia1;
-        if(((int)Math.log10(mes)+1)!=2){
-            mes1= "0"+mes;
-        }else{
-            mes1= ""+mes;
+    public String obtenerFechaActual() {
+        //OBTENEMOS FECHA
+        int dia = Calendar.getInstance().get(Calendar.DATE);
+        int mes = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+
+        String mes1, dia1;
+        if (((int) Math.log10(mes) + 1) != 2) {
+            mes1 = "0" + mes;
+        } else {
+            mes1 = "" + mes;
         }
-        if(((int)Math.log10(dia)+1)!=2){
-            dia1= "0"+dia;
-        }else{
-            dia1= ""+dia;
+        if (((int) Math.log10(dia) + 1) != 2) {
+            dia1 = "0" + dia;
+        } else {
+            dia1 = "" + dia;
         }
-        return year+"-"+mes1+"-"+dia1;
+        return year + "-" + mes1 + "-" + dia1;
     }
 
+    public byte[] devolverBytesBD(String idCompra, int idFuncion) {
+        byte[] bytes = null;
+        String sql = "select * from ticket where Compra_idCompra=? and Funcion_idFuncion=?;";
+        try (Connection conn = this.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, idCompra);
+            pstmt.setInt(2, idFuncion);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    bytes = rs.getBytes(3);
+                    /*InputStream img= rs.getBinaryStream(3);
+                    BufferedImage bufferimage= ImageIO.read(img);
+                    //Descargar la imagen generada
+                    ImageIO.write(bufferimage, "png",new File("C:\\Users\\HP\\Desktop\\hola2.png"));
+                    System.out.println("Descargar foto, exitoso!");*/
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bytes;
+    }
 }

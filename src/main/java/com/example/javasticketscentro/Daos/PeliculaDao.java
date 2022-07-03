@@ -112,12 +112,24 @@ public class PeliculaDao extends BaseDao {
                     Bticket ticket= new Bticket();
                     BFuncion bFuncion= new BFuncion();
                     bFuncion.setId(resultSet.getInt(6));
-                    bFuncion.setFecha(resultSet.getString(7));
-                    bFuncion.setHoraInicio(resultSet.getString(8));
+                    if(resultSet.getString(7)==null){
+                        bFuncion.setFecha("");
+                    }else{
+                        bFuncion.setFecha(resultSet.getString(7));
+                    }
+                    if(resultSet.getString(8)==null){
+                        bFuncion.setHoraInicio("");
+                    }else{
+                        bFuncion.setHoraInicio(resultSet.getString(8));
+                    }
                     BSala bSala=new BSala();
                     bSala.setNumero(resultSet.getInt(10));
                     BSede bSede= new BSede();
-                    bSede.setNombre(resultSet.getString(9));
+                    if(resultSet.getString(9)==null){
+                        bSede.setNombre("");
+                    }else{
+                        bSede.setNombre(resultSet.getString(9));
+                    }
                     bSala.setbSede(bSede);
                     if(resultSet.getInt(5)==0){
                         ticket.setCarrito(false);

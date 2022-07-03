@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Servlets;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BTarjeta;
 import com.example.javasticketscentro.Daos.CarritoDao;
+import com.google.zxing.WriterException;
 
 import javax.mail.MessagingException;
 import javax.servlet.*;
@@ -81,11 +82,11 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 }catch (NumberFormatException e){
                     session.setAttribute("msg", "numTaroCVV");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
-                } catch (MessagingException e) {
+                } catch (MessagingException | WriterException e) {
+                    e.printStackTrace();
                     session.setAttribute("msg", "errorAntivirus");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 }
-
                 break;
             case "listar":
                 try{
@@ -109,6 +110,8 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 }
                 break;
             case "cambiarTarjeta":
+                String path=request.getParameter("BrowseFolder");
+                System.out.println("Path escogido: " +path);
                 String idTarjeta= request.getParameter("tarjeta");
                 int idT= Integer.parseInt(idTarjeta);
                 request.setAttribute("tarjetaSelect",carritoDao.buscarTarjeta(idT));
