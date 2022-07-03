@@ -149,7 +149,7 @@
                                         <%}%>
 
                                         <p class="current_rating"><%=puntaje%> de 5</p>
-                                        <input type="hidden" name="puntaje" id="puntaje"/>
+                                        <input type="hidden" name="puntaje" value="<%=puntaje%>" id="puntaje"/>
                                     </div>
                                 <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=Pelicula.getIdPelicula()%>"/>
                                     <input  class="btn btn-tele" type="submit" value="Calificar" />

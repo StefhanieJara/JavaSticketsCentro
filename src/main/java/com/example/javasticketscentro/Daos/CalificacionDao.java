@@ -129,10 +129,74 @@ public class CalificacionDao extends BaseDao {
                 System.out.println("Hubo un error en la conexión!");
                 e.printStackTrace();
             }
-        }
 
+        }
+        actualizarCalificacionPelicula(idPelicula);
 }
 
+    public void actualizarCalificacionPelicula(int id) {
+        double ponderadoCalificacion=obtenerPonderadoPeli(id);
+        String sql="update pelicula set calificacionPelicula=? where idPelicula=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setDouble(1,ponderadoCalificacion);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void actualizarCalificacionCelebridad(int id){
+        double ponderadoCalificacion=obtenerPonderadoCele(id);
+        String sql="update celebridad set calificacion=? where idCelebridad=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setDouble(1,ponderadoCalificacion);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public double obtenerPonderadoCele(int id){
+        double ponderado=0.0;
+        String sql= "select round(AVG(cc.puntaje),2) from celebridad c " +
+                "left join calificacion_celebridad cc on c.idCelebridad = cc.Celebridad_idCelebridad " +
+                "group by c.idCelebridad " +
+                "having c.idCelebridad=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,id);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    ponderado=rs.getDouble(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ponderado;
+    }
+
+    public double obtenerPonderadoPeli(int id){
+        double ponderado=0.0;
+        String sql= "select round(AVG(c.puntaje),2) as `puntaje` from pelicula p " +
+                "left join calificacion c on p.idPelicula = c.Pelicula_idPelicula " +
+                "group by p.idPelicula " +
+                "having p.idPelicula=?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,id);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    ponderado=rs.getDouble(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ponderado;
+    }
 
     public boolean existe_puntaje1(int idPersona, int idCelebridad){
         String sql = "select * from calificacion_celebridad where Persona_idPersona = ? and Celebridad_idCelebridad = ?";
@@ -152,6 +216,7 @@ public class CalificacionDao extends BaseDao {
 
         return existe;
     }
+
     public void anadirPuntajePorCelebridad(int idPersona,int idCelebridad,int puntaje, boolean agregar){
         String sql;
         if(agregar){
@@ -176,6 +241,7 @@ public class CalificacionDao extends BaseDao {
                 System.out.println("Hubo un error en la conexión!");
                 e.printStackTrace();
             }
+        actualizarCalificacionCelebridad(idCelebridad);
     }
 
     public int puntajePeliculaPorId(int idPersona, int idPelicula){

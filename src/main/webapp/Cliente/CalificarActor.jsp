@@ -143,7 +143,7 @@
                                         <button class="star" type="button" name="star1" id="star1">&#9734;</button>
                                         <%}%>
                                         <p class="current_rating"><%=puntaje%> de 5</p>
-                                        <input type="hidden" name="puntaje" id="puntaje"/>
+                                        <input type="hidden" value="<%=puntaje%>" name="puntaje" id="puntaje"/>
                                     </div>
                                     <input type="hidden"  name="idCelebridad" id="idCelebridad" value="<%=listaActor.get(pagina-1).getIdCelebridad()%>"/>
                                     <input type="hidden"  name="idPelicula"  value="<%=idPelicula%>"/>

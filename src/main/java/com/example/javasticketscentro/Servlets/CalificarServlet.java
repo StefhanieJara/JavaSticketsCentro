@@ -66,9 +66,11 @@ public class CalificarServlet extends HttpServlet {
                         calificacionDao.anadirPuntajePorPelicula(usuario.getIdPer(), idPelicula, puntaje);
                         response.sendRedirect(request.getContextPath()+"/calificarPelicula?action=listarP&id="+idPeliculaS);
                     }else{
+                        System.out.println("ERRORRRRR");
                         response.sendRedirect(request.getContextPath());
                     }
                 }catch (NumberFormatException e){
+                    e.printStackTrace();
                     response.sendRedirect(request.getContextPath());
                 }
             }
