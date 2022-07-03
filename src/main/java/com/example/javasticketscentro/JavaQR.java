@@ -11,15 +11,14 @@ import java.awt.image.BufferedImage;
 public class JavaQR {
     public BufferedImage downloadLocalQR(String codigoCompra, int idFuncion) throws WriterException{
         int size=1000;
-        //String fileType="png";
-        String codigo="Se realizó su compra de su ticket de la función: "+idFuncion+" | El código de su compra es: "+codigoCompra;
+        String codigo="Compra completada! Nro. Función: "+idFuncion+" | Código de Compra: "+codigoCompra;
 
         //Generar QR
         QRCodeWriter qrcode= new QRCodeWriter();
         BitMatrix matrix= qrcode.encode(codigo, BarcodeFormat.QR_CODE, size, size);
 
-        //File f= new File(codigoCompra+"."+fileType); //creamos el archivo
         int matrixWidth = matrix.getWidth();//Sacamos el tamaño de la matriz
+
         //Con un buffer imagen, creamos una imagen en rgb
         BufferedImage image= new BufferedImage(matrixWidth,matrixWidth,BufferedImage.TYPE_INT_RGB);
         image.createGraphics();//Creamos el gráfico

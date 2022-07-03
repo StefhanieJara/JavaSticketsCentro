@@ -109,13 +109,14 @@ public class HistorialDao extends BaseDao{
             pstmt.setString(1, ticketId);
             pstmt.setInt(2, funcionId);
             pstmt.executeUpdate();
-            borrarCompra(ticketId);
+            if(!existeTicket(ticketId)){
+                borrarCompra(ticketId);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
-
     private void borrarCompra(String idCompra){
         String sql = "delete from compra where idCompra = ?";
 
@@ -126,5 +127,26 @@ public class HistorialDao extends BaseDao{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean existeTicket(String idCompra){
+        boolean existe=true;
+        String sql="select t.Compra_idCompra from compra c " +
+                "left join ticket t on c.idCompra = t.Compra_idCompra " +
+                "where c.idCompra=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setString(1,idCompra);
+            try(ResultSet rs=pstmt.executeQuery();){
+                if(rs.next()){
+                    if(rs.getString(1)==null){
+                        existe=false;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return existe;
     }
 }

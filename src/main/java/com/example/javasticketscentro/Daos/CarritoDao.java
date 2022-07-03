@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.*;
 import com.example.javasticketscentro.JavaMail;
+import com.example.javasticketscentro.JavaPDF;
 import com.example.javasticketscentro.JavaQR;
 import com.google.zxing.WriterException;
 
@@ -261,35 +262,38 @@ public class CarritoDao extends BaseDao {
     public void cancelarCompra(BPersona usuario) throws MessagingException, WriterException, IOException {
         BCompra compra = detectarCompraActiva(usuario.getIdPer());
         ArrayList<Bticket> btickets = listarCarrito(usuario.getIdPer());
-        String listaTickets = "";
 
         ArrayList<Integer> idFunciones= new ArrayList<>();//Almacenamos los id de las funciones
+
         ArrayList<String> detalleTicket= new ArrayList<>();//Almacenamos detalles de los tickets
+        ArrayList<Double> subtotal= new ArrayList<>();
+        ArrayList<String> nombrePeli= new ArrayList<>();
         double total = 0;
-        int contador=0;
         for (Bticket bticket : btickets) {
+            nombrePeli.add(bticket.getbFuncion().getbPelicula().getNombre());
             total += (bticket.getbFuncion().getPrecio() * bticket.getCantButaca());
             detalleTicket.add("Función: " + bticket.getbFuncion().getbPelicula().getNombre() + " | Fecha: " +
-                    bticket.getbFuncion().getFecha() + " | Hora: " + bticket.getbFuncion().getHoraInicio() + " | Sede: " + bticket.getbFuncion().getbSede().getNombre() +
+                    bticket.getbFuncion().getFecha() + " | Hora: " + bticket.getbFuncion().getHoraInicio() + "\nSede: " + bticket.getbFuncion().getbSede().getNombre() +
                     " | Sala: " + bticket.getbFuncion().getbSala().getNumero() + " | Butacas: " + bticket.getCantButaca() +
-                    " | Precio por Butacas: S/" + bticket.getbFuncion().getPrecio() + "<br>");
-            listaTickets += detalleTicket.get(contador);
+                    " | Precio por Butacas: S/" + bticket.getbFuncion().getPrecio());
             idFunciones.add(bticket.getbFuncion().getId());
-            contador++;
+            subtotal.add(Math.round(bticket.getbFuncion().getPrecio()*bticket.getCantButaca()*100.0)/100.0);
         }
 
         JavaMail javaMail = new JavaMail();
         String asunto = "JavaSticket: Recibo de Compra";
 
-        String msg = "Enhorabuena!<br><br>"+
+        String msg = "<h1>Completado!</h1><br>"+
                 "Tu compra ha sido realizada!<br>" +
-                "Código de Compra: " + compra.getIdCompra() +"<br><br>"
-                + listaTickets;
+                "Código de Compra: " + compra.getIdCompra() +"<br><br>Total: <b>S/"+Math.round(total*100.0)/100.0+"</b>" ;
+
         System.out.println(msg);//No borrar
+        ArrayList<BufferedImage> bufferQrs= new ArrayList<>();
         for(int id: idFunciones){
             JavaQR qr = new JavaQR();
             BufferedImage image = qr.downloadLocalQR(compra.getIdCompra(), id);
             cancelarTickets(compra, image, id); //les añadimos buffer del qr generado, por ahora son iguales todos
+            bufferQrs.add(image);
         }
 
         String fechaActual = obtenerFechaActual();
@@ -300,12 +304,16 @@ public class CarritoDao extends BaseDao {
             pstmt.setString(2, fechaActual);
             pstmt.setString(3, compra.getIdCompra());
             pstmt.executeUpdate();
-            ArrayList<byte[]> listaQRs= new ArrayList<>();
-            for(int id: idFunciones){
-                byte[] bytes = devolverBytesBD(compra.getIdCompra(), id);
-                listaQRs.add(bytes);
+
+            JavaPDF pdf= new JavaPDF();
+            ArrayList<byte[]> listaPdfs= new ArrayList<>();
+            int contador=0;
+            for(BufferedImage buff: bufferQrs){
+                byte[] bytes = pdf.generaPDF(buff, detalleTicket.get(contador), subtotal.get(contador),compra.getIdCompra(), usuario.getNombre()+" "+usuario.getApellido(), nombrePeli.get(contador));
+                listaPdfs.add(bytes);
+                contador++;
             }
-            javaMail.sendMessage(usuario.getEmail(),msg,asunto, listaQRs, detalleTicket);
+            javaMail.sendMessage(usuario.getEmail(),msg,asunto, listaPdfs, idFunciones);
 
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
