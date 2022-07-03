@@ -12,7 +12,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "indexServlet", value = "")
+@WebServlet(name = "indexServlet", value = {"", "/Index"})
 public class indexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,14 +24,15 @@ public class indexServlet extends HttpServlet {
         //Borramos caché
         IndexDao indexDao = new IndexDao();
         AdminDao adminDao = new AdminDao();
-
+        String filtro= request.getSession().getAttribute("filtro")==null? "": (String)request.getSession().getAttribute("filtro");
+        request.getSession().removeAttribute("filtro");
         BPersona usuario= (BPersona)request.getSession().getAttribute("clienteLog");
-        ArrayList<BPelicula> listapeliculas=indexDao.listaPeliculas();
-
+        ArrayList<BPelicula> listapeliculas=indexDao.listaPeliculas(filtro);
         if(usuario==null || usuario.getIdPer()==0 || usuario.getRol().equals("Cliente")){
             ArrayList<BSede> listaSedes = adminDao.listarSedes();
             request.setAttribute("Listapeliculas", listapeliculas);
             request.setAttribute("ListaSedes", listaSedes);
+            request.setAttribute("filtro", filtro);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
             requestDispatcher.forward(request,response);
         }else{
@@ -45,6 +46,8 @@ public class indexServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        request.getSession().setAttribute("filtro",request.getParameter("filtro"));
+        response.sendRedirect(request.getContextPath());
     }
 }

@@ -9,6 +9,7 @@
 <jsp:useBean id="Listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>"/>
 <jsp:useBean id="ListaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona" class="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="filtro" scope="request" type="java.lang.String" class="java.lang.String"/>
 <%int idClient= clienteLog.getIdPer();%>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,26 +44,23 @@
         </div>
         <!--Buscador de productos-->
         <div class="col-md-7 d-none d-md-block ps-0">
+
             <!--desaparece en menores a medium-->
+            <form method="post" action="<%=request.getContextPath()%>/Index">
             <div class="input-group">
                 <div style="width: 50%">
                     <input
+                            name="filtro"
+                            value="<%=filtro%>"
                             type="search"
-                            id="buscador_producto"
                             class="form-control"
-                            placeholder="Busca una pelicula"
-                    />
-                </div>
-                <a
-                        role="button"
-                        class="btn btn-tele border-start-1"
-                        href="usuarioProductoBuscado.html"
-                >
-                    <i class="fas fa-search"></i>
-                </a>
+                            placeholder="Busca una pelicula"/></div>
+                <button type="submit"
+                        class="btn btn-tele border-start-1">
+                    <i class="fas fa-search"></i></button>
             </div>
+            </form>
         </div>
-
 
         <!--Carrito-->
         <div
@@ -158,7 +156,7 @@
     <div class="card-header my-5"></div>
 
     <!-- Banner -->
-
+    <%if(filtro.isEmpty()){%>
     <!-- Banner presentación -->
     <div class="slider_carr">
         <div class="carousel-caption text-center">
@@ -174,14 +172,15 @@
         </ul>
 
     </div>
-    <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
     <!-- -->
+    <%}%>
+    <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
     <%session.setAttribute("vieneDePeli", false);%>
     <% for (int j=0; j<Math.ceil((double) Listapeliculas.size()/4);j++) {%>
         <div class="container px-6 py-2">
             <div class="row">
                 <% if (j==0) {%>
-                <h3 class="dist-name title-peliculas">Películas en cartelera</h3>
+                <h3 class="dist-name title-peliculas"><%=filtro.isEmpty()?"Películas en cartelera": "Resultados de su búsqueda"%></h3>
                 <%}%>
                 <div class="row container-pelicula">
                     <% for (int i=j*4; i<(j+1)*4; i++) { %>
