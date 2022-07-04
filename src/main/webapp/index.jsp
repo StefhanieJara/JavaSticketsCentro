@@ -56,7 +56,7 @@
                             type="search"
                             class="form-control"
                             placeholder="Busca una pelicula"/></div>
-                <button type="submit"
+                <button id="btnSubmit" type="submit"
                         class="btn btn-tele border-start-1">
                     <i class="fas fa-search"></i></button>
             </div>
@@ -176,6 +176,7 @@
     <%}%>
     <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
     <%session.setAttribute("vieneDePeli", false);%>
+
     <% for (int j=0; j<Math.ceil((double) Listapeliculas.size()/4);j++) {%>
         <div class="container px-6 py-2">
             <div class="row">
@@ -230,11 +231,20 @@
         <p class="copy-right text-center ">&copy; 2022 JavaSticket. All Rights Reserved</p>
     </footer>
 
-    <!--JS-->
+
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- JavaScript Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--JS-->
+    <script>
+        $("#btnSubmit").click(function (){
+            $(this).html(
+                `<i class="fas fa-search"></i>...<span class="spinner-border spinner-border-sm"
+                role="status" aria-hidden="true"></span>`
+            );
+        });
+    </script>
 </body>
 </html>
