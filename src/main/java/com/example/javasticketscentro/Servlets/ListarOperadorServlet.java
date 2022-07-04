@@ -1,14 +1,16 @@
 package com.example.javasticketscentro.Servlets;
 
-import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
+import com.example.javasticketscentro.Daos.LoginDao;
 
+import java.io.*;
+import java.net.URLEncoder;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "ListarOperadorServlet", value = "/ListarOperadorServlet")
@@ -24,7 +26,6 @@ public class ListarOperadorServlet extends HttpServlet {
         filtros.add("");
         filtros.add("");
         int pagina= request.getParameter("pagina") == null ? 1 :Integer.parseInt(request.getParameter("pagina"));
-
         switch (action){
             case "listar":
                 String nombreBuscar = request.getParameter("nombreBuscar")==null ? "" :  request.getParameter("nombreBuscar");
@@ -51,23 +52,61 @@ public class ListarOperadorServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
-        ArrayList<String> filtros= new ArrayList<>();
-        switch (action){
+        LoginDao loginDao = new LoginDao();
+        ArrayList<String> filtros = new ArrayList<>();
+        HttpSession session = request.getSession();
+        switch (action) {
             case "crear":
                 String nombre = request.getParameter("nombreOperador");
                 String apellido = request.getParameter("apellidoOperador");
                 String rol = "Operador";
-                //String foto = request.getParameter("foto");
                 String foto = "xd";
-                int dni = Integer.parseInt(request.getParameter("dni"));
-                int numCel = Integer.parseInt(request.getParameter("numCel"));
+                String num = request.getParameter("numCel");
                 String usuario = request.getParameter("usuario");
                 String contrasenia = request.getParameter("contrasenia");
                 String email = request.getParameter("email");
                 String direccion = request.getParameter("direccion");
                 String fecha_Nc = request.getParameter("fechaNac");
-                adminDao.anadirOperadores(nombre, dni,apellido, numCel, foto, fecha_Nc, email, usuario, contrasenia, direccion, rol);
-                response.sendRedirect(request.getContextPath()+"/ListarOperadorServlet");
+                String dnistr = request.getParameter("dni");
+                if (loginDao.existeEmail(email)) {
+                    session.setAttribute("error", "emailExiste");
+                    response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+                } else {
+                    if(nombre.isEmpty() || apellido.isEmpty() || usuario.isEmpty() ||
+                            contrasenia.isEmpty() || email.isEmpty() || direccion.isEmpty() ||
+                            fecha_Nc.isEmpty()){
+                        session.setAttribute("error", "vacio");
+                        response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+                    }else{
+                    if (dnistr.charAt(0) == '-') {
+                        session.setAttribute("error", "negativo");
+                        response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+                    } else {
+                        if (num.charAt(0) == '-') {
+                            session.setAttribute("error", "negativo1");
+                            response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+
+                        }else{
+                            if (num.charAt(0) != '9') {
+                                session.setAttribute("error", "comienzo");
+                                response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");}
+                            else{
+                            int numCel = Integer.parseInt(num);
+                            int dni = Integer.parseInt(dnistr);
+                            if (((int) Math.log10(dni) + 1) == 8) {
+                                if (((int) Math.log10(numCel) + 1) == 9) {
+                                    adminDao.anadirOperadores(nombre, dni, apellido, numCel, foto, fecha_Nc, email, usuario, contrasenia, direccion, rol);
+                                    response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
+                                    } else {
+                                    session.setAttribute("error", "digitonumero");
+                                    response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+                                }
+                            } else {
+                                session.setAttribute("error", "digitodni");
+                                response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");
+                            }}}}}}
+
+
                 break;
             case "borrar":
                 String id = request.getParameter("id");
@@ -92,7 +131,40 @@ public class ListarOperadorServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
                 requestDispatcher.forward(request,response);
                 break;
+            case "descargar" :
+                try(PrintWriter salir =  response.getWriter()) {
+                    int i = 1;
+                    String text = "\n  #  Nombre  Apellido  Email                 Telefono    Direccion \n";
+                    for(BPersona operador : adminDao.listarOperador("","","","",1,100, true)){
+                        text = text + "  " + i + "   " + operador.getNombre() + " " + operador.getApellido()
+                                + " " + operador.getEmail() + " " + operador.getNumCel() + " " + operador.getDireccion() + "\n";
+
+                        i ++;
+
+                    }
+                    FileOutputStream fout=new FileOutputStream("C:/Users/kevin/JavaSticketsCentro/src/main/webapp/a.txt");
+                    ObjectOutputStream out= new ObjectOutputStream(fout);
+                    out.writeObject(text);
+                    out.close();
+
+                    String path = getServletContext().getRealPath("a.txt");
+                    response.setContentType("text/plain");
+
+                    response.setHeader("Content-Disposition", "attachment; filename=\"" +path+"\"");
+                    FileInputStream in = new FileInputStream(path);
+                    int f;
+                    while((f=in.read())!=-1){
+                        salir.write(f);
+                    }
+                    in.close();
+                    salir.close();
+
+                    response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
+                    break;
+                }
+
         }
     }
 
 }
+

@@ -273,7 +273,6 @@
         <table>
             <thead>
             <tr>
-                <th>Foto</th>
                 <th>Nombres</th>
                 <th>Email</th>
                 <th>Telefono</th>
@@ -284,10 +283,6 @@
                 <% int a = 1;
                 for (BPersona operador : listaOperadores ) {%>
             <tr>
-                <td><img
-                    class="w-100"
-                    src="img\magaly.jpg"
-                    style="max-height: 200px; max-width: 100px"/></td>
                 <td><%=operador.getNombre()+" "+operador.getApellido()%></td>
                 <td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
                 <td>
@@ -359,7 +354,6 @@
     </div>
 
 
-
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
@@ -412,6 +406,9 @@
                         <%}%>
                     </form>
                 </ul>
+                <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=descargar">
+                    <button type="submit" class="page-link" href="#">Descargar Lista</button>
+                </form>
             </nav>
         </div>
     </div>

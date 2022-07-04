@@ -123,8 +123,9 @@
                                         >
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="email">Correo</label>
-                                        <input  name ="email"
+                                        <label class="form-label" for="email"></label>
+                                        <input  type="hidden"
+                                                name ="email"
                                                 type="text"
                                                 id="email"
                                                 class="form-control"
@@ -145,13 +146,22 @@
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="numCel">Numero de contacto</label>
                                         <input  name ="numCel"
-                                                type="text"
+                                                type="number"
                                                 id="numCel"
                                                 class="form-control"
                                                 value="<%=Operador.getNumCel()%>"
                                                 placeholder="Ingrese su numero de celular"
                                         >
                                     </div>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo")){%>
+                                    <div class="text-danger mb-2">No debe ser negativo</div>
+                                    <%}%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digito")){%>
+                                    <div class="text-danger mb-2">Debe tener 9 digitos</div>
+                                    <%}%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("comienzo")){%>
+                                    <div class="text-danger mb-2">Los numero deben comenzar con 9</div>
+                                    <%}%>
 
                                 </div>
 
@@ -170,7 +180,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-tele">Guardar Edicion</button>
-
+                            <%session.removeAttribute("error");%>
                         </form>
                     </div>
                 </div>

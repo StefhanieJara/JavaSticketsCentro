@@ -118,6 +118,9 @@
                                                class="form-control"
                                                placeholder="Ingrese correo"/>
                                     </div>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("emailExiste")){%>
+                                    <div class="text-danger mb-2">El email ingresado ya existe</div>
+                                    <%}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="direccion">Direccion</label>
                                         <input name="direccion"
@@ -134,6 +137,12 @@
                                                 class="form-control"
                                                 placeholder="Ingrese su dni"/>
                                     </div>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo")){%>
+                                    <div class="text-danger mb-2">El DNI no puede ser negativo</div>
+                                    <%}%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digitodni")){%>
+                                    <div class="text-danger mb-2">El DNI debe contar con 8 digitos</div>
+                                    <%}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="numCel">Numero de contacto</label>
                                         <input name="numCel"
@@ -142,6 +151,15 @@
                                                class="form-control"
                                                placeholder="Ingrese numero"/>
                                     </div>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo1")){%>
+                                    <div class="text-danger mb-2">No puede ingresar numero negativo</div>
+                                    <%}%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digitonumero")){%>
+                                    <div class="text-danger mb-2">El numero deben tener 9 digitos</div>
+                                    <%}%>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("comienzo")){%>
+                                    <div class="text-danger mb-2">El numero deben comenzar con 9</div>
+                                    <%}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="fechaNac">Ferha de Nacimiento</label>
                                         <input name="fechaNac"
@@ -150,6 +168,9 @@
                                                class="form-control"
                                                placeholder="aaaa-mm-dd"/>
                                     </div>
+                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("vacio")){%>
+                                    <div class="text-danger mb-2">No puede haber campos vacios</div>
+                                    <%}%>
 
                                 </div>
 
@@ -189,6 +210,7 @@
                                 <a href="<%=request.getContextPath()%>/ListarOperadorServlet" class="btn btn-danger">Regresar</a>
                                 <button type="submit" class="btn btn-tele">Crear Operador</button>
                             </div>
+                            <%session.removeAttribute("error");%>
                         </form>
                     </div>
                 </div>

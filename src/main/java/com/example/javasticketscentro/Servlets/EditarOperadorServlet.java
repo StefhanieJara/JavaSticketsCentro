@@ -35,35 +35,45 @@ public class EditarOperadorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
         String action = request.getParameter("action") == null ? "actualizar" : request.getParameter("a");
         AdminDao adminDao = new AdminDao();
+        HttpSession session= request.getSession();
         switch (action) {
             case "actualizar" -> {
-                BPersona operador = leerParametrosRequest(request);
-                adminDao.editarOperadores(operador);
-                response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
+                String ID = request.getParameter("idPer");
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String email = request.getParameter("email");
+                String direccion = request.getParameter("direccion");
+                String numero = request.getParameter("numCel");
+                BPersona operador = new BPersona();
+                operador.setIdPer(Integer.parseInt(ID));
+                operador.setNombre(nombre);
+                operador.setApellido(apellido);
+                operador.setEmail(email);
+                operador.setDireccion(direccion);
+                if(numero.charAt(0) == '-'){
+                    session.setAttribute("error","negativo");
+                    response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
+                }else{
+                    if(numero.charAt(0) == '9'){
+                    operador.setNumCel(Integer.parseInt(numero));
+                    if(((int)Math.log10(operador.getNumCel())+1)==9){
+                        adminDao.editarOperadores(operador);
+                        response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
+                    }else{
+                        session.setAttribute("error","digito");
+                        response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
+                    }
+                }else{
+                        session.setAttribute("error","comienzo");
+                        response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
+                    }
+
+                }
             }
 
         }
 
-    }
-    public BPersona leerParametrosRequest(HttpServletRequest request) {
-        String ID = request.getParameter("idPer");
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String email = request.getParameter("email");
-        String direccion = request.getParameter("direccion");
-        String numero = request.getParameter("numCel");
-
-        BPersona operador = new BPersona();
-        operador.setIdPer(Integer.parseInt(ID));
-        operador.setNombre(nombre);
-        operador.setApellido(apellido);
-        operador.setEmail(email);
-        operador.setDireccion(direccion);
-        operador.setNumCel(Integer.parseInt(numero));
-
-        return operador;
     }
 }
