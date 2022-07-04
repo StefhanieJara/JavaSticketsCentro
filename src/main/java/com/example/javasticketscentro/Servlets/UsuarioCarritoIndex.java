@@ -74,6 +74,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
                             carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
                         }
                         carritoDao.cancelarCompra(usuario);
+                        session.setAttribute("exitosoMSG", "CompraCancelado");
                         response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
                     }else{
                         session.setAttribute("msg", "errorFV");

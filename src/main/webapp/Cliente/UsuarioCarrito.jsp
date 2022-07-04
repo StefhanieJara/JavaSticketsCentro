@@ -144,6 +144,8 @@
                         </symbol>
                     </svg>
                     <%boolean noHayVacantes=false;%>
+                    <%if(carrito.size()!=0){%>
+                    <%if(carrito.get(0).getbFuncion().getFecha()!=null){%>
                     <!---->
                     <%for(Bticket bticket: carrito){%>
                     <!--Producto-->
@@ -241,15 +243,39 @@
                         <p class="mb-0">Ya no hay cupos para una función que había escogido. Elimine el producto de su carrito para seguir la compra.</p>
                     </div>
                     <%}%>
-                    <%if(carrito.size()==0){%>
+                    <%}else{%>
+                    <%if(session.getAttribute("exitosoMSG")!=null){%>
+                    <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                            Compra exitosa! Mensaje de confirmación enviada a su correo, junto a sus códigos qr.<a href="<%=request.getContextPath()%>/" class="alert-link"> Elegir una película!</a>.
+                        </div>
+                        <button type="button" data-bs-dismiss="alert" class="btn-close" aria-label="Close"></button>
+                    </div>
+                    <%session.removeAttribute("exitosoMSG");}else{%>
                     <div class="alert alert-secondary" role="alert">
                         <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>El carrito de compras está vacío!</h4>
                         <hr>
                         <p class="mb-0">Para añadir una compra, debes elegir una función de la película que deseas ver! <a href="<%=request.getContextPath()%>/" class="alert-link">Elegir una película!</a>.</p>
                     </div>
-                    <%}%>
+                    <%}}%>
+                    <%}else{%>
+                    <%if(session.getAttribute("exitosoMSG")!=null){%>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>Compra exitosa!</h4>
+                        <hr>
+                        <p class="mb-0">Mensaje de confirmación enviada a su correo, junto a sus códigos qr. Te esperamos! <a href="<%=request.getContextPath()%>/" class="alert-link"> Elegir una película!</a>.</p>
+                    </div>
+                    <%session.removeAttribute("exitosoMSG");}else{%>
+                    <div class="alert alert-secondary" role="alert">
+                        <h4 class="alert-heading"><svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>El carrito de compras está vacío!</h4>
+                        <hr>
+                        <p class="mb-0">Para añadir una compra, debes elegir una función de la película que deseas ver! <a href="<%=request.getContextPath()%>/" class="alert-link">Elegir una película!</a>.</p>
+                    </div>
+                    <%}}%>
                 </div>
             </div>
+
             <!--Costo total-->
             <div class="col-md-3 col-xl-4 pt-3 pt-md-0">
                 <div class="row">
@@ -268,6 +294,8 @@
                             </thead>
                             <tbody>
                             <%double costoTotal=0;%>
+                            <%if(carrito.size()!=0){%>
+                            <%if(carrito.get(0).getbFuncion().getFecha()!=null){%>
                             <%for(Bticket bticket: carrito){%>
                             <tr>
                                 <td><%=bticket.getbFuncion().getbPelicula().getNombre()%></td>
@@ -277,7 +305,7 @@
                                 <%costoTotal+=(bticket.getCantButaca()*bticket.getbFuncion().getPrecio());%>
                             </tr>
                             <%}%>
-
+                            <%}}%>
                             </tbody>
                         </table>
                     </div>
@@ -286,10 +314,12 @@
                         <span class="font-size-lg">Total:</span>
                         <span>&nbsp;s/ <%=(Math.round(costoTotal*100.0)/100.0)%></span>
                     </div>
-                    <%if(carrito.size()!=0 && !noHayVacantes){%>
+                    <%if(carrito.size()!=0){%>
+                    <%if(carrito.get(0).getbFuncion().getFecha()!=null && !noHayVacantes){%>
                     <div class="d-flex justify-content-center">
                         <a href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=pagar" class="btn btn-danger">Pagar</a>
                     </div>
+                    <%}%>
                     <%}%>
                 </div>
             </div>
