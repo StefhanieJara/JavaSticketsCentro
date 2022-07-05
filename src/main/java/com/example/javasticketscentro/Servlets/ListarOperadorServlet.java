@@ -3,6 +3,7 @@ package com.example.javasticketscentro.Servlets;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.LoginDao;
+import com.example.javasticketscentro.JavaPDF;
 
 import java.io.*;
 import java.net.URLEncoder;
@@ -134,34 +135,24 @@ public class ListarOperadorServlet extends HttpServlet {
             case "descargar" :
                 try(PrintWriter salir =  response.getWriter()) {
                     int i = 1;
-                    String text = "\n  #  Nombre  Apellido  Email                 Telefono    Direccion \n";
+                    String text = "#%Nombres%Email%Teléfono%Dirección\n";
                     for(BPersona operador : adminDao.listarOperador("","","","",1,100, true)){
-                        text = text + "  " + i + "   " + operador.getNombre() + " " + operador.getApellido()
-                                + " " + operador.getEmail() + " " + operador.getNumCel() + " " + operador.getDireccion() + "\n";
-
+                        text += i+".%"+operador.getNombre()+" "+operador.getApellido()+"%"+operador.getEmail()+
+                                "%"+operador.getNumCel()+"%"+operador.getDireccion()+"\n";
                         i ++;
-
                     }
-                    FileOutputStream fout=new FileOutputStream("C:/Users/kevin/JavaSticketsCentro/src/main/webapp/a.txt");
-                    ObjectOutputStream out= new ObjectOutputStream(fout);
-                    out.writeObject(text);
-                    out.close();
-
-                    String path = getServletContext().getRealPath("a.txt");
-                    response.setContentType("text/plain");
-
-                    response.setHeader("Content-Disposition", "attachment; filename=\"" +path+"\"");
-                    FileInputStream in = new FileInputStream(path);
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=listaOperadores.pdf");
+                    JavaPDF javaPDF= new JavaPDF();
+                    byte[] pdf= javaPDF.pdfOperadoresTable(text);
+                    InputStream in =new ByteArrayInputStream(pdf);
                     int f;
                     while((f=in.read())!=-1){
                         salir.write(f);
                     }
                     in.close();
-                    salir.close();
-
-                    response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
-                    break;
                 }
+                break;
 
         }
     }
