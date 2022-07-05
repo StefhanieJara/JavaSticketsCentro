@@ -196,7 +196,7 @@
                         <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizarFoto" enctype="multipart/form-data">
                         <h4 class="form-label" >Imagen de perfil</h4>
                         <div class="text-center mt-2 mb-3">
-                            <img id="img-preview" src="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=entregarImagen" style="max-width: 300px; resize: both; max-width: 300px" />
+                            <img id="img-preview" src="<%=clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"%>" style="max-width: 300px; resize: both; max-width: 300px" />
                         </div>
                         <!--progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
                                   style="width: 100%"></progress-->

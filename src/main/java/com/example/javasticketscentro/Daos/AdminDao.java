@@ -799,7 +799,7 @@ public class AdminDao extends BaseDao{
 
     public void mostrarImagen(int id, HttpServletResponse response){
         String sql= "select p.foto from persona p where idPersona=?";
-        response.setContentType("image/jpg");
+        response.setContentType("image/*");
         InputStream inputStream=null;
         OutputStream outputStream;
         try(Connection conn= this.getConnection();

@@ -129,7 +129,7 @@
                     <div class="d-flex flex-column">
                         <div class="my-2">
                             <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
-                            <img src="<%=clienteLog.getFoto()%>"
+                            <img src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
                                  class="rounded-circle mx-auto d-block mb-3 h-25 w-50" alt="profile image">
                         </div>
                         <div class="mb-3">

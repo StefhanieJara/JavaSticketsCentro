@@ -65,6 +65,7 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
                 Part part= request.getPart("photoUrl");
                 InputStream foto= part.getInputStream();
                 adminDao.editarFoto(persona.getIdPer(), foto);
+                persona.setFoto(foto.toString());
                 response.sendRedirect(request.getContextPath()+"/UsuarioEditaPerfilServlet");
                 break;
         }
