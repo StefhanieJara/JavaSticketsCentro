@@ -57,7 +57,11 @@ public class CarritoDao extends BaseDao {
     public void anadirTicket(int idFuncion, int idClient) {
         String idCompra = detectarCompraActiva(idClient).getIdCompra();
         if (idCompra.equals("NoExiste")) {
-            idCompra = generarCodigoCompra();
+            try {
+                idCompra = generarCodigoCompra();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             crearCompra(idCompra, idClient);
         }
         String sql = "insert into ticket (Compra_idCompra, Funcion_idFuncion, qr, cantidadButaca, carrito) values (?,?,'xd',1,1)";
@@ -84,13 +88,32 @@ public class CarritoDao extends BaseDao {
         }
     }
 
-    public String generarCodigoCompra() {
-        String codigo = "";
-        String[] letters = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-        for (int i = 0; i < 7; i++) {
-            codigo += letters[(int) Math.round(Math.random() * 15)];
-        }
+    public String generarCodigoCompra() throws SQLException {
+        String codigo;
+        do{
+            codigo = "";
+            String[] letters = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+            for (int i = 0; i < 7; i++) {
+                codigo += letters[(int) Math.round(Math.random() * 15)];
+            }
+        }while (existeCodigo(codigo));
+
         return codigo;
+    }
+
+    private boolean existeCodigo(String codigo) throws SQLException {
+        boolean existe= false;
+        String sql="select * from compra where idCompra=?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement psmt= conn.prepareStatement(sql);){
+            psmt.setString(1,codigo);
+            try(ResultSet rs= psmt.executeQuery()){
+                if(rs.next()){
+                    existe=true;
+                }
+            }
+        }
+        return existe;
     }
 
     public BCompra detectarCompraActiva(int idClient) {
