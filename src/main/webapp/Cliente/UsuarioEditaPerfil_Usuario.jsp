@@ -77,14 +77,13 @@
         <!-- header -->
         <header></header>
     </div>
-
-    <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizar">
         <div style="margin-bottom: 50px" class="contenerdor_perfil">
             <div class="container">
                 <h2>Editar perfil</h2>
                 <div class="row">
-                    <div class="col-md-6 mb-1">
-                        <div class="row mb-4">
+                     <div class="col-md-6 mb-1">
+                         <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizar" >
+                         <div class="row mb-4">
                             <div class="col-md-6" >
                                 <label class="form-label" for="nombre">Nombre</label>
                                 <input required
@@ -117,7 +116,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label" for="numCel">Número de contacto</label>
-                                <input  required name ="numCel"
+                                <input  required
+                                        name ="numCel"
                                         type="text"
                                         minlength="9"
                                         maxlength="9"
@@ -188,25 +188,29 @@
                                        placeholder="Ingrese su email">
                             </div>
                         </div>
+                             <button type="submit" class="btn btn-tele">Guardar Edicion</button>
+                         </form>
                     </div>
 
                     <div style="margin-top: 10px" class="col-md-6 mb-4 text-center">
+                        <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizarFoto" enctype="multipart/form-data">
                         <h4 class="form-label" >Imagen de perfil</h4>
                         <div class="text-center mt-2 mb-3">
-                            <img id="img-preview" src="<%=clienteLog.getFoto()%>" style="max-width: 300px; resize: both; max-width: 300px" />
+                            <img id="img-preview" src="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=entregarImagen" style="max-width: 300px; resize: both; max-width: 300px" />
                         </div>
+                        <!--progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
+                                  style="width: 100%"></progress-->
+                        <!--input type="hidden" value="" name="photoUrl" id="photoUrl"/-->
                         <div class="d-flex justify-content-center my-3">
-                            <input type="file" id="img-uploader">
+                            <!--input type="file" id="img-uploader"-->
+                            <input type="file" name="photoUrl">
                         </div>
-                        <progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
-                                  style="width: 100%"></progress>
-                        <input type="hidden" value="<%=clienteLog.getFoto()%>" name="photoUrl" id="photoUrl" />
+                            <button type="submit" class="btn btn-tele">Cambiar foto de perfil</button>
+                        </form>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-tele">Guardar Edicion</button>
             </div>
         </div>
-    </form>
 </main>
 
 <!--JS-->

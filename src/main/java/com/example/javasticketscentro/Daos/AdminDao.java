@@ -4,6 +4,8 @@ import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BSala;
 import com.example.javasticketscentro.Beans.BSede;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -763,7 +765,7 @@ public class AdminDao extends BaseDao{
     }
 
     public void editarUsuario(BPersona usuario){
-        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, direccionCliente = ?,usuario = ?, foto=? " +
+        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, direccionCliente = ?,usuario = ?" +
                 "where idPersona = ?";
 
         try(Connection conn= this.getConnection();
@@ -773,11 +775,49 @@ public class AdminDao extends BaseDao{
             pstmt.setInt(3, usuario.getNumCel());
             pstmt.setString(4, usuario.getDireccion());
             pstmt.setString(5, usuario.getUsuario());
-            pstmt.setString(6,usuario.getFoto());
-            pstmt.setInt(7, usuario.getIdPer());
+            pstmt.setInt(6, usuario.getIdPer());
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+    }
+    public void editarFoto(int id, InputStream foto){
+        String sql="UPDATE centro1.persona SET foto = ?" +
+                "where idPersona = ?";
+
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+            pstmt.setBlob(1,foto);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+        }catch(SQLException e) {
+            System.out.println("Hubo un error en la conexión!");
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarImagen(int id, HttpServletResponse response){
+        String sql= "select p.foto from persona p where idPersona=?";
+        response.setContentType("image/jpg");
+        InputStream inputStream=null;
+        OutputStream outputStream;
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1, id);
+            try(ResultSet rs= pstmt.executeQuery();){
+                outputStream= response.getOutputStream();
+                if(rs.next()){
+                    inputStream= rs.getBinaryStream(1);
+                }
+                byte[] datosImagen= new byte[inputStream.available()];
+                inputStream.read(datosImagen,0,inputStream.available());
+                outputStream.write(datosImagen);
+                inputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
