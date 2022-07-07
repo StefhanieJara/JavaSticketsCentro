@@ -277,8 +277,8 @@
             id="error"
             tabindex="-1"
             aria-labelledby="err_eliminar"
-            aria-hidden="true"
-    >
+            aria-hidden="true">
+
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
@@ -297,8 +297,7 @@
                     <button
                             type="button"
                             class="btn btn-danger"
-                            data-bs-dismiss="modal"
-                    >
+                            data-bs-dismiss="modal">
                         Ok
                     </button>
                 </div>

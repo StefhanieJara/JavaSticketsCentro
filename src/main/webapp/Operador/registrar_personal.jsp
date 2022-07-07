@@ -57,8 +57,8 @@
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
                     <div style="font-size: 0.62rem">
-                        <a href="<%=request.getContextPath()%>/personalServlet"></a>
-                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                        <a href="<%=request.getContextPath()%>/personalServlet">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                     </div>
                 </button>
             </div>
@@ -157,7 +157,8 @@
                                         <label class="form-label" for="productName"
                                         >Nombre</label
                                         >
-                                        <input
+                                        <input required
+                                               value="<%=session.getAttribute("nombre")==null? "":session.getAttribute("nombre")%>"
                                                 type="text"
                                                 name="nombrepersonal"
                                                 class="form-control"
@@ -167,7 +168,8 @@
                                         <label class="form-label" for="productName"
                                         >Apellido</label
                                         >
-                                        <input
+                                        <input required
+                                               value="<%=session.getAttribute("apellido")==null?"":session.getAttribute("apellido")%>"
                                                 type="text"
                                                 name="apellidopersonal"
                                                 id="productName"
@@ -175,19 +177,22 @@
                                                 placeholder="Ingrese el apellido del personal "
                                         />
                                     </div>
+                                    <%if(session.getAttribute("msg")!=null){%>
+                                        <div class="text-danger mb-2">Nombres o Apellidos inválidos!</div>
+                                    <%session.removeAttribute("msg");%>
+                                    <%}%>
                                     <div class="form-outline mb-4 py-4">
                                         <label class="form-label" for="productName">Elija la sede en la que va a asignar al personal</label>
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
-                                            <option value="Selecciona" selected>Selecciona</option>
                                             <%for(BSede bSede : sedes){%>
-                                            <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
+                                            <option <%=session.getAttribute("sede")==null?"":(session.getAttribute("sede").equals(bSede.getNombre())?"selected":"")%> value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
                             </div>
-
+                            <%session.removeAttribute("sede");session.removeAttribute("apellido");session.removeAttribute("nombre");%>
                             <div class="row row-cols-3 justify-content-center">
                                 <input
                                         class="btn btn-tele"

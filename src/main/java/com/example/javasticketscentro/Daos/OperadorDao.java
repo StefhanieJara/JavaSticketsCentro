@@ -221,4 +221,14 @@ public class OperadorDao extends BaseDao{
         }
     }
 
+    public void eliminarPersonal(int id){
+        String sql="delete from personal where idPersonal=?;";
+        try(Connection conn=this.getConnection();
+            PreparedStatement ptmt= conn.prepareStatement(sql);){
+            ptmt.setInt(1, id);
+            ptmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

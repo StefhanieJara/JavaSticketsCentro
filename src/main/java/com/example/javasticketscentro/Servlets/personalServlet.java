@@ -35,9 +35,6 @@ public class personalServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_personal.jsp");
                 requestDispatcher.forward(request,response);
             }
-            case "eliminar"->{
-
-            }
             case "editar" ->{
                 HttpSession session= request.getSession();
                 int id=(int)session.getAttribute("id");
@@ -64,23 +61,32 @@ public class personalServlet extends HttpServlet {
         nombre= request.getParameter("nombrepersonal");
         apellido = request.getParameter("apellidopersonal");
         Sede_idSedeStr = request.getParameter("elegirSede");
+        HttpSession session= request.getSession();
 
         switch (action){
             case "guardar"-> {
                 try {
                     int elegirSede = adminDao.encontrarIDSede(Sede_idSedeStr);
                     if (elegirSede != 0) {
-                        operadorDao.añadirPersonal(nombre,apellido,elegirSede);
-                        response.sendRedirect(request.getContextPath() + "/personalServlet");
+                        if(esSoloLetras(nombre)&&esSoloLetras(apellido)){
+                            operadorDao.añadirPersonal(nombre,apellido,elegirSede);
+                            response.sendRedirect(request.getContextPath() + "/personalServlet");
+                        }else{
+                            session.setAttribute("nombre",nombre);
+                            session.setAttribute("apellido", apellido);
+                            session.setAttribute("sede", Sede_idSedeStr);
+                            session.setAttribute("msg", "errorNombres");
+                            response.sendRedirect(request.getContextPath() + "/personalServlet?action=crear");
+                        }
                     } else {
                         response.sendRedirect(request.getContextPath() + "/personalServlet?action=crear");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/personalServlet?action=crear");
                 }
             }
             case "actualizar" ->{
-                HttpSession session= request.getSession();
                 String idStr = request.getParameter("idPersonal");
                 try {
                     int id = Integer.parseInt(idStr);
@@ -123,11 +129,15 @@ public class personalServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/personalServlet");
                 }
             }
+            case "eliminar"->{
+                int idPersonal=Integer.parseInt(request.getParameter("idPersonal"));
+                operadorDao.eliminarPersonal(idPersonal);
+                response.sendRedirect(request.getContextPath() + "/personalServlet");
+            }
         }
     }
 
-    static boolean esSoloLetras(String cadena)
-    {
+    static boolean esSoloLetras(String cadena){
         //Recorremos cada caracter de la cadena y comprobamos si son letras.
         //Para comprobarlo, lo pasamos a mayuscula y consultamos su numero ASCII.
         //Si está fuera del rango 65 - 90, es que NO son letras.
@@ -144,5 +154,4 @@ public class personalServlet extends HttpServlet {
         //Terminado el bucle sin que se haya retornado false, es que todos los caracteres son letras
         return true;
     }
-
 }

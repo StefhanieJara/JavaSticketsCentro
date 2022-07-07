@@ -247,7 +247,7 @@
                 <th>Opciones</th>
             </tr>
             </thead>
-                <%for (BPersonal personal : listaPersonal) { %>
+                <%int i=0;for (BPersonal personal : listaPersonal) { %>
             <tr>
                 <td><%=personal.getNombre()%></td>
                 <td><%=personal.getApellido()%></td>
@@ -259,36 +259,17 @@
                         <button type="submit">
                             <i class="far fa-edit btn-tele p-1 rounded"></i>
                         </button></form>
-                        <a href="<%=request.getContextPath()%>/personalServlet?action=eliminar&id=<%=personal.getIdPersonal()%>">
+                        <button type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminar<%=i%>">
                             <i class="btn btn-danger p-1 fas fa-times-circle"></i>
-                        </a>
+                        </button>
                     </div>
                 </td>
             </tr>
-            <%}%>
+            <%i++;}%>
         </table>
     </div>
-    <!--Icono para eliminar-->
-    <div class="d-flex justify-content-center my-2 d-md-none">
-        <a href="editaOperador.html">
-            <i class="far fa-edit btn-tele p-1 rounded"></i>
-        </a>
-        <div class="mx-3"></div>
-        <button
-                class="btn btn-danger py-0 px-1"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#confirmacion"
-        >
-            <i class="fas fa-times-circle"></i>
-        </button>
-        </td>
-        </tr>
-
-        </table>
-    </div>
-
-
 
     <div class="container">
         <div class="d-flex justify-content-center my-3">
@@ -309,6 +290,45 @@
             </nav>
         </div>
     </div>
+
+    <!--Modal eliminar producto: Producto pendiente para pedido-->
+    <%i=0;for (BPersonal personal : listaPersonal) {%>
+    <div    class="modal fade"
+            id="eliminar<%=i%>"
+            tabindex="-1"
+            aria-labelledby="err_eliminar"
+            aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="err_eliminar">Despedir Personal</h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    Si desea despedir a este personal, click en el botón "Despedir".
+                </div>
+                <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=eliminar">
+                <input type="hidden" name="idPersonal" value="<%=personal.getIdPersonal()%>">
+                <div class="modal-footer my-0 py-1">
+                    Nombre de trabajador: <%=personal.getNombre()+" "+personal.getApellido()%>
+                    <button
+                            type="submit"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal">
+                        Despedir
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%i++;}%>
 </main>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>

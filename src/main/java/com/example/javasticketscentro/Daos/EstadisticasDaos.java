@@ -271,7 +271,4 @@ public class EstadisticasDaos extends BaseDao{
         return  director;
     }
 
-
-
-
 }
