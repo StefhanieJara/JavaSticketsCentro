@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 public class JavaQR {
     public BufferedImage downloadLocalQR(String codigoCompra, int idFuncion) throws WriterException{
         int size=1000;
-        String codigo="Compra completada! Nro. Función: "+idFuncion+" | Código de Compra: "+codigoCompra;
+        String codigo= codigoCompra+idFuncion;
 
         //Generar QR
         QRCodeWriter qrcode= new QRCodeWriter();

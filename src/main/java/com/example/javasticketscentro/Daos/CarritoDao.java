@@ -397,7 +397,7 @@ public class CarritoDao extends BaseDao {
         return year + "-" + mes1 + "-" + dia1;
     }
 
-    public byte[] devolverBytesBD(String idCompra, int idFuncion) {
+    /*public byte[] devolverBytesBD(String idCompra, int idFuncion) {
         byte[] bytes = null;
         String sql = "select * from ticket where Compra_idCompra=? and Funcion_idFuncion=?;";
         try (Connection conn = this.getConnection();
@@ -407,16 +407,16 @@ public class CarritoDao extends BaseDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     bytes = rs.getBytes(3);
-                    /*InputStream img= rs.getBinaryStream(3);
+                    InputStream img= rs.getBinaryStream(3);
                     BufferedImage bufferimage= ImageIO.read(img);
                     //Descargar la imagen generada
                     ImageIO.write(bufferimage, "png",new File("C:\\Users\\HP\\Desktop\\hola2.png"));
-                    System.out.println("Descargar foto, exitoso!");*/
+                    System.out.println("Descargar foto, exitoso!");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return bytes;
-    }
+    }*/
 }
