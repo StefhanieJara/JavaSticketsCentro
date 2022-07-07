@@ -16,7 +16,7 @@ public class EstadisticasDaos extends BaseDao{
                 "    inner join pelicula p on p.idPelicula = f.Pelicula_idPelicula\n" +
                 "    inner join ticket t on f.idFuncion = t.Funcion_idFuncion\n" +
                 "where f.fecha > ? and f.fecha < ?\n" +
-                "group by f.idFuncion order by ´Porcentaje´ desc limit 1";
+                "group by f.idFuncion order by ´Porcentaje´ desc ";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, fecha1);

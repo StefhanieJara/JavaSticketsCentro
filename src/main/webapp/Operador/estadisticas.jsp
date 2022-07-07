@@ -502,7 +502,7 @@
                     <table >
                         <thead>
                         <tr>
-                            <td><h2>Porcentaje</h2></td><td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
+                            <td><h3>Porcentaje</h3></td><td><center><h3>%</h3></center> </td> <td><center> <h3>Pelicula</h3></center></td><td><center><h3>Sede</h3></center> </td><td><center><h3>Sala</h3></center> </td>
                         </tr>
                         </thead>
                         <tbody>
@@ -514,16 +514,16 @@
                                 <div class="progress">
                                     <div
 
-                                            class="progress-bar bg-danger"
+                                            class="progress-bar bg-primary"
                                             role="progressbar"
                                             style="width: <%=funcion.getAsistencia()%>%"
                                             aria-valuenow="<%=funcion.getAsistencia()%>"
                                             aria-valuemin="0"
-                                            aria-valuemax="100"
-                                    ><%=funcion.getAsistencia()%>
+                                            aria-valuemax="100">
                                     </div>
                                 </div>
-                            </td><td><center> <%=funcion.getbPelicula().getNombre()%></center></td><td><center> <%=funcion.getbSede().getNombre()%></center></td><td><center> <%=funcion.getbSala().getNumero()%></center></td>
+                            </td><td><h4><%=funcion.getAsistencia()%>
+            </h4></td> <td><center><h4> <%=funcion.getbPelicula().getNombre()%></h4></center></td><td><center><h4><%=funcion.getbSede().getNombre()%></h4> </center></td><td><center><h4><%=funcion.getbSala().getNumero()%></h4> </center></td>
 
                         </tr>
                         <%}%>
