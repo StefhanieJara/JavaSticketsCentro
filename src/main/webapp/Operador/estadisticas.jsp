@@ -192,6 +192,7 @@
             left:25%;
             top:100px;
             position: fixed;
+            overflow-y: auto;
             display: none;
         }
 
@@ -229,6 +230,23 @@
         }
 
         .delete3 {
+
+            Background: #dddddd;
+            width:50%;
+            color:#000;
+            font-family: Arial;
+            font-size: 18px;
+            text-align:center;
+            padding: 33px;
+            min-height: 300px;
+            border-radius: 10px;
+            left:25%;
+            top:100px;
+            position: fixed;
+            display: none;
+        }
+
+        .delete4 {
 
             Background: #dddddd;
             width:50%;
@@ -400,7 +418,7 @@
 
             <div>
                 <h2>Funciones</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                <p>Puedes encontrar el los porcentajes de las funciones.</p>
                 <a href="javascript:abrir0()"
                    type="button"
                    class="btn btn-danger border-start-1"
@@ -411,7 +429,7 @@
 
             <div>
                 <h2>Vistas</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                <p>Puedes encontrar la función más y menos vista.</p>
                 <a href="javascript:abrir1()"
                    type="button"
                    class="btn btn-danger border-start-1"
@@ -422,7 +440,7 @@
 
             <div>
                 <h2>Peliculas</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                <p>Puedes encontrar la pelicula mejor calificada.</p>
                 <a href="javascript:abrir2()"
                    type="button"
                    class="btn btn-danger border-start-1"
@@ -433,8 +451,19 @@
 
             <div>
                 <h2>Actores y Directores</h2>
-                <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+                <p>Puedes encontrar las celebridades mejores calificadas.</p>
                 <a href="javascript:abrir3()"
+                   type="submit"
+                   class="btn btn-danger border-start-1"
+                ><b>Visualizar</b></a>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+
+            <div>
+                <h2>Géneros</h2>
+                <p>Puedes encontrar una lista de todas las peliculas con su respectivos géneros.</p>
+                <a href="javascript:abrir4()"
                    type="submit"
                    class="btn btn-danger border-start-1"
                 ><b>Visualizar</b></a>
@@ -464,62 +493,48 @@
 
                 </form>
                 <div class="table-responsive">
+                    <%if(listaAsistencia.isEmpty()){%>
+                        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+                    <%}else{if(session.getAttribute("msg1")!=null){%>
+                        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg1")%></div>
+                    <%session.removeAttribute("msg1");
+                    }else{%>
                     <table >
                         <thead>
                         <tr>
-                            <td><h2>Porcentaje</h2></td><td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
+                            <td><h3>Porcentaje</h3></td><td><center><h3>%</h3></center> </td> <td><center> <h3>Pelicula</h3></center></td><td><center><h3>Sede</h3></center> </td><td><center><h3>Sala</h3></center> </td>
                         </tr>
                         </thead>
                         <tbody>
-                        <%if(session.getAttribute("msg1")!=null){%>
-                        <tr>
-                            <td></td><td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg1")%></div></td><td></td><td></td>
-                        </tr>
-                        <%session.removeAttribute("msg1");
-                        }else{%>
 
-                        <%for(BFuncion funcion: listaAsistencia){
-                        %>
+                        <%for(BFuncion funcion: listaAsistencia){%>
 
                         <tr>
                             <td>
                                 <div class="progress">
                                     <div
 
-                                            class="progress-bar bg-danger"
+                                            class="progress-bar bg-primary"
                                             role="progressbar"
                                             style="width: <%=funcion.getAsistencia()%>%"
                                             aria-valuenow="<%=funcion.getAsistencia()%>"
                                             aria-valuemin="0"
-                                            aria-valuemax="100"
-                                    ><%=funcion.getAsistencia()%>
+                                            aria-valuemax="100">
                                     </div>
                                 </div>
-                            </td><td><center> <%=funcion.getbPelicula().getNombre()%></center></td><td><center> <%=funcion.getbSede().getNombre()%></center></td><td><center> <%=funcion.getbSala().getNumero()%></center></td>
+                            </td><td><h4><%=funcion.getAsistencia()%>
+            </h4></td> <td><center><h4> <%=funcion.getbPelicula().getNombre()%></h4></center></td><td><center><h4><%=funcion.getbSede().getNombre()%></h4> </center></td><td><center><h4><%=funcion.getbSala().getNumero()%></h4> </center></td>
 
                         </tr>
                         <%}%>
-                        <%}%>
+
                         </tbody>
 
                     </table>
-                </div>
-                <h3>Lista de generos</h3>
-                <table >
-                    <thead>
-                    <tr>
-                        <td><h2>Pelicula</h2></td><td><h2>Género</h2></td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <%for (BFuncion genero: listaGenero){%>
-                    <tr>
-                        <td><h3><%=genero.getbPelicula().getNombre()%></h3></td><td><h3><%=genero.getbPelicula().getGenero()%></h3></td>
-                    </tr>
                     <%}%>
-                    </tbody>
+                    <%}%>
+                </div>
 
-                </table>
             </div></div>
 
 
@@ -533,7 +548,7 @@
     }
 </script>
 
-<div class="delete1" id="dele1">
+<div class="delete1 " id="dele1">
     <div id="cerrar1"><a href="javascript:cerrar1()">X</a></div>
     <h3>Más vista</h3>
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar2">
@@ -548,28 +563,31 @@
 
            </div>
     </form>
-    <table >
-        <thead>
-        <tr>
-            <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
-        </tr>
-        </thead>
-
-        <tbody>
-        <%if(session.getAttribute("msg2")!=null){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg2")%></div></td><td></td>
-        </tr>
+    <div class="table-responsive">
+        <%if(masVista.isEmpty()){%>
+        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+        <%}else{if(session.getAttribute("msg2")!=null){%>
+        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg2")%></div>
         <%session.removeAttribute("msg2");
         }else{%>
-        <%for (BFuncion vista: masVista){%>
-        <tr>
-            <td><h3><center><%=vista.getbPelicula().getNombre()%></center></h3></td><td><h3><center> <%=vista.getbSede().getNombre()%></center></h3></td><td><h3><center><%=vista.getbSala().getNumero()%></center> </h3></td>
-        </tr>
+            <table >
+                <thead>
+                <tr>
+                    <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
+                </tr>
+                </thead>
+
+                <tbody>
+                <%for (BFuncion vista: masVista){%>
+                <tr>
+                    <td><h4><center><%=vista.getbPelicula().getNombre()%></center></h4></td><td><h4><center> <%=vista.getbSede().getNombre()%></center></h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
         <%}%>
         <%}%>
-        </tbody>
-    </table>
+
     <br>
     <h3>Menos vista</h3>
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar3">
@@ -584,28 +602,32 @@
 
         </div>
     </form>
-    <table >
-        <thead>
-        <tr>
-            <td><h2>Pelicula</h2></td><td><h2>Sede</h2></td><td><h2>Sala</h2></td>
-        </tr>
-        </thead>
-
-        <tbody>
-        <%if(session.getAttribute("msg3")!=null){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg3")%></div></td><td></td>
-        </tr>
+        <%if(menosVista.isEmpty()){%>
+        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+        <%}else{if(session.getAttribute("msg3")!=null){%>
+        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg3")%></div>
         <%session.removeAttribute("msg3");
         }else{%>
-        <%for (BFuncion vista: menosVista){%>
-        <tr>
-            <td><h3><center><%=vista.getbPelicula().getNombre()%></center> </h3></td><td><h3><center><%=vista.getbSede().getNombre()%></center> </h3></td><td><h3><center><%=vista.getbSala().getNumero()%></center> </h3></td>
-        </tr>
+            <table >
+                <thead>
+                <tr>
+                    <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <%for (BFuncion vista: menosVista){%>
+                <tr>
+                    <td><h4><center><%=vista.getbPelicula().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSede().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
+                </tr>
+                <%}%>
+
+                </tbody>
+            </table>
         <%}%>
         <%}%>
-        </tbody>
-    </table>
+    </div>
 </div>
 </div>
 <script>
@@ -631,43 +653,30 @@
             <button type="submit" class="btn btn-danger">Filtrar</button>
         </div>
     </form>
-    <table >
+    <%if(peliculaMejorCalificada.getNombre() == null){%>
+    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+    <%}else{if(session.getAttribute("msg4")!=null){%>
+    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg4")%></div>
+    <%session.removeAttribute("msg4");
+    }else{%>
+    <table>
+
         <thead>
         <tr>
-            <td><h2>Pelicula</h2></td><td><h2>Calificación</h2></td>
+            <td><h3>Pelicula</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
         </tr>
         </thead>
         <tbody>
-        <%if(peliculaMejorCalificada.getCalificacionPelicula()==0){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert">Esta pelicula no ha sido calificada aún</div></td>
-        </tr>
-        <%}else{%>
-        <%if(session.getAttribute("msg4")!=null){%>
-        <tr>
-            <td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg4")%></div></td>
-        </tr>
-        <%
-        }else{%>
 
         <tr>
-            <td><h2><%=peliculaMejorCalificada.getNombre()%></h2></td><td><h2><%=peliculaMejorCalificada.getCalificacionPelicula()%></h2></td>
+            <td><h4><%=peliculaMejorCalificada.getNombre()%></h4></td><td><h4><%=peliculaMejorCalificada.getCalificacionPelicula()%></h4></td><td><img src="<%=peliculaMejorCalificada.getFoto()%>" style="max-height: 200px; max-width: 150px"></td>
         </tr>
-        <%}%>
-        <%}%>
+
         </tbody>
     </table>
-    <%if(peliculaMejorCalificada.getCalificacionPelicula()==0){%>
-    <div class="alert alert-danger" role="alert">Imagen no encontrada</div>
-    <%}else{%>
-    <%if(session.getAttribute("msg4")!=null){%>
-    <div class="alert alert-danger" role="alert">No se ha encontrado imagen</div>
-    <%session.removeAttribute("msg4");
-    }else{%>
+    <%}%>
+    <%}%>
 
-    <img src="<%=peliculaMejorCalificada.getFoto()%>" style="max-height: 200px; max-width: 150px">
-    <%}%>
-    <%}%>
 </div>
 <script>
     function abrir2() {
@@ -692,33 +701,29 @@
             <button type="submit" class="btn btn-danger">Filtrar</button>
         </div>
     </form>
-    <table >
+    <%if(actorMejorCalificado.getNombre() == null){%>
+    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+    <%}else{if(session.getAttribute("msg5")!=null){%>
+    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg5")%></div>
+    <%session.removeAttribute("msg5");
+    }else{%>
+    <table>
         <thead>
         <tr>
-            <td><h2>Actor</h2></td><td><h2>Calificación</h2></td><td><h2>Foto</h2></td>
+            <td><h3>Actor</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
         </tr>
         </thead>
         <tbody>
-        <%if(actorMejorCalificado.getCalificacion()==0){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert">Este actor no ha sido calificado aún</div></td>
-        </tr>
-        <%}else{%>
-        <%if(session.getAttribute("msg5")!=null){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg5")%></div></td><td></td>
-        </tr>
-        <%session.removeAttribute("msg5");
-        }else{%>
 
         <tr>
-            <td><h2><%=actorMejorCalificado.getNombre()%> <%=actorMejorCalificado.getApellido()%></h2></td><td><h2><%=actorMejorCalificado.getCalificacion()%></h2></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
+            <td><h4><%=actorMejorCalificado.getNombre()%> <%=actorMejorCalificado.getApellido()%></h4></td><td><h4><%=actorMejorCalificado.getCalificacion()%></h4></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
         </tr>
-        <%}%>
-        <%}%>
         </tbody>
-
     </table>
+
+    <%}%>
+    <%}%>
+
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar6" >
         <label> Fecha de inicio</label>
         <input type="date" name="date11" value="<%=fecha11%>" >
@@ -728,33 +733,28 @@
 
         <button type="submit" class="btn btn-danger">Filtrar</button>
     </form>
-    <table >
+
+    <%if(directorMejorCalificado.getNombre() == null){%>
+    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
+    <%}else{if(session.getAttribute("msg6")!=null){%>
+    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg6")%></div>
+    <%session.removeAttribute("msg6");
+    }else{%>
+    <table>
         <thead>
         <tr>
-            <td><h2>Director</h2></td><td><h2>Calificación</h2></td><td><h2>Foto</h2></td>
+            <td><h3>Director</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
         </tr>
         </thead>
         <tbody>
-        <%if(directorMejorCalificado.getCalificacion()==0){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert">Este director no ha sido calificado aún</div></td>
-        </tr>
-        <%}else{%>
-        <%if(session.getAttribute("msg6")!=null){%>
-        <tr>
-            <td></td><td><div class="alert alert-danger" role="alert"><%=session.getAttribute("msg6")%></div></td><td></td>
-        </tr>
-        <%session.removeAttribute("msg6");
-        }else{%>
-
         <tr>
             <td><h3><%=directorMejorCalificado.getNombre()%> <%=directorMejorCalificado.getApellido()%></h3></td><td><h3><%=directorMejorCalificado.getCalificacion()%></h3></td><td><img src="<%=directorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
         </tr>
-        <%}%>
-        <%}%>
-        </tbody>
 
+        </tbody>
     </table>
+    <%}%>
+    <%}%>
 </div>
 <script>
     function abrir3() {
@@ -762,6 +762,43 @@
     }
     function cerrar3() {
         document.getElementById("dele3").style.display="none";
+    }
+</script>
+
+<div class="delete0" id="dele4">
+    <div id="cerrar4"><a href="javascript:cerrar4()">X</a></div>
+    <div class="modal-body" >
+        <div  class="cold md" >
+            <h4>Lista de generos</h4>
+            <table >
+                <thead>
+                <tr>
+                    <td><h4>Pelicula</h4></td><td><h4>Género</h4></td>
+                </tr>
+                </thead>
+                <tbody>
+                <%for (BFuncion genero: listaGenero){%>
+                <tr>
+                    <td><h4><%=genero.getbPelicula().getNombre()%></h4></td><td><h4><%=genero.getbPelicula().getGenero()%></h4></td>
+                </tr>
+                <%}%>
+                </tbody>
+
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function abrir4() {
+        document.getElementById("dele4").style.display="block";
+    }
+    function cerrar4() {
+        document.getElementById("dele4").style.display="none";
     }
 </script>
 

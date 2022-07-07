@@ -15,6 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -30,6 +31,16 @@
     <link rel="stylesheet" href="assets/css_2/estilos_carrusel.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/5733880de3.js" crossorigin="anonymous"></script>
+
+    <style>
+        #btnSubmit{
+            border-color: rgba(0, 0, 0, 0.87);
+            background-color: rgba(0, 0, 0, 0.87);
+        }
+        .f1 {background-image: url("img/sedeChacarilla.jpg");background-size: cover;}
+        .f2 {background-image: url("img/sedeLince.jpg");background-size: cover;}
+        .f3 {background-image: url("img/sedeMiraflores.jpg");background-size: cover;}
+    </style>
 </head>
 <body>
 <!--Cabecera Principal cliente-->
@@ -242,7 +253,7 @@
         $("#btnSubmit").click(function (){
             $(this).html(
                 `<i class="fas fa-search"></i>...<span class="spinner-border spinner-border-sm"
-                role="status" aria-hidden="true"></span>`
+                role="status" aria-hidden="true" ></span>`
             );
         });
     </script>

@@ -436,7 +436,7 @@ a.animated-button:visited:hover:after {
 }
 
 a.animated-button.gibson-three {
-	border: 2px solid #ff4e00;
+	border: 2px solid #000000;
 	color: #fff;
 }
 
@@ -454,7 +454,7 @@ a.animated-button.gibson-three:after {
 a.animated-button.gibson-three:hover:after {
 	height: 600% !important;
 	opacity: 1;
-	color: #ff4e00;
+	color: #000000;
 }
 
 
@@ -616,7 +616,7 @@ figure.effect-lexi h3 {
     color: #fff;
 }
 figure.effect-lexi h3 span {
-    color: #ff4e00;
+    color: #000000;
 }
 
 figure.effect-lexi p {
@@ -655,7 +655,7 @@ figure.effect-lexi:hover p {
 }
 .mail-grid-text-info h3 {
     font-size: 0.9em;
-    color: #ff4e00;
+    color: #000000;
     margin: 0em 0 0.5em;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -745,7 +745,7 @@ button.close {
     outline: none;
 }
 .modal-body h6 {
-    color: #ff4e00;
+    color: #000000;
     font-size: 1.1em;
     letter-spacing: 1px;
 }
@@ -760,7 +760,7 @@ button.close {
     font-size: 1.2em;
 }
 .login.newsletter a:hover {
-    color: #ff4e00;
+    color: #000000;
 }
 ul.agile_top_section li {
     display: inline-block;
@@ -1019,7 +1019,7 @@ ul.social-icons li a i.fab.fa-google-plus-g:hover {
 .customer-info h6 {
     font-size: 1em;
     margin: 1em 0;
-    color: #ff4e00;
+    color: #000000;
 }
 .customer-info ul.social-icons li a i {
     color: #202223;
@@ -1337,7 +1337,7 @@ ul.short li {
 }
 
 ul.short li a {
-    color: #ff4e00;
+    color: #000000;
 }
 
 /*-- /error --*/
@@ -1360,7 +1360,7 @@ a.b-home {
 }
 
 a.b-home:hover {
-    background: #ff4e00;
+    background: #000000;
     letter-spacing: 1px;
 }
 
@@ -1406,7 +1406,7 @@ a.b-home:hover {
     cursor: pointer;
 }
 .error_page button.btn1:hover {
-    background: #ff4e00;
+    background: #000000;
 }
 .error_page form {
     margin: 0 auto;
@@ -1440,7 +1440,7 @@ h3.tittle-w3layouts.two{
 .testimonials_grid label {
     font-size: 1em;
     letter-spacing: 1px;
-    color: #ff4e00;
+    color: #000000;
 }
 .testimonials_grid h3 span {
     font-weight: 100;
@@ -1482,7 +1482,7 @@ a.carousel-control-next.test, a.carousel-control-prev.test {
     color: #333!important;
 }
 .footer-top-w3layouts-grid-sec:hover .mail-grid-icon i {
-    color: #ff4e00;
+    color: #000000;
 }
 /*--footer--*/
 
@@ -1515,7 +1515,7 @@ footer {
 	font-weight: 300;
 	font-size: 1.2em;
 	line-height: 1.9;
-	color: #ff4e00;
+	color: #000000;
 }
 
 .copyright-w3layouts {
@@ -1559,7 +1559,7 @@ footer {
 }
 
 .footer-text button.btn1 {
-	color: #ff4e00;
+	color: #000000;
 	border: none;
 	padding: 10px 0;
 	outline: none;
@@ -1643,13 +1643,13 @@ ul.links li a:hover {
     font-size: 15px;
 }
 .footer-social li a:hover {
-    color: #ff4e00;
+    color: #000000;
 }
 
 /*--//social-icons--*/
 
 .copyright-w3layouts a {
-    color: #ff4e00;
+    color: #000000;
 }
 
 /*--//footer--*/
