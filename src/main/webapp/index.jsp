@@ -37,6 +37,9 @@
             border-color: rgba(0, 0, 0, 0.87);
             background-color: rgba(0, 0, 0, 0.87);
         }
+        .f1 {background-image: url("img/sedeChacarilla.jpg");background-size: cover;}
+        .f2 {background-image: url("img/sedeLince.jpg");background-size: cover;}
+        .f3 {background-image: url("img/sedeMiraflores.jpg");background-size: cover;}
     </style>
 </head>
 <body>
