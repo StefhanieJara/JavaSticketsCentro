@@ -10,6 +10,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <style>
+            #historialdecompras{
+                border-color: rgba(0, 0, 0, 0.87);
+                background-color: rgba(0, 0, 0, 0.87);
+            }
+        </style>
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
         <meta charset="utf-8" />
         <meta
@@ -153,7 +159,7 @@
                 <div class="card-w-sidebar">
                     <div class="card">
                         <!--Título-->
-                        <div class="card-header card-header-tele">
+                        <div id="historialdecompras" class="card-header card-header-tele">
                             <h4 class="my-2">Historial de Compras</h4>
                         </div>
                         <!--Contenido-->

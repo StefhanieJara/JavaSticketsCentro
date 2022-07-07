@@ -23,6 +23,12 @@
             src="https://kit.fontawesome.com/5733880de3.js"
             crossorigin="anonymous"
     ></script>
+    <style>
+        #cambiarcolorboton{
+            border-color: rgba(0, 0, 0, 0.87);
+            background-color: rgba(0, 0, 0, 0.87);
+        }
+    </style>
 </head>
 <body>
 <nav
@@ -188,7 +194,7 @@
                                        placeholder="Ingrese su email">
                             </div>
                         </div>
-                             <button type="submit" class="btn btn-tele">Guardar Edicion</button>
+                             <button id="cambiarcolorboton" type="submit" class="btn btn-tele">Guardar Edicion</button>
                          </form>
                     </div>
 
@@ -205,7 +211,7 @@
                             <!--input type="file" id="img-uploader"-->
                             <input type="file" name="photoUrl">
                         </div>
-                            <button type="submit" class="btn btn-tele">Cambiar foto de perfil</button>
+                            <button id="cambiarcolorboton" type="submit"  class="btn btn-tele">Cambiar foto de perfil</button>
                         </form>
                     </div>
                 </div>

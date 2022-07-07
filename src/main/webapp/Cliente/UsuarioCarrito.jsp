@@ -10,7 +10,16 @@
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<style>
+    #Funciones_seleccionadas{
+        border-color: rgba(0, 0, 0, 0.87);
+        background-color: rgba(0, 0, 0, 0.87);
+    }
+    #resumen{
+        border-color: rgba(0, 0, 0, 0.87);
+        background-color: rgba(0, 0, 0, 0.87);
+    }
+</style>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -25,7 +34,6 @@
     <script
             src="https://kit.fontawesome.com/5733880de3.js"
             crossorigin="anonymous"></script>
-
 </head>
 <body>
 <!--Cabecera Principal cliente-->
@@ -118,6 +126,7 @@
     </div>
 <!--Contenido-->
 <main>
+    <br><br>
     <!--Alinear cabecera con contenido-->
     <div class="card-header my-5"></div>
     <!--Carrito-->
@@ -128,7 +137,7 @@
                 <!--Items de la 1-->
                 <div>
                     <!--Nombre cabecera-->
-                    <h3 class="cart-header px-4 py-3">
+                    <h3 id="Funciones_seleccionadas" class="cart-header px-4 py-3">
                         <span>Funciones Seleccionadas</span>
                     </h3>
                     <!--AÑADO ADVERTENCIAS-->
@@ -280,7 +289,7 @@
             <div class="col-md-3 col-xl-4 pt-3 pt-md-0">
                 <div class="row">
                     <!--Cabecera resumen-->
-                    <h3 class="cart-header px-4 py-3 justify-content-center">Resumen</h3>
+                    <h3 id="resumen" class="cart-header px-4 py-3 justify-content-center">Resumen</h3>
                     <!--Tabla resumen-->
                     <div class="table-responsive">
                         <table class="table table-striped text-center mb-0">
