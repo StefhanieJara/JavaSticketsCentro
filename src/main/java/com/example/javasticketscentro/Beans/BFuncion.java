@@ -10,8 +10,6 @@ public class BFuncion {
     private BSede bSede;
     private String horaInicio;
     private float Asistencia;
-    private int cancelado;
-    private int carrito;
 
     public BSede getbSede() {
         return bSede;
@@ -19,22 +17,6 @@ public class BFuncion {
 
     public void setbSede(BSede bSede) {
         this.bSede = bSede;
-    }
-
-    public int getCancelado() {
-        return cancelado;
-    }
-
-    public void setCancelado(int cancelado) {
-        this.cancelado = cancelado;
-    }
-
-    public int getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(int carrito) {
-        this.carrito = carrito;
     }
 
     public float getAsistencia() {

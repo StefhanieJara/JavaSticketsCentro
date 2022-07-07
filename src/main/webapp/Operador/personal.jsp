@@ -251,19 +251,24 @@
             <tr>
                 <td><%=personal.getNombre()%></td>
                 <td><%=personal.getApellido()%></td>
-                <td><%=personal.getNombre_sede()%></td>
+                <td><%=personal.getbSede().getNombre()%></td>
                 <td style="width: 100px;">
                     <div class="col-sm-1 d-none d-md-block text-around">
-                        <a href="<%=request.getContextPath()%>/personalServlet?action=editar&id=<%=personal.getIdPersonal()%>">
+                        <form action="<%=request.getContextPath()%>/personalServlet?action=editar" method="post">
+                            <input type="hidden" value="<%=personal.getIdPersonal()%>" name="id">
+                        <button type="submit">
                             <i class="far fa-edit btn-tele p-1 rounded"></i>
-                        </a>
+                        </button></form>
                         <a href="<%=request.getContextPath()%>/personalServlet?action=eliminar&id=<%=personal.getIdPersonal()%>">
                             <i class="btn btn-danger p-1 fas fa-times-circle"></i>
                         </a>
                     </div>
+                </td>
+            </tr>
+            <%}%>
+        </table>
     </div>
     <!--Icono para eliminar-->
-
     <div class="d-flex justify-content-center my-2 d-md-none">
         <a href="editaOperador.html">
             <i class="far fa-edit btn-tele p-1 rounded"></i>
@@ -278,7 +283,6 @@
             <i class="fas fa-times-circle"></i>
         </button>
         </td>
-        <%} %>
         </tr>
 
         </table>
