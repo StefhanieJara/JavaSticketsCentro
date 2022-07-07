@@ -1,6 +1,4 @@
 <%@ page import="com.example.javasticketscentro.Beans.BSede" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
-<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -56,8 +54,8 @@
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
                     <div style="font-size: 0.62rem">
-                        <a href="<%=request.getContextPath()%>/personalServlet"></a>
-                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                        <a href="<%=request.getContextPath()%>/personalServlet">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                     </div>
                 </button>
             </div>
@@ -158,10 +156,8 @@
 
                             <div class="row">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Nombre</label
-                                        >
-                                        <input
+                                        <label class="form-label" for="productName">Nombre</label>
+                                        <input required
                                                 type="text"
                                                 name="nombrepersonal"
                                                 class="form-control"
@@ -169,31 +165,30 @@
                                                 placeholder="Ingrese el nombre del personal"/>
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Apellido</label
-                                        >
-                                        <input
+                                        <label class="form-label" for="productName">Apellido</label>
+                                        <input required
                                                 type="text"
                                                 name="apellidopersonal"
                                                 id="productName"
                                                 class="form-control"
                                                 value="<%=bPersonal.getApellido()%>"
-                                                placeholder="Ingrese el apellido del personal "
-                                        />
+                                                placeholder="Ingrese el apellido del personal"/>
                                     </div>
+                                    <%if(session.getAttribute("msg")!=null){%>
+                                        <div class="text-danger mb-2">Nombres o Apellidos inválidos!</div>
+                                        <%session.removeAttribute("msg");%>
+                                    <%}%>
                                     <div class="form-outline mb-4 py-4">
                                         <label class="form-label" for="productName">Elija la sede en la que va a asignar al personal</label>
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
-                                            <option value="Selecciona" selected>Selecciona</option>
                                             <%for(BSede bSede : sedes){%>
-                                            <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
+                                            <option <%=bSede.getIdSede()==bPersonal.getbSede().getIdSede() ? "selected": ""%> value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
                             </div>
-
                             <div class="row row-cols-3 justify-content-center">
                                 <input
                                         class="btn btn-tele"

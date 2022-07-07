@@ -53,8 +53,10 @@ public class OperadorDao extends BaseDao{
                 bPersonal.setIdPersonal(rs.getInt(1));
                 bPersonal.setNombre(rs.getString(2));
                 bPersonal.setApellido(rs.getString(3));
-                bPersonal.setIdSede(rs.getInt(4));
-                bPersonal.setNombre_sede(rs.getString(5));
+                BSede bSede= new BSede();
+                bSede.setIdSede(rs.getInt(4));
+                bSede.setNombre(rs.getString(5));
+                bPersonal.setbSede(bSede);
                 listapersonal.add(bPersonal);
             }
         } catch (SQLException e) {
@@ -79,22 +81,25 @@ public class OperadorDao extends BaseDao{
     }
 
     public BPersonal buscarPorId(int id) {
-        BPersonal bPersonal  = new BPersonal();
+        BPersonal bPersonal  = null;
 
-        String sql = "select * from personal where idPersonal= ?";
+        String sql = "select p.idPersonal,p.nombre, p. apellido, p.Sede_idSede, s.nombre from personal p " +
+                "inner join sede s on p.Sede_idSede = s.idSede " +
+                "where idPersonal= ?";
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
-
             pstmt.setInt(1, id);
-
             try (ResultSet rs = pstmt.executeQuery();) {
-
                 if (rs.next()) {
+                    bPersonal= new BPersonal();
                     bPersonal.setIdPersonal(rs.getInt(1));
                     bPersonal.setNombre(rs.getString(2));
                     bPersonal.setApellido(rs.getString(3));
-                    bPersonal.setIdSede(rs.getInt(4));
+                    BSede sede= new BSede();
+                    sede.setIdSede(rs.getInt(4));
+                    sede.setNombre(rs.getString(5));
+                    bPersonal.setbSede(sede);
                 }
             }
         } catch (SQLException e) {
