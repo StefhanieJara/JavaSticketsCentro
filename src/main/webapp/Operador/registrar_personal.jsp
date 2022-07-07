@@ -1,6 +1,4 @@
 <%@ page import="com.example.javasticketscentro.Beans.BSede" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
-<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022

@@ -37,27 +37,30 @@ public class OperadorDao extends BaseDao{
         }
         return listapeliculas;
     }
-    public ArrayList<BPersonal> listapersonal() {
+    public ArrayList<BPersonal> listapersonal(String nombre, String apellido) {
 
         ArrayList<BPersonal> listapersonal = new ArrayList<>();
 
-        String sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per\n" +
-                "\tinner join sede se on per.Sede_idSede= se.idSede;";
+        String sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per " +
+                "                inner join sede se on per.Sede_idSede= se.idSede " +
+                "where per.nombre like ? and per.apellido like ?;";
 
         try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
-
-            while (rs.next()) {
-                BPersonal bPersonal = new BPersonal();
-                bPersonal.setIdPersonal(rs.getInt(1));
-                bPersonal.setNombre(rs.getString(2));
-                bPersonal.setApellido(rs.getString(3));
-                BSede bSede= new BSede();
-                bSede.setIdSede(rs.getInt(4));
-                bSede.setNombre(rs.getString(5));
-                bPersonal.setbSede(bSede);
-                listapersonal.add(bPersonal);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, "%"+nombre+"%");
+            pstmt.setString(2, "%"+apellido+"%");
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BPersonal bPersonal = new BPersonal();
+                    bPersonal.setIdPersonal(rs.getInt(1));
+                    bPersonal.setNombre(rs.getString(2));
+                    bPersonal.setApellido(rs.getString(3));
+                    BSede bSede= new BSede();
+                    bSede.setIdSede(rs.getInt(4));
+                    bSede.setNombre(rs.getString(5));
+                    bPersonal.setbSede(bSede);
+                    listapersonal.add(bPersonal);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

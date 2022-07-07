@@ -23,10 +23,12 @@ public class personalServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         OperadorDao operadorDao = new OperadorDao();
         AdminDao adminDao = new AdminDao();
-
+        HttpSession s= request.getSession();
+        String nombrefil=s.getAttribute("nombrefil")==null?"":(String)s.getAttribute("nombrefil");
+        String apellidofil=s.getAttribute("apellidofil")==null?"":(String)s.getAttribute("apellidofil");
         switch (action){
             case "listar" -> {
-                request.setAttribute("listaPersonal",operadorDao.listapersonal());
+                request.setAttribute("listaPersonal",operadorDao.listapersonal(nombrefil,apellidofil));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/personal.jsp");
                 requestDispatcher.forward(request,response);
             }
@@ -132,6 +134,11 @@ public class personalServlet extends HttpServlet {
             case "eliminar"->{
                 int idPersonal=Integer.parseInt(request.getParameter("idPersonal"));
                 operadorDao.eliminarPersonal(idPersonal);
+                response.sendRedirect(request.getContextPath() + "/personalServlet");
+            }
+            case "filtrar"->{
+                session.setAttribute("nombrefil", nombre);
+                session.setAttribute("apellidofil", apellido);
                 response.sendRedirect(request.getContextPath() + "/personalServlet");
             }
         }

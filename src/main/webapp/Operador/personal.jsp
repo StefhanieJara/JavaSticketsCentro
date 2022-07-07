@@ -216,25 +216,30 @@
     <div class="caja2">
     </div>
     <div class="caja1">
+        <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=filtrar">
         <div class="row g-3 align-items-center mt-2 ">
             <div class="rows-auto">
                 <h4><center>FILTROS</center></h4>
-                <label for="inputtext6" class="col-form-label">Nombre</label>
+                <label class="col-form-label">Nombre</label>
             </div>
             <div class="rows-auto">
-                <input type="text" id="inputtext6" class="form-control" aria-describedby="textHelpInline">
+                <input type="text" value="<%=session.getAttribute("nombrefil")==null?"":session.getAttribute("nombrefil")%>" name="nombrepersonal" placeholder="Filtrar por nombre" class="form-control" aria-describedby="textHelpInline">
             </div>
         </div>
         <div class="row g-3 align-items-center mt-2 ">
             <div class="rows-auto">
-                <label for="inputtext6" class="col-form-label">Apellido</label>
+                <label class="col-form-label">Apellido</label>
             </div>
             <div class="rows-auto">
-                <input type="text" class="form-control" aria-describedby="textHelpInline">
+                <input type="text" value="<%=session.getAttribute("apellidofil")==null?"":session.getAttribute("apellidofil")%>" name="apellidopersonal" placeholder="Filtrar por apellido" class="form-control" aria-describedby="textHelpInline">
             </div>
         </div>
-
-
+            <div class="row g-3 align-items-center mt-2">
+                <div class="rows-auto">
+                    <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar filtros</button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div id="main-container">
