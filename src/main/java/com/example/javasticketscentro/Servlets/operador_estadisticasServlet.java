@@ -62,11 +62,12 @@ public class operador_estadisticasServlet extends HttpServlet {
         String fecha11 = request.getParameter("date11")== null ? "2022-06-07" : request.getParameter("date11");
         String fecha12 = request.getParameter("date12")== null ? "2022-08-07" : request.getParameter("date12");
         HttpSession session = request.getSession();
+        ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
         switch (action){
             case "filtrar1":
                 try {
                     ArrayList<BFuncion> asistencia = estadisticasDaos.listarAsistencia(fecha1,fecha2);
-                    ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+
                     if (asistencia.get(0)!=null){
                         request.setAttribute("listaGenero", generos);
                         request.setAttribute("listaAsistencia", asistencia);
@@ -86,7 +87,9 @@ public class operador_estadisticasServlet extends HttpServlet {
             case "filtrar2":
                 try {
                     ArrayList<BFuncion> masVista = estadisticasDaos.listarMasVista(fecha3,fecha4);
+
                     if(masVista.get(0)!=null){
+                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("masVista", masVista);
                         request.setAttribute("fecha3",fecha3);
                         request.setAttribute("fecha4",fecha4);
@@ -103,7 +106,9 @@ public class operador_estadisticasServlet extends HttpServlet {
             case "filtrar3":
                 try {
                     ArrayList<BFuncion> menosVista = estadisticasDaos.listarMenosVista(fecha5,fecha6);
+
                     if(menosVista.get(0)!=null){
+                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("menosVista", menosVista);
                         request.setAttribute("fecha5",fecha5);
                         request.setAttribute("fecha6",fecha6);
@@ -120,7 +125,8 @@ public class operador_estadisticasServlet extends HttpServlet {
             case "filtrar4":
 
                     BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada(fecha7,fecha8);
-                    if (pelicula.getCalificacionPelicula()!=0){
+                    if (pelicula!=null){
+                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("peliculaMejorCalificada", pelicula);
                         request.setAttribute("fecha7",fecha7);
                         request.setAttribute("fecha8",fecha8);
@@ -137,7 +143,8 @@ public class operador_estadisticasServlet extends HttpServlet {
             case "filtrar5":
 
                     BCelebridad actor = estadisticasDaos.actorMejorCalificado(fecha9,fecha10);
-                    if(actor.getCalificacion()!=0){
+                    if(actor!=null){
+                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("actorMejorCalificado", actor);
                         request.setAttribute("fecha9",fecha9);
                         request.setAttribute("fecha10",fecha10);
@@ -154,7 +161,8 @@ public class operador_estadisticasServlet extends HttpServlet {
             case "filtrar6":
 
                 BCelebridad director = estadisticasDaos.directorMejorCalificado(fecha11,fecha12);
-                if(director.getCalificacion()!=0){
+                if(director!=null){
+                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("directorMejorCalificado", director);
                         request.setAttribute("fecha11",fecha11);
                         request.setAttribute("fecha12",fecha12);
