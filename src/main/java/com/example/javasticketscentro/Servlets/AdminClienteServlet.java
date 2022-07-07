@@ -2,11 +2,15 @@ package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
+import com.example.javasticketscentro.JavaPDF;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
     @WebServlet(name = "AdminClienteServlet", value = "/AdminClienteServlet")
@@ -46,7 +50,7 @@ public class AdminClienteServlet extends HttpServlet {
         AdminDao adminDao= new AdminDao();
         ArrayList<String> filtros= new ArrayList<>();
         switch (action){
-            case "buscar" -> {
+            case "buscar" :
                 String nombreBuscar = request.getParameter("nombreBuscar");
                 filtros.add(nombreBuscar);
                 String apellidoBuscar = request.getParameter("apellidoBuscar");
@@ -63,7 +67,28 @@ public class AdminClienteServlet extends HttpServlet {
                 request.setAttribute("filtros", filtros);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaCl.jsp");
                 requestDispatcher.forward(request, response);
-            }
+            break;
+            case "descargar" :
+                try(PrintWriter salir =  response.getWriter()) {
+                    int i = 1;
+                    String text = "#%Nombres%Email%Teléfono%Dirección\n";
+                    for(BPersona cliente : adminDao.listaCliente("","","","",1,100, true)){
+                        text += i+".%"+cliente.getNombre()+" "+cliente.getApellido()+"%"+cliente.getEmail()+
+                                "%"+cliente.getNumCel()+"%"+cliente.getDireccion()+"\n";
+                        i ++;
+                    }
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=listaClientes.pdf");
+                    JavaPDF javaPDF= new JavaPDF();
+                    byte[] pdf= javaPDF.pdfOperadoresTable(text);
+                    InputStream in =new ByteArrayInputStream(pdf);
+                    int f;
+                    while((f=in.read())!=-1){
+                        salir.write(f);
+                    }
+                    in.close();
+                }
+                break;
         }
     }
 }
