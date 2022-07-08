@@ -4,6 +4,7 @@ import com.example.javasticketscentro.Beans.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.concurrent.locks.StampedLock;
 
 public class OperadorDao extends BaseDao{
 
@@ -66,7 +67,6 @@ public class OperadorDao extends BaseDao{
         }
     }
 
-
     public void crearPelicula(String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
         String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero, estado)\n" +
                 "values (?, ?, ?, ?, ?,?,?,1);";
@@ -85,41 +85,85 @@ public class OperadorDao extends BaseDao{
         }
     }
 
-    public ArrayList<BFuncion> listarFunciones(){
+    public ArrayList<BFuncion> listarFunciones(String fecha, String idSede, int pagina, int cant_result, boolean limit){
         ArrayList<BFuncion> listaDeFunciones = new ArrayList<>();
-        String sql = "select p.idPelicula, p.nombre, p.foto, f.idFuncion, f.precio, f.stock, f.fecha, f.horaInicio, s.numero, se.nombre\n" +
-                "from pelicula p inner join funcion f on p.idPelicula = f.Pelicula_idPelicula\n" +
-                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
-                "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
-                "inner join sede se on s.Sede_idSede = se.idSede\n" +
-                "where (p.estado=1 and f.habilitado=1);";
+        String sql;
+        int posicion=0;
+        if(limit){
+            posicion=(pagina-1)*cant_result;
+            sql = "select p.idPelicula, p.nombre, p.foto, f.idFuncion, f.precio, f.stock, f.fecha, f.horaInicio, s.numero, se.nombre\n" +
+                    "from pelicula p inner join funcion f on p.idPelicula = f.Pelicula_idPelicula\n" +
+                    "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                    "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                    "inner join sede se on s.Sede_idSede = se.idSede\n" +
+                    "where (p.estado=1 and f.habilitado=1) and s.idSala like ? and f.fecha like ? limit ?,"+cant_result;
+        }else{
+            sql = "select p.idPelicula, p.nombre, p.foto, f.idFuncion, f.precio, f.stock, f.fecha, f.horaInicio, s.numero, se.nombre\n" +
+                    "from pelicula p inner join funcion f on p.idPelicula = f.Pelicula_idPelicula\n" +
+                    "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                    "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                    "inner join sede se on s.Sede_idSede = se.idSede\n" +
+                    "where (p.estado=1 and f.habilitado=1) and s.idSala like ? and f.fecha like ?;";
+        }
+
         try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
-            while (rs.next()) {
-                BFuncion bFuncion = new BFuncion();
-                BSala bSala = new BSala();
-                BSede bSede = new BSede();
-                BPelicula bPelicula = new BPelicula();
-                bPelicula.setIdPelicula(rs.getInt(1));
-                bPelicula.setNombre(rs.getString(2));
-                bPelicula.setFoto(rs.getString(3));
-                bFuncion.setIdFuncion(rs.getInt(4));
-                bFuncion.setPrecio(rs.getDouble(5));
-                bFuncion.setStock(rs.getInt(6));
-                bFuncion.setFecha(rs.getString(7));
-                bFuncion.setHoraInicio(rs.getString(8));
-                bSala.setNumero(rs.getInt(9));
-                bSede.setNombre(rs.getString(10));
-                bFuncion.setbSala(bSala);
-                bFuncion.setbPelicula(bPelicula);
-                bFuncion.setbSede(bSede);
-                listaDeFunciones.add(bFuncion);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, "%"+idSede+"%");
+            pstmt.setString(2, "%"+fecha+"%");
+            if(limit){
+                pstmt.setInt(3, posicion);
+            }
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BFuncion bFuncion = new BFuncion();
+                    BSala bSala = new BSala();
+                    BSede bSede = new BSede();
+                    BPelicula bPelicula = new BPelicula();
+                    bPelicula.setIdPelicula(rs.getInt(1));
+                    bPelicula.setNombre(rs.getString(2));
+                    bPelicula.setFoto(rs.getString(3));
+                    bFuncion.setIdFuncion(rs.getInt(4));
+                    bFuncion.setPrecio(rs.getDouble(5));
+                    bFuncion.setStock(rs.getInt(6));
+                    bFuncion.setFecha(rs.getString(7));
+                    bFuncion.setHoraInicio(rs.getString(8));
+                    bSala.setNumero(rs.getInt(9));
+                    bSede.setNombre(rs.getString(10));
+                    bFuncion.setbSala(bSala);
+                    bFuncion.setbPelicula(bPelicula);
+                    bFuncion.setbSede(bSede);
+                    listaDeFunciones.add(bFuncion);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return listaDeFunciones;
+    }
+
+    public ArrayList<BSala> listarSalas(){
+        String sql="select * from sala " +
+                "    inner join sede s on sala.Sede_idSede = s.idSede;";
+        ArrayList<BSala> salas= new ArrayList<>();
+        try(Connection conn= this.getConnection();
+            Statement stmt= conn.createStatement();
+            ResultSet rs= stmt.executeQuery(sql);){
+            while(rs.next()){
+                BSala sala= new BSala();
+                BSede sede= new BSede();
+                sede.setIdSede(rs.getInt(1));
+                sala.setAforo(rs.getInt(2));
+                sala.setIdSala(rs.getInt(3));
+                sala.setNumero(rs.getInt(4));
+                sede.setNombre(rs.getString(6));
+                sede.setDireccion(rs.getString(7));
+                sala.setbSede(sede);
+                salas.add(sala);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return salas;
     }
     public ArrayList<BPersonal> listapersonal(String nombre, String apellido, int pagina, int cant_result, boolean limit) {
 

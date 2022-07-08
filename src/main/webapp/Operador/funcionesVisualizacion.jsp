@@ -1,8 +1,14 @@
-<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
 <%@ page import="com.example.javasticketscentro.Beans.BFuncion" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <jsp:useBean id="listaFunciones" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" />
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="salas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="fechaFiltro" scope="request" type="java.lang.String"/>
+<jsp:useBean id="idSala" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,10 +141,8 @@
                             </a>
                         </div>
                         <div class="p-2">
-                            <a
-                                    href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
-                                    class="text-dark text-decoration-none"
-                            >
+                            <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                    class="text-dark text-decoration-none">
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Gestione Películas</span>
                             </a>
@@ -182,18 +186,20 @@
     </ul>
 
     <!--Barra de búsqueda producto-->
-    <form class="mb-4">
-        <div class="input-group justify-content-center">
+    <form class="mb-4" method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=filtrar">
+        <div class="input-group justify-content-lg-end">
             <div class="form-outline" style="width: 36%">
-                <input
-                        type="search"
-                        id="form1"
-                        class="form-control"
-                        placeholder="Buscar producto"/>
+                <div class="rows-auto">
+                    <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar</button>
+                </div>
+                <input type="date" value="<%=fechaFiltro%>" name="fechaFiltro">
+                <select name="idSala"  class="frm-field required sect">
+                    <option value="-1">Filtrar por Sala</option>
+                    <%for(BSala bsalas : salas){%>
+                    <option <%=idSala.equals(""+bsalas.getIdSala())?"selected":""%> value="<%=bsalas.getIdSala()%>"><%="Sede: "+bsalas.getbSede().getNombre()+"&nbsp;&nbsp;&nbsp;&nbsp;N°Sala: "+bsalas.getNumero()%></option>
+                    <%}%>
+                </select>
             </div>
-            <button type="button" class="btn btn-tele border-start-1">
-                <i class="fas fa-search"></i>
-            </button>
         </div>
         <br>
     </form>
@@ -259,19 +265,41 @@
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+
+                    <%for(i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>
