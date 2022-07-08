@@ -1,12 +1,18 @@
 package com.example.javasticketscentro.Servlets;
 
+import com.example.javasticketscentro.Beans.BFuncion;
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.OperadorDao;
+import com.example.javasticketscentro.JavaPDF;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 
 @WebServlet(name = "OperadorFuncionesServlet", value = "/OperadorFuncionesServlet")
 public class OperadorFuncionesServlet extends HttpServlet {
@@ -68,6 +74,29 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 int pagina= Integer.parseInt(request.getParameter("pagina"));
                 session.setAttribute("pagina", pagina);
                 response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                break;
+            case "descargar":
+                String fechaFiltro=request.getParameter("fechaFiltro");
+                String idSala= request.getParameter("idSala");
+                try(PrintWriter salir =  response.getWriter()) {
+                    int i = 1;
+                    String text = "#%Película%Precio por Ticket%Stock%Hora de Inicio\n";
+                    for(BFuncion funcion : operadorDao.listarFunciones(fechaFiltro, idSala, 1,cant_resultFunciones, false)){
+                        text += i+".%"+funcion.getbPelicula().getNombre()+"%"+funcion.getPrecio()+
+                                "%"+funcion.getStock()+"%"+funcion.getHoraInicio()+"\n";
+                        i ++;
+                    }
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=funciones.pdf");
+                    JavaPDF javaPDF= new JavaPDF();
+                    byte[] pdf= javaPDF.pdfFuncionTable(text);
+                    InputStream in =new ByteArrayInputStream(pdf);
+                    int f;
+                    while((f=in.read())!=-1){
+                        salir.write(f);
+                    }
+                    in.close();
+                }
                 break;
         }
     }

@@ -186,6 +186,15 @@
     </ul>
 
     <!--Barra de búsqueda producto-->
+    <%if(!idSala.equals("")&&!fechaFiltro.equals("")){%>
+    <%if(!idSala.equals("-1")){%>
+    <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=descargar">
+        <input type="hidden" value="<%=fechaFiltro%>" name="fechaFiltro">
+        <input type="hidden" value="<%=idSala%>" name="idSala">
+        <button type="submit" class="page-link" href="#">Descargar Lista</button>
+    </form>
+    <%}%>
+    <%}%>
     <form class="mb-4" method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=filtrar">
         <div class="input-group justify-content-lg-end">
             <div class="form-outline" style="width: 36%">

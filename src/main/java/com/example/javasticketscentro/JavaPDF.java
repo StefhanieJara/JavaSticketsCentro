@@ -107,7 +107,7 @@ public class JavaPDF {
         return baos1.toByteArray();
     }
 
-    public byte[] pdfOperadoresTable(String text) throws IOException {
+    public byte[] pdfFuncionTable(String text) throws IOException {
 
         //DOCUMENTO PDF
         int marginTop = 20; // Margen que yo quiera
@@ -151,27 +151,27 @@ public class JavaPDF {
 
         String lineaDirec="";
         int cant_Saltos, minLogintudSalto=23;
-        int cellWidthDireccion=150, cellWidthCorreo=170, cellWidthNum=30, cellWidthNombres=100;
+        int cellWidthHoraInicio=100, cellWidthPpT=100, cellWidthNum=30, cellWidthNomPeli=150;
         int cellHeightDinamic;
         //Creamos la tabla
         for(int i=0;i<rowCount;i++){
-            cant_Saltos= hallarSaltos(tablaOperadores[i][4],font,fontsize,cellWidthDireccion);
+            cant_Saltos= hallarSaltos(tablaOperadores[i][1],font,fontsize,cellWidthNomPeli);
             cellHeightDinamic=cellHeight*(cant_Saltos+1);
 
             for(int j=0;j<colCount;j++){
                 cellWidth=70;
                 if(j==4){
-                    cellWidth= cellWidthDireccion;
+                    cellWidth= cellWidthHoraInicio;
                 }if(j==2){
-                    cellWidth= cellWidthCorreo;
+                    cellWidth= cellWidthPpT;
                 }if(j==0){
                     cellWidth= cellWidthNum;
                 }if(j==1){
-                    cellWidth= cellWidthNombres;
+                    cellWidth= cellWidthNomPeli;
                 }
                 contentStream.addRect(init_x,init_y, cellWidth,-cellHeightDinamic);
 
-                if(j==4){
+                if(j==1){
                     String[] deletro=tablaOperadores[i][j].split("");
                     int salto=0;
                     for(int n=0;n<(cant_Saltos+1);n++){

@@ -132,28 +132,6 @@ public class ListarOperadorServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaOp.jsp");
                 requestDispatcher.forward(request,response);
                 break;
-            case "descargar" :
-                try(PrintWriter salir =  response.getWriter()) {
-                    int i = 1;
-                    String text = "#%Nombres%Email%Teléfono%Dirección\n";
-                    for(BPersona operador : adminDao.listarOperador("","","","",1,100, true)){
-                        text += i+".%"+operador.getNombre()+" "+operador.getApellido()+"%"+operador.getEmail()+
-                                "%"+operador.getNumCel()+"%"+operador.getDireccion()+"\n";
-                        i ++;
-                    }
-                    response.setContentType("application/pdf");
-                    response.setHeader("Content-Disposition", "attachment; filename=listaOperadores.pdf");
-                    JavaPDF javaPDF= new JavaPDF();
-                    byte[] pdf= javaPDF.pdfOperadoresTable(text);
-                    InputStream in =new ByteArrayInputStream(pdf);
-                    int f;
-                    while((f=in.read())!=-1){
-                        salir.write(f);
-                    }
-                    in.close();
-                }
-                break;
-
         }
     }
 
