@@ -110,6 +110,7 @@ public class HistorialDao extends BaseDao{
             PeliculaDao habilitar= new PeliculaDao();
             habilitar.habilitarFuncion(funcionId);
         }
+        actualizarCompra(ticketId,costoTotalCompra(ticketId)-calcularCostoTicket(ticketId,funcionId));
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, ticketId);
@@ -123,7 +124,52 @@ public class HistorialDao extends BaseDao{
         }
 
     }
-
+    private double costoTotalCompra(String idCompra){
+        String sql="select c.montoTotal from compra c where idCompra=?";
+        double costo=0.0;
+        try(Connection conn=this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setString(1,idCompra);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    costo= rs.getDouble(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return costo;
+    }
+    private void actualizarCompra(String idCompra,double costo){
+        String sql="update compra set montoTotal=? where idCompra=?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setDouble(1,costo);
+            pstmt.setString(2, idCompra);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private double calcularCostoTicket(String ticketId,int funcionId){
+        String sql="select t.cantidadButaca*f.precio from ticket t " +
+                "inner join funcion f on t.Funcion_idFuncion = f.idFuncion " +
+                "where t.Compra_idCompra=? and f.idFuncion=?;";
+        double costo= 0.0;
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt=conn.prepareStatement(sql)){
+            pstmt.setString(1, ticketId);
+            pstmt.setInt(2, funcionId);
+            try(ResultSet rs= pstmt.executeQuery()  ;){
+                if(rs.next()){
+                    costo= rs.getDouble(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return costo;
+    }
     private boolean entradasAgotadas(int idFuncion){
         boolean agotado=false;
         String sql="select  f.stock-sum(t.cantidadButaca) as `butacasRestantes`, f.idFuncion " +
