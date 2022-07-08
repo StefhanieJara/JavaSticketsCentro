@@ -232,15 +232,8 @@
                             <div class="row">
                                 <div class="col-md-12 mb-4 pb-2">
                                     <div class="form-outline">
-                                        <label class="form-label" for="productoDescription"
-                                        >Sinopsis</label
-                                        >
-                                        <input
-                                                type="text"
-                                                name="sinopsis"
-                                                id="productoDescription"
-                                                class="form-control"
-                                        >
+                                        <label class="form-label" for="productoDescription">Sinopsis</label>
+                                        <textarea name="sinopsis" id="productoDescription" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>

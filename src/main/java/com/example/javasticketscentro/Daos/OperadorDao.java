@@ -67,6 +67,23 @@ public class OperadorDao extends BaseDao{
         }
     }
 
+    public void actualizarPelicula(int idPelicula, String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
+        String sql = "update pelicula set nombre = ?, restriccionEdad = ?, sinopsis = ?, duracion = ?, foto= ?, genero = ? where idPelicula=?;";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, restriccion);
+            pstmt.setString(3, sinopsis);
+            pstmt.setString(4, duracion);
+            pstmt.setString(5, URLFoto);
+            pstmt.setString(6, genero);
+            pstmt.setInt(7, idPelicula);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public void crearPelicula(String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
         String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero, estado)\n" +
                 "values (?, ?, ?, ?, ?,?,?,1);";
@@ -83,6 +100,29 @@ public class OperadorDao extends BaseDao{
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public BPelicula obtenerPelicula(int idPelicula){
+        BPelicula pelicula = new BPelicula();
+        String sql = "select * from pelicula where idPelicula=?";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt= connection.prepareStatement(sql)){
+            pstmt.setInt(1, idPelicula);
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    pelicula.setIdPelicula(rs.getInt(1));
+                    pelicula.setNombre(rs.getString(2));
+                    pelicula.setRestriccionEdad(rs.getString(3));
+                    pelicula.setSinopsis(rs.getString(4));
+                    pelicula.setDuracion(rs.getString(5));
+                    pelicula.setFoto(rs.getString(6));
+                    pelicula.setGenero(rs.getString(8));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return pelicula;
     }
 
     public ArrayList<BFuncion> listarFunciones(String fecha, String idSede, int pagina, int cant_result, boolean limit){

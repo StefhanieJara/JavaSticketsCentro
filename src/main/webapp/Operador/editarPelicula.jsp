@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula" class="com.example.javasticketscentro.Beans.BPelicula"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,11 +103,20 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Gestione Funciones</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Películas</span>
                                 </a>
                             </div>
                             <div class="p-2">
@@ -133,126 +143,103 @@
         </div>
     </div>
 </body>
-    <br><br><br><br><br><br><br><br>
-<section class="vh-100">
-    <div class="container py-4 h-100">
+<section class="vh-100 py-5">
+    <div class="container py-2 h-50">
+
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
                 <div
                         class="card shadow-2-strong card-registration"
-                        style="border-radius: 15px"
+                        style="border-radius: 15px; margin-top: 100px"
                 >
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-2">Editar función</h4>
+                        <h4 class="my-8">Editar película</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Nombre de la pelicula</label
-                                        >
+                                        <label class="form-label">Nombre de la pelicula</label>
                                         <input
+                                                required
                                                 type="text"
+                                                name="nombrePeli"
                                                 class="form-control"
                                                 placeholder="Ingrese el nombre de la película"
+                                                value="<%=pelicula.getNombre()%>"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Género de la pelicula</label
-                                        >
+                                        <label class="form-label">Genero</label>
                                         <input
+                                                required
                                                 type="text"
-                                                id="productName"
+                                                name="genero"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"
+                                                placeholder="Ingrese el género de la pelicula"
+                                                value="<%=pelicula.getGenero()%>"
                                         />
                                     </div>
-                                </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label">Ingrese la duración de la pelicula</label>
+                                        <input
+                                                required
+                                                type="time"
+                                                name="tiempo"
+                                                class="form-control"
+                                                placeholder="Ingrese la duracion de la pelicula"
+                                                value="<%=pelicula.getDuracion()%>"
+                                        />
+                                    </div>
 
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label">Restricción de edad</label>
+                                        <select
+                                                name="restriccionEdad"
+                                                class="frm-field required sect"
+                                        >
+                                            <option selected="true"><%=pelicula.getRestriccionEdad()%></option>
+                                            <option>Para todo publico (AA)</option>
+                                            <option>+12 (B)</option>
+                                            <option>+15(B15)</option>
+                                            <option>+18 (C)</option>
+                                            <option>Explicitas o lenguaje violento(D)</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label"
-                                    >Imagen Referencial</label
-                                    >
+                                    <label class="form-label">Imagen</label>
                                     <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="img/doctorStrange.jpg"
-                                                class="img-thumbnail"
-                                                width="100px"
-                                                height="100px"
-                                                alt="medicamento"
-                                        />
+                                        <img id="img-preview" src="<%=pelicula.getFoto()%>" style="max-width: 300px; resize: both; max-width: 300px" />
                                     </div>
-                                    <input class="form-control" type="file" id="formFile" />
-
                                     <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
+                                        <input type="file" id="img-uploader">
                                     </div>
-                                    <div class="d-flex justify-content-start my-3">
-                                        <div class="pb-1">
-                                            ¿Desea cambiar el aforo?&nbsp;&nbsp;&nbsp;
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="siReceta"
-                                                    value="option1"
-                                                    checked
-                                            />
-                                            <label class="form-check-label" for="siReceta"
-                                            >Sí</label
-                                            >
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="noReceta"
-                                                    value="option2"
-                                            />
-                                            <label class="form-check-label" for="noReceta"
-                                            >No</label
-                                            >
-                                        </div>
-                                    </div>
+                                    <progress id="img-upload-bar" width="10px" value="0" max="100"
+                                              style="width: 100%"></progress>
+                                    <input type="hidden" name="photoUrl" id="photoUrl" />
+                                </div>
+                            </div>
 
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productStock"
-                                        >Stock de tickets disponible</label
-                                        >
-                                        <input
-                                                type="number"
-                                                id="productStock"
-                                                class="form-control"
-                                                placeholder="0"
-                                        />
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="productoDescription">Sinopsis</label>
+                                        <textarea name="sinopsis" id="productoDescription" class="form-control"><%=pelicula.getSinopsis()%></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="">
-                                <a
-                                        href="<%=request.getContextPath()%>/editarPeliculaServlet"
-                                        class="btn btn-danger"
-                                >Editar Pelicula</a>
-                            </div>
+                            <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
+                            <button type="submit" id="enviar" class="btn btn-danger">Siguiente: Editar celebridades</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 
