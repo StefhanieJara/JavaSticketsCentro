@@ -87,7 +87,7 @@ public class PeliculaDao extends BaseDao {
                     bFuncion.setStock(resultSet.getInt(9)==0? resultSet.getInt(8) : resultSet.getInt(9));
                     bSala.setbSede(bSede);
                     bFuncion.setbSala(bSala);
-                    if(!deshabilitarFuncion(bFuncion)){
+                    if(!deshabilitarFuncion(bFuncion, false)){
                         listaFunciones.add(bFuncion);
                     }
                 }
@@ -99,13 +99,13 @@ public class PeliculaDao extends BaseDao {
         return listaFunciones;
     }
 
-    public boolean deshabilitarFuncion(BFuncion bFuncion) throws ParseException {
+    public boolean deshabilitarFuncion(BFuncion bFuncion, boolean sinButacas) throws ParseException {
         boolean deshabilitar= true;
         CarritoDao carrito=new CarritoDao();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
         Date date_now=dateFormat.parse(carrito.obtenerFechaActual());
         Date date_funcion= dateFormat.parse(bFuncion.getFecha());
-        if(date_funcion.before(date_now)){
+        if(sinButacas){
             String sql="update funcion set habilitado=0 where idFuncion=?";
             try(Connection conn= this.getConnection();
                 PreparedStatement pstmt= conn.prepareStatement(sql);){
@@ -115,8 +115,20 @@ public class PeliculaDao extends BaseDao {
                 e.printStackTrace();
             }
         }else{
-            deshabilitar=false;
+            if(date_funcion.before(date_now)){
+                String sql="update funcion set habilitado=0 where idFuncion=?";
+                try(Connection conn= this.getConnection();
+                    PreparedStatement pstmt= conn.prepareStatement(sql);){
+                    pstmt.setInt(1,bFuncion.getIdFuncion());
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                deshabilitar=false;
+            }
         }
+
         return deshabilitar;
     }
     public ArrayList<Bticket> funcionesDelCliente(int idClient){

@@ -84,7 +84,6 @@ public class UsuarioCarritoIndex extends HttpServlet {
                     session.setAttribute("msg", "numTaroCVV");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 } catch (MessagingException | WriterException e) {
-                    e.printStackTrace();
                     session.setAttribute("msg", "errorAntivirus");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 }
@@ -111,8 +110,6 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 }
                 break;
             case "cambiarTarjeta":
-                String path=request.getParameter("BrowseFolder");
-                System.out.println("Path escogido: " +path);
                 String idTarjeta= request.getParameter("tarjeta");
                 int idT= Integer.parseInt(idTarjeta);
                 request.setAttribute("tarjetaSelect",carritoDao.buscarTarjeta(idT));

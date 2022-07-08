@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -343,9 +344,20 @@ public class CarritoDao extends BaseDao {
             pstmt.setDouble(1, total);
             pstmt.setString(2, fechaActual);
             pstmt.setString(3, compra.getIdCompra());
+
+            //Si se compraron todos los boletos, se dehabilita
+            PeliculaDao dehabilitar= new PeliculaDao();
+            for (Bticket bticket : btickets) {
+                if((bticket.getbFuncion().getStock()-bticket.getCantButaca())==0){
+                    dehabilitar.deshabilitarFuncion(bticket.getbFuncion(), true);
+                }
+            }
+
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al comprar la compra");
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
