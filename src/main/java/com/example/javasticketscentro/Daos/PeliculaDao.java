@@ -99,6 +99,17 @@ public class PeliculaDao extends BaseDao {
         return listaFunciones;
     }
 
+    public void habilitarFuncion(int idFuncion){
+        String sql="update funcion set habilitado=1 where idFuncion=?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idFuncion);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean deshabilitarFuncion(BFuncion bFuncion, boolean sinButacas) throws ParseException {
         boolean deshabilitar= true;
         CarritoDao carrito=new CarritoDao();

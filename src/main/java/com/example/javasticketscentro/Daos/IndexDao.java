@@ -39,7 +39,7 @@ public class IndexDao extends BaseDao{
         ArrayList<BPelicula> lista= new ArrayList<>();
         String sql= "select p.idPelicula, p.nombre, p.foto, p.calificacionPelicula, f.fecha from pelicula p " +
                 "inner join funcion f on p.idPelicula = f.Pelicula_idPelicula " +
-                "where f.fecha>=CURRENT_DATE and p.estado=1" +
+                "where f.habilitado=1 and p.estado=1" +
                 " group by p.idPelicula " + //APARECE ERROR, PERO FUNCIONA XD NO TOCAR
                 "order by p.calificacionPelicula desc, f.fecha asc " +
                 "limit 0,16"; //Inprimimos los 16 mejores calificados, que no hayan pasado sus funciones y

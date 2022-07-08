@@ -1,10 +1,12 @@
 
 package com.example.javasticketscentro.Daos;
 
+import com.example.javasticketscentro.Beans.BFuncion;
 import com.example.javasticketscentro.Beans.Bhistorial;
 import com.example.javasticketscentro.Beans.Bhistorial_detalle;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class HistorialDao extends BaseDao{
@@ -104,6 +106,10 @@ public class HistorialDao extends BaseDao{
     public void borrar(String ticketId, int funcionId) {
         String sql = "delete from ticket where (Compra_idCompra = ? and Funcion_idFuncion = ?)";
 
+        if(entradasAgotadas(funcionId)){
+            PeliculaDao habilitar= new PeliculaDao();
+            habilitar.habilitarFuncion(funcionId);
+        }
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, ticketId);
@@ -117,6 +123,30 @@ public class HistorialDao extends BaseDao{
         }
 
     }
+
+    private boolean entradasAgotadas(int idFuncion){
+        boolean agotado=false;
+        String sql="select  f.stock-sum(t.cantidadButaca) as `butacasRestantes`, f.idFuncion " +
+                "from funcion f " +
+                "   inner join ticket t on f.idFuncion = t.Funcion_idFuncion " +
+                "   inner join compra c on t.Compra_idCompra = c.idCompra " +
+                "where c.cancelado=1 and idFuncion=? " +
+                "group by f.idFuncion";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idFuncion);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    if(rs.getInt(1)==0){
+                        agotado=true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return agotado;
+    }
     private void borrarCompra(String idCompra){
         String sql = "delete from compra where idCompra = ?";
 
@@ -128,7 +158,6 @@ public class HistorialDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-
     private boolean existeTicket(String idCompra){
         boolean existe=true;
         String sql="select t.Compra_idCompra from compra c " +
