@@ -3,7 +3,10 @@ package com.example.javasticketscentro.Daos;
 import com.example.javasticketscentro.Beans.*;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PeliculaDao extends BaseDao {
 
@@ -52,6 +55,7 @@ public class PeliculaDao extends BaseDao {
         return pelicula;
     }
     public ArrayList<BFuncion> detectarFunciones(int id){
+
         ArrayList<BFuncion> listaFunciones= new ArrayList<>();
         String sql="select f.idFuncion, f.precio,f.stock,f.fecha, f.horaInicio, s2.nombre, s.numero, f.stock, sub.butacasRestantes from funcion f " +
                 "                                left join pelicula p on (p.idPelicula=f.Pelicula_idPelicula) " +
@@ -63,12 +67,13 @@ public class PeliculaDao extends BaseDao {
                 "                                                   inner join ticket t on f.idFuncion = t.Funcion_idFuncion " +
                 "                                                   inner join compra c on t.Compra_idCompra = c.idCompra " +
                 "                                           where c.cancelado=1 group by f.idFuncion) sub on sub.idFuncion=f.idFuncion " +
-                "                                where p.idPelicula=? and CURRENT_DATE<=f.fecha";
+                "                                where p.idPelicula=? and f.habilitado=1";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
             pstmt.setInt(1,id);
             try(ResultSet resultSet= pstmt.executeQuery()){
                 while(resultSet.next()){
+
                     BFuncion bFuncion= new BFuncion();
                     bFuncion.setIdFuncion(resultSet.getInt(1));
                     bFuncion.setPrecio(resultSet.getDouble(2));
@@ -82,16 +87,39 @@ public class PeliculaDao extends BaseDao {
                     bFuncion.setStock(resultSet.getInt(9)==0? resultSet.getInt(8) : resultSet.getInt(9));
                     bSala.setbSede(bSede);
                     bFuncion.setbSala(bSala);
-                    listaFunciones.add(bFuncion);
+
+                    if(!deshabilitarFuncion(bFuncion.getIdFuncion(), bFuncion.getFecha())){
+                        listaFunciones.add(bFuncion);
+                    }
                 }
             }
-        }catch(SQLException e) {
+        }catch(SQLException | ParseException e) {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
         return listaFunciones;
     }
 
+    public boolean deshabilitarFuncion(int idFuncion, String fechaFuncion) throws ParseException {
+        boolean deshabilitar= true;
+        CarritoDao carrito=new CarritoDao();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        Date date_now=dateFormat.parse(carrito.obtenerFechaActual());
+        Date date_funcion= dateFormat.parse(fechaFuncion);
+        if(date_funcion.before(date_now)){
+            String sql="update funcion set habilitado=0 where idFuncion=?";
+            try(Connection conn= this.getConnection();
+                PreparedStatement pstmt= conn.prepareStatement(sql);){
+                pstmt.setInt(1,idFuncion);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else{
+            deshabilitar=false;
+        }
+        return deshabilitar;
+    }
     public ArrayList<Bticket> funcionesDelCliente(int idClient){
         String sql= "select p.idPersona , c.idCompra,c.cancelado, " +
                 "                       t.cantidadButaca, t.carrito,f.idFuncion, f.fecha, f.horaInicio, s2.nombre, s.numero from persona p " +

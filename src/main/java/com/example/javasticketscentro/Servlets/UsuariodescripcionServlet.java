@@ -68,7 +68,6 @@ public class UsuariodescripcionServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/UsuariologinclientServlet");
                 }else{
                     try{
-
                         int idFuncionesco= Integer.parseInt(idStrFuncionEscogida);
                         carritoDao.anadirTicket(idFuncionesco, usuario.getIdPer());
                         session.setAttribute("msg", "anadirTicket");

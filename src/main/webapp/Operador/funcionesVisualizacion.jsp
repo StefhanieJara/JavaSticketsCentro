@@ -212,7 +212,9 @@
         </div>
         <br>
     </form>
-
+    <%if(!idSala.equals("") || !fechaFiltro.equals("")){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}%>
     <!--Productos-->
     <% int i=0; for (BFuncion funcion :  listaFunciones) {%>
     <hr class="mx-md-5 mx-sm-3" />
@@ -268,7 +270,7 @@
     <hr class="mx-md-5 mx-sm-3" />
     <%i++;}%>
 
-
+    <%if(cant_paginas>1){%>
     <!--Paginación-->
     <div class="container">
         <div class="d-flex justify-content-center my-3">
@@ -313,7 +315,7 @@
             </nav>
         </div>
     </div>
-
+    <%}%>
     <!--Modal eliminar producto: Producto pendiente para pedido-->
     <%i=0; for (BFuncion funcion : listaFunciones) {%>
     <div class="modal fade" id="eliminar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >

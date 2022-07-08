@@ -3,6 +3,7 @@ package com.example.javasticketscentro.Daos;
 import com.example.javasticketscentro.Beans.*;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.concurrent.locks.StampedLock;
 
@@ -126,6 +127,7 @@ public class OperadorDao extends BaseDao{
     }
 
     public ArrayList<BFuncion> listarFunciones(String fecha, String idSede, int pagina, int cant_result, boolean limit){
+        PeliculaDao funcionDeshab=new PeliculaDao();
         ArrayList<BFuncion> listaDeFunciones = new ArrayList<>();
         String sql;
         int posicion=0;
@@ -172,8 +174,12 @@ public class OperadorDao extends BaseDao{
                     bFuncion.setbSala(bSala);
                     bFuncion.setbPelicula(bPelicula);
                     bFuncion.setbSede(bSede);
+
+                    funcionDeshab.deshabilitarFuncion(bFuncion.getIdFuncion(), bFuncion.getFecha());
                     listaDeFunciones.add(bFuncion);
                 }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

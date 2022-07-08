@@ -13,7 +13,7 @@ public class IndexDao extends BaseDao{
     public ArrayList<BPelicula> listaPeliculas(String filtro){
         ArrayList<BPelicula> listaPelis= new ArrayList<>();
         if(!filtro.equals("")){
-            String sql = "SELECT idPelicula, nombre, foto FROM pelicula where nombre like ?";
+            String sql = "SELECT idPelicula, nombre, foto FROM pelicula where nombre like ? and estado=1";
             try (Connection conn = this.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, "%"+filtro+"%");
@@ -39,8 +39,8 @@ public class IndexDao extends BaseDao{
         ArrayList<BPelicula> lista= new ArrayList<>();
         String sql= "select p.idPelicula, p.nombre, p.foto, p.calificacionPelicula, f.fecha from pelicula p " +
                 "inner join funcion f on p.idPelicula = f.Pelicula_idPelicula " +
-                "where f.fecha>=CURRENT_DATE " +
-                "group by p.idPelicula " + //APARECE ERROR, PERO FUNCIONA XD NO TOCAR
+                "where f.fecha>=CURRENT_DATE and p.estado=1" +
+                " group by p.idPelicula " + //APARECE ERROR, PERO FUNCIONA XD NO TOCAR
                 "order by p.calificacionPelicula desc, f.fecha asc " +
                 "limit 0,16"; //Inprimimos los 16 mejores calificados, que no hayan pasado sus funciones y
                 //que los más próximos
