@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaPersonal" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPersonal>" />
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 <html lang="en">
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -180,8 +182,7 @@
                             <div class="p-2">
                                 <a
                                         href="<%=request.getContextPath()%>/operador_estadisticasServlet"
-                                        class="text-dark text-decoration-none"
-                                >
+                                        class="text-dark text-decoration-none">
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Visualizar Estadísticas</span>
                                 </a>
@@ -275,27 +276,51 @@
             <%i++;}%>
         </table>
     </div>
-
+    <%if(cant_paginas!=1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+
+                    <%for(i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>
     </div>
-
+    <%}%>
     <!--Modal eliminar producto: Producto pendiente para pedido-->
     <%i=0;for (BPersonal personal : listaPersonal) {%>
     <div    class="modal fade"

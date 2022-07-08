@@ -37,18 +37,28 @@ public class OperadorDao extends BaseDao{
         }
         return listapeliculas;
     }
-    public ArrayList<BPersonal> listapersonal(String nombre, String apellido) {
+    public ArrayList<BPersonal> listapersonal(String nombre, String apellido, int pagina, int cant_result, boolean limit) {
 
         ArrayList<BPersonal> listapersonal = new ArrayList<>();
-
-        String sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per " +
-                "                inner join sede se on per.Sede_idSede= se.idSede " +
-                "where per.nombre like ? and per.apellido like ?;";
-
+        String sql;
+        int posicion=0;
+        if(limit){
+            posicion=(pagina-1)*cant_result;
+            sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per " +
+                    "                inner join sede se on per.Sede_idSede= se.idSede " +
+                    "where per.nombre like ? and per.apellido like ? limit ?,"+cant_result;
+        }else{
+            sql = "select per.idPersonal,per.nombre, per. apellido, per.Sede_idSede, se.nombre from personal per " +
+                    "                inner join sede se on per.Sede_idSede= se.idSede " +
+                    "where per.nombre like ? and per.apellido like ?;";
+        }
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             pstmt.setString(1, "%"+nombre+"%");
             pstmt.setString(2, "%"+apellido+"%");
+            if(limit){
+                pstmt.setInt(3, posicion);
+            }
             try(ResultSet rs= pstmt.executeQuery();){
                 while (rs.next()) {
                     BPersonal bPersonal = new BPersonal();

@@ -18,6 +18,8 @@ import java.io.IOException;
 
 @WebServlet(name = "personalServlet", urlPatterns = {"/personalServlet"})
 public class personalServlet extends HttpServlet {
+    private static int cant_resultPersonal=5;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
@@ -26,9 +28,14 @@ public class personalServlet extends HttpServlet {
         HttpSession s= request.getSession();
         String nombrefil=s.getAttribute("nombrefil")==null?"":(String)s.getAttribute("nombrefil");
         String apellidofil=s.getAttribute("apellidofil")==null?"":(String)s.getAttribute("apellidofil");
+        int pagina= s.getAttribute("pagina")==null?1:(int)s.getAttribute("pagina");
+        s.removeAttribute("pagina");
         switch (action){
             case "listar" -> {
-                request.setAttribute("listaPersonal",operadorDao.listapersonal(nombrefil,apellidofil));
+                request.setAttribute("listaPersonal",operadorDao.listapersonal(nombrefil,apellidofil, pagina, cant_resultPersonal, true));
+                int cant_paginas=(int)Math.ceil((double)operadorDao.listapersonal(nombrefil,apellidofil, pagina, cant_resultPersonal, false).size()/cant_resultPersonal);
+                request.setAttribute("cant_paginas", cant_paginas);
+                request.setAttribute("pagina", pagina);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/personal.jsp");
                 requestDispatcher.forward(request,response);
             }
@@ -139,6 +146,11 @@ public class personalServlet extends HttpServlet {
             case "filtrar"->{
                 session.setAttribute("nombrefil", nombre);
                 session.setAttribute("apellidofil", apellido);
+                response.sendRedirect(request.getContextPath() + "/personalServlet");
+            }
+            case "paginar"->{
+                int pagina= Integer.parseInt(request.getParameter("pagina"));
+                session.setAttribute("pagina", pagina);
                 response.sendRedirect(request.getContextPath() + "/personalServlet");
             }
         }

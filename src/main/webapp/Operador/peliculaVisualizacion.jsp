@@ -32,6 +32,7 @@
     ></script>
 </head>
 <body>
+    <%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>
 <!--Botón flotante "+" para agregar producto-->
 <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>

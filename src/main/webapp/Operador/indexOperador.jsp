@@ -31,7 +31,7 @@
     ></script>
 </head>
 <body>
-
+<%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>
 <nav
         class="navbar navbar-expand-md fixed-top shadow-sm justify-content-center bg-danger"
 >
