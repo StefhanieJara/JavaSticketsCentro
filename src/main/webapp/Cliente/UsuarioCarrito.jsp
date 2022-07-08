@@ -222,7 +222,7 @@
                                     </button>
                                     <input class="form-control border-start-0 border-end-0 text-center"
                                            type="number" style="width:46px;" id="contador"
-                                           value="<%=bticket.getCantButaca()==0 ? "1": bticket.getCantButaca()%>" name="butacas" min="1"/>
+                                           value="<%=bticket.getCantButaca()==0 ? "1": bticket.getCantButaca()%>" max="<%=bticket.getbFuncion().getStock()%>" name="butacas" min="1"/>
                                     <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                                             class="btn btn-tele" id="mas" type="button">
                                         <i class="fas fa-plus fa-xs"></i>

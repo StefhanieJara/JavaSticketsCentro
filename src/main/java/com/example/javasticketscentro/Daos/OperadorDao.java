@@ -175,7 +175,7 @@ public class OperadorDao extends BaseDao{
                     bFuncion.setbPelicula(bPelicula);
                     bFuncion.setbSede(bSede);
 
-                    funcionDeshab.deshabilitarFuncion(bFuncion.getIdFuncion(), bFuncion.getFecha());
+                    funcionDeshab.deshabilitarFuncion(bFuncion);
                     listaDeFunciones.add(bFuncion);
                 }
             } catch (ParseException e) {
