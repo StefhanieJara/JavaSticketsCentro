@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listapeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" />
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +19,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP-Lista de películas</title>
+    <title>Centro Cultural PUCP-Lista de peliculas</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,6 +34,7 @@
     ></script>
 </head>
 <body>
+    <%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>
 <!--Botón flotante "+" para agregar producto-->
 <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
@@ -49,7 +52,7 @@
         <div
                 class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
         >
-            <a class="navbar-brand py-0">
+            <a class="navbar-brand py-0" href="usuario.html">
                 <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
             </a>
         </div>
@@ -178,22 +181,25 @@
     </ul>
 
     <!--Barra de búsqueda producto-->
-    <form class="mb-4">
+    <form class="mb-4" method="post" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=buscar">
         <div class="input-group justify-content-center">
             <div class="form-outline" style="width: 36%">
-                <input
+                <input  value="<%=session.getAttribute("filtrnombre")==null?"":session.getAttribute("filtrnombre")%>"
+                        name="filtrnombre"
                         type="search"
-                        id="form1"
                         class="form-control"
-                        placeholder="Buscar producto"/>
+                        placeholder="Buscar Película"/>
             </div>
-            <button type="button" class="btn btn-tele border-start-1">
+            <button type="submit" class="btn btn-tele border-start-1">
                 <i class="fas fa-search"></i>
             </button>
         </div>
         <br>
     </form>
-
+    <%if(session.getAttribute("filtrnombre")!=null){%>
+    <%if(!session.getAttribute("filtrnombre").equals("")){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}}%>
     <!--Productos-->
     <% int i=0; for (BPelicula pelicula : listapeliculas ) {%>
     <hr class="mx-md-5 mx-sm-3" />
@@ -226,8 +232,6 @@
             <p class="mb-4">
                 <%=pelicula.getGenero()%>
             </p>
-            <h6 class="mt-1">Hora: <b><%=pelicula.getHoraInicio()%></b></h6>
-            <h6 class="mt-1">Fecha: <b><%=pelicula.getFecha()%></b></h6>
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
@@ -251,29 +255,51 @@
     <hr class="mx-md-5 mx-sm-3" />
     <%i++;}%>
     <!--Paginación-->
-
+    <%if(cant_paginas!=1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link">Anterior</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
-                    </li>
+                    <form method="post" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina-1%>">
+                        <%if(pagina==1){%>
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link">Anterior</button>
+                        </li>
+                        <%}%>
+                    </form>
+
+                    <%for(i=1;i<=cant_paginas;i++){%>
+                    <form method="post" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=i%>">
+                        <%if(i==pagina){%>
+                        <li class="page-item active"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}else{%>
+                        <li class="page-item"><button type="submit" class="page-link" href="#"><%=i%></button></li>
+                        <%}%>
+                    </form>
+                    <%}%>
+                    <form method="post" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=paginar">
+                        <input type="hidden" name="pagina" value="<%=pagina+1%>">
+                        <%if(pagina==cant_paginas){%>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Siguiente</a>
+                        </li>
+                        <%}else{%>
+                        <li class="page-item">
+                            <button type="submit" class="page-link" href="#">Siguiente</button>
+                        </li>
+                        <%}%>
+                    </form>
                 </ul>
             </nav>
         </div>
     </div>
-
+    <%}%>
     <!--Modal eliminar producto: Producto pendiente para pedido-->
 
     <%i=0; for (BPelicula pelicula : listapeliculas ) {%>
@@ -290,7 +316,7 @@
                     ¿Está seguro de realizar esta acción?
                     <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=borrar">
                         <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <br>
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
                 </div>

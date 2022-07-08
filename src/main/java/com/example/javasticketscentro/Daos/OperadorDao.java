@@ -7,26 +7,36 @@ import java.util.ArrayList;
 
 public class OperadorDao extends BaseDao{
 
-    public ArrayList<BPelicula> listapeliculas() {
-
+    public ArrayList<BPelicula> listapeliculas(String nombre, int pagina, int cant_result, boolean limit) {
+        String sql;
         ArrayList<BPelicula> listapeliculas = new ArrayList<>();
-
-        String sql = "select pe.idPelicula, pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe where estado=1;";
-
+        int posicion=0;
+        if(limit){
+            posicion=(pagina-1)*cant_result;
+            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe " +
+                    "where pe.nombre like ? limit ?,"+cant_result;
+        }else{
+            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe " +
+                    "where pe.nombre like ? ";
+        }
         try (Connection connection = this.getConnection();
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
-
-            while (rs.next()) {
-                BPelicula bPelicula = new BPelicula();
-                bPelicula.setIdPelicula(rs.getInt(1));
-                bPelicula.setNombre(rs.getString(2));
-                bPelicula.setRestriccionEdad(rs.getString(3));
-                bPelicula.setSinopsis(rs.getString(4));
-                bPelicula.setDuracion(rs.getString(5));
-                bPelicula.setGenero(rs.getString(6));
-                bPelicula.setFoto(rs.getString(7));
-                listapeliculas.add(bPelicula);
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, "%"+nombre+"%");
+            if(limit){
+                pstmt.setInt(2, posicion);
+            }
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BPelicula bPelicula = new BPelicula();
+                    bPelicula.setIdPelicula(rs.getInt(1));
+                    bPelicula.setNombre(rs.getString(2));
+                    bPelicula.setRestriccionEdad(rs.getString(3));
+                    bPelicula.setSinopsis(rs.getString(4));
+                    bPelicula.setDuracion(rs.getString(5));
+                    bPelicula.setGenero(rs.getString(6));
+                    bPelicula.setFoto(rs.getString(7));
+                    listapeliculas.add(bPelicula);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -55,7 +65,6 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-
 
 
     public void crearPelicula(String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
@@ -152,6 +161,7 @@ public class OperadorDao extends BaseDao{
         }
         return listapersonal;
     }
+
     public void añadirPersonal(String nombre, String apellido, int Sede_idSede) {
 
         String sql = "insert into personal (nombre, apellido, Sede_idSede) values (?,?,?);";
@@ -166,6 +176,7 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
+
     public BPersonal buscarPorId(int id) {
         BPersonal bPersonal  = null;
 
