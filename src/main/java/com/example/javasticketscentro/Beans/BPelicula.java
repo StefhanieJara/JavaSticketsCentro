@@ -5,51 +5,14 @@ import java.util.ArrayList;
 public class BPelicula {
     private int idPelicula;
     private String nombre;
-    private String restricconEdad;
+    private String restriccionEdad;
     private String sinopsis;
     private String duracion;
     private String foto;
     private double calificacionPelicula;
     private String genero;
-    private double precio_peli;
-    private int stock;
-    private String horaInicio;
-    private String fecha;
     private ArrayList<BCelebridad> actores = new ArrayList<>();
     private ArrayList<BCelebridad> directores = new ArrayList<>();
-
-
-    public double getPrecio_peli() {
-        return precio_peli;
-    }
-
-    public void setPrecio_peli(double precio_peli) {
-        this.precio_peli = precio_peli;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
 
     public ArrayList<BCelebridad> getActores() {
         return actores;
@@ -83,12 +46,12 @@ public class BPelicula {
         this.nombre = nombre;
     }
 
-    public String getRestricconEdad() {
-        return restricconEdad;
+    public String getRestriccionEdad() {
+        return restriccionEdad;
     }
 
-    public void setRestricconEdad(String restricconEdad) {
-        this.restricconEdad = restricconEdad;
+    public void setRestriccionEdad(String restriccionEdad) {
+        this.restriccionEdad = restriccionEdad;
     }
 
     public String getSinopsis() {

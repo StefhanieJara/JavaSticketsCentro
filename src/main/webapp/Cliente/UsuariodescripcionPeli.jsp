@@ -277,7 +277,7 @@
                             <select class="form-select" name="funcionEscogida">
                                 <option value="Funciones" selected disabled>Funciones</option>
                                 <%for(BFuncion bFuncion: funciones){%>
-                                <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+(bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
+                                <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getIdFuncion()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+(bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
                                 <%}%>
                             </select>
                             <%}else{%>
@@ -287,7 +287,7 @@
                                     <%if(funcionesCliente.size()!=0){%>
                                         <%boolean existeLista= false,mismaFechaSede=false;Bticket ticketEncontrado=new Bticket();
                                         for(Bticket ticket: funcionesCliente){
-                                            if(ticket.getbFuncion().getId()==bFuncion.getId() ){
+                                            if(ticket.getbFuncion().getIdFuncion()==bFuncion.getIdFuncion() ){
                                                 ticketEncontrado= ticket;
                                                 existeLista=true;
                                                 break;
@@ -301,7 +301,7 @@
                                         }%>
                                         <%if(existeLista){%>
                                             <%if(ticketEncontrado.getbCompra().getCancelado()==0){%>
-                                            <option value="<%=bFuncion.getId()%>" <%=ticketEncontrado.getCarrito() || bFuncion.getStock()==0 ? "disabled" : ""%>><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                            <option value="<%=bFuncion.getIdFuncion()%>" <%=ticketEncontrado.getCarrito() || bFuncion.getStock()==0 ? "disabled" : ""%>><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
                                                 <%if(ticketEncontrado.getCarrito()){%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -311,7 +311,7 @@
                                                 <%}%>
                                                 </option>
                                             <%}else{%>
-                                                <option value="<%=bFuncion.getId()%>" disabled><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                                <option value="<%=bFuncion.getIdFuncion()%>" disabled><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -319,16 +319,16 @@
                                             <%}%>
                                         <%}else{%>
                                             <%if(mismaFechaSede){%>
-                                                <option disabled value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
+                                                <option disabled value="<%=bFuncion.getIdFuncion()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()%>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;Horario incompatible!</option>
                                             <%}else{%>
-                                               <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio() +(bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
+                                               <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getIdFuncion()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio() +(bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
                                             <%}%>
                                         <%}%>
                                     <%}else{%>
-                                        <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getId()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+ (bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
+                                        <option <%=bFuncion.getStock()==0 ? "disabled" : ""%> value="<%=bFuncion.getIdFuncion()%>"><%="Sede: "+bFuncion.getbSala().getbSede().getNombre()+ " | Sala: "+bFuncion.getbSala().getNumero()+" | Fecha:"+bFuncion.getFecha()+" | Hora: "+bFuncion.getHoraInicio()+ (bFuncion.getStock()==0 ? "      ----Sin Cupos Disponibles----" : " | Precio c/u: S/"+bFuncion.getPrecio())%></option>
                                     <%}%>
                                 <%}%>
                             </select>

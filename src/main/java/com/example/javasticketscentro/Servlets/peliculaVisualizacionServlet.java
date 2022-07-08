@@ -41,10 +41,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
 
             }
-
         }
-
-
     }
 
     @Override
@@ -54,15 +51,17 @@ public class peliculaVisualizacionServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         RequestDispatcher requestDispatcher;
         switch (action){
+            case "borrar":
+                int idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                operadorDao.deshabilitarPelicula(idPelicula);
+                response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
+                break;
             case "guardar":
                 try {
                     String nombre = request.getParameter("nombrePeli")==null?"":request.getParameter("nombrePeli");
                     String genero = request.getParameter("genero")==null?"":request.getParameter("genero");
-                    String fecha = request.getParameter("fecha")==null?"":request.getParameter("fecha");
                     String tiempoDuracion = request.getParameter("tiempo")==null?"":request.getParameter("tiempo");
                     String duracionConFormato = tiempoDuracion + ":00";
-                    String tiempoInicio = request.getParameter("tiempoInicio")==null?"":request.getParameter("tiempoInicio");
-                    String horaInicio = tiempoInicio + ":00";
                     String restriccion = request.getParameter("restriccionEdad")==null?"":request.getParameter("restriccionEdad");
                     String sinopsis = request.getParameter("sinopsis")==null?"":request.getParameter("sinopsis");
                     String URLFoto = request.getParameter("photoUrl");
@@ -71,24 +70,12 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                     }else if (URLFoto.equals("")){
                         URLFoto="https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
                     }
-                    int idsala = Integer.parseInt(request.getParameter("sala").equals("Seleccionar")?"0":request.getParameter("sala"));
-                    int stock = Integer.parseInt(request.getParameter("stock").equals("")?"0":request.getParameter("stock"));
-                    float precio = Float.parseFloat(request.getParameter("precio").equals("")?"0":request.getParameter("precio"));
-                    int idSede = Integer.parseInt(request.getParameter("sede").equals("Seleccionar")?"0":request.getParameter("sede"));
-                    int idDirector = Integer.parseInt(request.getParameter("director").equals("Seleccionar")?"0":request.getParameter("director"));
-                    int idActor1 = Integer.parseInt(request.getParameter("actor1").equals("Seleccionar")?"0":request.getParameter("actor1"));
-                    if (stock==0 || precio==0.0 || idSede == 0 || idDirector==0 || idActor1==0 || idsala==0 ||
-                            nombre.equals("") || genero.equals("") || fecha.equals("") || tiempoDuracion.equals("") || restriccion.equals("") || tiempoInicio.equals("") || sinopsis.equals("")){
-                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet?action=crear&mensaje=incompletos");
-                    }else{
-                        operadorDao.crearFuncion(nombre, genero, fecha, duracionConFormato, restriccion, idsala, sinopsis, URLFoto, stock, precio, idSede, idDirector,idActor1, horaInicio);
-                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
-                    }
+                    operadorDao.crearPelicula(nombre, genero, duracionConFormato, restriccion, sinopsis, URLFoto);
+                    response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                 }
                 break;
         }
     }
-
 }

@@ -209,7 +209,7 @@
                              style="max-width: 10rem;">
                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
                                 <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
-                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
+                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getIdFuncion()%>">
                             <!--Cantidad-->
                             <div class="form-group mt-sm-4 mt-0">
                                 <!--Label-->
@@ -236,7 +236,7 @@
                             </form>
                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=borrar">
                                 <input type="hidden" name="idCompra" value="<%=bticket.getbCompra().getIdCompra()%>">
-                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getId()%>">
+                                <input type="hidden" name="idFuncion" value="<%=bticket.getbFuncion().getIdFuncion()%>">
                             <!--Botón borrar-->
                             <button class="btn btn-danger btn-sm mt-sm-4 mt-2 w-100" type="submit">
                                 <i class="far fa-trash-alt"></i>

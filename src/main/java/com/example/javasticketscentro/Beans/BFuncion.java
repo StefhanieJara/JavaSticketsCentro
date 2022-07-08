@@ -1,7 +1,7 @@
 package com.example.javasticketscentro.Beans;
 
 public class BFuncion {
-    private int id;
+    private int idFuncion;
     private double precio;
     private int stock;
     private String fecha;
@@ -43,12 +43,12 @@ public class BFuncion {
         this.bPelicula = bPelicula;
     }
 
-    public int getId() {
-        return id;
+    public int getIdFuncion() {
+        return idFuncion;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdFuncion(int idFuncion) {
+        this.idFuncion = idFuncion;
     }
 
     public double getPrecio() {

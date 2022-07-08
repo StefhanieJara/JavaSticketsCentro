@@ -24,7 +24,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP - Registrar Película</title>
+    <title>Centro Cultural PUCP - Perfil de usuario</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/estilos.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -108,20 +108,11 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
-                                        class="text-dark text-decoration-none"
-                                >
-                                    <span><i class="fas fa-list"></i></span>
-                                    <span>Gestione Funciones</span>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                <a
                                         href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-list"></i></span>
-                                    <span>Gestione Películas</span>
+                                    <span>Gestione Funciones</span>
                                 </a>
                             </div>
                             <div class="p-2">
@@ -166,25 +157,27 @@
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-8">Registrar película</h4>
+                        <h4 class="my-8">Registrar función</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=guardar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Nombre de la pelicula</label>
+                                        <label class="form-label" for="productName"
+                                        >Nombre de la pelicula</label
+                                        >
                                         <input
-                                                required
                                                 type="text"
                                                 name="nombrePeli"
                                                 class="form-control"
                                                 placeholder="Ingrese el nombre de la película"/>
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Genero</label>
+                                        <label class="form-label" for="productName"
+                                        >Genero</label
+                                        >
                                         <input
-                                                required
                                                 type="text"
                                                 name="genero"
                                                 class="form-control"
@@ -192,16 +185,34 @@
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Ingrese la duración de la pelicula</label>
+                                        <label class="form-label" for="productName">Ingrese la duración de la pelicula</label>
                                         <input
-                                                required
                                                 type="time"
                                                 name="tiempo"
                                                 class="form-control"
                                                 placeholder="Ingrese la duracion de la pelicula"/> </div>
-
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Restricción de edad</label>
+                                        <label class="form-label" for="productName">Ingrese la hora de inicio de la película</label>
+                                        <input
+                                                type="time"
+                                                name="tiempoInicio"
+                                                class="form-control"
+                                                placeholder="Ingrese la duracion de la pelicula"/> </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Ingrese la fecha</label
+                                        >
+                                        <input
+                                                type="date"
+                                                name="fecha"
+                                                id="productName"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Restricción de edad</label
+                                        >
                                         <select
                                                 name="restriccionEdad"
                                                 class="frm-field required sect"
@@ -214,7 +225,23 @@
                                             <option>Explicitas o lenguaje violento(D)</option>
                                         </select>
                                     </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Elija el numero de sala</label
+                                        >
+                                        <select
+                                                name="sala"
+                                                class="frm-field required sect"
+                                        >
+                                            <option>Seleccionar</option>
+                                            <%for(BSala bsalas : listarsala){%>
+                                            <option value="<%=bsalas.getIdSala()%>"><%=bsalas.getNumero()%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
                                 </div>
+
+
                                 <div class="col-md-6 mb-4 text-center">
                                     <label class="form-label">Imagen</label>
                                     <div class="text-center mt-2 mb-3">
@@ -222,10 +249,57 @@
                                     </div>
                                     <div class="d-flex justify-content-center my-3">
                                         <input type="file" id="img-uploader">
+
                                     </div>
                                     <progress id="img-upload-bar" width="10px" value="0" max="100"
                                               style="width: 100%"></progress>
                                     <input type="hidden" name="photoUrl" id="photoUrl" />
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productStock"
+                                        >Stock de tickets disponible</label
+                                        >
+                                        <input
+                                                name="stock"
+                                                type="number"
+                                                min="20"
+                                                max="200"
+                                                id="productStock"
+                                                class="form-control"
+                                                placeholder="0"
+                                        />
+                                    </div>
+                                    <div class="form-outline">
+                                        <label class="form-label" for="productPrice"
+                                        >Precio por ticket</label
+                                        >
+                                        <input
+                                                name="precio"
+                                                type="number"
+                                                min="0.0"
+                                                step="0.1"
+                                                max="60"
+                                                id="productPrice"
+                                                class="form-control"
+                                                placeholder="S/."
+                                        />
+                                    </div>
+
+                                    <div class="form-outline mb-4 py-4">
+                                        <label class="form-label" for="productName"
+                                        >Elija la sede</label
+                                        >
+                                        <select
+                                                id="country1"
+                                                name="sede"
+                                                class="frm-field required sect"
+                                        >
+                                            <option>Seleccionar</option>
+                                            <%for(BSede bSede : listarsede){%>
+                                            <option value="<%=bSede.getIdSede()%>"><%=bSede.getNombre()%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -244,7 +318,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" id="enviar" class="btn btn-danger">Siguiente: Añadir celebridades</button>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="productName">Director</label>
+                                <select
+                                        name="director"
+                                        class="frm-field required sect"
+                                >
+                                    <option>Seleccionar</option>
+                                    <%for(BCelebridad bCelebridad : listarDirector){%>
+                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
+                                    <%}%>
+                                </select>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="productName"
+                                >Actor/actriz protagonista 1</label
+                                >
+                                <select
+                                        name="actor1"
+                                        class="frm-field required sect"
+                                >
+                                    <option>Seleccionar</option>
+                                    <%for(BCelebridad bCelebridad : listarActor){%>
+                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
+                                    <%}%>
+                                </select>
+                            </div>
+                            <button type="submit" id="enviar" class="btn btn-danger">Registrar Función</button>
                         </form>
                     </div>
                 </div>

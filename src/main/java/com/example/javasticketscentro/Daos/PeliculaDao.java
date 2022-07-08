@@ -21,7 +21,7 @@ public class PeliculaDao extends BaseDao {
                         pelicula = new BPelicula();
                         pelicula.setIdPelicula(resultSet.getInt(1));
                         pelicula.setNombre(resultSet.getString(2));
-                        pelicula.setRestricconEdad(resultSet.getString(3));
+                        pelicula.setRestriccionEdad(resultSet.getString(3));
                         pelicula.setSinopsis(resultSet.getString(4));
                         pelicula.setDuracion(resultSet.getString(5));
                         pelicula.setFoto(resultSet.getString(6));
@@ -70,7 +70,7 @@ public class PeliculaDao extends BaseDao {
             try(ResultSet resultSet= pstmt.executeQuery()){
                 while(resultSet.next()){
                     BFuncion bFuncion= new BFuncion();
-                    bFuncion.setId(resultSet.getInt(1));
+                    bFuncion.setIdFuncion(resultSet.getInt(1));
                     bFuncion.setPrecio(resultSet.getDouble(2));
                     bFuncion.setStock(resultSet.getInt(3));
                     bFuncion.setFecha(resultSet.getString(4));
@@ -111,7 +111,7 @@ public class PeliculaDao extends BaseDao {
                 while(resultSet.next()){
                     Bticket ticket= new Bticket();
                     BFuncion bFuncion= new BFuncion();
-                    bFuncion.setId(resultSet.getInt(6));
+                    bFuncion.setIdFuncion(resultSet.getInt(6));
                     if(resultSet.getString(7)==null){
                         bFuncion.setFecha("");
                     }else{

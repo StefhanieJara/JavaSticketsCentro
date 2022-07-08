@@ -1,42 +1,36 @@
-<%@ page import="com.example.javasticketscentro.Beans.BSede" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
-<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
+<%--
   Created by IntelliJ IDEA.
-  User: stefh
-  Date: 6/06/2022
-  Time: 13:59
+  User: Niurka
+  Date: 06/06/2022
+  Time: 01:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listarsala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>"/>
-<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
-<jsp:useBean id="listarsede" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
-<jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
-    <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <title>Centro Cultural PUCP - Registrar Película</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/estilos.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-            rel="stylesheet"
-    />
-    <script
-            src="https://kit.fontawesome.com/5733880de3.js"
-            crossorigin="anonymous"
-    ></script>
+    <head>
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
+        <meta charset="utf-8" />
+        <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+        <title>Centro Cultural PUCP - Editar Producto</title>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+                href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+                rel="stylesheet"
+        />
+        <link rel="stylesheet" href="assets/css/estilos.css" />
+        <script
+                src="https://kit.fontawesome.com/5733880de3.js"
+                crossorigin="anonymous"
+        ></script>
+    </head>
 </head>
 <body>
     <nav class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
@@ -147,115 +141,130 @@
             </div>
         </div>
     </div>
-
-<section class="vh-100 py-5">
-    <div class="container py-2 h-50">
-
+</body>
+    <br><br><br><br><br><br><br><br>
+<section class="vh-100">
+    <div class="container py-4 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
                 <div
                         class="card shadow-2-strong card-registration"
-                        style="border-radius: 15px; margin-top: 100px"
+                        style="border-radius: 15px"
                 >
-                    <%if (!mensaje.equals("")){%>
-                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
-                       ¡Datos incompletos!
-                    </div>
-                    <%}%>
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-8">Registrar película</h4>
+                        <h4 class="my-2">Editar función</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=guardar">
+                        <form>
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Nombre de la pelicula</label>
+                                        <label class="form-label" for="productName"
+                                        >Nombre de la pelicula</label
+                                        >
                                         <input
-                                                required
                                                 type="text"
-                                                name="nombrePeli"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"/>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label">Genero</label>
-                                        <input
-                                                required
-                                                type="text"
-                                                name="genero"
-                                                class="form-control"
-                                                placeholder="Ingrese el género de la pelicula"
+                                                placeholder="Ingrese el nombre de la película"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label">Ingrese la duración de la pelicula</label>
-                                        <input
-                                                required
-                                                type="time"
-                                                name="tiempo"
-                                                class="form-control"
-                                                placeholder="Ingrese la duracion de la pelicula"/> </div>
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label">Restricción de edad</label>
-                                        <select
-                                                name="restriccionEdad"
-                                                class="frm-field required sect"
-                                        >
-                                            <option disabled="disabled" selected="true">Seleccionar</option>
-                                            <option>Para todo publico (AA)</option>
-                                            <option>+12 (B)</option>
-                                            <option>+15(B15)</option>
-                                            <option>+18 (C)</option>
-                                            <option>Explicitas o lenguaje violento(D)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label class="form-label">Imagen</label>
-                                    <div class="text-center mt-2 mb-3">
-                                        <img id="img-preview" style="max-width: 300px; resize: both; max-width: 300px" />
-                                    </div>
-                                    <div class="d-flex justify-content-center my-3">
-                                        <input type="file" id="img-uploader">
-                                    </div>
-                                    <progress id="img-upload-bar" width="10px" value="0" max="100"
-                                              style="width: 100%"></progress>
-                                    <input type="hidden" name="photoUrl" id="photoUrl" />
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12 mb-4 pb-2">
-                                    <div class="form-outline">
-                                        <label class="form-label" for="productoDescription"
-                                        >Sinopsis</label
+                                        <label class="form-label" for="productName"
+                                        >Género de la pelicula</label
                                         >
                                         <input
                                                 type="text"
-                                                name="sinopsis"
-                                                id="productoDescription"
+                                                id="productName"
                                                 class="form-control"
+                                                placeholder="Ingrese el nombre de la película"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4 text-center">
+                                    <label for="formFile" class="form-label"
+                                    >Imagen Referencial</label
+                                    >
+                                    <div class="text-center mt-2 mb-3">
+                                        <img
+                                                src="img/doctorStrange.jpg"
+                                                class="img-thumbnail"
+                                                width="100px"
+                                                height="100px"
+                                                alt="medicamento"
+                                        />
+                                    </div>
+                                    <input class="form-control" type="file" id="formFile" />
+
+                                    <div class="d-flex justify-content-center my-3">
+                                        <input
+                                                class="btn btn-tele"
+                                                type="submit"
+                                                value="Subir imagen"
+                                        />
+                                    </div>
+                                    <div class="d-flex justify-content-start my-3">
+                                        <div class="pb-1">
+                                            ¿Desea cambiar el aforo?&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input
+                                                    class="form-check-input"
+                                                    type="radio"
+                                                    name="inlineRadioOptions"
+                                                    id="siReceta"
+                                                    value="option1"
+                                                    checked
+                                            />
+                                            <label class="form-check-label" for="siReceta"
+                                            >Sí</label
+                                            >
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input
+                                                    class="form-check-input"
+                                                    type="radio"
+                                                    name="inlineRadioOptions"
+                                                    id="noReceta"
+                                                    value="option2"
+                                            />
+                                            <label class="form-check-label" for="noReceta"
+                                            >No</label
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productStock"
+                                        >Stock de tickets disponible</label
                                         >
+                                        <input
+                                                type="number"
+                                                id="productStock"
+                                                class="form-control"
+                                                placeholder="0"
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" id="enviar" class="btn btn-danger">Siguiente: Añadir celebridades</button>
+                            <div class="">
+                                <a
+                                        href="<%=request.getContextPath()%>/editarPeliculaServlet"
+                                        class="btn btn-danger"
+                                >Editar Pelicula</a>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-<script src="assets/appSubirImagen.js"></script>
-</body>
-</html>
 
+</html>

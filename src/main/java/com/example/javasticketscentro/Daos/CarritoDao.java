@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.invoke.StringConcatException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -180,7 +179,7 @@ public class CarritoDao extends BaseDao {
                     bFuncion.setPrecio(rs.getDouble(4));
                     bFuncion.setFecha(rs.getString(5));
                     bFuncion.setHoraInicio(rs.getString(6));
-                    bFuncion.setId(rs.getInt(12));
+                    bFuncion.setIdFuncion(rs.getInt(12));
                     bFuncion.setStock(rs.getInt(13) == 0 ? rs.getInt(14) : rs.getInt(13));
                     BSala bSala = new BSala();
                     bSala.setNumero(rs.getInt(7));
@@ -300,7 +299,7 @@ public class CarritoDao extends BaseDao {
                     bticket.getbFuncion().getFecha() + " | Hora: " + bticket.getbFuncion().getHoraInicio() + "\nSede: " + bticket.getbFuncion().getbSede().getNombre() +
                     " | Sala: " + bticket.getbFuncion().getbSala().getNumero() + " | Butacas: " + bticket.getCantButaca() +
                     " | Precio por Butacas: S/" + bticket.getbFuncion().getPrecio());
-            idFunciones.add(bticket.getbFuncion().getId());//ID de funciones
+            idFunciones.add(bticket.getbFuncion().getIdFuncion());//ID de funciones
             subtotal.add(Math.round(bticket.getbFuncion().getPrecio()*bticket.getCantButaca()*100.0)/100.0);//Subtotales
         }
         //Iniciamos el envío por correo

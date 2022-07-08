@@ -16,7 +16,6 @@ import java.io.IOException;
     public class indexOperadorServlet extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/indexOperador.jsp");
             requestDispatcher.forward(request,response);
         }

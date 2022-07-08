@@ -107,11 +107,20 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                    href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
                                 <span>Gestione Funciones</span>
+                            </a>
+                        </div>
+                        <div class="p-2">
+                            <a
+                                    href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                    class="text-dark text-decoration-none"
+                            >
+                                <span><i class="fas fa-list"></i></span>
+                                <span>Gestione Películas</span>
                             </a>
                         </div>
                         <div class="p-2">
@@ -211,7 +220,7 @@
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <a
-                                            href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                            href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
                                             class="btn btn-danger"
                                     >Ir a Funciones</a
                                     >
@@ -219,6 +228,43 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="card">
+                            <div
+                                    class="card-header h-100 shadow border-0 text-white"
+                                    style="
+                      background-image: url('img/TeatroPucp.jpg');
+                      background-size: cover;
+                    "
+                            >
+                                <h2
+                                        class="mt-5 mb-3 fw-bold"
+                                        style="text-shadow: 0.5px 0.5px #2b2b2b"
+                                >
+                                    Gestione Películas
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div
+                                        class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
+                                >
+                                    <ul class="">
+                                        <p>
+                                            Gestione las películas de la cartelera
+                                        </p>
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <a
+                                            href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                            class="btn btn-danger"
+                                    >Ir a Peliculas</a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col">
                         <div class="card">
                             <div
@@ -254,50 +300,6 @@
         </div>
     </div>
 </main>
-
-<div
-        class="modal fade"
-        id="motivoBloqueo"
-        tabindex="-1"
-        aria-labelledby="conf_eliminar"
-        aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content border-0">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="conf_eliminar">Bloquear farmacia</h5>
-                <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                ></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-outline">
-                    <label class="form-label" for="bloqueoFarmacia">
-                        Escriba el motivo del bloqueo de la farmacia:
-                    </label>
-                    <textarea
-                            type="tel"
-                            id="bloqueoFarmacia"
-                            class="form-control"
-                    ></textarea>
-                </div>
-                <br />
-                ¿Está seguro que desea bloquearla?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
-                <button type="button" class="btn btn-danger">
-                    Eliminar Producto
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

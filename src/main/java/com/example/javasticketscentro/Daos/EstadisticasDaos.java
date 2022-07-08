@@ -26,7 +26,7 @@ public class EstadisticasDaos extends BaseDao{
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
                     funcion.setAsistencia(resultSet.getFloat(1));
-                    funcion.setId(resultSet.getInt(2));
+                    funcion.setIdFuncion(resultSet.getInt(2));
                     BPelicula bPelicula = new BPelicula();
                     bPelicula.setNombre(resultSet.getString(3));
                     funcion.setbPelicula(bPelicula);
@@ -101,7 +101,7 @@ public class EstadisticasDaos extends BaseDao{
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
-                    funcion.setId(resultSet.getInt(2));
+                    funcion.setIdFuncion(resultSet.getInt(2));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
                     funcion.setbPelicula(pelicula);
@@ -152,7 +152,7 @@ public class EstadisticasDaos extends BaseDao{
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
-                    funcion.setId(resultSet.getInt(2));
+                    funcion.setIdFuncion(resultSet.getInt(2));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
                     funcion.setbPelicula(pelicula);

@@ -172,11 +172,20 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Gestione Funciones</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Películas</span>
                                 </a>
                             </div>
                             <div class="p-2">

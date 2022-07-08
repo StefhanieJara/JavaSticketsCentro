@@ -11,8 +11,7 @@ public class OperadorDao extends BaseDao{
 
         ArrayList<BPelicula> listapeliculas = new ArrayList<>();
 
-        String sql = "select pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto, fu.precio, fu.stock, fu.horaInicio,fu.fecha from pelicula pe\n" +
-                "\tinner join funcion fu on pe.idPelicula=fu.Pelicula_idPelicula;";
+        String sql = "select pe.idPelicula, pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe where estado=1;";
 
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -20,22 +19,98 @@ public class OperadorDao extends BaseDao{
 
             while (rs.next()) {
                 BPelicula bPelicula = new BPelicula();
-                bPelicula.setNombre(rs.getString(1));
-                bPelicula.setRestricconEdad(rs.getString(2));
-                bPelicula.setSinopsis(rs.getString(3));
-                bPelicula.setDuracion(rs.getString(4));
-                bPelicula.setGenero(rs.getString(5));
-                bPelicula.setFoto(rs.getString(6));
-                bPelicula.setPrecio_peli(rs.getDouble(7));
-                bPelicula.setStock(rs.getInt(8));
-                bPelicula.setHoraInicio(rs.getString(9));
-                bPelicula.setFecha(rs.getString(10));
+                bPelicula.setIdPelicula(rs.getInt(1));
+                bPelicula.setNombre(rs.getString(2));
+                bPelicula.setRestriccionEdad(rs.getString(3));
+                bPelicula.setSinopsis(rs.getString(4));
+                bPelicula.setDuracion(rs.getString(5));
+                bPelicula.setGenero(rs.getString(6));
+                bPelicula.setFoto(rs.getString(7));
                 listapeliculas.add(bPelicula);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return listapeliculas;
+    }
+
+    public void deshabilitarPelicula(int idPelicula){
+        String sql = "UPDATE pelicula SET estado = 0 where pelicula.idPelicula=?;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt= connection.prepareStatement(sql)){
+            pstmt.setInt(1, idPelicula);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deshabilitarFuncion(int idFuncion){
+        String sql = "UPDATE funcion SET habilitado = 0 where idFuncion=?;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt= connection.prepareStatement(sql)){
+            pstmt.setInt(1, idFuncion);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    public void crearPelicula(String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
+        String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero, estado)\n" +
+                "values (?, ?, ?, ?, ?,?,?,1);";
+        try(Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, restriccion);
+            pstmt.setString(3, sinopsis);
+            pstmt.setString(4, duracion);
+            pstmt.setString(5, URLFoto);
+            pstmt.setDouble(6, 0.0);
+            pstmt.setString(7, genero);
+            pstmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<BFuncion> listarFunciones(){
+        ArrayList<BFuncion> listaDeFunciones = new ArrayList<>();
+        String sql = "select p.idPelicula, p.nombre, p.foto, f.idFuncion, f.precio, f.stock, f.fecha, f.horaInicio, s.numero, se.nombre\n" +
+                "from pelicula p inner join funcion f on p.idPelicula = f.Pelicula_idPelicula\n" +
+                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                "inner join sede se on s.Sede_idSede = se.idSede\n" +
+                "where (p.estado=1 and f.habilitado=1);";
+        try (Connection connection = this.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+            while (rs.next()) {
+                BFuncion bFuncion = new BFuncion();
+                BSala bSala = new BSala();
+                BSede bSede = new BSede();
+                BPelicula bPelicula = new BPelicula();
+                bPelicula.setIdPelicula(rs.getInt(1));
+                bPelicula.setNombre(rs.getString(2));
+                bPelicula.setFoto(rs.getString(3));
+                bFuncion.setIdFuncion(rs.getInt(4));
+                bFuncion.setPrecio(rs.getDouble(5));
+                bFuncion.setStock(rs.getInt(6));
+                bFuncion.setFecha(rs.getString(7));
+                bFuncion.setHoraInicio(rs.getString(8));
+                bSala.setNumero(rs.getInt(9));
+                bSede.setNombre(rs.getString(10));
+                bFuncion.setbSala(bSala);
+                bFuncion.setbPelicula(bPelicula);
+                bFuncion.setbSede(bSede);
+                listaDeFunciones.add(bFuncion);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaDeFunciones;
     }
     public ArrayList<BPersonal> listapersonal(String nombre, String apellido, int pagina, int cant_result, boolean limit) {
 
@@ -77,7 +152,6 @@ public class OperadorDao extends BaseDao{
         }
         return listapersonal;
     }
-
     public void añadirPersonal(String nombre, String apellido, int Sede_idSede) {
 
         String sql = "insert into personal (nombre, apellido, Sede_idSede) values (?,?,?);";
@@ -92,7 +166,6 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-
     public BPersonal buscarPorId(int id) {
         BPersonal bPersonal  = null;
 
@@ -102,8 +175,11 @@ public class OperadorDao extends BaseDao{
 
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
+
             pstmt.setInt(1, id);
+
             try (ResultSet rs = pstmt.executeQuery();) {
+
                 if (rs.next()) {
                     bPersonal= new BPersonal();
                     bPersonal.setIdPersonal(rs.getInt(1));
