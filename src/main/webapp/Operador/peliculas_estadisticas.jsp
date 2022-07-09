@@ -10,6 +10,7 @@
 <jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
 <jsp:useBean id="generos" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
 <jsp:useBean id="filtro" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 <%double contador;
 double puntajeX=0;
 boolean existe=false;
@@ -20,6 +21,16 @@ double puntaje = pelicula.getCalificacionPelicula();%>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/stars1.css" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <style>
+
+
+        .yellow-color {
+            color:#EABE3F;
+        }
+
+
+    </style>
 </head>
 <body>
 
@@ -52,20 +63,20 @@ double puntaje = pelicula.getCalificacionPelicula();%>
     <tr>
         <td><h3><%=pelicula.getNombre()%></h3></td><td><h3><%=pelicula.getCalificacionPelicula()%></h3></td>
         <td>
-            <div class="stars">
+
             <%for (contador=0; contador<puntajeX; contador++){%>
-                <span class="star on"></span>
+            <i class='fa fa-star yellow-color' style="font-size:45px;"></i>
             <%}%>
 
             <%if(existe){%>
-                <span class="star half"></span>
+            <i class='fa fa-star-half-full yellow-color' style="font-size:45px;"></i>
                     <%puntajeX++;
             }%>
 
             <%for (contador=0; contador<5-puntajeX; contador++){%>
-            <span class="star"></span>
+            <i class='fa fa-star-o yellow-color' style="font-size:45px;"></i>
             <%}%>
-            </div>
+
         </td>
         <td><img src="<%=pelicula.getFoto()%>" style="max-height:200px; max-width: 100px"></td>
     </tr>
