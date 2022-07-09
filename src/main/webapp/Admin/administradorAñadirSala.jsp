@@ -186,7 +186,7 @@
                             <h4 class="my-2">Añadir Nueva Sala</h4>
                         </div>
                         <div class="card-body p-4 p-md-5">
-                                <div class=" row mb-3">
+                                <div class="row mb-3">
                                     <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=buscarSalas">
                                     <div class="col-lg-8">
                                         <label class="form-label" for="country1">Elija la sede</label>

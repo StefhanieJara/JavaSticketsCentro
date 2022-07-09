@@ -242,7 +242,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-lg-8">
                                                 <div class="form-outline mb-4 py-4">
                                                 <label class="form-label">Elija el tipo de tarjeta</label>
                                                 <select name="tipoTarjeta"
@@ -250,6 +250,10 @@
                                                     <option <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%> value="tarjeta de crédito" <%=tarjetaSelect.getIdTarjeta()!=0 ? (tarjetaSelect.getTipo().equals("tarjeta de crédito") ? "selected" :"") :""%>>Credito</option>
                                                     <option <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%> value="tarjeta de débito" <%=tarjetaSelect.getIdTarjeta()!=0 ? (tarjetaSelect.getTipo().equals("tarjeta de débito") ? "selected" :"") :""%>>Debito</option>
                                                 </select>
+                                                </div>
+                                                <div class="form-check form-switch mb-4 py-4">
+                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%> name="guardarTarjeta" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                    <label class="form-check-label" for="flexSwitchCheckDefault">Recordar Tarjeta</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -265,6 +269,7 @@
                                         <%}%>
                                         <%session.removeAttribute("msg");%>
                                         <%}%>
+
                                         <div class="row row-cols-3 justify-content-center">
                                             <button id="btnSubmit"
                                                     class="btn btn-tele"
@@ -277,6 +282,7 @@
                     </div>
                 </div>
             </section>
+
         </main>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
