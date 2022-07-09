@@ -27,8 +27,20 @@
             href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
             rel="stylesheet"
     />
+    <style>
+        video{
+            position: fixed;
+            min-width: 100%;
+            min-height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -1;
+        }
+    </style>
 </head>
-<body background="img/banner3.jpg">
+<body>
+    <video src="https://rr5---sn-uqx2-aphd.googlevideo.com/videoplayback?expire=1657406360&ei=OK_JYuDNDZeSobIP0r6a4AY&ip=181.66.151.11&id=o-AMOahIvhwqF1OEMcZ3Fy6kZiRDDbWBil5DF_WbjQ_u7O&itag=22&source=youtube&requiressl=yes&mh=_l&mm=31%2C29&mn=sn-uqx2-aphd%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=5&pl=24&initcwndbps=606250&spc=lT-KhipPzgyE6ZsvLoeRGOeXB1KmWr0&vprv=1&mime=video%2Fmp4&ns=8gokDm6h1rwpQmLxJFvq_iAH&cnr=14&ratebypass=yes&dur=5.061&lmt=1657384701257272&mt=1657384398&fvip=2&fexp=24001373%2C24007246&c=WEB&txp=6211224&n=j74DMs-PEVyatg&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Cmime%2Cns%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIhANJVOeEBNMrTgNZqAgd5obFZC49nwigxhHRg1Fq-5QbKAiA-ogWFQKfzVO65HmXa_ie1rcAuHnvBvRUDFc4S22qDtg%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhAOgs1unkog4ZInY3L1eM0mjeSC9eBp-3Bowsbo-4C2p-AiEAwJ554TcSwIz5B4AKgJGi88BYI5FXWxAfbSaGoZH_NVI%3D" autoplay="true" muted="true" loop="true" poster="img/banner3.jpg"></video>
 <section
         class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
         style="min-height: 700px;">
