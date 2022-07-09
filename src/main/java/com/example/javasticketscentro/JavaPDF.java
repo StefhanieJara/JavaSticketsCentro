@@ -1,5 +1,6 @@
 package com.example.javasticketscentro;
 
+import com.example.javasticketscentro.Beans.BFuncion;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -107,7 +108,7 @@ public class JavaPDF {
         return baos1.toByteArray();
     }
 
-    public byte[] pdfFuncionTable(String text) throws IOException {
+    public byte[] pdfFuncionTable(String text, BFuncion funcion) throws IOException {
 
         //DOCUMENTO PDF
         int marginTop = 20; // Margen que yo quiera
@@ -119,6 +120,12 @@ public class JavaPDF {
         PDPageContentStream contentStream= new PDPageContentStream(document,page);
 
         PDRectangle mediaBox= page.getMediaBox();//Para obtener dimensiones de la pagina
+
+
+        //Título
+        PDFont font= PDType1Font.HELVETICA_BOLD;
+        int fontsize=16;
+        centrar(font, marginTop,fontsize,"JavaSticket: Sede "+funcion.getbSala().getbSede().getNombre()+" Sala N°"+funcion.getbSala().getNumero()+" "+funcion.getFecha(), mediaBox,contentStream, Color.BLACK, 0, true);
 
         //Listamos clientes
         String[] operadores=text.split("\n");//Obtenemos las filas
@@ -138,8 +145,8 @@ public class JavaPDF {
         }
 
         //Diseño de letra
-        PDFont font=PDType1Font.TIMES_ROMAN;
-        int fontsize=12;
+        font=PDType1Font.TIMES_ROMAN;
+        fontsize=12;
         contentStream.setStrokingColor(Color.DARK_GRAY);
         contentStream.setLineWidth(1);
 
@@ -147,12 +154,18 @@ public class JavaPDF {
         int cellWidth, cellHeight=30;//Dimensiones de las tablas
         int colCount= cantColumnas;//Numero de columnas
         int rowCount= operadores.length;//Numero de filas
-        float init_x=marginTop,init_y=mediaBox.getHeight()-marginTop;
+        float init_x=marginTop,init_y=mediaBox.getHeight()-3*marginTop;//dos veces margintop para el título
 
         String lineaDirec="";
         int cant_Saltos, minLogintudSalto=23;
         int cellWidthHoraInicio=100, cellWidthPpT=100, cellWidthNum=30, cellWidthNomPeli=150;
         int cellHeightDinamic;
+
+        //Centrar tabla
+        x=70+cellWidthHoraInicio+cellWidthPpT+cellWidthNum+cellWidthNomPeli;
+        float center_x=(mediaBox.getWidth() - x)/2;
+        init_x= center_x;
+
         //Creamos la tabla
         for(int i=0;i<rowCount;i++){
             cant_Saltos= hallarSaltos(tablaOperadores[i][1],font,fontsize,cellWidthNomPeli);
@@ -214,7 +227,7 @@ public class JavaPDF {
 
                 init_x+=cellWidth;
             }
-            init_x=marginTop;//Volvemos al lado izquierdo del A4
+            init_x=center_x;//Volvemos al lado izquierdo del A4
             init_y-=cellHeightDinamic;//Bajamos de columna
         }
         contentStream.stroke();
