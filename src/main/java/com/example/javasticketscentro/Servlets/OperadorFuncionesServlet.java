@@ -2,6 +2,7 @@ package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BFuncion;
 import com.example.javasticketscentro.Beans.BPersona;
+import com.example.javasticketscentro.Beans.BSala;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.OperadorDao;
 import com.example.javasticketscentro.JavaPDF;
@@ -76,9 +77,14 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
                 break;
             case "descargar":
+                AdminDao admin= new AdminDao();
                 String fechaFiltro=request.getParameter("fechaFiltro");
                 String idSala= request.getParameter("idSala");
                 try(PrintWriter salir =  response.getWriter()) {
+                    BSala sala= admin.buscarSala(Integer.parseInt(idSala));
+                    BFuncion funcionFecha= new BFuncion();
+                    funcionFecha.setbSala(sala);
+                    funcionFecha.setFecha(fechaFiltro);
                     int i = 1;
                     String text = "#%Película%Precio por Ticket%Stock%Hora de Inicio\n";
                     for(BFuncion funcion : operadorDao.listarFunciones(fechaFiltro, idSala, 1,cant_resultFunciones, false)){
@@ -89,7 +95,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     response.setContentType("application/pdf");
                     response.setHeader("Content-Disposition", "attachment; filename=funciones.pdf");
                     JavaPDF javaPDF= new JavaPDF();
-                    byte[] pdf= javaPDF.pdfFuncionTable(text);
+                    byte[] pdf= javaPDF.pdfFuncionTable(text, funcionFecha);
                     InputStream in =new ByteArrayInputStream(pdf);
                     int f;
                     while((f=in.read())!=-1){

@@ -70,11 +70,12 @@ public class UsuarioCarritoIndex extends HttpServlet {
                         carritoDao = new CarritoDao();
                         session=request.getSession();
                         usuario= (BPersona) session.getAttribute("clienteLog");
-                        if(idTarjeta==-1){
-                            carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
-                        }
+
                         carritoDao.cancelarCompra(usuario);
                         session.setAttribute("exitosoMSG", "CompraCancelado");
+                        if(idTarjeta==-1 && request.getParameter("guardarTarjeta")!=null){
+                            carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
+                        }
                         response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
                     }else{
                         session.setAttribute("msg", "errorFV");
