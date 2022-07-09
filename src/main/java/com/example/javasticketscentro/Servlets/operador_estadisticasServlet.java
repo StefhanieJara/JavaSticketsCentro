@@ -8,14 +8,14 @@ import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.EstadisticasDaos;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 
 @WebServlet(name = "operador_estadisticasServlet", value = "/operador_estadisticasServlet")
@@ -24,18 +24,97 @@ public class operador_estadisticasServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         EstadisticasDaos estadisticasDaos = new EstadisticasDaos();
+        HttpSession session = request.getSession();
 
         switch (action) {
             case "listar":
                 try {
-
                     ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+                    ArrayList<BFuncion> seleccionar = estadisticasDaos.listarGenero1();
+                    ArrayList<BFuncion> asistencias = estadisticasDaos.listarAsistencia1();
+                    ArrayList<BFuncion> masVistas = estadisticasDaos.listarMasVista1();
+                    ArrayList<BFuncion> menosVistas = estadisticasDaos.listarMenosVista1();
+                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
+                    BCelebridad actor = estadisticasDaos.actorMejorCalificado1();
+                    BCelebridad director = estadisticasDaos.directorMejorCalificado1();
+                    String fechaMin = estadisticasDaos.firstFecha();
+                    String fechaMax = estadisticasDaos.lastFecha();
                     request.setAttribute("listaGenero", generos);
+                    request.setAttribute("generos",seleccionar);
+                    request.setAttribute("listaAsistencia", asistencias);
+                    request.setAttribute("masVista",masVistas);
+                    request.setAttribute("menosVista",menosVistas);
+                    request.setAttribute("pelicula",pelicula);
+                    request.setAttribute("actor", actor);
+                    request.setAttribute("director", director);
+                    request.setAttribute("fechaI",fechaMin);
+                    request.setAttribute("fechaH",fechaMax);
 
                     RequestDispatcher listar = request.getRequestDispatcher("Operador/estadisticas.jsp");
                     listar.forward(request, response);
                 }
                  catch(IndexOutOfBoundsException e){
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                }
+                break;
+            case "listar1":
+                try{
+                    ArrayList<BFuncion> asistencias = estadisticasDaos.listarAsistencia1();
+                    String fechaMin = estadisticasDaos.firstFecha();
+                    String fechaMax = estadisticasDaos.lastFecha();
+                    request.setAttribute("listaAsistencia",asistencias);
+
+                    request.getSession().setAttribute("fechaI",fechaMin);
+                    request.getSession().setAttribute("fechaH", fechaMax);
+                    RequestDispatcher listar = request.getRequestDispatcher("Operador/funciones_estadisticas.jsp");
+                    listar.forward(request, response);
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                }
+                break;
+            case "listar2":
+                try {
+                    ArrayList<BFuncion> masVistas = estadisticasDaos.listarMasVista1();
+                    ArrayList<BFuncion> menosVistas = estadisticasDaos.listarMenosVista1();
+                    String fechaMin = estadisticasDaos.firstFecha();
+                    String fechaMax = estadisticasDaos.lastFecha();
+                    request.setAttribute("masVista",masVistas);
+                    request.setAttribute("menosVista",menosVistas);
+                    request.getSession().setAttribute("fechaI",fechaMin);
+                    request.getSession().setAttribute("fechaH", fechaMax);
+                    RequestDispatcher listar = request.getRequestDispatcher("Operador/vistas_estadisticas.jsp");
+                    listar.forward(request, response);
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                }
+                break;
+            case "listar3":
+                try {
+                    ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+                    ArrayList<BFuncion> seleccionar = estadisticasDaos.listarGenero1();
+                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
+                    request.setAttribute("listaGenero", generos);
+                    request.setAttribute("generos",seleccionar);
+                    request.setAttribute("pelicula",pelicula);
+                    RequestDispatcher listar = request.getRequestDispatcher("Operador/peliculas_estadisticas.jsp");
+                    listar.forward(request, response);
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                }
+                break;
+            case "listar4":
+                BCelebridad actor = estadisticasDaos.actorMejorCalificado1();
+                BCelebridad director = estadisticasDaos.directorMejorCalificado1();
+                try{
+                    request.setAttribute("actor", actor);
+                    request.setAttribute("director", director);
+                    RequestDispatcher listar = request.getRequestDispatcher("Operador/celebridades_estadisticas.jsp");
+                    listar.forward(request, response);
+                }catch (IndexOutOfBoundsException e){
                     System.out.println("Error al convertir tipo de dato");
                     response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
                 }
@@ -47,136 +126,97 @@ public class operador_estadisticasServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         EstadisticasDaos estadisticasDaos = new EstadisticasDaos();
         String fecha1 = request.getParameter("date1")== null ? "2022-06-07" : request.getParameter("date1");
         String fecha2 = request.getParameter("date2")== null ? "2022-08-07" : request.getParameter("date2");
         String fecha3 = request.getParameter("date3")== null ? "2022-06-07" : request.getParameter("date3");
         String fecha4 = request.getParameter("date4")== null ? "2022-08-07" : request.getParameter("date4");
-        String fecha5 = request.getParameter("date5")== null ? "2022-06-07" : request.getParameter("date5");
-        String fecha6 = request.getParameter("date6")== null ? "2022-08-07" : request.getParameter("date6");
-        String fecha7 = request.getParameter("date7")== null ? "2022-06-07" : request.getParameter("date7");
-        String fecha8 = request.getParameter("date8")== null ? "2022-08-07" : request.getParameter("date8");
-        String fecha9 = request.getParameter("date9")== null ? "2022-06-07" : request.getParameter("date9");
-        String fecha10 = request.getParameter("date10")== null ? "2022-08-07" : request.getParameter("date10");
-        String fecha11 = request.getParameter("date11")== null ? "2022-06-07" : request.getParameter("date11");
-        String fecha12 = request.getParameter("date12")== null ? "2022-08-07" : request.getParameter("date12");
         HttpSession session = request.getSession();
-        ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+
         switch (action){
             case "filtrar1":
                 try {
                     ArrayList<BFuncion> asistencia = estadisticasDaos.listarAsistencia(fecha1,fecha2);
 
                     if (asistencia.get(0)!=null){
-                        request.setAttribute("listaGenero", generos);
+
                         request.setAttribute("listaAsistencia", asistencia);
                         request.setAttribute("fecha1",fecha1);
                         request.setAttribute("fecha2",fecha2);
 
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
+                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/funciones_estadisticas.jsp");
                         filtrar.forward(request, response);
                     }
                 }catch (IndexOutOfBoundsException e) {
                     System.out.println("Error al convertir tipo de dato");
                     request.getSession().setAttribute("msg1","No se ha encontrado la función más asistida");
-                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                    request.setAttribute("fecha1",fecha1);
+                    request.setAttribute("fecha2",fecha2);
+
+                    RequestDispatcher filtrar = request.getRequestDispatcher("Operador/funciones_estadisticas.jsp");
+                    filtrar.forward(request, response);
                 }
                 break;
 
             case "filtrar2":
                 try {
                     ArrayList<BFuncion> masVista = estadisticasDaos.listarMasVista(fecha3,fecha4);
-
+                    ArrayList<BFuncion> menosVista = estadisticasDaos.listarMenosVista(fecha3,fecha4);
                     if(masVista.get(0)!=null){
-                        request.setAttribute("listaGenero",generos);
                         request.setAttribute("masVista", masVista);
+                        request.setAttribute("menosVista",menosVista);
                         request.setAttribute("fecha3",fecha3);
                         request.setAttribute("fecha4",fecha4);
-
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
+                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/vistas_estadisticas.jsp");
                         filtrar.forward(request, response);
                     }
                 }catch (IndexOutOfBoundsException e){
                     session.setAttribute("msg2","No se ha encontrado la función más vista");
+                    session.setAttribute("msg3","No se ha encontrado la función menos vista");
                     System.out.println("Error al convertir tipo de dato");
-                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                    request.setAttribute("fecha3", fecha3);
+                    request.setAttribute("fecha4", fecha4);
+                    RequestDispatcher filtrar = request.getRequestDispatcher("Operador/vistas_estadisticas.jsp");
+                    filtrar.forward(request, response);
                 }
                 break;
-            case "filtrar3":
+
+            case "filtrar7":
+                String genero = request.getParameter("filtro");
+                ArrayList<BFuncion> seleccionar = estadisticasDaos.listarGenero1();
+                ArrayList<BFuncion> peliculas = estadisticasDaos.listarPorGenero(genero);
+                BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
                 try {
-                    ArrayList<BFuncion> menosVista = estadisticasDaos.listarMenosVista(fecha5,fecha6);
-
-                    if(menosVista.get(0)!=null){
-                        request.setAttribute("listaGenero",generos);
-                        request.setAttribute("menosVista", menosVista);
-                        request.setAttribute("fecha5",fecha5);
-                        request.setAttribute("fecha6",fecha6);
-
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
+                    if(peliculas.get(0)!=null){
+                        request.setAttribute("listaGenero", peliculas);
+                        request.setAttribute("filtro", genero);
+                        request.setAttribute("generos",seleccionar);
+                        request.setAttribute("pelicula", pelicula);
+                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/peliculas_estadisticas.jsp");
                         filtrar.forward(request, response);
                     }
                 }catch (IndexOutOfBoundsException e){
-                    session.setAttribute("msg3","No se ha encontrado la función menos vista");
                     System.out.println("Error al convertir tipo de dato");
                     response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
                 }
                 break;
-            case "filtrar4":
-
-                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada(fecha7,fecha8);
-                    if (pelicula!=null){
-                        request.setAttribute("listaGenero",generos);
-                        request.setAttribute("peliculaMejorCalificada", pelicula);
-                        request.setAttribute("fecha7",fecha7);
-                        request.setAttribute("fecha8",fecha8);
-
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
-                        filtrar.forward(request, response);
-                    }else{
-                        session.setAttribute("msg4","No se ha encontrado la pelicula mejor calificada");
-                        System.out.println("Error al convertir tipo de dato");
-                        response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
-                    }
-
+            case "listar8":
+                BPelicula pelicula1 = estadisticasDaos.peliculaMejorCalificada1();
+                ArrayList<BFuncion> seleccionar1 = estadisticasDaos.listarGenero1();
+                ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
+                try{
+                    request.setAttribute("listaGenero", generos);
+                    request.setAttribute("generos",seleccionar1);
+                    request.setAttribute("pelicula",pelicula1);
+                    RequestDispatcher listar = request.getRequestDispatcher("Operador/peliculas_estadisticas.jsp");
+                    listar.forward(request, response);
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Error al convertir tipo de dato");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                 }
                 break;
-            case "filtrar5":
-
-                    BCelebridad actor = estadisticasDaos.actorMejorCalificado(fecha9,fecha10);
-                    if(actor!=null){
-                        request.setAttribute("listaGenero",generos);
-                        request.setAttribute("actorMejorCalificado", actor);
-                        request.setAttribute("fecha9",fecha9);
-                        request.setAttribute("fecha10",fecha10);
-
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
-                        filtrar.forward(request, response);
-                    }else {
-                        session.setAttribute("msg5","No se ha encontrado actor mejor calificado");
-                        System.out.println("Error al convertir tipo de dato");
-                        response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
-                    }
-
-                break;
-            case "filtrar6":
-
-                BCelebridad director = estadisticasDaos.directorMejorCalificado(fecha11,fecha12);
-                if(director!=null){
-                        request.setAttribute("listaGenero",generos);
-                        request.setAttribute("directorMejorCalificado", director);
-                        request.setAttribute("fecha11",fecha11);
-                        request.setAttribute("fecha12",fecha12);
-
-                        RequestDispatcher filtrar = request.getRequestDispatcher("Operador/estadisticas.jsp");
-                        filtrar.forward(request, response);
-                }else{
-                        session.setAttribute("msg6","No se ha encontrado director mejor calificado");
-                        System.out.println("Error al convertir tipo de dato");
-                        response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
-                }
-
-                break;
-
         }
     }
 }

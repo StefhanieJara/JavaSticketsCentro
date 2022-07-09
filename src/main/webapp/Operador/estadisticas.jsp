@@ -6,26 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaAsistencia" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
-<jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
-<jsp:useBean id="masVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
-<jsp:useBean id="menosVista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
-<jsp:useBean id="peliculaMejorCalificada" scope="request" type="com.example.javasticketscentro.Beans.BPelicula" class="com.example.javasticketscentro.Beans.BPelicula"/>
-<jsp:useBean id="actorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" class="com.example.javasticketscentro.Beans.BCelebridad"/>
-<jsp:useBean id="directorMejorCalificado" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" class="com.example.javasticketscentro.Beans.BCelebridad"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
-<jsp:useBean id="fecha1" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha2" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha3" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha4" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha5" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha6" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha7" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha8" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha9" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha10" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha11" scope="request" type="java.lang.String" class="java.lang.String"/>
-<jsp:useBean id="fecha12" scope="request" type="java.lang.String" class="java.lang.String"/>
+
 <html>
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -178,90 +160,6 @@
             outline: 0;
         }
 
-        .delete0 {
-
-            Background: #dddddd;
-            width:50%;
-            color:#000;
-            font-family: Arial;
-            font-size: 18px;
-            text-align:center;
-            padding: 33px;
-            min-height: 300px;
-            border-radius: 10px;
-            left:25%;
-            top:100px;
-            position: fixed;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .delete1 {
-
-            Background: #dddddd;
-            width:50%;
-            color:#000;
-            font-family: Arial;
-            font-size: 18px;
-            text-align:center;
-            padding: 33px;
-            min-height: 300px;
-            border-radius: 10px;
-            left:25%;
-            top:100px;
-            position: fixed;
-            display: none;
-        }
-        .delete2 {
-
-            Background: #dddddd;
-            width:50%;
-            color:#000;
-            font-family: Arial;
-            font-size: 18px;
-            text-align:center;
-            padding: 33px;
-            min-height: 300px;
-            border-radius: 10px;
-            left:25%;
-            top:100px;
-            position: fixed;
-            display: none;
-        }
-
-        .delete3 {
-
-            Background: #dddddd;
-            width:50%;
-            color:#000;
-            font-family: Arial;
-            font-size: 18px;
-            text-align:center;
-            padding: 33px;
-            min-height: 300px;
-            border-radius: 10px;
-            left:25%;
-            top:100px;
-            position: fixed;
-            display: none;
-        }
-
-        .delete4 {
-
-            Background: #dddddd;
-            width:50%;
-            color:#000;
-            font-family: Arial;
-            font-size: 18px;
-            text-align:center;
-            padding: 33px;
-            min-height: 300px;
-            border-radius: 10px;
-            left:25%;
-            top:100px;
-            position: fixed;
-            display: none;
-        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="assets/css_2/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -415,8 +313,8 @@
 
             <div>
                 <h2>Funciones</h2>
-                <p>Puedes encontrar el los porcentajes de las funciones.</p>
-                <a href="javascript:abrir0()"
+                <p>Puedes encontrar el los porcentajes de asistencia de las funciones.</p>
+                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar1"
                    type="button"
                    class="btn btn-danger border-start-1"
                 ><b>Visualizar</b></a>
@@ -427,7 +325,7 @@
             <div>
                 <h2>Vistas</h2>
                 <p>Puedes encontrar la función más y menos vista.</p>
-                <a href="javascript:abrir1()"
+                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar2"
                    type="button"
                    class="btn btn-danger border-start-1"
                 ><b>Visualizar</b></a>
@@ -437,8 +335,8 @@
 
             <div>
                 <h2>Peliculas</h2>
-                <p>Puedes encontrar la pelicula mejor calificada.</p>
-                <a href="javascript:abrir2()"
+                <p>Puedes encontrar la pelicula mejor calificada y buscar por género.</p>
+                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar3"
                    type="button"
                    class="btn btn-danger border-start-1"
                 ><b>Visualizar</b></a>
@@ -449,356 +347,19 @@
             <div>
                 <h2>Actores y Directores</h2>
                 <p>Puedes encontrar las celebridades mejores calificadas.</p>
-                <a href="javascript:abrir3()"
+                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar4"
                    type="submit"
                    class="btn btn-danger border-start-1"
                 ><b>Visualizar</b></a>
             </div>
         </div>
-        <div class="col d-flex align-items-start">
 
-            <div>
-                <h2>Géneros</h2>
-                <p>Puedes encontrar una lista de todas las peliculas con su respectivos géneros.</p>
-                <a href="javascript:abrir4()"
-                   type="submit"
-                   class="btn btn-danger border-start-1"
-                ><b>Visualizar</b></a>
-            </div>
-        </div>
     </div>
 
 
 </div>
 
-<div class="delete0" id="dele0">
-    <div id="cerrar0"><a href="javascript:cerrar0()">X</a></div>
 
-
-
-        <div class="modal-body" >
-            <div  class="cold md" >
-                <h3>Porcentaje de asistencia por función</h3>
-                <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar1">
-                <label> Fecha de inicio</label>
-                <input type="date" name="date1" value="<%=fecha1%>" >
-
-                <label> Fecha de fin </label>
-                <input type="date" name="date2" value="<%=fecha2%>" >
-
-                <button type="submit" class="btn btn-danger">Filtrar</button>
-
-                </form>
-                <div class="table-responsive">
-                    <%if(listaAsistencia.isEmpty()){%>
-                        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-                    <%}else{if(session.getAttribute("msg1")!=null){%>
-                        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg1")%></div>
-                    <%session.removeAttribute("msg1");
-                    }else{%>
-                    <table >
-                        <thead>
-                        <tr>
-                            <td><h3>Porcentaje</h3></td><td><center><h3>%</h3></center> </td> <td><center> <h3>Pelicula</h3></center></td><td><center><h3>Sede</h3></center> </td><td><center><h3>Sala</h3></center> </td>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <%for(BFuncion funcion: listaAsistencia){%>
-
-                        <tr>
-                            <td>
-                                <div class="progress">
-                                    <div
-
-                                            class="progress-bar bg-primary"
-                                            role="progressbar"
-                                            style="width: <%=funcion.getAsistencia()%>%"
-                                            aria-valuenow="<%=funcion.getAsistencia()%>"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100">
-                                    </div>
-                                </div>
-                            </td><td><h4><%=funcion.getAsistencia()%>
-            </h4></td> <td><center><h4> <%=funcion.getbPelicula().getNombre()%></h4></center></td><td><center><h4><%=funcion.getbSede().getNombre()%></h4> </center></td><td><center><h4><%=funcion.getbSala().getNumero()%></h4> </center></td>
-
-                        </tr>
-                        <%}%>
-
-                        </tbody>
-
-                    </table>
-                    <%}%>
-                    <%}%>
-                </div>
-
-            </div></div>
-
-
-</div>
-<script>
-    function abrir0() {
-        document.getElementById("dele0").style.display="block";
-    }
-    function cerrar0() {
-        document.getElementById("dele0").style.display="none";
-    }
-</script>
-
-<div class="delete1 " id="dele1">
-    <div id="cerrar1"><a href="javascript:cerrar1()">X</a></div>
-    <h3>Más vista</h3>
-    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar2">
-        <div class="modal-body" >
-            <label> Fecha de inicio</label>
-            <input type="date" name="date3" value="<%=fecha3%>" >
-
-            <label> Fecha de fin </label>
-            <input type="date" name="date4" value="<%=fecha4%>" >
-
-            <button type="submit" class="btn btn-danger">Filtrar</button>
-
-           </div>
-    </form>
-    <div class="table-responsive">
-        <%if(masVista.isEmpty()){%>
-        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-        <%}else{if(session.getAttribute("msg2")!=null){%>
-        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg2")%></div>
-        <%session.removeAttribute("msg2");
-        }else{%>
-            <table >
-                <thead>
-                <tr>
-                    <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
-                </tr>
-                </thead>
-
-                <tbody>
-                <%for (BFuncion vista: masVista){%>
-                <tr>
-                    <td><h4><center><%=vista.getbPelicula().getNombre()%></center></h4></td><td><h4><center> <%=vista.getbSede().getNombre()%></center></h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
-                </tr>
-                <%}%>
-                </tbody>
-            </table>
-        <%}%>
-        <%}%>
-
-    <br>
-    <h3>Menos vista</h3>
-    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar3">
-        <div class="modal-body" >
-            <label> Fecha de inicio</label>
-            <input type="date" name="date5" value="<%=fecha5%>" >
-
-            <label> Fecha de fin </label>
-            <input type="date" name="date6" value="<%=fecha6%>">
-
-            <button type="submit" class="btn btn-danger">Filtrar</button>
-
-        </div>
-    </form>
-        <%if(menosVista.isEmpty()){%>
-        <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-        <%}else{if(session.getAttribute("msg3")!=null){%>
-        <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg3")%></div>
-        <%session.removeAttribute("msg3");
-        }else{%>
-            <table >
-                <thead>
-                <tr>
-                    <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <%for (BFuncion vista: menosVista){%>
-                <tr>
-                    <td><h4><center><%=vista.getbPelicula().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSede().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
-                </tr>
-                <%}%>
-
-                </tbody>
-            </table>
-        <%}%>
-        <%}%>
-    </div>
-</div>
-</div>
-<script>
-    function abrir1() {
-        document.getElementById("dele1").style.display="block";
-    }
-    function cerrar1() {
-        document.getElementById("dele1").style.display="none";
-    }
-</script>
-
-<div class="delete2" id="dele2">
-    <div id="cerrar2"><a href="javascript:cerrar2()">X</a></div>
-    <h3>Mejor calificada</h3>
-    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar4">
-        <div class="modal-body" >
-            <label> Fecha de inicio</label>
-            <input type="date" name="date7" value="<%=fecha7%>" >
-
-            <label> Fecha de fin </label>
-            <input type="date" name="date8" value="<%=fecha8%>">
-
-            <button type="submit" class="btn btn-danger">Filtrar</button>
-        </div>
-    </form>
-    <%if(peliculaMejorCalificada.getNombre() == null){%>
-    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-    <%}else{if(session.getAttribute("msg4")!=null){%>
-    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg4")%></div>
-    <%session.removeAttribute("msg4");
-    }else{%>
-    <table>
-
-        <thead>
-        <tr>
-            <td><h3>Pelicula</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td><h4><%=peliculaMejorCalificada.getNombre()%></h4></td><td><h4><%=peliculaMejorCalificada.getCalificacionPelicula()%></h4></td><td><img src="<%=peliculaMejorCalificada.getFoto()%>" style="max-height: 200px; max-width: 150px"></td>
-        </tr>
-
-        </tbody>
-    </table>
-    <%}%>
-    <%}%>
-
-</div>
-<script>
-    function abrir2() {
-        document.getElementById("dele2").style.display="block";
-    }
-    function cerrar2() {
-        document.getElementById("dele2").style.display="none";
-    }
-</script>
-
-<div class="delete3" id="dele3">
-    <div id="cerrar3"><a href="javascript:cerrar3()">X</a></div>
-    <h3>Mejor calificado</h3>
-    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar5">
-        <div class="modal-body" >
-            <label> Fecha de inicio</label>
-            <input type="date" name="date9" value="<%=fecha9%>" >
-
-            <label> Fecha de fin </label>
-            <input type="date" name="date10" value="<%=fecha10%>">
-
-            <button type="submit" class="btn btn-danger">Filtrar</button>
-        </div>
-    </form>
-    <%if(actorMejorCalificado.getNombre() == null){%>
-    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-    <%}else{if(session.getAttribute("msg5")!=null){%>
-    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg5")%></div>
-    <%session.removeAttribute("msg5");
-    }else{%>
-    <table>
-        <thead>
-        <tr>
-            <td><h3>Actor</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td><h4><%=actorMejorCalificado.getNombre()%> <%=actorMejorCalificado.getApellido()%></h4></td><td><h4><%=actorMejorCalificado.getCalificacion()%></h4></td><td><img src="<%=actorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <%}%>
-    <%}%>
-
-    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar6" >
-        <label> Fecha de inicio</label>
-        <input type="date" name="date11" value="<%=fecha11%>" >
-
-        <label> Fecha de fin </label>
-        <input type="date" name="date12" value="<%=fecha12%>" >
-
-        <button type="submit" class="btn btn-danger">Filtrar</button>
-    </form>
-
-    <%if(directorMejorCalificado.getNombre() == null){%>
-    <div class="alert alert-success" role="alert">Seleccione un rango de fechas válido</div>
-    <%}else{if(session.getAttribute("msg6")!=null){%>
-    <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg6")%></div>
-    <%session.removeAttribute("msg6");
-    }else{%>
-    <table>
-        <thead>
-        <tr>
-            <td><h3>Director</h3></td><td><h3>Calificación</h3></td><td><h3>Foto</h3></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><h3><%=directorMejorCalificado.getNombre()%> <%=directorMejorCalificado.getApellido()%></h3></td><td><h3><%=directorMejorCalificado.getCalificacion()%></h3></td><td><img src="<%=directorMejorCalificado.getFoto()%>" style="height: 100px; width: 80px"></td>
-        </tr>
-
-        </tbody>
-    </table>
-    <%}%>
-    <%}%>
-</div>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script>
-    function abrir3() {
-        document.getElementById("dele3").style.display="block";
-    }
-    function cerrar3() {
-        document.getElementById("dele3").style.display="none";
-    }
-</script>
-
-<div class="delete0" id="dele4">
-    <div id="cerrar4"><a href="javascript:cerrar4()">X</a></div>
-    <div class="modal-body" >
-        <div  class="cold md" >
-            <h4>Lista de generos</h4>
-            <table >
-                <thead>
-                <tr>
-                    <td><h4>Pelicula</h4></td><td><h4>Género</h4></td>
-                </tr>
-                </thead>
-                <tbody>
-                <%for (BFuncion genero: listaGenero){%>
-                <tr>
-                    <td><h4><%=genero.getbPelicula().getNombre()%></h4></td><td><h4><%=genero.getbPelicula().getGenero()%></h4></td>
-                </tr>
-                <%}%>
-                </tbody>
-
-            </table>
-
-
-        </div>
-    </div>
-</div>
-
-
-<script>
-    function abrir4() {
-        document.getElementById("dele4").style.display="block";
-    }
-    function cerrar4() {
-        document.getElementById("dele4").style.display="none";
-    }
-</script>
-
-
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
