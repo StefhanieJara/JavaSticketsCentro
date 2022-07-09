@@ -16,6 +16,7 @@ public class AdminListarSalasServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         int pagina= request.getParameter("pagina") == null ? 1 :Integer.parseInt(request.getParameter("pagina"));
+        HttpSession session= request.getSession();
 
         AdminDao adminDao = new AdminDao();
         switch (action){
@@ -39,7 +40,14 @@ public class AdminListarSalasServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }
             case "crear"->{
+                ArrayList<Integer> numerosSalas= session.getAttribute("numerosSalas")==null?new ArrayList<>():(ArrayList<Integer>) session.getAttribute("numerosSalas");
+                boolean buscoSalas= session.getAttribute("numerosSalas")==null?false:true;
+                session.removeAttribute("numerosSalas");
+                session.removeAttribute("numerosSalas");
+
                 request.setAttribute("sedes", adminDao.listarSedes());
+                request.setAttribute("numerosSalas", numerosSalas);
+                request.setAttribute("buscoSalas", buscoSalas);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorAñadirSala.jsp");
                 requestDispatcher.forward(request,response);
             }
@@ -54,35 +62,37 @@ public class AdminListarSalasServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
+        HttpSession session=request.getSession();
         String numeroSalaStr;
         String aforoStr;
         String elegirSedeStr;
         numeroSalaStr = request.getParameter("numeroSala");
         aforoStr = request.getParameter("aforo");
         elegirSedeStr = request.getParameter("elegirSede");
-        int pagina= Integer.parseInt(request.getParameter("pagina"));
+        int pagina= Integer.parseInt(request.getParameter("pagina")==null?"1":request.getParameter("pagina"));
         switch (action){
             case "guardar"->{
                 try{
                     int numeroSala = Integer.parseInt(numeroSalaStr);
                     int aforo = Integer.parseInt(aforoStr);
-                    int elegirSede = adminDao.encontrarIDSede(elegirSedeStr);
-                    if(elegirSede!=0){
-                        adminDao.anadirSala(elegirSede,aforo,numeroSala);
-                        response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
-                    }else{
-                        response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet?action=crear");
-                    }
+                    int elegirSede = Integer.parseInt(elegirSedeStr);
+                    adminDao.anadirSala(elegirSede,aforo,numeroSala);
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir tipo de dato");
                 }
-
+                response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet");
+            }
+            case "buscarSalas"->{
+                int elegirSede = Integer.parseInt(elegirSedeStr);
+                session.setAttribute("filtroSede",elegirSede);
+                session.setAttribute("numerosSalas", adminDao.numerosSalaExistentes(elegirSede));
+                session.setAttribute("buscoSalas", "");
+                response.sendRedirect(request.getContextPath()+"/AdminListarSalasServlet?action=crear");
             }
             case "editar"->{
                 int idSala= Integer.parseInt(request.getParameter("idSala"));
                 try{
                     int aforo = Integer.parseInt(aforoStr);
-
                     adminDao.editarSala(aforo, idSala);
                 }catch (NumberFormatException e){
                     System.out.println("Error al convertir tipo de dato");
@@ -91,7 +101,7 @@ public class AdminListarSalasServlet extends HttpServlet {
             }
             case "filtrar"->{
                 String filtro= request.getParameter("filtro");
-                ArrayList<BSala> salas= new ArrayList<>();
+                ArrayList<BSala> salas;
                 if(!filtro.equals("Selecciona la sede")){
                     salas=adminDao.filtrarSala(filtro, true, cant_resultClientes, pagina);
                     int cant_paginas=(int)Math.ceil((double)adminDao.filtrarSala(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);

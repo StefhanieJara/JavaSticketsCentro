@@ -329,7 +329,7 @@
         </div>
     </div>
     <%}%>
-    <!--Modal eliminar producto: Producto pendiente para pedido-->
+    <!--Modal Eliminar Sala-->
     <%i=0;for (BSala sala : listaSala ){%>
     <div    class="modal fade"
             id="eliminar<%=i%>"
@@ -340,7 +340,7 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="err_eliminar">Sede: <%=sala.getbSede().getNombre()%> N°: <%=sala.getNumero()%></h5>
+                    <h5 class="modal-title" id="err_eliminar">Eliminar Sala | <%=sala.getbSede().getNombre()%> N°<%=sala.getNumero()%></h5>
                     <button
                             type="button"
                             class="btn-close btn-close-white"
@@ -352,9 +352,7 @@
                     Recuerde que para eliminar una sala, esta no debe poseer una función pendiente.
                 </div>
                 <%if(!eliminarSePuede.get(i)){%>
-                <div class="alert alert-warning" role="alert">
-                    <p class="mb-0">No es posible eliminar esta sala, existen funciones pendientes.</p>
-                </div>
+                    <div class="text-danger mb-2">No es posible eliminar esta sala, existen funciones pendientes.</div>
                 <%}%>
                 <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar">
                     <input type="hidden" name="id" value="<%=sala.getIdSala()%>">
@@ -374,7 +372,7 @@
     </div>
     <%i++;}%>
 
-    <!--Modal eliminar producto: Producto pendiente para pedido-->
+    <!--Modal Editar Sala-->
     <%i=0;for (BSala sala : listaSala ) {%>
     <div    class="modal fade"
             id="editar<%=i%>"
@@ -396,7 +394,7 @@
                 <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar">
                 <div class="modal-body">
                     Recuerde que para editar el aforo de una sala, esta no debe ser menor a los stocks de sus funciones correspondientes.
-                    <br><br><b>Aforo:  </b><input required type="number" min="<%=maxStock.get(i)%>" value="<%=sala.getAforo()%>" name="aforo">
+                    <br><br><b>Aforo:  </b><input required type="number" max="200" min="<%=maxStock.get(i)%>" value="<%=sala.getAforo()%>" name="aforo">
                 </div>
                     <input type="hidden" name="pagina" value="1">
                     <input type="hidden" name="idSala" value="<%=sala.getIdSala()%>">

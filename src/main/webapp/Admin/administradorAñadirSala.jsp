@@ -8,6 +8,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="sedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="numerosSalas" scope="request" type="java.util.ArrayList<java.lang.Integer>"/>
+<jsp:useBean id="buscoSalas" scope="request" type="java.lang.Boolean"/>
+
+<%  int filtroSede= session.getAttribute("filtroSede")==null?0:(Integer)session.getAttribute("filtroSede");
+    session.removeAttribute("filtroSede");
+    int maxNumero=0;
+    for(int numero:numerosSalas){
+        if(maxNumero<numero){
+            maxNumero= numero;
+        }
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,57 +183,67 @@
                                 class="card-header"
                                 style="background-color: #e72d4b; color: white"
                         >
-                            <h4 class="my-2">Añadir Sala</h4>
+                            <h4 class="my-2">Añadir Nueva Sala</h4>
                         </div>
                         <div class="card-body p-4 p-md-5">
-                            <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=guardar">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <div class="form-outline">
-                                            <input type="hidden" name="pagina" value="1"><!--Siempre regresaremos pagina 1-->
-                                            <label class="form-label" for="farmaName">Ingrese el numero de sala</label>
-                                            <input type="number"
-                                                    name="numeroSala"
-                                                    id="farmaName"
-                                                    class="form-control"
-                                                    placeholder="Ingrese numero de sala" max="10" min="1" required="required"/>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-outline">
-                                            <label class="form-label" for="farmaMail">Máximo de personas en la sala (aforo)</label>
-                                            <input type="number"
-                                                    id="farmaMail"
-                                                    name="aforo"
-                                                    class="form-control"
-                                                    placeholder="Ingrese el aforo" required="required" max="200" min="50"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-
-                                    <div class="form-outline mb-4 py-4">
+                                <div class=" row mb-3">
+                                    <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=buscarSalas">
+                                    <div class="col-lg-8">
                                         <label class="form-label" for="country1">Elija la sede</label>
                                         <select id="country1"
                                                 class="frm-field required sect"
                                                 name="elegirSede">
                                             <%for(BSede bSede : sedes){%>
-                                            <option value="<%=bSede.getNombre()%>"><%=bSede.getNombre()%></option>
+                                            <option <%=bSede.getIdSede()==filtroSede?"selected":""%> value="<%=bSede.getIdSede()%>"><%=bSede.getNombre()%></option>
                                             <%}%>
                                         </select>
+                                        <button
+                                                class="btn btn-tele"
+                                                type="submit">Buscar salas</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                <div class="row mb-3">
+                                    <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=guardar">
+                                    <div class="form-outline mb-4 py-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">Ingrese el numero de sala</label>
+                                            <input type="hidden" value="<%=filtroSede%>" name="elegirSede">
+                                            <select <%=buscoSalas?"":"disabled"%> class="frm-field required sect"
+                                                    name="numeroSala">
+                                                <%for(int i=1;i<maxNumero+10;i++){%>
+                                                    <% boolean estaLista=false;for(int numero: numerosSalas){
+                                                            if(numero==i){
+                                                                estaLista=true;
+                                                                break;
+                                                            }
+                                                        }%>
+                                                    <%if(!estaLista){%>
+                                                <option value="<%=i%>">N°Sala: <%=i%></option>
+                                                <%}}%>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="col-md-6">
+                                            <div class="form-outline">
+                                                <label class="form-label">Máximo de personas en la sala (aforo)</label>
+                                                <input  <%=buscoSalas?"required":"disabled"%> type="number"
+                                                        name="aforo"
+                                                        class="form-control"
+                                                        placeholder="Ingrese el aforo" max="200" min="50"/>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row row-cols-3 justify-content-center">
-                                        <input
+                                        <input <%=buscoSalas?"":"disabled"%>
                                                 class="btn btn-tele"
                                                 type="submit"
                                                 value="Registrar sala"
                                         />
                                     </div>
+                                    </form>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>

@@ -498,6 +498,23 @@ public class AdminDao extends BaseDao{
             e.printStackTrace();
         }
     }
+    public ArrayList<Integer> numerosSalaExistentes(int idSede){
+        String sql="select s.numero from sala s where Sede_idSede=?";
+        ArrayList<Integer> numeros= new ArrayList<>();;
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idSede);
+            try(ResultSet rs= pstmt.executeQuery();){
+                while(rs.next()){
+                    numeros.add(rs.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numeros;
+    }
+
     //Editamos Salas
     public void editarSala(int aforo, int id){
 
