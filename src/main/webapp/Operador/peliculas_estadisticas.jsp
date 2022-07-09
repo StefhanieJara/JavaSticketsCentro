@@ -10,14 +10,38 @@
 <jsp:useBean id="listaGenero" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
 <jsp:useBean id="generos" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BFuncion>" class="java.util.ArrayList"/>
 <jsp:useBean id="filtro" scope="request" type="java.lang.String" class="java.lang.String"/>
+<%double contador;
+double puntajeX=0;
+boolean existe=false;
+double puntaje = pelicula.getCalificacionPelicula();%>
 <html>
 <head>
     <title>Estadisticas - Peliculas</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/stars1.css" />
 </head>
 <body>
 
+<%
+    for(contador=0; contador<5; contador++){
+        double su = puntaje-contador;
+        System.out.println(su);
+
+        if(su<0.4 && su <=1 && su >=0){
+            puntajeX = Math.floor(puntaje);
+            existe = false;
+        }else{if(su>0.6){
+            puntajeX = Math.ceil(puntaje);
+            existe = false;
+        }else{if(su>=0.4 && su <=0.6){
+            puntajeX = Math.floor(puntaje);
+            existe = true;
+
+        }
+        }
+        }
+    }%>
 <table>
     <thead>
     <tr>
@@ -26,7 +50,24 @@
     </thead>
     <tbody>
     <tr>
-        <td><h3><%=pelicula.getNombre()%></h3></td><td><h3><%=pelicula.getCalificacionPelicula()%></h3></td><td><h3>Pendiente</h3></td><td><img src="<%=pelicula.getFoto()%>" style="max-height:200px; max-width: 100px"></td>
+        <td><h3><%=pelicula.getNombre()%></h3></td><td><h3><%=pelicula.getCalificacionPelicula()%></h3></td>
+        <td>
+            <div class="stars">
+            <%for (contador=0; contador<puntajeX; contador++){%>
+                <span class="star on"></span>
+            <%}%>
+
+            <%if(existe){%>
+                <span class="star half"></span>
+                    <%puntajeX++;
+            }%>
+
+            <%for (contador=0; contador<5-puntajeX; contador++){%>
+            <span class="star"></span>
+            <%}%>
+            </div>
+        </td>
+        <td><img src="<%=pelicula.getFoto()%>" style="max-height:200px; max-width: 100px"></td>
     </tr>
     </tbody>
 </table>

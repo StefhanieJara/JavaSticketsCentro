@@ -397,8 +397,9 @@ public class EstadisticasDaos extends BaseDao{
 
     public BPelicula peliculaMejorCalificada1(){
         BPelicula pelicula = null;
-        String sql = "select pe.nombre, pe.foto, max(pe.calificacionPelicula), pe.idPelicula from pelicula pe\n" +
-                "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula";
+        String sql = "select pe.nombre, pe.foto, pe.calificacionPelicula, pe.idPelicula from pelicula pe\n" +
+                "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n"+
+                "order by pe.calificacionPelicula desc limit 1";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
@@ -457,11 +458,12 @@ public class EstadisticasDaos extends BaseDao{
 
     public BCelebridad actorMejorCalificado1(){
         BCelebridad actor = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, max(ce.calificacion), ce.idCelebridad,  pe.nombre, pe.idPelicula from celebridad ce\n" +
+        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.calificacion, ce.idCelebridad,  pe.nombre, pe.idPelicula from celebridad ce\n" +
                 "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
-                "where ce.rol= 'actor'";
+                "where ce.rol= 'actor'\n"+
+                "order by ce.calificacion desc limit 1";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
@@ -525,11 +527,12 @@ public class EstadisticasDaos extends BaseDao{
 
     public BCelebridad directorMejorCalificado1(){
         BCelebridad director = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, max(ce.calificacion), ce.idCelebridad,  pe.nombre, pe.idPelicula  from celebridad ce\n" +
+        String sql = "select ce.nombre, ce.apellido, ce.foto, ce.calificacion, ce.idCelebridad,  pe.nombre, pe.idPelicula  from celebridad ce\n" +
                 "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
-                "where ce.rol= 'director'";
+                "where ce.rol= 'director'\n"+
+                "order by ce.calificacion desc limit 1";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
