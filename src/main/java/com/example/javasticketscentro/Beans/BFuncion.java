@@ -10,6 +10,7 @@ public class BFuncion {
     private BSede bSede;
     private String horaInicio;
     private float Asistencia;
+    private int butacas;
 
     public BSede getbSede() {
         return bSede;
@@ -83,5 +84,11 @@ public class BFuncion {
         this.horaInicio = horaInicio;
     }
 
+    public int getButacas() {
+        return butacas;
+    }
 
+    public void setButacas(int butacas) {
+        this.butacas = butacas;
+    }
 }

@@ -165,7 +165,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMasVista(String fecha1, String fecha2){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -174,7 +174,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > ? and f.fecha < ?\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ desc) t1\n" +
-                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -193,6 +193,8 @@ public class EstadisticasDaos extends BaseDao{
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
                     funcion.setIdFuncion(resultSet.getInt(2));
+                    funcion.setStock(resultSet.getInt("stock"));
+                    funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
                     funcion.setbPelicula(pelicula);
@@ -216,7 +218,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMasVista1(){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -225,7 +227,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > (select fecha from funcion order by fecha asc limit 1) and f.fecha < now()\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ desc) t1\n" +
-                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -240,6 +242,8 @@ public class EstadisticasDaos extends BaseDao{
              while (resultSet.next()) {
                  BFuncion funcion = new BFuncion();
                  funcion.setIdFuncion(resultSet.getInt(2));
+                 funcion.setStock(resultSet.getInt("stock"));
+                 funcion.setButacas(resultSet.getInt(3));
                  BPelicula pelicula = new BPelicula();
                  pelicula.setNombre(resultSet.getString(1));
                  funcion.setbPelicula(pelicula);
@@ -263,7 +267,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMenosVista(String fecha1, String fecha2){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -272,7 +276,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > ? and f.fecha < ?\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ asc) t1\n" +
-                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -291,6 +295,8 @@ public class EstadisticasDaos extends BaseDao{
                 while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
                     funcion.setIdFuncion(resultSet.getInt(2));
+                    funcion.setStock(resultSet.getInt("stock"));
+                    funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
                     funcion.setbPelicula(pelicula);
@@ -314,7 +320,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMenosVista1(){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -323,7 +329,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > (select fecha from funcion order by fecha asc limit 1) and f.fecha < now()\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ asc) t1\n" +
-                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre\n" +
+                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -339,6 +345,8 @@ public class EstadisticasDaos extends BaseDao{
             while (resultSet.next()) {
                     BFuncion funcion = new BFuncion();
                     funcion.setIdFuncion(resultSet.getInt(2));
+                    funcion.setStock(resultSet.getInt("stock"));
+                    funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
                     funcion.setbPelicula(pelicula);

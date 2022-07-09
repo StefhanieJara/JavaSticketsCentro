@@ -40,7 +40,7 @@
     <table >
         <thead>
         <tr>
-            <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
+            <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td><td><h3>Butacas/Stock</h3></td>
         </tr>
         </thead>
 
@@ -48,6 +48,7 @@
         <%for (BFuncion vista: masVista){%>
         <tr>
             <td><h4><center><%=vista.getbPelicula().getNombre()%></center></h4></td><td><h4><center> <%=vista.getbSede().getNombre()%></center></h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
+            <td><h4><%=vista.getButacas()%>/<%=vista.getStock()%></h4></td>
         </tr>
         <%}%>
         </tbody>
@@ -62,7 +63,7 @@
 <table >
     <thead>
     <tr>
-        <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td>
+        <td><h3>Pelicula</h3></td><td><h3>Sede</h3></td><td><h3>Sala</h3></td><td><h3>Butacas/Stock</h3></td>
     </tr>
     </thead>
 
@@ -71,6 +72,7 @@
     <%for (BFuncion vista: menosVista){%>
     <tr>
         <td><h4><center><%=vista.getbPelicula().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSede().getNombre()%></center> </h4></td><td><h4><center><%=vista.getbSala().getNumero()%></center> </h4></td>
+        <td><h4><%=vista.getButacas()%>/<%=vista.getStock()%></h4></td>
     </tr>
     <%}%>
 

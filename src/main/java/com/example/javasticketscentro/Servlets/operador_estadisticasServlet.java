@@ -199,7 +199,7 @@ public class operador_estadisticasServlet extends HttpServlet {
                     }
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Error al convertir tipo de dato");
-                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
+                    response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet?action=listar3");
                 }
                 break;
             case "listar8":

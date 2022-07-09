@@ -20,13 +20,13 @@
 <table>
     <thead>
     <tr>
-        <td><h3>Actor</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td> <td><h3>Foto</h3></td>
+        <td><h3>Película</h3></td><td><h3>Actor</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td> <td><h3>Foto</h3></td>
     </tr>
     </thead>
     <tbody>
 
     <tr>
-        <td><h4><%=actor.getNombre()%> <%=actor.getApellido()%></h4></td><td><h4><%=actor.getCalificacion()%></h4></td><td><h3>Pendiente</h3></td><td><img src="<%=actor.getFoto()%>" style="height: 100px; width: 80px"></td>
+        <td><h4><%=actor.getbPelicula().getNombre()%></h4></td><td><h4><%=actor.getNombre()%> <%=actor.getApellido()%></h4></td> <td><h4><%=actor.getCalificacion()%></h4></td><td><h3>Pendiente</h3></td><td><img src="<%=actor.getFoto()%>" style="height: 100px; width: 80px"></td>
     </tr>
     </tbody>
 </table>
@@ -35,12 +35,12 @@
 <table>
     <thead>
     <tr>
-        <td><h3>Director</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td>  <td><h3>Foto</h3></td>
+        <td><h3>Película</h3></td><td><h3>Director</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td>  <td><h3>Foto</h3></td>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td><h3><%=director.getNombre()%> <%=director.getApellido()%></h3></td><td><h3><%=director.getCalificacion()%></h3></td><td><h3>Pendiente</h3></td> <td><img src="<%=director.getFoto()%>" style="height: 100px; width: 80px"></td>
+        <td><h4><%=director.getbPelicula().getNombre()%></h4></td><td><h3><%=director.getNombre()%> <%=director.getApellido()%></h3></td><td><h3><%=director.getCalificacion()%></h3></td><td><h3>Pendiente</h3></td> <td><img src="<%=director.getFoto()%>" style="height: 100px; width: 80px"></td>
     </tr>
 
     </tbody>
