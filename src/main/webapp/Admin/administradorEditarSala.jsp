@@ -171,7 +171,7 @@
                                 class="card-header"
                                 style="background-color: #e72d4b; color: white"
                         >
-                            <h4 class="my-2">Editar Sala</h4>
+                            <h4 class="my-2">Editar Aforo de Sala</h4>
                         </div>
                         <div class="card-body p-4 p-md-5">
                             <form method="POST" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar2">
@@ -183,7 +183,7 @@
                                     <div class="col-md-6">
                                         <div class="form-outline">
                                             <label class="form-label" for="farmaName">Número de sala</label>
-                                            <input type="number"
+                                            <input disabled type="number"
                                                     name="numeroSala"
                                                     id="farmaName"
                                                     class="form-control"
@@ -212,7 +212,7 @@
                                                 class="frm-field required sect"
                                                 name="elegirSede">
                                             <%for(BSede bSede : sedes){%>
-                                                <option value="<%=bSede.getNombre()%>" <%=bSede.getNombre().equals(bSala.getbSede().getNombre()) ?"selected" : ""%> ><%=bSede.getNombre()%></option>
+                                                <option value="<%=bSede.getIdSede()%>" <%=bSede.getNombre().equals(bSala.getbSede().getNombre()) ?"selected" : "disabled"%> ><%=bSede.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>

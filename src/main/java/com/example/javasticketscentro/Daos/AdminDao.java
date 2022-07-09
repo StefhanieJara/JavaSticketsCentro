@@ -327,46 +327,8 @@ public class AdminDao extends BaseDao{
         }
         return listaCelebridad;
     }
-        //Métodos internos para filtrar actores y directores
-    public String generarSQL_filtrosCel(String tabla, String rol, String nombre,String apellido,int cant_result){
-        String sql, sql0,sql1,sql2;
 
-        if(rol!=null){
-            sql0="Select * from "+tabla+" where (rol like ? ";
-        }else{
-            sql0="Select * from "+tabla+" where (rol like '%' ";
-        }
-        if(nombre!=null){
-            sql1="and nombre like ? ";
-        }else{
-            sql1="and nombre like '%' ";
-        }
-        if(apellido!=null){
-            sql2="and apellido like ?) limit ?,"+ cant_result;
-        }else{
-            sql2=") limit ?," + cant_result;
-        }
-        sql=sql0+sql1+sql2;
-        return sql;
-    }
-    public void enviar_PstmtCel(PreparedStatement pstmt, int posicion, String rol, String nombre, String apellido) throws SQLException {
-        int contador=0;
-        if(rol != null){
-            contador++;
-            pstmt.setString(contador,"%"+rol+"%");
-        }
-        if(nombre!=null){
-            contador++;
-            pstmt.setString(contador,"%"+nombre+"%");
-        }
-        if(apellido!=null){
-            contador++;
-            pstmt.setString(contador,"%"+apellido+"%");
-        }
-        contador++;
-        pstmt.setInt(contador, posicion);
-    }
-        //Eliminar Celebridad
+       //Eliminar Celebridad
     public void eliminarCelebridad(int id_Celebridad){
         eliminarCelebridadPorPelicula(id_Celebridad, 0);
         eliminarCalificacionCelebridad(id_Celebridad,0);
@@ -537,20 +499,56 @@ public class AdminDao extends BaseDao{
         }
     }
     //Editamos Salas
-    public void editarSala(int idSede,int aforo,int numero, int id){
+    public void editarSala(int aforo, int id){
 
-        String sql="update sala set Sede_idSede=?, aforo=?, numero=? where idSala=?";
+        String sql="update sala set aforo=? where idSala=?";
         try(Connection conn= this.getConnection();
             PreparedStatement pstmt= conn.prepareStatement(sql)){
-            pstmt.setInt(1,idSede);
-            pstmt.setInt(2,aforo);
-            pstmt.setInt(3,numero);
-            pstmt.setInt(4,id);
+            pstmt.setInt(1,aforo);
+            pstmt.setInt(2,id);
             pstmt.executeUpdate();
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+    }
+    public int detectarMayorStock(int idSala){
+        int mayorStock=0;
+        String sql="select max(f.stock),s.idSala from funcion f " +
+                "left join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
+                "left join sala s on fhs.Sala_idSala = s.idSala " +
+                "group by s.idSala having s.idSala=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idSala);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    mayorStock= rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mayorStock;
+    }
+    public boolean sePuedeEliminar(int idSala){
+        boolean sePuedeEliminar= true;
+        String sql="select * from funcion f " +
+                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion " +
+                "inner join sala s on fhs.Sala_idSala = s.idSala " +
+                "where s.idSala=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idSala);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    sePuedeEliminar= false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sePuedeEliminar;
     }
 
     public ArrayList<BSala> listasala() {
@@ -575,8 +573,6 @@ public class AdminDao extends BaseDao{
         }
         return listasala;
     }
-
-
     //eliminamos Salas
     //Eliminar Sala
     public void eliminarSala(int idSala){
@@ -687,10 +683,12 @@ public class AdminDao extends BaseDao{
                 while (rs.next()){
                     BSala bSala = new BSala();
                     bSala.setIdSala(rs.getInt(1));
-                    bSala.setIdSede(rs.getInt(2));
                     bSala.setNumero(rs.getInt(3));
                     bSala.setAforo(rs.getInt(4));
-                    bSala.setNombre(rs.getString(5));
+                    BSede sede= new BSede();
+                    sede.setIdSede(rs.getInt(2));
+                    sede.setNombre(rs.getString(5));
+                    bSala.setbSede(sede);
                     listaSala.add(bSala);
                 }
             }

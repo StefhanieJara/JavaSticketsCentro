@@ -13,7 +13,8 @@
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
-
+<jsp:useBean id="maxStock" scope="request" type="java.util.ArrayList<java.lang.Integer>"/>
+<jsp:useBean id="eliminarSePuede" scope="request" type="java.util.ArrayList<java.lang.Boolean>"/>
 <html lang="en">
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -253,29 +254,33 @@
                 <th></th>
             </tr>
             </thead>
-                <%for (BSala sala : listaSala ) {%>
+                <%int i=0;for (BSala sala : listaSala ) {%>
             <tr>
-                <td><%=sala.getNombre()%></td>
+                <td><%=sala.getbSede().getNombre()%></td>
                 <td><%=sala.getAforo()%></td>
                 <td><%=sala.getNumero()%></td>
                 <td>
                     <div class="col-sm-1 d-none d-md-block text-around">
-                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar&id=<%=sala.getIdSala()%>">
+                        <button type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editar<%=i%>">
                             <i class="far fa-edit btn-tele p-1 rounded"></i>
-                        </a>
-                        <a href="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar&id=<%=sala.getIdSala()%>">
+                        </button>
+                        <button type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#eliminar<%=i%>" >
                             <i class="btn btn-danger p-1 fas fa-times-circle"></i>
-                        </a>
+                        </button>
                     </div>
 
                 </td>
         </tr>
-        <%}%>
+        <%i++;}%>
         </table>
     </div>
 
 
-
+    <%if(cant_paginas>1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
@@ -294,7 +299,7 @@
                         <%}%>
                     </form>
 
-                    <%for(int i=1;i<=cant_paginas;i++){%>
+                    <%for(i=1;i<=cant_paginas;i++){%>
                     <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=filtrar">
                         <input type="hidden" name="pagina" value="<%=i%>">
                         <input type="hidden" name="filtro" value="<%=filtro%>">
@@ -323,6 +328,90 @@
             </nav>
         </div>
     </div>
+    <%}%>
+    <!--Modal eliminar producto: Producto pendiente para pedido-->
+    <%i=0;for (BSala sala : listaSala ){%>
+    <div    class="modal fade"
+            id="eliminar<%=i%>"
+            tabindex="-1"
+            aria-labelledby="err_eliminar"
+            aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="err_eliminar">Sede: <%=sala.getbSede().getNombre()%> N°: <%=sala.getNumero()%></h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    Recuerde que para eliminar una sala, esta no debe poseer una función pendiente.
+                </div>
+                <%if(!eliminarSePuede.get(i)){%>
+                <div class="alert alert-warning" role="alert">
+                    <p class="mb-0">No es posible eliminar esta sala, existen funciones pendientes.</p>
+                </div>
+                <%}%>
+                <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar">
+                    <input type="hidden" name="id" value="<%=sala.getIdSala()%>">
+                    <input type="hidden" name="pagina" value="1">
+                    <%if(eliminarSePuede.get(i)){%>
+                    <div class="modal-footer my-0 py-1">
+                        <button
+                                type="submit"
+                                class="btn btn-danger">
+                            Eliminar Sala
+                        </button>
+                    </div>
+                    <%}%>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%i++;}%>
+
+    <!--Modal eliminar producto: Producto pendiente para pedido-->
+    <%i=0;for (BSala sala : listaSala ) {%>
+    <div    class="modal fade"
+            id="editar<%=i%>"
+            tabindex="-1"
+            aria-labelledby="err_eliminar"
+            aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title">Editar Aforo de la sala | <%=sala.getbSede().getNombre()%> N°<%=sala.getNumero()%></h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=editar">
+                <div class="modal-body">
+                    Recuerde que para editar el aforo de una sala, esta no debe ser menor a los stocks de sus funciones correspondientes.
+                    <br><br><b>Aforo:  </b><input required type="number" min="<%=maxStock.get(i)%>" value="<%=sala.getAforo()%>" name="aforo">
+                </div>
+                    <input type="hidden" name="pagina" value="1">
+                    <input type="hidden" name="idSala" value="<%=sala.getIdSala()%>">
+                    <div class="modal-footer my-0 py-1">
+                        <button
+                                type="submit"
+                                class="btn btn-warning">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%i++;}%>
 
 </main>
 
