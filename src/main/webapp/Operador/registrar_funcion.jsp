@@ -1,6 +1,9 @@
 <%@ page import="com.example.javasticketscentro.Beans.BSede" %>
 <%@ page import="com.example.javasticketscentro.Beans.BSala" %>
-<%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %><%--
   Created by IntelliJ IDEA.
   User: stefh
   Date: 6/06/2022
@@ -8,12 +11,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listarsala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>"/>
+<jsp:useBean id="listaPeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" class="java.util.ArrayList"/>
 <jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
-<jsp:useBean id="listarsede" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
-<jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+<jsp:useBean id="listaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>" class="java.util.ArrayList"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="ListaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
+<jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="Precio" scope="request" type="java.lang.Double"/>
+<jsp:useBean id="idSede" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="fecha" scope="request" type="java.lang.String"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +66,7 @@
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
                     <div style="font-size: 0.62rem">
-                        <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"></a>
+                        <a href="<%=request.getContextPath()%>/OperadorFuncionesServlet"></a>
                         <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
                     </div>
                 </button>
@@ -108,11 +114,20 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Gestione Funciones</span>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Gestione Películas</span>
                                 </a>
                             </div>
                             <div class="p-2">
@@ -160,119 +175,24 @@
                         <h4 class="my-8">Registrar función</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=guardar">
+                        <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=registrar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Nombre de la pelicula</label
-                                        >
-                                        <input
-                                                type="text"
-                                                name="nombrePeli"
-                                                class="form-control"
-                                                placeholder="Ingrese el nombre de la película"/>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Genero</label
-                                        >
-                                        <input
-                                                type="text"
-                                                name="genero"
-                                                class="form-control"
-                                                placeholder="Ingrese el género de la pelicula"
-                                        />
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName">Ingrese la duración de la pelicula</label>
-                                        <input
-                                                type="time"
-                                                name="tiempo"
-                                                class="form-control"
-                                                placeholder="Ingrese la duracion de la pelicula"/> </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName">Ingrese la hora de inicio de la película</label>
-                                        <input
-                                                type="time"
-                                                name="tiempoInicio"
-                                                class="form-control"
-                                                placeholder="Ingrese la duracion de la pelicula"/> </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Ingrese la fecha</label
-                                        >
-                                        <input
-                                                type="date"
-                                                name="fecha"
-                                                id="productName"
-                                                class="form-control"
-                                        />
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Restricción de edad</label
-                                        >
+                                        <label class="form-label">Seleccione la película</label>
                                         <select
-                                                name="restriccionEdad"
-                                                class="frm-field required sect"
-                                        >
-                                            <option disabled="disabled" selected="true">Seleccionar</option>
-                                            <option>Para todo publico (AA)</option>
-                                            <option>+12 (B)</option>
-                                            <option>+15(B15)</option>
-                                            <option>+18 (C)</option>
-                                            <option>Explicitas o lenguaje violento(D)</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Elija el numero de sala</label
-                                        >
-                                        <select
-                                                name="sala"
+                                                name="idPeli"
                                                 class="frm-field required sect"
                                         >
                                             <option>Seleccionar</option>
-                                            <%for(BSala bsalas : listarsala){%>
-                                            <option value="<%=bsalas.getIdSala()%>"><%=bsalas.getNumero()%></option>
+
+                                            <%for(BPelicula pelicula : listaPeliculas){%>
+                                            <option <%=pelicula.getIdPelicula()==idPelicula?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
-                                </div>
-
-
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label class="form-label">Imagen</label>
-                                    <div class="text-center mt-2 mb-3">
-                                        <img id="img-preview" style="max-width: 300px; resize: both; max-width: 300px" />
-                                    </div>
-                                    <div class="d-flex justify-content-center my-3">
-                                        <input type="file" id="img-uploader">
-
-                                    </div>
-                                    <progress id="img-upload-bar" width="10px" value="0" max="100"
-                                              style="width: 100%"></progress>
-                                    <input type="hidden" name="photoUrl" id="photoUrl" />
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productStock"
-                                        >Stock de tickets disponible</label
-                                        >
-                                        <input
-                                                name="stock"
-                                                type="number"
-                                                min="20"
-                                                max="200"
-                                                id="productStock"
-                                                class="form-control"
-                                                placeholder="0"
-                                        />
-                                    </div>
                                     <div class="form-outline">
-                                        <label class="form-label" for="productPrice"
-                                        >Precio por ticket</label
-                                        >
+                                        <label class="form-label">Precio por ticket (S/.)</label>
                                         <input
                                                 name="precio"
                                                 type="number"
@@ -281,72 +201,88 @@
                                                 max="60"
                                                 id="productPrice"
                                                 class="form-control"
-                                                placeholder="S/."
+                                                value="<%=Precio%>"
                                         />
                                     </div>
-
-                                    <div class="form-outline mb-4 py-4">
+                                    <% LocalDate todaysDate = LocalDate.now();
+                                       String todayStr = todaysDate.toString();
+                                       DateTimeFormatter horaActual = DateTimeFormatter.ofPattern("HH:mm");
+                                       todayStr=todayStr+"T"+horaActual.format(LocalDateTime.now());
+                                    %>
+                                    <div class="form-outline mb-4">
                                         <label class="form-label" for="productName"
-                                        >Elija la sede</label
+                                        >Tiempo de inicio</label
                                         >
+                                        <input
+                                                type="datetime-local"
+                                                min="<%=todayStr%>"
+                                                name="fechaHora"
+                                                id="productName"
+                                                class="form-control"
+                                                value="<%=fecha%>"
+                                                oninvalid="setCustomValidity('Ingrese una fecha superior a la actual')"
+                                                onchange="try{setCustomValidity('')}catch(e){}"
+                                        />
+                                    </div>
+                                   <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Elija la sede</label>
                                         <select
-                                                id="country1"
-                                                name="sede"
+                                                name="idsede"
                                                 class="frm-field required sect"
                                         >
                                             <option>Seleccionar</option>
-                                            <%for(BSede bSede : listarsede){%>
-                                            <option value="<%=bSede.getIdSede()%>"><%=bSede.getNombre()%></option>
+                                            <%for(BSede sede : listaSedes){%>
+                                            <option <%=sede.getIdSede()==idSede?"selected":""%> value="<%=sede.getIdSede()%>"><%=sede.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
+                            <button type="submit" id="enviar" class="btn btn-danger">Buscar Salas disponibles</button>
+                            <br>
+                        </form>
+                        <%if(ListaSalas.size()>0){%>
+                        <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=guardar">
                             <div class="row">
-                                <div class="col-md-12 mb-4 pb-2">
+                                <input type="hidden" name="fechaHora" value="<%=fecha%>">
+                                <input type="hidden" name="idPeli" value="<%=idPelicula%>">
+                                <input type="hidden" name="precio" value="<%=Precio%>">
+                                <input type="hidden" name="idsede" value="<%=idSede%>">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="productName"
+                                    >Elija la sala</label>
+                                    <select
+                                            name="idSala"
+                                            class="frm-field required sect"
+                                    >
+                                        <option>Seleccionar</option>
+                                        <%for(BSala sala : ListaSalas){%>
+                                        <option value="<%=sala.getIdSala()%>"><%=sala.getNumero()%></option>
+                                        <%}%>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-1">
                                     <div class="form-outline">
-                                        <label class="form-label" for="productoDescription"
-                                        >Sinopsis</label
+                                        <label class="form-label" for="productPrice"
+                                        >Stock</label
                                         >
                                         <input
-                                                type="text"
-                                                name="sinopsis"
-                                                id="productoDescription"
+                                                name="stock"
+                                                type="number"
+                                                min="0.0"
+                                                step="0.1"
                                                 class="form-control"
-                                        >
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="productName">Director</label>
-                                <select
-                                        name="director"
-                                        class="frm-field required sect"
-                                >
-                                    <option>Seleccionar</option>
-                                    <%for(BCelebridad bCelebridad : listarDirector){%>
-                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="productName"
-                                >Actor/actriz protagonista 1</label
-                                >
-                                <select
-                                        name="actor1"
-                                        class="frm-field required sect"
-                                >
-                                    <option>Seleccionar</option>
-                                    <%for(BCelebridad bCelebridad : listarActor){%>
-                                    <option value="<%=bCelebridad.getIdCelebridad()%>"><%=bCelebridad.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                            </div>
-                            <button type="submit" id="enviar" class="btn btn-danger">Registrar Función</button>
+                            <br>
+                            <button type="submit" class="btn btn-danger">Registrar Función</button>
                         </form>
+                        <%}%>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -354,8 +290,6 @@
 </section>
 
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-<script src="assets/appSubirImagen.js"></script>
 </body>
 </html>
 

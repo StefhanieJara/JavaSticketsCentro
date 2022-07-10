@@ -1,4 +1,9 @@
-<%--
+<%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
   Created by IntelliJ IDEA.
   User: Niurka
   Date: 06/06/2022
@@ -7,6 +12,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<jsp:useBean id="listaPeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" class="java.util.ArrayList"/>
+<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
+<jsp:useBean id="listaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>" class="java.util.ArrayList"/>
+<jsp:useBean id="ListaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
+<jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="Precio" scope="request" type="java.lang.Double"/>
+<jsp:useBean id="idSede" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="idSala" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="stock" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="fecha" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -158,104 +173,98 @@
                         <h4 class="my-2">Editar función</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form>
+                        <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Nombre de la pelicula</label
+                                        <label class="form-label">Seleccione la película</label>
+                                        <select
+                                                name="idPeli"
+                                                class="frm-field required sect"
                                         >
+                                            <option>Seleccionar</option>
+
+                                            <%for(BPelicula pelicula : listaPeliculas){%>
+                                            <option <%=pelicula.getIdPelicula()==idPelicula?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                    <div class="form-outline">
+                                        <label class="form-label">Precio por ticket (S/.)</label>
                                         <input
-                                                type="text"
+                                                name="precio"
+                                                type="number"
+                                                min="0.0"
+                                                step="0.1"
+                                                max="60"
+                                                id="productPrice"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"
+                                                value="<%=Precio%>"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="productName"
-                                        >Género de la pelicula</label
+                                        >Tiempo de inicio</label
                                         >
                                         <input
-                                                type="text"
+                                                type="datetime-local"
+                                                min="<%=fecha%>"
+                                                name="fechaHora"
                                                 id="productName"
                                                 class="form-control"
-                                                placeholder="Ingrese el nombre de la película"
+                                                value="<%=fecha%>"
+                                                oninvalid="setCustomValidity('Ingrese una fecha superior a la actual')"
+                                                onchange="try{setCustomValidity('')}catch(e){}"
                                         />
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="productName"
+                                        >Elija la sede</label>
+                                        <select
+                                                name="idsede"
+                                                class="frm-field required sect"
+                                        >
+                                            <option>Seleccionar</option>
+                                            <%for(BSede sede : listaSedes){%>
+                                            <option <%=sede.getIdSede()==idSede?"selected":""%> value="<%=sede.getIdSede()%>"><%=sede.getNombre()%></option>
+                                            <%}%>
+                                        </select>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6 mb-4 text-center">
-                                    <label for="formFile" class="form-label"
-                                    >Imagen Referencial</label
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="productName"
+                                    >Elija la sala</label>
+                                    <select
+                                            name="idSala"
+                                            class="frm-field required sect"
                                     >
-                                    <div class="text-center mt-2 mb-3">
-                                        <img
-                                                src="img/doctorStrange.jpg"
-                                                class="img-thumbnail"
-                                                width="100px"
-                                                height="100px"
-                                                alt="medicamento"
-                                        />
-                                    </div>
-                                    <input class="form-control" type="file" id="formFile" />
-
-                                    <div class="d-flex justify-content-center my-3">
-                                        <input
-                                                class="btn btn-tele"
-                                                type="submit"
-                                                value="Subir imagen"
-                                        />
-                                    </div>
-                                    <div class="d-flex justify-content-start my-3">
-                                        <div class="pb-1">
-                                            ¿Desea cambiar el aforo?&nbsp;&nbsp;&nbsp;
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="siReceta"
-                                                    value="option1"
-                                                    checked
-                                            />
-                                            <label class="form-check-label" for="siReceta"
-                                            >Sí</label
-                                            >
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input
-                                                    class="form-check-input"
-                                                    type="radio"
-                                                    name="inlineRadioOptions"
-                                                    id="noReceta"
-                                                    value="option2"
-                                            />
-                                            <label class="form-check-label" for="noReceta"
-                                            >No</label
-                                            >
-                                        </div>
-                                    </div>
-
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productStock"
-                                        >Stock de tickets disponible</label
+                                        <option>Seleccionar</option>
+                                        <%for(BSala sala : ListaSalas){%>
+                                        <option value="<%=sala.getIdSala()==idSala?"selected":""%>"><%=sala.getNumero()%></option>
+                                        <%}%>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-1">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="productPrice"
+                                        >Stock</label
                                         >
                                         <input
+                                                name="stock"
                                                 type="number"
-                                                id="productStock"
+                                                min="0.0"
+                                                step="0.1"
                                                 class="form-control"
-                                                placeholder="0"
+                                                value="<%=stock%>"
                                         />
                                     </div>
                                 </div>
                             </div>
-                            <div class="">
-                                <a
-                                        href="<%=request.getContextPath()%>/editarPeliculaServlet"
-                                        class="btn btn-danger"
-                                >Editar Pelicula</a>
-                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-danger">Guardar Cambios</button>
                         </form>
                     </div>
                 </div>

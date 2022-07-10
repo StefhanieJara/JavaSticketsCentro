@@ -108,7 +108,12 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         URLFoto="https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
                     }
                     operadorDao.crearPelicula(nombre, genero, duracionConFormato, restriccion, sinopsis, URLFoto);
-                    response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
+                    AdminDao adminDao = new AdminDao();
+                    request.setAttribute("listarActor", adminDao.listarActor());
+                    request.setAttribute("listarDirector", adminDao.listarDirector());
+                    request.setAttribute("idPeli", operadorDao.obtenerIdPelicula(nombre));
+                    RequestDispatcher view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                    view.forward(request, response);
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                 }

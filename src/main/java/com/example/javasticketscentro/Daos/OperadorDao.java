@@ -1,6 +1,7 @@
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.*;
+import com.sun.mail.imap.protocol.ID;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -44,6 +45,112 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
         return listapeliculas;
+    }
+
+    public ArrayList<BPelicula> listapeliculas() {
+        ArrayList<BPelicula> listapeliculas = new ArrayList<>();
+        String sql = "select idPelicula, nombre, duracion from pelicula where estado=1";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BPelicula bPelicula = new BPelicula();
+                    bPelicula.setIdPelicula(rs.getInt(1));
+                    bPelicula.setNombre(rs.getString(2));
+                    bPelicula.setDuracion(rs.getString(3));
+                    listapeliculas.add(bPelicula);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listapeliculas;
+    }
+
+    public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
+        ArrayList<BSala> SalasDisponibles;
+        ArrayList<BSala> SalasFiltradas = new ArrayList<>();
+        ArrayList<BFuncion> funcionesFiltradas = new ArrayList<>();
+        String sql = "select fecha, horaInicio, duracion, Sala_idSala, s.numero, s.aforo  from funcion\n" +
+                "    inner join funcion_has_sala fhs on funcion.idFuncion = fhs.Funcion_idFuncion\n" +
+                "    inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                "    inner join pelicula p on funcion.Pelicula_idPelicula = p.idPelicula\n" +
+                "    where (Sede_idSede=? and fecha=?)";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setInt(1, idsede);
+            pstmt.setString(2, fechaInicio);
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BSala sala = new BSala();
+                    BFuncion funcion = new BFuncion();
+                    BPelicula pelicula = new BPelicula();
+                    sala.setIdSala(rs.getInt(4));
+                    sala.setNumero(rs.getInt(5));
+                    sala.setAforo(rs.getInt(6));
+                    funcion.setFecha(rs.getString(1));
+                    funcion.setHoraInicio(rs.getString(2));
+                    funcion.setbPelicula(pelicula);
+                    funcion.getbPelicula().setDuracion(rs.getString(3));
+                    funcionesFiltradas.add(funcion);
+                    SalasFiltradas.add(sala);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(SalasFiltradas.size()>0){
+            SalasDisponibles = filtrarSalas(SalasFiltradas, listarSalasPorID(idsede), funcionesFiltradas, obtenerPelicula(idPeli).getDuracion(), horaInicio);
+        }else{
+            SalasDisponibles = listarSalasPorID(idsede);
+        }
+        return SalasDisponibles;
+    }
+
+    public ArrayList<BSala> filtrarSalas(ArrayList<BSala> SalasFiltradas, ArrayList<BSala> SalasTotales, ArrayList<BFuncion> funciones, String duracion, String horaInicio){
+        ArrayList<Integer> SalasNoElegidas = new ArrayList<>();
+        String duracionNueva = duracion;
+        String horaInicioNueva = horaInicio;
+        String horaFinNueva = sumarHoras(horaInicioNueva, duracionNueva);
+        for(int i=0; i<=SalasFiltradas.size(); i++){
+            String horaInicioFiltrada = funciones.get(i).getHoraInicio();
+            String duracionFiltrada = funciones.get(i).getbPelicula().getDuracion();
+            String horaFinFiltrada = sumarHoras(horaInicioFiltrada, duracionFiltrada);
+            if(convertirASegundos(horaInicioFiltrada) < convertirASegundos(horaFinNueva)){
+                SalasNoElegidas.add(SalasFiltradas.get(i).getIdSala());
+            }else if(convertirASegundos(horaFinFiltrada) > convertirASegundos(horaInicioNueva)){
+                SalasNoElegidas.add(SalasFiltradas.get(i).getIdSala());
+            }
+        }
+        for (int j=0; j<=SalasTotales.size();j++){
+            if(SalasNoElegidas.contains(SalasTotales.get(j).getIdSala())){
+                SalasTotales.remove(j);
+            }
+        }
+        return SalasTotales;
+    }
+    public String sumarHoras(String hora1, String duracion){
+        int segundoshora1 = convertirASegundos(hora1);
+        int segundosDuracion = convertirASegundos(duracion);
+        return convertirAHoras(segundoshora1+segundosDuracion);
+    }
+    public int convertirASegundos(String hora){
+        String[] partesHora = hora.split(":");
+        int segundoshora = Integer.parseInt(partesHora[0])*3600 + Integer.parseInt(partesHora[1])*60 + Integer.parseInt(partesHora[2]);
+        return segundoshora;
+    }
+    public static String convertirAHoras(int segundos){
+        String hora="";
+        int hor, min, seg;
+        hor = segundos/3600;
+        min = (segundos-(3600*hor))/60;
+        if(hor>=24){
+            hor -= 24;
+        }
+        String horStr = (""+hor+"").length()==1?"0"+hor:""+hor+"";
+        String minStr = (""+min+"").length()==1?"0"+min:""+min+"";
+        hora = horStr+":"+minStr+":00";
+        return hora;
     }
 
     public void deshabilitarPelicula(int idPelicula){
@@ -211,6 +318,29 @@ public class OperadorDao extends BaseDao{
         }
         return salas;
     }
+
+    public ArrayList<BSala> listarSalasPorID(int idSede){
+        ArrayList<BSala> salas= new ArrayList<>();
+        String sql="select * from sala where Sede_idSede=?";
+        try(Connection conn=this.getConnection();
+            PreparedStatement ptmt= conn.prepareStatement(sql);){
+            ptmt.setInt(1, idSede);
+            try(ResultSet rs = ptmt.executeQuery()){
+                while(rs.next()){
+                    BSala sala= new BSala();
+                    sala.setIdSede(rs.getInt(1));
+                    sala.setAforo(rs.getInt(2));
+                    sala.setIdSala(rs.getInt(3));
+                    sala.setNumero(rs.getInt(4));
+                    salas.add(sala);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return salas;
+    }
+
     public ArrayList<BPersonal> listapersonal(String nombre, String apellido, int pagina, int cant_result, boolean limit) {
 
         ArrayList<BPersonal> listapersonal = new ArrayList<>();
@@ -313,30 +443,66 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-    public void crearFuncion(String nombre, String genero, String fecha, String duracion, String restriccion,
-                             int idsala, String sinopsis, String URLFoto, int stock, float precio, int idSede, int idDirector, int idActor1, String horaInicio){
-        String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero)\n" +
-                "values (?, ?, ?, ?, ?,?,?);";
-        try(Connection connection = this.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, restriccion);
-            pstmt.setString(3, sinopsis);
-            pstmt.setString(4, duracion);
-            pstmt.setString(5, URLFoto);
-            pstmt.setDouble(6, 0.0);
-            pstmt.setString(7, genero);
-            pstmt.executeUpdate();
+
+    public BFuncion obtenerFuncion(int idFuncion){
+        BFuncion funcion = new BFuncion();
+        String sql = "select * from funcion where idFuncion = ?";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt= connection.prepareStatement(sql)){
+            pstmt.setInt(1, idFuncion);
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BPelicula pelicula = new BPelicula();
+                    funcion.setIdFuncion(rs.getInt(1));
+                    funcion.setPrecio(rs.getDouble(2));
+                    funcion.setStock(rs.getInt(3));
+                    pelicula.setIdPelicula(rs.getInt(4));
+                    pelicula.setNombre(obtenerPelicula(pelicula.getIdPelicula()).getNombre());
+                    funcion.setbPelicula(pelicula);
+                    funcion.setFecha(rs.getString(5));
+                    funcion.setHoraInicio(rs.getString(6));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return funcion;
+    }
+
+    public int obtenerSalaPorFuncion(int IDFuncion){
+        int id=0;
+        String sql = "Select Sala_idSala from funcion_has_sala where Funcion_idFuncion = ?";
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, IDFuncion);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        int IDpeli = obtenerIdPelicula(nombre);
-        asignarFuncion(precio, stock, IDpeli, fecha, horaInicio);
-        int IDFuncion = obtenerIDFuncion(IDpeli, fecha, horaInicio);
-        asignarCelebridad(IDpeli, idDirector);
-        asignarCelebridad(IDpeli, idActor1);
-        asignarSala(IDFuncion, idsala);
+        return id;
     }
+
+    public int obtenerSede(int IDSala){
+        int id=0;
+        String sql = "Select Sede_idSede from sala where idSala = ?";
+        try(Connection conn = this.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, IDSala);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return id;
+    }
+
     public int obtenerIdPelicula(String nombre){
         String sql = "Select idPelicula from pelicula where nombre = ?";
         int IDPeli=0;
@@ -373,12 +539,12 @@ public class OperadorDao extends BaseDao{
         return IDfuncion;
     }
 
-    public void asignarFuncion(float precio, int stock, int IDPelicula, String fecha, String horaInicio){
-        String sql = "INSERT INTO centro1.funcion (precio, stock, Pelicula_idPelicula, fecha, horaInicio)\n" +
-                "values ( ? , ? , ? , ? , ?);";
+    public void crearFuncion(double precio, int stock, int IDPelicula, String fecha, String horaInicio, int idSala){
+        String sql = "INSERT INTO centro1.funcion (precio, stock, Pelicula_idPelicula, fecha, horaInicio, habilitado)\n" +
+                "values ( ? , ? , ? , ? , ?, 1);";
         try (Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setFloat(1, precio);
+            pstmt.setDouble(1, precio);
             pstmt.setInt(2, stock);
             pstmt.setInt(3, IDPelicula);
             pstmt.setString(4, fecha);
@@ -387,6 +553,7 @@ public class OperadorDao extends BaseDao{
         }catch (SQLException e){
             e.printStackTrace();
         }
+        asignarSala(obtenerIDFuncion(IDPelicula, fecha, horaInicio), idSala);
     }
     public void asignarSala(int IDFuncion, int idsala){
         String sql = "INSERT INTO funcion_has_sala (Funcion_idFuncion, Sala_idSala) VALUES (?,?)";

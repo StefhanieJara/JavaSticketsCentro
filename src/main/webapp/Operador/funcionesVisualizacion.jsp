@@ -34,7 +34,7 @@
 </head>
 <body>
 <!--Botón flotante "+" para agregar elemento-->
-<a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=crear" class="btn-float">
+<a href="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=crear" class="btn-float">
     <i class="fas fa-plus my-float"></i>
 </a>
 
@@ -253,7 +253,7 @@
             <div class="col-sm-1 mt-5 d-none d-md-block text-center">
                 <div class="col-sm-1 d-none d-md-block text-around">
                     <form action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=editar" method="post">
-                        <input type="hidden" value="<%=funcion.getIdFuncion()%>" name="idPeli">
+                        <input type="hidden" value="<%=funcion.getIdFuncion()%>" name="idFuncion">
                         <button type="submit">
                             <i class="far fa-edit btn-tele p-1 rounded"></i>
                         </button>
@@ -330,7 +330,7 @@
                     <br>
                     ¿Está seguro de realizar esta acción?
                     <form method="post" class="row g-3" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=borrar">
-                        <input type="hidden" name="idPeli" value="<%=funcion.getIdFuncion()%>">
+                        <input type="hidden" name="idFuncion" value="<%=funcion.getIdFuncion()%>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
