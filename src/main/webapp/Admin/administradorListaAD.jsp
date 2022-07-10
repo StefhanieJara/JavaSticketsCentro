@@ -198,7 +198,8 @@
         </div>
     </form>
 
-    <%for (BCelebridad celebridad : listaCelebridades ) {%>
+    <% int a = 0;
+    for (BCelebridad celebridad : listaCelebridades ) {%>
     <!--Celebridad-->
     <hr class="mx-md-5 mx-sm-3" />
     <!--Celebridad-->
@@ -226,13 +227,67 @@
             <a href="<%=request.getContextPath()%>/ADServlet?action=editar&id=<%=celebridad.getIdCelebridad()%>">
                 <i class="far fa-edit btn-tele p-3 rounded"></i>
             </a>
-            <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
-                <i class="btn btn-danger mt-2 p-3 fas fa-times-circle"></i>
-            </a>
+            <hr class="my-1" style="background-color: white" />
+                <button
+                        class="btn btn-danger p-2"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmacion<%=a%>">
+                    <i class="btn btn-danger p-2 fas fa-times-circle"></i>
+                </button>
+
         </div>
 
     </div>
     <hr class="mx-md-5 mx-sm-3" />
+    <div class="mx-3"></div>
+    <button
+            class="btn btn-danger py-0 px-1"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#confirmacion<%=a%>"
+    >
+        <i class="fas fa-times-circle"></i>
+    </button>
+    </td>
+    </tr>
+    <div class="modal fade"
+         id="confirmacion<%=a%>"
+         tabindex="-1"
+         aria-labelledby="conf_eliminar"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="conf_eliminar">Eliminar Actor o Director</h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    Este actor o director será eliminado y ya no podra recuperar la
+                    información.<br />
+                    ¿Está seguro que desea eliminarlo de la lista?
+                </div>
+                <div class="modal-footer">
+                    <a href="<%=request.getContextPath()%>/ADServlet">
+                        <button type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal">Cancelar</button>
+                    </a>
+                    <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
+                        <button type="button" class="btn btn-danger">Eliminar Celebridad</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% a++;
+    %>
+    </div>
     <%}%>
     <!--Paginación-->
     <div class="container">
