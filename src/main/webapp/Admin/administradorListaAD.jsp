@@ -243,11 +243,10 @@
     <div class="mx-3"></div>
     <button
             class="btn btn-danger py-0 px-1"
-            type="button"
+            type="hidden"
             data-bs-toggle="modal"
             data-bs-target="#confirmacion<%=a%>"
     >
-        <i class="fas fa-times-circle"></i>
     </button>
     </td>
     </tr>

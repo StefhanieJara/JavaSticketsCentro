@@ -355,6 +355,9 @@
                     <%}%>
                 </form>
             </ul>
+            <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=descargar">
+                <button type="submit" class="page-link" href="#">Descargar Lista</button>
+            </form>
         </nav>
     </div>
 </div>
