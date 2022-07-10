@@ -177,9 +177,9 @@
         </div>
         <ul>
             <li><img  src="img/banner3.jpg" alt=""></li>
-            <li><img  src="img/banner2.jpg" alt=""></li>
+            <li><img  src="img/ccpucp.jpg" alt=""></li>
             <li><img  src="img/banner3.jpg" alt=""></li>
-            <li><img  src="img/banner2.jpg" alt=""></li>
+            <li><img  src="img/ccpucp.jpg" alt=""></li>
         </ul>
 
     </div>
@@ -189,7 +189,7 @@
     <%session.setAttribute("vieneDePeli", false);%>
 
     <% for (int j=0; j<Math.ceil((double) Listapeliculas.size()/4);j++) {%>
-        <div class="container px-6 py-2">
+        <div class="container px-8 py-2">
             <div class="row">
                 <% if (j==0) {%>
                 <h3 class="dist-name title-peliculas"><%=filtro.isEmpty()?"Películas en cartelera": "Resultados de su búsqueda"%></h3>
@@ -198,8 +198,9 @@
                     <% for (int i=j*4; i<(j+1)*4; i++) { %>
                     <%if(i<Listapeliculas.size()){%>
                     <div class="col-pelicula1">
-                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=describir&id=<%=Listapeliculas.get(i).getIdPelicula()%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="100%"></a>
-                        <div class="textoPeliculas"><%=Listapeliculas.get(i).getNombre()%></div>
+                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=describir&id=<%=Listapeliculas.get(i).getIdPelicula()%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="350px" width="250px"></a>
+                        <div class="textoPeliculas"  ><%=Listapeliculas.get(i).getNombre()%></div>
+                        <br><br>
                     </div>
                     <%}%>
                     <%}%>
