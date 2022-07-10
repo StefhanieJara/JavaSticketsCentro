@@ -92,9 +92,15 @@ public class ListarOperadorServlet extends HttpServlet {
                                 session.setAttribute("error", "comienzo");
                                 response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet?action=agregar");}
                             else{
-                            int numCel = Integer.parseInt(num);
-                            int dni = Integer.parseInt(dnistr);
-                            if (((int) Math.log10(dni) + 1) == 8) {
+                                int numCel = 0;
+                                int dni = 0;
+                                try{numCel = Integer.parseInt(num);}
+                                catch (NumberFormatException e) {
+                                session.setAttribute("error", "digitonumero");}
+                                try{dni = Integer.parseInt(dnistr);} catch (NumberFormatException e) {
+                                    session.setAttribute("error", "digitodni");
+                                }
+                                if (((int) Math.log10(dni) + 1) == 8) {
                                 if (((int) Math.log10(numCel) + 1) == 9) {
                                     adminDao.anadirOperadores(nombre, dni, apellido, numCel, foto, fecha_Nc, email, usuario, contrasenia, direccion, rol);
                                     response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");

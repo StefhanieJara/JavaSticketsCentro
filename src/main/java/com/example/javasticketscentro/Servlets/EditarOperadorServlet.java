@@ -57,8 +57,11 @@ public class EditarOperadorServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
                 }else{
                     if(numero.charAt(0) == '9'){
-                    operador.setNumCel(Integer.parseInt(numero));
-                    if(((int)Math.log10(operador.getNumCel())+1)==9){
+                    try{operador.setNumCel(Integer.parseInt(numero));
+                    } catch (NumberFormatException e) {
+                        session.setAttribute("error","digito");
+                    }
+                        if(((int)Math.log10(operador.getNumCel())+1)==9){
                         adminDao.editarOperadores(operador);
                         response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
                     }else{
