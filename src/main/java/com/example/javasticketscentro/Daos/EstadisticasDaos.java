@@ -165,7 +165,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMasVista(String fecha1, String fecha2){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock, p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -174,7 +174,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > ? and f.fecha < ?\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ desc) t1\n" +
-                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock\n" +
+                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre, f.stock, p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -197,6 +197,7 @@ public class EstadisticasDaos extends BaseDao{
                     funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
+                    pelicula.setFoto(resultSet.getString("foto"));
                     funcion.setbPelicula(pelicula);
                     BSala sala = new BSala();
                     sala.setNumero(resultSet.getInt("numero"));
@@ -218,7 +219,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMasVista1(){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -227,7 +228,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > (select fecha from funcion order by fecha asc limit 1) and f.fecha < now()\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ desc) t1\n" +
-                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+                "where t1.´Butacas´ = (select max(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -246,6 +247,7 @@ public class EstadisticasDaos extends BaseDao{
                  funcion.setButacas(resultSet.getInt(3));
                  BPelicula pelicula = new BPelicula();
                  pelicula.setNombre(resultSet.getString(1));
+                 pelicula.setFoto(resultSet.getString("foto"));
                  funcion.setbPelicula(pelicula);
                  BSala sala = new BSala();
                  sala.setNumero(resultSet.getInt("numero"));
@@ -267,7 +269,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMenosVista(String fecha1, String fecha2){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -276,7 +278,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > ? and f.fecha < ?\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ asc) t1\n" +
-                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -299,6 +301,7 @@ public class EstadisticasDaos extends BaseDao{
                     funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
+                    pelicula.setFoto(resultSet.getString("foto"));
                     funcion.setbPelicula(pelicula);
                     BSala sala = new BSala();
                     sala.setNumero(resultSet.getInt("numero"));
@@ -320,7 +323,7 @@ public class EstadisticasDaos extends BaseDao{
 
     public ArrayList<BFuncion> listarMenosVista1(){
         ArrayList<BFuncion> vistas = new ArrayList<>();
-        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+        String sql = "select * from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -329,7 +332,7 @@ public class EstadisticasDaos extends BaseDao{
                 "where f.fecha > (select fecha from funcion order by fecha asc limit 1) and f.fecha < now()\n" +
                 "group by f.idFuncion\n" +
                 "order by ´Butacas´ asc) t1\n" +
-                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock\n" +
+                "where t1.´Butacas´ = (select min(´Butacas´) from (select   p.nombre as 'Nombre de pelicula', f.idFuncion as 'Función', sum(cantidadButaca) as ´Butacas´ , fecha, sa.numero, se.nombre,f.stock,p.foto\n" +
                 "from ticket t inner join funcion f on t.Funcion_idFuncion = f.idFuncion\n" +
                 "\t\t\t  inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
                 "              inner join funcion_has_sala fs on f.idFuncion = fs.Funcion_idFuncion\n" +
@@ -349,6 +352,7 @@ public class EstadisticasDaos extends BaseDao{
                     funcion.setButacas(resultSet.getInt(3));
                     BPelicula pelicula = new BPelicula();
                     pelicula.setNombre(resultSet.getString(1));
+                    pelicula.setFoto(resultSet.getString("foto"));
                     funcion.setbPelicula(pelicula);
                     BSala sala = new BSala();
                     sala.setNumero(resultSet.getInt("numero"));
@@ -368,48 +372,22 @@ public class EstadisticasDaos extends BaseDao{
         return vistas;
     }
 
-    public BPelicula peliculaMejorCalificada(String fecha1, String fecha2){
-        BPelicula pelicula = null;
-        String sql = "select pe.nombre, pe.foto, max(pe.calificacionPelicula), pe.idPelicula from pelicula pe\n" +
-                "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
-                "where f.fecha > ? and f.fecha < ?";
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, fecha1);
-            pstmt.setString(2, fecha2);
-            try (ResultSet resultSet = pstmt.executeQuery()) {
-                if (resultSet.next()) {
-                   pelicula = new BPelicula();
-                   pelicula.setNombre(resultSet.getString(1));
-                   pelicula.setFoto(resultSet.getString(2));
-                   pelicula.setCalificacionPelicula(resultSet.getDouble(3));
-                   pelicula.setIdPelicula(resultSet.getInt(4));
 
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Hubo un error en la conexión!");
-            e.printStackTrace();
-        }
-        return pelicula;
-    }
-
-    public BPelicula peliculaMejorCalificada1(){
-        BPelicula pelicula = null;
+    public ArrayList<BPelicula>  peliculaMejorCalificada1(){
+        ArrayList<BPelicula> peliculas = new ArrayList<>();
         String sql = "select pe.nombre, pe.foto, pe.calificacionPelicula, pe.idPelicula from pelicula pe\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n"+
-                "order by pe.calificacionPelicula desc limit 1";
+                "order by pe.calificacionPelicula desc limit 3";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
-            if (resultSet.next()) {
-                pelicula = new BPelicula();
+            while (resultSet.next()) {
+                BPelicula pelicula = new BPelicula();
                 pelicula.setNombre(resultSet.getString(1));
                 pelicula.setFoto(resultSet.getString(2));
                 pelicula.setCalificacionPelicula(resultSet.getDouble(3));
                 pelicula.setIdPelicula(resultSet.getInt(4));
-
+                peliculas.add(pelicula);
             }
 
 
@@ -417,59 +395,25 @@ public class EstadisticasDaos extends BaseDao{
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
-        return pelicula;
+        return peliculas;
     }
 
 
-    public BCelebridad actorMejorCalificado(String fecha1, String fecha2){
-        BCelebridad actor = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, max(ce.calificacion), ce.idCelebridad,  pe.nombre, pe.idPelicula from celebridad ce\n" +
-                "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
-                "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
-                "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
-                "where f.fecha > ? and f.fecha < ? and ce.rol= 'actor'";
-
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, fecha1);
-            pstmt.setString(2, fecha2);
-            try (ResultSet resultSet = pstmt.executeQuery()) {
-                while (resultSet.next()) {
-                    actor = new BCelebridad();
-                    actor.setNombre(resultSet.getString(1));
-                    actor.setApellido(resultSet.getString(2));
-                    actor.setFoto(resultSet.getString(3));
-                    actor.setCalificacion(resultSet.getDouble(4));
-                    actor.setIdCelebridad(resultSet.getInt(5));
-                    BPelicula pelicula = new BPelicula();
-                    pelicula.setNombre(resultSet.getString(6));
-                    pelicula.setIdPelicula(resultSet.getInt(7));
-                    actor.setbPelicula(pelicula);
-
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Hubo un error en la conexión!");
-            e.printStackTrace();
-        }
-        return  actor;
-    }
-
-    public BCelebridad actorMejorCalificado1(){
-        BCelebridad actor = null;
+    public ArrayList<BCelebridad> actorMejorCalificado1(){
+        ArrayList<BCelebridad> actores = new ArrayList<>();
         String sql = "select ce.nombre, ce.apellido, ce.foto, ce.calificacion, ce.idCelebridad,  pe.nombre, pe.idPelicula from celebridad ce\n" +
                 "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
                 "where ce.rol= 'actor'\n"+
-                "order by ce.calificacion desc limit 1";
+                "group by ce.nombre\n"+
+                "order by ce.calificacion desc limit 3";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
-            if (resultSet.next()) {
-                    actor = new BCelebridad();
+            while (resultSet.next()) {
+                    BCelebridad actor = new BCelebridad();
                     actor.setNombre(resultSet.getString(1));
                     actor.setApellido(resultSet.getString(2));
                     actor.setFoto(resultSet.getString(3));
@@ -479,7 +423,7 @@ public class EstadisticasDaos extends BaseDao{
                     pelicula.setNombre(resultSet.getString(6));
                     pelicula.setIdPelicula(resultSet.getInt(7));
                     actor.setbPelicula(pelicula);
-
+                    actores.add(actor);
             }
 
 
@@ -487,58 +431,25 @@ public class EstadisticasDaos extends BaseDao{
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
-        return  actor;
+        return  actores;
     }
 
-    public BCelebridad directorMejorCalificado(String fecha1, String fecha2){
-        BCelebridad director = null;
-        String sql = "select ce.nombre, ce.apellido, ce.foto, max(ce.calificacion), ce.idCelebridad,  pe.nombre, pe.idPelicula  from celebridad ce\n" +
-                "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
-                "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
-                "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
-                "where f.fecha > ? and f.fecha < ? and ce.rol= 'director'";
 
-        try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, fecha1);
-            pstmt.setString(2, fecha2);
-            try (ResultSet resultSet = pstmt.executeQuery()) {
-                while (resultSet.next()) {
-                    director = new BCelebridad();
-                    director.setNombre(resultSet.getString(1));
-                    director.setApellido(resultSet.getString(2));
-                    director.setFoto(resultSet.getString(3));
-                    director.setCalificacion(resultSet.getDouble(4));
-                    director.setIdCelebridad(resultSet.getInt(5));
-                    BPelicula pelicula = new BPelicula();
-                    pelicula.setNombre(resultSet.getString(6));
-                    pelicula.setIdPelicula(resultSet.getInt(7));
-                    director.setbPelicula(pelicula);
-
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Hubo un error en la conexión!");
-            e.printStackTrace();
-        }
-        return  director;
-    }
-
-    public BCelebridad directorMejorCalificado1(){
-        BCelebridad director = null;
+    public ArrayList<BCelebridad> directorMejorCalificado1(){
+        ArrayList<BCelebridad> directores = new ArrayList<>();
         String sql = "select ce.nombre, ce.apellido, ce.foto, ce.calificacion, ce.idCelebridad,  pe.nombre, pe.idPelicula  from celebridad ce\n" +
                 "inner join celebridad_por_pelicula cp on cp.Celebridad_idCelebridad = ce.idCelebridad\n" +
                 "inner join pelicula pe on cp.Pelicula_idPelicula = pe.idPelicula\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n" +
                 "where ce.rol= 'director'\n"+
-                "order by ce.calificacion desc limit 1";
+                "group by ce.nombre\n"+
+                "order by ce.calificacion desc limit 3";
 
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet resultSet = stmt.executeQuery(sql)) {
-            if (resultSet.next()) {
-                    director = new BCelebridad();
+            while (resultSet.next()) {
+                    BCelebridad director = new BCelebridad();
                     director.setNombre(resultSet.getString(1));
                     director.setApellido(resultSet.getString(2));
                     director.setFoto(resultSet.getString(3));
@@ -548,6 +459,7 @@ public class EstadisticasDaos extends BaseDao{
                     pelicula.setNombre(resultSet.getString(6));
                     pelicula.setIdPelicula(resultSet.getInt(7));
                     director.setbPelicula(pelicula);
+                    directores.add(director);
             }
 
 
@@ -555,7 +467,7 @@ public class EstadisticasDaos extends BaseDao{
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
-        return  director;
+        return  directores;
     }
 
     public String firstFecha(){

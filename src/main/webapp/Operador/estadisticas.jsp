@@ -163,7 +163,7 @@
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="assets/css_2/bootstrap.css" rel='stylesheet' type='text/css' />
-    <link href="assets/css_2/style.css" rel='stylesheet' type='text/css' />
+
     <link rel="stylesheet" href="assets/css_2/grafico_style.css">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -304,16 +304,23 @@
 <div class="container px-4 py-5" id="icon-grid">
 
 
-<br>
-    <br>
-    <br><br>
-    <h2 class="pb-2 border-bottom">Estadísticas</h2>
+<main>
+    <div class="card-header mt-5 mb-4"></div>
+
+    <!--Pestañas visualización y gestión-->
+    <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+        <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="#"
+            ><h1>Estadísticas</h1></a
+            >
+        </li>
+    </ul>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
         <div class="col d-flex align-items-start">
 
             <div>
                 <h2>Funciones</h2>
-                <p>Puedes encontrar el los porcentajes de asistencia de las funciones.</p>
+                <p>Puedes encontrar los porcentajes de asistencia de todas las funciones.</p>
                 <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar1"
                    type="button"
                    class="btn btn-danger border-start-1"
@@ -334,7 +341,7 @@
         <div class="col d-flex align-items-start">
 
             <div>
-                <h2>Peliculas</h2>
+                <h2>Películas</h2>
                 <p>Puedes encontrar la pelicula mejor calificada y buscar por género.</p>
                 <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar3"
                    type="button"
@@ -356,7 +363,7 @@
 
     </div>
 
-
+</main>
 </div>
 
 

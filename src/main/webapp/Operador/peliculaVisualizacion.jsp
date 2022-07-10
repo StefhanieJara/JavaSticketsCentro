@@ -32,6 +32,7 @@
             src="https://kit.fontawesome.com/5733880de3.js"
             crossorigin="anonymous"
     ></script>
+
 </head>
 <body>
     <%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>

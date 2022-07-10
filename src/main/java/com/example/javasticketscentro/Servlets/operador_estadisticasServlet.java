@@ -34,9 +34,9 @@ public class operador_estadisticasServlet extends HttpServlet {
                     ArrayList<BFuncion> asistencias = estadisticasDaos.listarAsistencia1();
                     ArrayList<BFuncion> masVistas = estadisticasDaos.listarMasVista1();
                     ArrayList<BFuncion> menosVistas = estadisticasDaos.listarMenosVista1();
-                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
-                    BCelebridad actor = estadisticasDaos.actorMejorCalificado1();
-                    BCelebridad director = estadisticasDaos.directorMejorCalificado1();
+                    ArrayList<BPelicula> pelicula =estadisticasDaos.peliculaMejorCalificada1();
+                    ArrayList<BCelebridad> actor = estadisticasDaos.actorMejorCalificado1();
+                    ArrayList<BCelebridad> director = estadisticasDaos.directorMejorCalificado1();
                     String fechaMin = estadisticasDaos.firstFecha();
                     String fechaMax = estadisticasDaos.lastFecha();
                     request.setAttribute("listaGenero", generos);
@@ -95,7 +95,7 @@ public class operador_estadisticasServlet extends HttpServlet {
                 try {
                     ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
                     ArrayList<BFuncion> seleccionar = estadisticasDaos.listarGenero1();
-                    BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
+                    ArrayList<BPelicula> pelicula =estadisticasDaos.peliculaMejorCalificada1();
                     request.setAttribute("listaGenero", generos);
                     request.setAttribute("generos",seleccionar);
                     request.setAttribute("pelicula",pelicula);
@@ -107,8 +107,9 @@ public class operador_estadisticasServlet extends HttpServlet {
                 }
                 break;
             case "listar4":
-                BCelebridad actor = estadisticasDaos.actorMejorCalificado1();
-                BCelebridad director = estadisticasDaos.directorMejorCalificado1();
+
+                ArrayList<BCelebridad> actor = estadisticasDaos.actorMejorCalificado1();
+                ArrayList<BCelebridad> director = estadisticasDaos.directorMejorCalificado1();
                 try{
                     request.setAttribute("actor", actor);
                     request.setAttribute("director", director);
@@ -187,7 +188,7 @@ public class operador_estadisticasServlet extends HttpServlet {
                 String genero = request.getParameter("filtro");
                 ArrayList<BFuncion> seleccionar = estadisticasDaos.listarGenero1();
                 ArrayList<BFuncion> peliculas = estadisticasDaos.listarPorGenero(genero);
-                BPelicula pelicula = estadisticasDaos.peliculaMejorCalificada1();
+                ArrayList<BPelicula> pelicula =estadisticasDaos.peliculaMejorCalificada1();
                 try {
                     if(peliculas.get(0)!=null){
                         request.setAttribute("listaGenero", peliculas);
@@ -203,7 +204,7 @@ public class operador_estadisticasServlet extends HttpServlet {
                 }
                 break;
             case "listar8":
-                BPelicula pelicula1 = estadisticasDaos.peliculaMejorCalificada1();
+                ArrayList<BPelicula> pelicula1 =estadisticasDaos.peliculaMejorCalificada1();
                 ArrayList<BFuncion> seleccionar1 = estadisticasDaos.listarGenero1();
                 ArrayList<BFuncion> generos = estadisticasDaos.listarGenero();
                 try{

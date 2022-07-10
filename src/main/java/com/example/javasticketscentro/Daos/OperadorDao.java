@@ -328,7 +328,9 @@ public class OperadorDao extends BaseDao{
             try(ResultSet rs = ptmt.executeQuery()){
                 while(rs.next()){
                     BSala sala= new BSala();
-                    sala.setIdSede(rs.getInt(1));
+                    BSede sede = new BSede();
+                    sede.setIdSede(rs.getInt(1));
+                    sala.setbSede(sede);
                     sala.setAforo(rs.getInt(2));
                     sala.setIdSala(rs.getInt(3));
                     sala.setNumero(rs.getInt(4));

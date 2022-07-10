@@ -17,26 +17,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-<h3>Porcentaje de asistencia por función</h3>
-<form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar1">
-    <label> Fecha de inicio</label>
-    <input type="date" name="date1" value="<%=session.getAttribute("fechaI") == null ? fecha1: session.getAttribute("fechaI")%>"  >
-    <%session.removeAttribute("fechaI");%>
-    <label> Fecha de fin </label>
-    <input type="date" name="date2" value="<%=session.getAttribute("fechaH") == null ? fecha2: session.getAttribute("fechaH")%>"  >
-    <%session.removeAttribute("fechaH");%>
-    <button type="submit" class="btn btn-danger">Filtrar</button>
 
-</form>
-<div class="table-responsive">
+<figure class="text-center">
+    <h3>Porcentaje de asistencia por función</h3>
+</figure>
+<div class="d-flex gap-sm-4 justify-content-center">
+    <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar1">
+        <label> Fecha de inicio</label>
+        <input type="date" name="date1" value="<%=session.getAttribute("fechaI") == null ? fecha1: session.getAttribute("fechaI")%>"  >
+        <%session.removeAttribute("fechaI");%>
+        <label> Fecha de fin </label>
+        <input type="date" name="date2" value="<%=session.getAttribute("fechaH") == null ? fecha2: session.getAttribute("fechaH")%>"  >
+        <%session.removeAttribute("fechaH");%>
+        <button type="submit" class="btn btn-danger">Filtrar</button>
+
+    </form>
+</div>
+<div class="container-md">
         <%if(session.getAttribute("msg1")!=null){%>
     <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg1")%></div>
         <%session.removeAttribute("msg1");
                     }else{%>
-    <table >
+    <table class="table table-bordered border-danger">
         <thead>
         <tr>
-            <td><h3>Porcentaje</h3></td><td><center><h3>%</h3></center> </td> <td><center> <h3>Pelicula</h3></center></td><td><center><h3>Sede</h3></center> </td><td><center><h3>Sala</h3></center> </td>
+            <td><h3><center>Porcentaje</center></h3></td><td><center><h3>%</h3></center> </td> <td><center> <h3>Película</h3></center></td><td><center><h3>Sede</h3></center> </td><td><center><h3>Sala</h3></center> </td>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +53,7 @@
                 <div class="progress">
                     <div
 
-                            class="progress-bar bg-primary"
+                            class="progress-bar bg-danger"
                             role="progressbar"
                             style="width: <%=funcion.getAsistencia()%>%"
                             aria-valuenow="<%=funcion.getAsistencia()%>"
@@ -56,7 +61,7 @@
                             aria-valuemax="100">
                     </div>
                 </div>
-            </td><td><h4><%=funcion.getAsistencia()%>
+            </td><td><h4><center><%=funcion.getAsistencia()%></center>
         </h4></td> <td><center><h4> <%=funcion.getbPelicula().getNombre()%></h4></center></td><td><center><h4><%=funcion.getbSede().getNombre()%></h4> </center></td><td><center><h4><%=funcion.getbSala().getNumero()%></h4> </center></td>
 
         </tr>
@@ -66,6 +71,7 @@
 
     </table>
         <%}%>
-
+</div>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
