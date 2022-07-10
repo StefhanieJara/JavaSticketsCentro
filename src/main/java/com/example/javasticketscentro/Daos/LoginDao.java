@@ -99,4 +99,15 @@ public class LoginDao extends BaseDao{
         }
         return codigo;
     }
+
+
+    public int tiene_numeros(String texto){
+        var numeros="0123456789";
+        for(int i=0; i<texto.length(); i++){
+            if (numeros.indexOf(texto.charAt(i),0)!=-1){
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

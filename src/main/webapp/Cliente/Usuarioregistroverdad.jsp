@@ -86,6 +86,12 @@
                                             <div class="col-md-6">
                                                 <input class="form-control mb-3" type="text" name="apellido" placeholder="Apellido" required="required">
                                             </div>
+                                            <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("apellidoIncorrecto")){%>
+                                            <div class="text-danger mb-2">El nombre no debe ser un número</div>
+                                            <%}%>
+                                            <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("nombreIncorrecto")){%>
+                                            <div class="text-danger mb-2">El nombre no debe ser un número</div>
+                                            <%}%>
                                         </div>
                                         <div class="mb-3">
                                             <div class="input-group has-validation">
