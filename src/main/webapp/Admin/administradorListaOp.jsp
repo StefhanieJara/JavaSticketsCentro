@@ -406,6 +406,9 @@
                         <%}%>
                     </form>
                 </ul>
+                <form method="post" action="<%=request.getContextPath()%>/ListarOperadorServlet?action=descargar">
+                    <button type="submit" class="page-link" href="#">Descargar Lista</button>
+                </form>
             </nav>
         </div>
     </div>
