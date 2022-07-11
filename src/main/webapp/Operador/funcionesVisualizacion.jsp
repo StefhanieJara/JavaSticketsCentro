@@ -185,35 +185,51 @@
         </li>
     </ul>
 
+
+    <form class="mb-4" method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=filtrar">
+        <center>
+        <table>
+            <tr>
+        <div class="input-group justify-content-lg-end">
+            <div class="form-outline" style="width: 18%">
+                <td>
+                <input type="date" class="form-select form-select-sm" value="<%=fechaFiltro%>" name="fechaFiltro">
+                </td>
+                <td>
+                    <select name="idSala"  class=" form-select form-select-sm">
+                    <option value="-1">Filtrar por Sala</option>
+                    <%for(BSala bsalas : salas){%>
+                    <option <%=idSala.equals(""+bsalas.getIdSala())?"selected":""%> value="<%=bsalas.getIdSala()%>"><%="Sede: "+bsalas.getbSede().getNombre()+"&nbsp;&nbsp;&nbsp;&nbsp;N°Sala: "+bsalas.getNumero()%></option>
+                    <%}%>
+                </select>
+                </td>
+                <td>
+                <div class="rows-auto">
+                    <button type="submit" class="btn btn-primary" style="background-color:#e72d4b; border-color:black; color:white; ">Aplicar</button>
+                </div>
+                </td>
+
+            </div>
+        </div>
+            </tr>
+
+        </table>
+        </center>
+    </form>
+    <center>
     <!--Barra de búsqueda producto-->
     <%if(!idSala.equals("")&&!fechaFiltro.equals("")){%>
     <%if(!idSala.equals("-1")){%>
     <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=descargar">
         <input type="hidden" value="<%=fechaFiltro%>" name="fechaFiltro">
         <input type="hidden" value="<%=idSala%>" name="idSala">
-        <button type="submit" class="page-link" href="#">Descargar Lista</button>
+        <button type="submit" class="page-link btn" href="#" style="background-color:black; border-color:black; color:white;" >Descargar Lista</button>
     </form>
     <%}%>
     <%}%>
-    <form class="mb-4" method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=filtrar">
-        <div class="input-group justify-content-lg-end">
-            <div class="form-outline" style="width: 36%">
-                <div class="rows-auto">
-                    <button type="submit" class="btn btn-primary" style="background-color:indianred; border-color:red; color:white">Aplicar</button>
-                </div>
-                <input type="date" value="<%=fechaFiltro%>" name="fechaFiltro">
-                <select name="idSala"  class="frm-field required sect">
-                    <option value="-1">Filtrar por Sala</option>
-                    <%for(BSala bsalas : salas){%>
-                    <option <%=idSala.equals(""+bsalas.getIdSala())?"selected":""%> value="<%=bsalas.getIdSala()%>"><%="Sede: "+bsalas.getbSede().getNombre()+"&nbsp;&nbsp;&nbsp;&nbsp;N°Sala: "+bsalas.getNumero()%></option>
-                    <%}%>
-                </select>
-            </div>
-        </div>
-        <br>
-    </form>
+    </center>
     <%if(!idSala.equals("") || !fechaFiltro.equals("")){%>
-    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <h3 class="dist-name textoPeliculas"  style="color:#e72d4b; padding-left: 50px ;">Resultados de su búsqueda</h3>
     <%}%>
     <!--Productos-->
     <% int i=0; for (BFuncion funcion :  listaFunciones) {%>
@@ -254,14 +270,16 @@
                 <div class="col-sm-1 d-none d-md-block text-around">
                     <form action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=editar" method="post">
                         <input type="hidden" value="<%=funcion.getIdFuncion()%>" name="idFuncion">
-                        <button type="submit">
-                            <i class="far fa-edit btn-tele p-1 rounded"></i>
+                        <button type="submit"
+                                class=" btn btn-tele py-0 px-1">
+                            <i class="far fa-edit "></i>
                         </button>
                     </form>
                     <button type="button"
+                            class="btn btn-danger py-0 px-1"
                             data-bs-toggle="modal"
                             data-bs-target="#eliminar<%=i%>">
-                        <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                        <i class="fas fa-times-circle "></i>
                     </button>
                 </div>
             </div>
@@ -322,17 +340,29 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Esta película será deshabilitada y todas sus funciones serán eliminadas.
                     <br>
-                    ¿Está seguro de realizar esta acción?
+                    <center>¿Está seguro de realizar esta acción?</center>
                     <form method="post" class="row g-3" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=borrar">
                         <input type="hidden" name="idFuncion" value="<%=funcion.getIdFuncion()%>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                       <center>
+                        <table>
+                            <tr>
+                                <td>
+                                    <br>
+                                    <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
+                                </td>
+                                <td>
+                                    <br>
+                                    <button type="submit" class="btn btn-danger" width="15%">Eliminar</button>
+                                </td>
+                            </tr>
+                        </table>
+                       </center>
                     </form>
                 </div>
             </div>
