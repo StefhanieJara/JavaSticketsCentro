@@ -6,7 +6,7 @@
 <jsp:useBean id="lista" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial>" />
 <jsp:useBean id="listaHistoriales" scope="request" type="java.util.ArrayList<java.util.ArrayList<com.example.javasticketscentro.Beans.Bhistorial_detalle>>" />
 
-<% BPersona usuario=(BPersona)session.getAttribute("clienteLog");%>
+<% BPersona usuario=(BPersona)session.getAttribute("clienteLog");session.removeAttribute("pagina");%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -132,7 +132,7 @@
                                     </a>
                                 </div>
                                 <div class="p-2">
-                                    <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                    <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                         <span><i class="fas fa-list"></i></span>
                                         <span>Historial de tickets</span>
                                     </a>
@@ -256,7 +256,7 @@
                                                     if(fechayhora_2.isAfter(LocalDateTime.now())){ %>
                                                 <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
                                                 <%}else{%>
-                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarP&id=<%=funcion.getIdPelicula()%> " type="button" class="btn btn-warning">Calificar</a></td>
+                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listarP&id=<%=funcion.getIdPelicula()%> " type="button" class="btn btn-warning">Calificar</a></td>
                                                 <%}%>
 
                                             </tr>

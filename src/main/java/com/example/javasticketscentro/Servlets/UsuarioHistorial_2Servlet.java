@@ -16,13 +16,12 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
-        HttpSession session;
+        HttpSession session= request.getSession();;
         BPersona usuario;
         HistorialDao historialDao = new HistorialDao();
         switch (action){
             case "listar" -> {
                 try{
-                    session= request.getSession();
                     usuario= (BPersona) session.getAttribute("clienteLog");
                     ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(usuario.getIdPer());
                     request.setAttribute("lista", listadetickets);
@@ -48,6 +47,14 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                 }catch (NumberFormatException e){
                     response.sendRedirect(request.getContextPath());
                 }
+            }
+            case "listarP"->{
+                String idPeliculaStr =  request.getParameter("id");
+                session.setAttribute("idPeli", Integer.parseInt(idPeliculaStr));
+                response.sendRedirect(request.getContextPath()+"/calificarPelicula");
+            }
+            default -> {
+                response.sendRedirect(request.getContextPath());
             }
         }
 

@@ -18,16 +18,14 @@ public class CalificarServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarP" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("id");
-        HttpSession session;
+
+        HttpSession session= request.getSession();
         BPersona usuario;
         int idPelicula;
      switch (action) {
          case "listarP":
-             try {
-                 session= request.getSession();
                  usuario= (BPersona) session.getAttribute("clienteLog");
-                 idPelicula = Integer.parseInt(idPeliculaStr);
+                 idPelicula=(Integer) session.getAttribute("idPeli");
                  BPelicula pelicula = calificacionDao.listarPelicula(idPelicula);
                  if (pelicula != null) {
                      request.setAttribute("Pelicula", pelicula);
@@ -37,18 +35,22 @@ public class CalificarServlet extends HttpServlet {
                  }else{
                      response.sendRedirect(request.getContextPath());
                  }
-             } catch (NumberFormatException e) {
-                 response.sendRedirect(request.getContextPath());
-             }
              break;
-     }
-
+         case "listarD":
+             String idPeliculaStr =  request.getParameter("idPelicula");
+             session.setAttribute("idPeli",Integer.parseInt(idPeliculaStr));
+             response.sendRedirect(request.getContextPath()+"/calificarDirector");
+             break;
+         default:
+             response.sendRedirect(request.getContextPath());
+             break;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action") == null ? "listarP" : request.getParameter("action");
+        String action = request.getParameter("action") == null ? "calificarP" : request.getParameter("action");
         CalificacionDao calificacionDao = new CalificacionDao();
         HttpSession session;
         BPersona usuario;
@@ -64,7 +66,7 @@ public class CalificarServlet extends HttpServlet {
                     int idPelicula = Integer.parseInt(idPeliculaS);
                     if(calificacionDao.listarPelicula(idPelicula)!=null){
                         calificacionDao.anadirPuntajePorPelicula(usuario.getIdPer(), idPelicula, puntaje);
-                        response.sendRedirect(request.getContextPath()+"/calificarPelicula?action=listarP&id="+idPeliculaS);
+                        response.sendRedirect(request.getContextPath()+"/calificarPelicula");
                     }else{
                         System.out.println("ERRORRRRR");
                         response.sendRedirect(request.getContextPath());
@@ -74,8 +76,6 @@ public class CalificarServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath());
                 }
             }
-
-
         }
     }
 }

@@ -104,7 +104,7 @@
                                 </a>
                             </div>
                             <div class="p-2">
-                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Historial de tickets</span>
                                 </a>

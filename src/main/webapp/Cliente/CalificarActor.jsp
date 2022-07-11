@@ -129,7 +129,7 @@
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
-                                        <p style="font-size:25px; color: red;"><em>Actor <%=pagina%></em></p>
+                                        <p style="font-size:25px; color: red;"><em>Actor <%=pagina%> de <%=listaActor.size()%></em></p>
                                     </div>
                                     <div class="form-outline mb-4">
                                         <p style="font-size:30px; color: black;"><em><%=listaActor.get(pagina-1).getNombre()%> <%=listaActor.get(pagina-1).getApellido()%></em></p>
@@ -196,7 +196,7 @@
                         <%}%>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
 
                     </div>

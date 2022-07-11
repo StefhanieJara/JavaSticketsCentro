@@ -17,30 +17,31 @@ public class Calificar2Servlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listarD" : request.getParameter("action");
 
         CalificacionDao calificacionDao = new CalificacionDao();
-        String idPeliculaStr =  request.getParameter("idPelicula");
-        HttpSession session;
+        HttpSession session=request.getSession();;
         BPersona usuario;
-        int idPelicula;
         switch (action) {
             case "listarD":
-                try {
-                    session=request.getSession();
-                    usuario=(BPersona) session.getAttribute("clienteLog");
-                    idPelicula = Integer.parseInt(idPeliculaStr);
-                    ArrayList<BCelebridad> listaDirector = calificacionDao.listarCelebridadPorID(usuario.getIdPer(), idPelicula, "director");
-                    if (listaDirector.get(0) != null) {
-                        request.setAttribute("idPelicula",idPelicula);
-                        request.setAttribute("director", listaDirector.get(0));
-                        int puntaje=calificacionDao.puntajeCelebridadPorId(usuario.getIdPer(),listaDirector.get(0).getIdCelebridad());
-                        request.setAttribute("puntaje", puntaje);
-                        RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
-                        listarD.forward(request, response);
-                    }else{
-                        response.sendRedirect(request.getContextPath());
-                    }
-                } catch (NumberFormatException e) {
+                usuario=(BPersona) session.getAttribute("clienteLog");
+                int idPelicula = (Integer)session.getAttribute("idPeli");
+                ArrayList<BCelebridad> listaDirector = calificacionDao.listarCelebridadPorID(usuario.getIdPer(), idPelicula, "director");
+                if (listaDirector.get(0) != null) {
+                    request.setAttribute("idPelicula",idPelicula);
+                    request.setAttribute("director", listaDirector.get(0));
+                    int puntaje=calificacionDao.puntajeCelebridadPorId(usuario.getIdPer(),listaDirector.get(0).getIdCelebridad());
+                    request.setAttribute("puntaje", puntaje);
+                    RequestDispatcher listarD = request.getRequestDispatcher("Cliente/CalificarDirector.jsp");
+                    listarD.forward(request, response);
+                }else{
                     response.sendRedirect(request.getContextPath());
                 }
+                break;
+            case "listarA":
+                String idPeli=request.getParameter("idPelicula");
+                session.setAttribute("idPeli", Integer.parseInt(idPeli));
+                response.sendRedirect(request.getContextPath()+"/calificarActor");
+                break;
+            default:
+                response.sendRedirect(request.getContextPath());
                 break;
         }
     }
@@ -52,20 +53,18 @@ public class Calificar2Servlet extends HttpServlet {
         CalificacionDao calificacionDao = new CalificacionDao();
 
         String idCelebridadS = request.getParameter("idCelebridad");
-        String idPeliculaS = request.getParameter("idPelicula");
         String puntajePelicula = request.getParameter("puntaje");
         HttpSession session;
         BPersona usuario;
         switch (action){
             case "calificarD" -> {
-                System.out.println(puntajePelicula+" "+idCelebridadS);
                 try{
                     session=request.getSession();
                     usuario= (BPersona)session.getAttribute("clienteLog");
                     int puntaje = Integer.parseInt(puntajePelicula);
                     int idCelebridad = Integer.parseInt(idCelebridadS);
                     calificacionDao.anadirPuntajePorCelebridad(usuario.getIdPer(), idCelebridad, puntaje, false);
-                    response.sendRedirect(request.getContextPath()+"/calificarDirector?action=listarD&idPelicula="+idPeliculaS);
+                    response.sendRedirect(request.getContextPath()+"/calificarDirector");
                 }catch (NumberFormatException e){
                     System.out.println("Error Calificar Director");
                     response.sendRedirect(request.getContextPath());

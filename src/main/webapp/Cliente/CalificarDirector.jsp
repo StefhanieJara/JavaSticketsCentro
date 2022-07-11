@@ -160,10 +160,10 @@
                             </div>
                         </form>
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarActor?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
+                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
                         </div>
 
                     </div>

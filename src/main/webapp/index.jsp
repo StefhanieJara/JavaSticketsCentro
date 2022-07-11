@@ -78,7 +78,7 @@
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end">
             <a class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex">
                 <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i>
@@ -139,7 +139,7 @@
                                 </a>
                             </div>
                             <div class="p-2">
-                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" class="text-dark text-decoration-none">
+                                <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" class="text-dark text-decoration-none">
                                     <span><i class="fas fa-list"></i></span>
                                     <span>Historial de tickets</span>
                                 </a>

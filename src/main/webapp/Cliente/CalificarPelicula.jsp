@@ -127,7 +127,7 @@
                     </div>
                     <div class="card-body p-4 p-md-5">
 
-                        <form method="post" action="<%=request.getContextPath()%>/calificarPelicula?action=calificarP" >
+                        <form method="post" action="<%=request.getContextPath()%>/calificarPelicula" >
                             <div class="row" >
                                 <div class="col" align="center">
                                     <div class="form-outline mb-4">
@@ -158,11 +158,11 @@
                         </form>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listar" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
                         </div>
 
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarD&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a>
+                            <a href="<%=request.getContextPath()%>/calificarPelicula?action=listarD&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a>
                         </div>
 
                     </div>
