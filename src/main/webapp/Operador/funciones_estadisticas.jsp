@@ -166,20 +166,46 @@
     <div class="card-header mt-5 mb-4"></div>
     <br><br>
 <figure class="text-center">
-    <h3>Porcentaje de asistencia por función</h3>
+    <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+        <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="#"
+            ><h3>Porcentaje de asistencia por función</h3></a
+            >
+        </li>
+    </ul>
 </figure>
 <div class="d-flex gap-sm-4 justify-content-center">
+    <br><br>
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar1">
-        <label> Fecha de inicio</label>
-        <input type="date" name="date1" value="<%=session.getAttribute("fechaI") == null ? fecha1: session.getAttribute("fechaI")%>"  >
-        <%session.removeAttribute("fechaI");%>
-        <label> Fecha de fin </label>
-        <input type="date" name="date2" value="<%=session.getAttribute("fechaH") == null ? fecha2: session.getAttribute("fechaH")%>"  >
-        <%session.removeAttribute("fechaH");%>
-        <button type="submit" class="btn btn-danger">Filtrar</button>
+        <table >
+            <tr>
+                <td>
+                    <label> Fecha de inicio</label>
+                    <div style="padding-right: 10px;">
+                    <input type="date" name="date1" class=" form-select form-select-sm" " value="<%=session.getAttribute("fechaI") == null ? fecha1: session.getAttribute("fechaI")%>"  >
+                    <%session.removeAttribute("fechaI");%>
+                    </div>
+                </td>
+                <td>
+                    <label> Fecha de fin </label>
+                    <div style="padding-right: 10px;">
+                        <input type="date" name="date2" class=" form-select form-select-sm" value="<%=session.getAttribute("fechaH") == null ? fecha2: session.getAttribute("fechaH")%>"  >
+                        <%session.removeAttribute("fechaH");%>
+                    </div>
+                </td>
+                <td>
+                    <br>
+                    <button type="submit" class="btn btn-danger">Filtrar</button>
+                </td>
+            </tr>
+        </table>
+
+
+
 
     </form>
 </div>
+    <br><br>
 <div class="container-md">
         <%if(session.getAttribute("msg1")!=null){%>
     <div class="alert alert-danger" role="alert"><%=session.getAttribute("msg1")%></div>

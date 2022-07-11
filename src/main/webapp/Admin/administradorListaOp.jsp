@@ -291,7 +291,7 @@
                     </a>
                     <hr class="my-1" style="background-color: white" />
                     <button
-                            class="btn btn-danger py-1 px-2"
+                            class="btn btn-danger py-2 px-2"
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmacion<%=a%>">

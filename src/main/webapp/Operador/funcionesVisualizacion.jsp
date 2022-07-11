@@ -275,6 +275,7 @@
                             <i class="far fa-edit "></i>
                         </button>
                     </form>
+                    <hr class="my-1" style="background-color: white" />
                     <button type="button"
                             class="btn btn-danger py-0 px-1"
                             data-bs-toggle="modal"

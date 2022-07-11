@@ -69,7 +69,7 @@
         .caja1{
             background-color: #ddd;
             width: 250px;
-            height: 650px;
+            height: 300px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -79,7 +79,7 @@
         .caja2{
             background-color: #ddd;
             width: 300px;
-            height: 650px;
+            height: 300px;
             position: absolute;
             margin-top: 30px;
             left: 1%;
@@ -234,6 +234,7 @@
                 </select>
             </div>
         </div>
+            <br>
         <div class="row row-cols-3 justify-content-center">
             <input
                     class="btn btn-tele"
@@ -248,7 +249,7 @@
         <table>
             <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Sede</th>
                 <th>Aforo</th>
                 <th>Numero</th>
                 <th></th>
@@ -262,14 +263,17 @@
                 <td>
                     <div class="col-sm-1 d-none d-md-block text-around">
                         <button type="button"
+                                class="btn-tele py-1 px-1 rounded"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editar<%=i%>">
-                            <i class="far fa-edit btn-tele p-1 rounded"></i>
+                            <i class="far fa-edit "></i>
                         </button>
+                        <hr class="my-1" style="background-color: white" />
                         <button type="button"
+                                class="btn btn-danger py-1 px-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#eliminar<%=i%>" >
-                            <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                            <i class="fas fa-times-circle"></i>
                         </button>
                     </div>
 

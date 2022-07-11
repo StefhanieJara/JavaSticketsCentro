@@ -229,11 +229,11 @@
             </a>
             <hr class="my-1" style="background-color: white" />
                 <button
-                        class="btn btn-danger p-2"
+                        class="btn btn-danger p-3"
                         type="button"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmacion<%=a%>">
-                    <i class="btn btn-danger p-2 fas fa-times-circle"></i>
+                    <i class="fas fa-times-circle"></i>
                 </button>
 
         </div>
@@ -242,13 +242,14 @@
     <hr class="mx-md-5 mx-sm-3" />
     <div class="mx-3"></div>
     <button
-            class="btn btn-danger py-0 px-1"
+            class="btn btn-danger p-2"
             type="hidden"
             data-bs-toggle="modal"
             data-bs-target="#confirmacion<%=a%>"
     >
     </button>
     </td>
+    </tr>
     </tr>
     <div class="modal fade"
          id="confirmacion<%=a%>"
@@ -268,18 +269,19 @@
                 </div>
                 <div class="modal-body">
                     Este actor o director será eliminado y ya no podra recuperar la
-                    información.<br />
-                    ¿Está seguro que desea eliminarlo de la lista?
+                    información.<br>
+                    <center><form class="dist-name">¿Está seguro que desea eliminarlo de la lista?</form>
+
+                        <a href="<%=request.getContextPath()%>/ADServlet">
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                        </a>
+                        <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
+                            <button type="button" class="btn btn-danger">Eliminar </button>
+                        </a>
+                    </center>
                 </div>
-                <div class="modal-footer">
-                    <a href="<%=request.getContextPath()%>/ADServlet">
-                        <button type="button"
-                                class="btn btn-light"
-                                data-bs-dismiss="modal">Cancelar</button>
-                    </a>
-                    <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
-                        <button type="button" class="btn btn-danger">Eliminar Celebridad</button>
-                    </a>
                 </div>
             </div>
         </div>

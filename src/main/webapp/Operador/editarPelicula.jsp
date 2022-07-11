@@ -200,7 +200,7 @@
                                         <label class="form-label">Restricción de edad</label>
                                         <select
                                                 name="restriccionEdad"
-                                                class="frm-field required sect"
+                                                class="form-select  frm-field required sect"
                                         >
                                             <option selected="true"><%=pelicula.getRestriccionEdad()%></option>
                                             <option>Para todo publico (AA)</option>

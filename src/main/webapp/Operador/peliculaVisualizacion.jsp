@@ -248,14 +248,17 @@
             <div class="col-sm-1 d-none d-md-block text-around">
                 <form action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=editar" method="post">
                     <input type="hidden" value="<%=pelicula.getIdPelicula()%>" name="idPeli">
-                    <button type="submit">
-                        <i class="far fa-edit btn-tele p-1 rounded"></i>
+                    <button type="submit"
+                            class=" btn btn-tele py-0 px-1">
+                        <i class="far fa-edit "></i>
                     </button>
                 </form>
+                <hr class="my-1" style="background-color: white" />
                 <button type="button"
+                        class="btn btn-danger py-0 px-1"
                         data-bs-toggle="modal"
                         data-bs-target="#eliminar<%=i%>">
-                    <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                    <i class="fas fa-times-circle"></i>
                 </button>
             </div>
         </div>
@@ -317,17 +320,31 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Esta película será deshabilitada y todas sus funciones serán eliminadas.
                     <br>
-                    ¿Está seguro de realizar esta acción?
+                    <center>¿Está seguro de realizar esta acción?</center>
                     <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=borrar">
                         <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
                         <br>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <center>
+                            <br>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger" width="50px">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </center>
                     </form>
                 </div>
             </div>

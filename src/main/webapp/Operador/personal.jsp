@@ -271,13 +271,16 @@
                     <div class="col-sm-1 d-none d-md-block text-around">
                         <form action="<%=request.getContextPath()%>/personalServlet?action=editar" method="post">
                             <input type="hidden" value="<%=personal.getIdPersonal()%>" name="id">
-                        <button type="submit">
-                            <i class="far fa-edit btn-tele p-1 rounded"></i>
+                        <button type="submit"
+                                class="btn-tele p-1 rounded">
+                            <i class="far fa-edit "></i>
                         </button></form>
+                        <hr class="my-1" style="background-color: white" />
                         <button type="button"
+                                class="btn btn-danger py-1 px-1"
                                 data-bs-toggle="modal"
                                 data-bs-target="#eliminar<%=i%>">
-                            <i class="btn btn-danger p-1 fas fa-times-circle"></i>
+                            <i class="fas fa-times-circle"></i>
                         </button>
                     </div>
                 </td>
@@ -341,7 +344,7 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="err_eliminar">Despedir Personal</h5>
+                    <h5 class="modal-title" id="err_eliminar">¿Despedir Personal?</h5>
                     <button
                             type="button"
                             class="btn-close btn-close-white"
@@ -350,19 +353,26 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    Si desea despedir a este personal, click en el botón "Despedir".
+                    <form class="dist-name">Si desea despedir a este personal, click en el botón "Despedir".</form>
+
+                    <center>Nombre de trabajador: <%=personal.getNombre()+" "+personal.getApellido()%></center>
                 </div>
                 <form method="post" action="<%=request.getContextPath()%>/personalServlet?action=eliminar">
                 <input type="hidden" name="idPersonal" value="<%=personal.getIdPersonal()%>">
-                <div class="modal-footer my-0 py-1">
-                    Nombre de trabajador: <%=personal.getNombre()+" "+personal.getApellido()%>
-                    <button
-                            type="submit"
-                            class="btn btn-danger"
-                            data-bs-dismiss="modal">
-                        Despedir
-                    </button>
-                </div>
+
+                    <center>
+                        <div style="padding-right: 10px">
+
+                                <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
+                                <button
+                                            type="submit"
+                                            class="btn btn-danger"
+                                            data-bs-dismiss="modal">
+                                        Despedir
+                                    </button>
+                        </div>
+                    </center>
+
                 </form>
             </div>
         </div>
