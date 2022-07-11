@@ -13,7 +13,6 @@ import java.io.IOException;
 public class editarPeliculaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarPelicula.jsp");
         requestDispatcher.forward(request,response);
     }

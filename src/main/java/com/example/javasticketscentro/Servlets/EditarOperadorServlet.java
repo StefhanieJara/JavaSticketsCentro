@@ -29,6 +29,7 @@ public class EditarOperadorServlet extends HttpServlet {
                 System.out.println(id);
                 response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
             }
+            default -> {response.sendRedirect(request.getContextPath());}
         }
     }
 

@@ -49,6 +49,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_pelicula.jsp");
                 requestDispatcher.forward(request,response);
             }
+            default -> {response.sendRedirect(request.getContextPath());}
         }
     }
 

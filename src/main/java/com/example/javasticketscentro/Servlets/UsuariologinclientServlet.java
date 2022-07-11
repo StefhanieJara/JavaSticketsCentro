@@ -48,6 +48,9 @@ public class UsuariologinclientServlet extends HttpServlet {
                     view= request.getRequestDispatcher("Cliente/UsuariorecuperarContra2.jsp");
                     view.forward(request,response);
                     break;
+                default:
+                    response.sendRedirect(request.getContextPath());
+                    break;
             }
         }else{
             switch (action){
@@ -65,6 +68,9 @@ public class UsuariologinclientServlet extends HttpServlet {
                             response.sendRedirect(request.getContextPath()+"/AdminIndexServlet");
                         }
                     }
+                    break;
+                default:
+                    response.sendRedirect(request.getContextPath());
                     break;
             }
         }

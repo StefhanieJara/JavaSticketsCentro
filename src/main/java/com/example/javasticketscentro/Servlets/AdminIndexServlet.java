@@ -29,6 +29,9 @@ public class AdminIndexServlet extends HttpServlet {
             case "gestionClientes":
                 response.sendRedirect(request.getContextPath()+ "/AdminClienteServlet");
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
         }
     }
 

@@ -52,6 +52,9 @@ public class ADServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/ADServlet");
                 }
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
         }
     }
 

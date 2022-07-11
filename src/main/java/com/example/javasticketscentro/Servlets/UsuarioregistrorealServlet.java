@@ -19,6 +19,9 @@ public class UsuarioregistrorealServlet extends HttpServlet {
                 view= request.getRequestDispatcher("Cliente/Usuarioregistroverdad.jsp");
                 view.forward(request, response);
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
         }
     }
     @Override

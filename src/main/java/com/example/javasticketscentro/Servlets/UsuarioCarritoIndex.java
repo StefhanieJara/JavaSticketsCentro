@@ -38,6 +38,9 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/Usuariopayment.jsp");
                 requestDispatcher.forward(request,response);
             }
+            default -> {
+                response.sendRedirect(request.getContextPath());
+            }
         }
 
     }

@@ -41,6 +41,7 @@ public class AdminClienteServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaCl.jsp");
                 requestDispatcher.forward(request,response);
             }
+            default -> {response.sendRedirect(request.getContextPath());}
         }
     }
 

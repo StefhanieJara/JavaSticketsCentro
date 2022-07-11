@@ -120,6 +120,9 @@ public class operador_estadisticasServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/operador_estadisticasServlet");
                 }
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
     }
 }
 

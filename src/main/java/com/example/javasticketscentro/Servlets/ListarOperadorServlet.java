@@ -45,6 +45,9 @@ public class ListarOperadorServlet extends HttpServlet {
                 RequestDispatcher agregarOperadores = request.getRequestDispatcher("/Admin/registrarOperador.jsp");
                 agregarOperadores.forward(request, response);
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
         }
     }
 

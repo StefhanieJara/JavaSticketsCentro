@@ -26,6 +26,9 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
                 BPersona usuario=(BPersona) session.getAttribute("clienteLog");
                 adminDao.mostrarImagen(usuario.getIdPer(), response);
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
+                break;
         }
 
     }

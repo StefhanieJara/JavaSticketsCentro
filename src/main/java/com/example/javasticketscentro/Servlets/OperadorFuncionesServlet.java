@@ -51,6 +51,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
                 requestDispatcher.forward(request,response);
             }
+            default -> {response.sendRedirect(request.getContextPath());}
         }
     }
 
