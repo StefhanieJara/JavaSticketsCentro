@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @WebServlet(name = "ADServlet", urlPatterns ={"/ADServlet"} )
 public class ADServlet extends HttpServlet {
-    private int cant_resultClientes=5;
+    private int cant_resultClientes=12;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");

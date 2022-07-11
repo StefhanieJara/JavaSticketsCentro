@@ -213,11 +213,12 @@
                                 <!--progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
                                           style="width: 100%"></progress-->
                                 <!--input type="hidden" value="" name="photoUrl" id="photoUrl"/-->
+                                <label>Archivos tipo: .jpg,.png,.jpeg,.webp,.heic</label>
                                 <div class="d-flex justify-content-center my-3">
                                     <!--input type="file" id="img-uploader"-->
-                                    <input type="file" name="photoUrl">
+                                    <input type="file" accept=".jpg,.png,.jpeg,.webp,.heic" name="photoUrl">
                                 </div>
-                                <button id="cambiarcolorboton" type="submit"  class="btn btn-tele">Cambiar foto de perfil</button>
+                                <button  type="submit"  class="btn btn-tele">Cambiar foto de perfil</button>
                             </form>
                         </div>
                     </div>
