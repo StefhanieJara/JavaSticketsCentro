@@ -204,7 +204,7 @@
                             <div
                                     class="card-header h-100 shadow border-0 text-white"
                                     style="
-                      background-image: url('img/Actores.jpg');
+                      background-image: url('https://www.americatv.com.pe/cinescape/wp-content/uploads/2022/07/GETTY_TAIKA-WAITITI-NATALIE-PORTMAN-COMIC-CON_1120.jpg');
                       background-size: cover;
                     "
                             >
@@ -212,7 +212,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Gestione Actores y Directores
+                                    Gestione Celebridades
                                 </h2>
                             </div>
                             <div class="card-body">
@@ -220,7 +220,7 @@
                                         class="d-flex flex-column mt-auto h-100 text-dark align-items-start"
                                 >
                                     <ul class="">
-                                        <p>Agregue, elimine y visualice los operadores que están trabajando</p>
+                                        <p>Agregue, elimine y visualice las celebridades (actores y directores)</p>
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center">
@@ -269,6 +269,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col"></div>
                     <div class="col">
                         <div class="card">
                             <div
@@ -282,7 +283,7 @@
                                         class="mt-5 mb-3 fw-bold"
                                         style="text-shadow: 0.5px 0.5px #2b2b2b"
                                 >
-                                    Visualizar la lista de Clientes
+                                    Visualizar Lista de Clientes
                                 </h2>
                             </div>
                             <div class="card-body">

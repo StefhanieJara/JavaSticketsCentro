@@ -32,7 +32,7 @@
             white-space: nowrap;
         }
         body{
-            font-family: Arial;
+            font-family: var(--bs-font-sans-serif);
         }
         #main-container{
             text-align: left;
