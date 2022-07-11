@@ -214,7 +214,7 @@
                                 >
                                     <ul class="">
                                         <p>
-                                            Añada las funciones para una sede y sala determinada
+                                            Añada las funciones para una sede y sala
                                         </p>
                                     </ul>
                                 </div>
@@ -233,7 +233,7 @@
                             <div
                                     class="card-header h-100 shadow border-0 text-white"
                                     style="
-                      background-image: url('img/TeatroPucp.jpg');
+                      background-image: url('https://larepublica.pe/resizer/stmX2DkxC0vksAY-3TFad12Glfw=/480x282/top/smart/cloudfront-us-east-1.images.arcpublishing.com/gruporepublica/AKDXSYE7ZNAV3OTWPFRKTGFBH4.jpg');
                       background-size: cover;
                     "
                             >
@@ -264,7 +264,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col"></div>
                     <div class="col">
                         <div class="card">
                             <div

@@ -26,7 +26,7 @@
 
     <STYLE TYPE="text/css">
         body{
-            font-family: Arial;
+            font-family: var(--bs-font-sans-serif);
         }
         #main-container{
             margin: 52px ;
@@ -218,7 +218,7 @@
     <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
         <li class="nav-item">
             <a class="nav-link text-white active" aria-current="page" href="#"
-            ><b>Lista de Personal de mantenimiento</b></a
+            ><h1>Lista de Personal de mantenimiento</h1></a
             >
         </li>
     </ul>
