@@ -193,15 +193,19 @@
         <div class="input-group justify-content-lg-end">
             <div class="form-outline" style="width: 18%">
                 <td>
-                <input type="date" class="form-select form-select-sm" value="<%=fechaFiltro%>" name="fechaFiltro">
+                    <div style="padding-right: 10px">
+                        <input type="date" class="form-select" value="<%=fechaFiltro%>" name="fechaFiltro">
+                    </div>
                 </td>
                 <td>
-                    <select name="idSala"  class=" form-select form-select-sm">
-                    <option value="-1">Filtrar por Sala</option>
-                    <%for(BSala bsalas : salas){%>
-                    <option <%=idSala.equals(""+bsalas.getIdSala())?"selected":""%> value="<%=bsalas.getIdSala()%>"><%="Sede: "+bsalas.getbSede().getNombre()+"&nbsp;&nbsp;&nbsp;&nbsp;N°Sala: "+bsalas.getNumero()%></option>
-                    <%}%>
-                </select>
+                    <div style="padding-right: 10px">
+                        <select name="idSala"  class=" form-select">
+                            <option value="-1">Filtrar por Sala</option>
+                            <%for(BSala bsalas : salas){%>
+                            <option <%=idSala.equals(""+bsalas.getIdSala())?"selected":""%> value="<%=bsalas.getIdSala()%>"><%="Sede: "+bsalas.getbSede().getNombre()+"&nbsp;&nbsp;&nbsp;&nbsp;N°Sala: "+bsalas.getNumero()%></option>
+                            <%}%>
+                        </select>
+                    </div>
                 </td>
                 <td>
                 <div class="rows-auto">
