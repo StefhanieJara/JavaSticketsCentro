@@ -172,20 +172,46 @@
     <br><br>
 <div class="d-flex gap-sm-4 justify-content-center">
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar2">
-        <div class="modal-body" >
-            <label> Fecha de inicio</label>
-            <input type="date" name="date3" value="<%=session.getAttribute("fechaI") == null ? fecha3: session.getAttribute("fechaI")%>">
-            <%session.removeAttribute("fechaI");%>
-            <label> Fecha de fin </label>
-            <input type="date" name="date4" value="<%=session.getAttribute("fechaH") == null ? fecha4: session.getAttribute("fechaH")%>" >
-            <%session.removeAttribute("fechaH");%>
-            <button type="submit" class="btn btn-danger">Filtrar</button>
+        <div >
+            <table>
+                <tr>
+                    <td>
+                        <div style="padding-right:20px">
+                            <label> Fecha de inicio</label>
+                            <input class="form-select" type="date" name="date3" value="<%=session.getAttribute("fechaI") == null ? fecha3: session.getAttribute("fechaI")%>">
+                            <%session.removeAttribute("fechaI");%>
+                        </div>
+
+                    </td>
+                    <td>
+                        <div style="padding-right:20px">
+                            <label> Fecha de fin </label>
+                            <input class="form-select" type="date" name="date4" value="<%=session.getAttribute("fechaH") == null ? fecha4: session.getAttribute("fechaH")%>" >
+                            <%session.removeAttribute("fechaH");%>
+                        </div>
+                    </td>
+                    <td>
+                        <br>
+                        <button type="submit" class="btn btn-danger">Filtrar</button>
+                    </td>
+                </tr>
+            </table>
+
+
+
 
         </div>
     </form>
 </div>
 <figure class="text-center">
-    <h3>Más vista</h3>
+
+    <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+        <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="#"
+            ><h3>Funciones más vistas</h3></a
+            >
+        </li>
+    </ul>
 </figure>
 
 <div class="container-md">
@@ -214,7 +240,14 @@
 <br>
 
 <figure class="text-center">
-    <h3>Menos vista</h3>
+
+    <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+        <li class="nav-item">
+            <a class="nav-link text-white active" aria-current="page" href="#"
+            ><h3>Funciones menos vistas</h3></a
+            >
+        </li>
+    </ul>
 </figure>
 
 <div class="container-md">
