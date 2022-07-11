@@ -57,8 +57,8 @@ int samir2 =1;%>
         <div
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
-            <a class="navbar-brand py-0" href="#">
-                <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
+            <a class="navbar-brand py-0">
+                <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" with="188px" height="97px"></a>
             </a>
         </div>
 
