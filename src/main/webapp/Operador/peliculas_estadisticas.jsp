@@ -44,7 +44,7 @@ int samir = 1;%>
     />
     <link rel="stylesheet" href="assets/css/estilos.css" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 </head>
 <body>
@@ -78,7 +78,7 @@ int samir = 1;%>
                     aria-controls="offcanvasWithBackdrop"
                     style="color: #fff">
                 <div style="font-size: 0.62rem">
-                    <i class="fas fa-user-circle fa-3x"></i>
+                    <i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
                 </div>
             </button>
         </div>
@@ -133,8 +133,17 @@ int samir = 1;%>
                                     href="<%=request.getContextPath()%>/personalServlet"
                                     class="text-dark text-decoration-none"
                             >
-                                <span><i class="fas fa-list"></i></span>
+                                <span><i class="fa fa-list"></i></span>
                                 <span>Gestione Personal</span>
+                            </a>
+                        </div>
+                        <div class="p-2">
+                            <a
+                                    href="<%=request.getContextPath()%>/OperadorFuncionesServlet"
+                                    class="text-dark text-decoration-none"
+                            >
+                                <span><i class="fa fa-list"></i></span>
+                                <span>Gestione Funciones</span>
                             </a>
                         </div>
                         <div class="p-2">
@@ -142,15 +151,15 @@ int samir = 1;%>
                                     href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"
                                     class="text-dark text-decoration-none"
                             >
-                                <span><i class="fas fa-list"></i></span>
-                                <span>Gestione Funciones</span>
+                                <span><i class="fa fa-list"></i></span>
+                                <span>Gestione Películas</span>
                             </a>
                         </div>
                         <div class="p-2">
                             <a
                                     href="<%=request.getContextPath()%>/operador_estadisticasServlet"
                                     class="text-dark text-decoration-none">
-                                <span><i class="fas fa-list"></i></span>
+                                <span><i class="fa fa-list"></i></span>
                                 <span>Visualizar Estadísticas</span>
                             </a>
                         </div>
@@ -161,7 +170,7 @@ int samir = 1;%>
         <div class="mt-auto p-2 w-100">
             <div class="offcanvas-body border-top pt-4">
                 <a href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=logout" class="text-dark text-decoration-none">
-                    <span><i class="fas fa-sign-out-alt"></i></span>
+                    <span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
                     <span>Cerrar sesión</span>
                 </a>
             </div>
