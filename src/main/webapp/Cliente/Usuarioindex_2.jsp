@@ -29,7 +29,7 @@
     />
 
 </head>
-<body">
+<body>
 <section
         class="d-flex flex-grow-1 flex-shrink-1 p-4 justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center vh-100"
         style="min-height: 700px;">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <a href="index.html"><img src="img/PUCPnegativo(blanco).png" class="logo-PUCP"></a>
+                            <a href="index.html"><img src="logo.png" class="logo-PUCP"></a>
                         </div>
                         <div class="flex-row justify-content-center align-content-center">
                             <div class="d-flex flex-column px-md-5 justify-content-center align-content-center">

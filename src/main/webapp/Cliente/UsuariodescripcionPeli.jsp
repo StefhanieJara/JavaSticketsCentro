@@ -56,7 +56,7 @@
                 class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2"
         >
             <a class="navbar-brand py-0" href="#">
-                <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
+                <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" with="188px" height="97px"/></a>
             </a>
         </div>
         <%session.removeAttribute("vieneDePeli");session.removeAttribute("idPeli");%>
@@ -167,27 +167,25 @@
     <br><br>
     <div class="main-container">
         <div class="row justify-content-center align-items-center h-100">
-            <div class="col-12 col-lg-9 col-xl-7">
+            <div class="col-12  col-12 col-lg-9 col-xl-7">
                 <div class="card-header my-5"></div>
                 <div class="container">
-                    <table>
+                    <table >
                         <thead>
                         <br>
-                        <tr>
-                            <center>
-                                <h1 class="text-dark" ><%=pelicula.getNombre()%></h1>
-                            </center>
+                        <tr  >
+
+                                <b><h1 face="Tahoma,sans-serif " size="10px" class="dist-name" style="color:#e72d4b" ><%=pelicula.getNombre()%></h1>
+                                </b>
                         </tr>
                         </thead>
                         <br>
                         <br>
-                        <br>
+
                         <tr>
                             <img src="<%=pelicula.getFoto()%>"
-                                 style="float:left; padding-right: 10px;" width="400" height="620" alt="Foto Dr Strange" >
+                                 style="float:left; padding-right: 50px;" width="420" height="580" >
                         </tr>
-                        <br>
-                        <br>
                         <br>
                         <tr>
                             <p class="text-dark"><b class="text-dark">Descripcion: </b><%=pelicula.getSinopsis()%></p>
@@ -217,7 +215,7 @@
                         </tr>
                         <tr>
                             <ul>
-                                <li type="circle"><h6 class="text-dark">
+                                <h6 class="text-dark">
                                     <b class="text-dark">Actores:</b>
                                     <%i=1;%>
                                     <%for(BCelebridad bCelebridad: pelicula.getActores()){%>
@@ -233,8 +231,10 @@
                             </ul>
                         </tr>
                     </table>
+                    <br>
                 </div>
-                <br><br><br><br><br>
+                <br><br>
+                <br><br><br><br><br><br>
                 <div class="main-container">
                 <form method="POST" action="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=anadirCarro">
                     <table class="table table-sm table-borderless">
