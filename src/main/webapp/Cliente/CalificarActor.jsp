@@ -71,7 +71,7 @@
                     class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2"
             >
                 <a class="navbar-brand py-0" href="usuario.html">
-                    <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
+                    <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" with="188px" height="97px"/></a>
                 </a>
             </div>
             <!--Espacio-->

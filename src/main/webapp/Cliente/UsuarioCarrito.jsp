@@ -41,7 +41,7 @@
     <div class="row w-100 align-items-center pe-sm-4 ps-0 my-2">
         <!--Logo Centro Cultural PUCP-->
         <div class="col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-xxl-2 ps-xl-5 ps-lg-4 ps-md-5 ps-2">
-            <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" /></a>
+            <a href="<%=request.getContextPath()%>/"><img src="img/logo.png" with="188px" height="97px" /></a>
         </div>
         <!--Carrito-->
         <div class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">

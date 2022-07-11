@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-6 d-flex flex-column justify-content-center align-content-center">
                             <div class="row">
-                                <a href="index.html"><img src="img/PUCPnegativo(blanco).png" class="logo-PUCP"></a>
+                                <a href="index.html"><img src="img/logo.png" class="logo-PUCP"></a>
                             </div>
                             <br><br>
                             <div class="flex-row justify-content-center align-content-center">
