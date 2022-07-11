@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class indexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action= request.getParameter("action")==null?"":request.getParameter("action");
 
         //Borramos caché
         response.setHeader("Pragma", "No-cache");
@@ -29,12 +30,22 @@ public class indexServlet extends HttpServlet {
         BPersona usuario= (BPersona)request.getSession().getAttribute("clienteLog");
         ArrayList<BPelicula> listapeliculas=indexDao.listaPeliculas(filtro);
         if(usuario==null || usuario.getIdPer()==0 || usuario.getRol().equals("Cliente")){
-            ArrayList<BSede> listaSedes = adminDao.listarSedes();
-            request.setAttribute("Listapeliculas", listapeliculas);
-            request.setAttribute("ListaSedes", listaSedes);
-            request.setAttribute("filtro", filtro);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-            requestDispatcher.forward(request,response);
+            switch (action){
+                case "describir"->{
+                    String idPelistr = request.getParameter("id");
+                    HttpSession session= request.getSession();
+                    session.setAttribute("idPeli", Integer.parseInt(idPelistr));
+                    response.sendRedirect(request.getContextPath()+"/UsuariodescripcionServlet");
+                }
+                default -> {
+                    ArrayList<BSede> listaSedes = adminDao.listarSedes();
+                    request.setAttribute("Listapeliculas", listapeliculas);
+                    request.setAttribute("ListaSedes", listaSedes);
+                    request.setAttribute("filtro", filtro);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+                    requestDispatcher.forward(request,response);
+                }
+            }
         }else{
             if(usuario.getRol().equals("Operador")){
                 response.sendRedirect(request.getContextPath()+"/indexOperadorServlet");

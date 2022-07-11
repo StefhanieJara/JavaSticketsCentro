@@ -198,7 +198,7 @@
                     <% for (int i=j*4; i<(j+1)*4; i++) { %>
                     <%if(i<Listapeliculas.size()){%>
                     <div class="col-pelicula1">
-                        <a href="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=describir&id=<%=Listapeliculas.get(i).getIdPelicula()%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="350px" width="250px"></a>
+                        <a href="<%=request.getContextPath()%>/Index?action=describir&id=<%=Listapeliculas.get(i).getIdPelicula()%>"><img src="<%=Listapeliculas.get(i).getFoto()%>" class="imagenPeli" height="350px" width="250px"></a>
                         <div class="textoPeliculas"  ><%=Listapeliculas.get(i).getNombre()%></div>
                         <br><br>
                     </div>

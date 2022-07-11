@@ -18,12 +18,11 @@ public class UsuariodescripcionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PeliculaDao peliculaDao= new PeliculaDao();
-        String idPelistr = request.getParameter("id");
         String action= request.getParameter("action")==null? "describir" : request.getParameter("action");
 
         HttpSession session= request.getSession();
         BPersona usuario=(BPersona)session.getAttribute("clienteLog");
-    
+
         RequestDispatcher requestDispatcher;
         if(usuario==null){
             response.sendRedirect(request.getContextPath());
@@ -31,10 +30,9 @@ public class UsuariodescripcionServlet extends HttpServlet {
             switch (action){
                 case "describir":
                     try{
-                        int idPeli= Integer.parseInt(idPelistr);
+                        int idPeli= (Integer)session.getAttribute("idPeli");
                         BPelicula pelicula= peliculaDao.devolverPelicula(idPeli);
                         if(pelicula.getIdPelicula()!=0){
-
                             request.setAttribute("pelicula", pelicula);
                             request.setAttribute("funciones", peliculaDao.detectarFunciones(idPeli));
                             request.setAttribute("funcionesCliente", peliculaDao.funcionesDelCliente(usuario.getIdPer()));
@@ -43,7 +41,7 @@ public class UsuariodescripcionServlet extends HttpServlet {
                         }else{
                             response.sendRedirect(request.getContextPath());
                         }
-                    }catch (NumberFormatException e){
+                    }catch (NullPointerException e){
                         response.sendRedirect(request.getContextPath());
                     }
                     break;

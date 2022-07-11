@@ -312,8 +312,6 @@ public class CarritoDao extends BaseDao {
                 "Tu compra ha sido realizada!<br>" +
                 "Código de Compra: " + compra.getIdCompra() +"<br><br>Total: <b>S/"+Math.round(total*100.0)/100.0+"</b>" ;
 
-        System.out.println(msg);//No borrar
-
         ArrayList<BufferedImage> bufferQrs= new ArrayList<>();
         for(int id: idFunciones){
             JavaQR qr = new JavaQR();
