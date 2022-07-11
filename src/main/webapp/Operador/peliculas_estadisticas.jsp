@@ -182,11 +182,14 @@ int samir = 1;%>
 <main>
     <div class="card-header mt-5 mb-4"></div>
     <br><br>
+    <figure class="text-center">
+        <h3>Películas mejor calificadas</h3>
+    </figure>
 <div class="container-fluid">
 <table class="table table-dark table-hover">
     <thead>
     <tr>
-        <td><h3>#</h3></td><td><h3>Peliculas</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td><td><h3>Foto</h3></td>
+        <td><h3>#</h3></td><td><h3>Películas</h3></td><td><h3>Puntaje</h3></td><td><h3>Clasificación</h3></td><td><h3>Foto</h3></td>
     </tr>
     </thead>
     <tbody>
@@ -257,16 +260,17 @@ int samir = 1;%>
 <div class="container-sm">
     <figure class="text-center">
         <blockquote class="blockquote">
-            <h4>Listado</h4>
+            <h4>Listado de películas</h4>
             <form  method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar8">
                 <button type="submit" class="btn btn-primary">Ver películas</button>
             </form>
         </blockquote>
     </figure>
+
 <table class="table table-primary table-striped-columns">
     <thead>
     <tr>
-        <td><h4>Pelicula</h4></td><td><h4>Género</h4></td>
+        <td><h4>Película</h4></td><td><h4>Género</h4></td>
     </tr>
     </thead>
     <tbody>

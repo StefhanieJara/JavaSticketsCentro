@@ -181,6 +181,9 @@ int samir2 =1;%>
 <main>
     <div class="card-header mt-5 mb-4"></div>
     <br><br>
+    <figure class="text-center">
+        <h3>Celebridades mejor calificadas</h3>
+    </figure>
 <div class="container-fluid">
 <table class="table table-dark table-hover">
     <thead>
