@@ -169,7 +169,7 @@
 
 <main>
     <div class="card-header mt-5 mb-4"></div>
-    <br><br>
+    <br><br><br>
 <div class="d-flex gap-sm-4 justify-content-center">
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar2">
         <div >
