@@ -9,6 +9,7 @@
 <jsp:useBean id="tarjetas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BTarjeta>"/>
 <jsp:useBean id="tarjetaSelect" scope="request" type="com.example.javasticketscentro.Beans.BTarjeta" class="com.example.javasticketscentro.Beans.BTarjeta"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -157,7 +158,7 @@
                                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=cambiarTarjeta">
                                                 <label class="form-label">Elija el tipo de tarjeta</label>
                                                 <select name="tarjeta"
-                                                        class="frm-field required sect">
+                                                        class="frm-field sect">
                                                     <%for (BTarjeta tarjeta:tarjetas){%>
                                                     <option <%=tarjetaSelect.getIdTarjeta()==tarjeta.getIdTarjeta() ? "selected" : ""%> value="<%=tarjeta.getIdTarjeta()%>">Tarjeta ID: <%=tarjeta.getIdTarjeta()%></option>
                                                     <%}%>
@@ -184,7 +185,7 @@
                                                     <label class="form-label">
                                                         Ingrese el número de su tarjeta
                                                     </label>
-                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : "required"%>
+                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%>
                                                             type="text"
                                                             class="form-control"
                                                             name="numeroTarjeta"
@@ -197,7 +198,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-outline">
                                                     <label class="form-label" for="Mail">CVV</label>
-                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : "required"%>
+                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%>
                                                             type="text"
                                                             id="Mail"
                                                             class="form-control"
@@ -212,7 +213,7 @@
                                                     <label class="form-label" for="Mail"
                                                     >Fecha de Vencimiento</label
                                                     >
-                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : "required"%>
+                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%>
                                                             type="text"
                                                             class="form-control"
                                                             name="fechaVencimiento"
@@ -226,7 +227,7 @@
                                                     <label class="form-label" for="Mail"
                                                     >Ingrese el banco</label
                                                     >
-                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : "required"%>
+                                                    <input <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%>
                                                             type="text"
                                                             class="form-control"
                                                             name="bancoNombre"
@@ -240,7 +241,7 @@
                                                 <div class="form-outline mb-4 py-4">
                                                 <label class="form-label">Elija el tipo de tarjeta</label>
                                                 <select name="tipoTarjeta"
-                                                        class="frm-field required sect">
+                                                        class="frm-field sect">
                                                     <option <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%> value="tarjeta de crédito" <%=tarjetaSelect.getIdTarjeta()!=0 ? (tarjetaSelect.getTipo().equals("tarjeta de crédito") ? "selected" :"") :""%>>Credito</option>
                                                     <option <%= tarjetaSelect.getIdTarjeta()!=0 ? "disabled" : ""%> value="tarjeta de débito" <%=tarjetaSelect.getIdTarjeta()!=0 ? (tarjetaSelect.getTipo().equals("tarjeta de débito") ? "selected" :"") :""%>>Debito</option>
                                                 </select>
@@ -266,6 +267,9 @@
                                         <%}%>
                                         <%if(session.getAttribute("msg").equals("tamanoCVVTar")){%>
                                         <div class="text-danger mb-2">El número de tarjeta debe poseer 16 y el CVV 3 carácteres.</div>
+                                        <%}%>
+                                        <%if(session.getAttribute("msg").equals("vacio")){%>
+                                        <div class="text-danger mb-2">Debe ingresar todos los datos solicitados.</div>
                                         <%}%>
                                         <%session.removeAttribute("msg");%>
                                         <%}%>

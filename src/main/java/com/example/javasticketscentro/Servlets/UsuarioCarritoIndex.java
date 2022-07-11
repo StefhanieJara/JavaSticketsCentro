@@ -48,6 +48,8 @@ public class UsuarioCarritoIndex extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+
+
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         CarritoDao carritoDao= new CarritoDao();
         String idCompraStr= request.getParameter("idCompra");
@@ -55,6 +57,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
         HttpSession session;
         BPersona usuario;
         personalServlet soloLetras = new personalServlet();
+
         switch (action){
             case "guardar":
                 session=request.getSession();
@@ -63,42 +66,48 @@ public class UsuarioCarritoIndex extends HttpServlet {
 
                 String fechaVencimientoStr = request.getParameter("fechaVencimiento");//validar numeros
                 String bancoNombre = request.getParameter("bancoNombre");
+
                 String tipoTarjeta = request.getParameter("tipoTarjeta");
                 String idTarjetasr= request.getParameter("idTarjeta");
-                if(cvvStr.length()!=3 || numeroTarjetaStr.length()!=16){
-                    session.setAttribute("msg", "tamanoCVVTar");
+                if(numeroTarjetaStr.isEmpty()||cvvStr.isEmpty()||fechaVencimientoStr.isEmpty()||bancoNombre.isEmpty()){
+                    session.setAttribute("msg", "vacio");
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 }else{
-                    try{
-                        int cvv = Integer.parseInt(cvvStr);
-                        long numeroTarjeta= Long.parseLong(numeroTarjetaStr); //Solo para captar que sean números
-                        int idTarjeta= Integer.parseInt(idTarjetasr);
-                        if(carritoDao.fVen_valido(fechaVencimientoStr) && fechaVencimientoStr.length()==5){
-                            if(soloLetras.esSoloLetras(bancoNombre)){
-                                carritoDao = new CarritoDao();
-                                session=request.getSession();
-                                usuario= (BPersona) session.getAttribute("clienteLog");
+                    if(cvvStr.length()!=3 || numeroTarjetaStr.length()!=16){
+                        session.setAttribute("msg", "tamanoCVVTar");
+                        response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                    }else{
+                        try{
+                            int cvv = Integer.parseInt(cvvStr);
+                            long numeroTarjeta= Long.parseLong(numeroTarjetaStr); //Solo para captar que sean números
+                            int idTarjeta= Integer.parseInt(idTarjetasr);
+                            if(carritoDao.fVen_valido(fechaVencimientoStr) && fechaVencimientoStr.length()==5){
+                                if(soloLetras.esSoloLetras(bancoNombre)){
+                                    carritoDao = new CarritoDao();
+                                    session=request.getSession();
+                                    usuario= (BPersona) session.getAttribute("clienteLog");
 
-                                carritoDao.cancelarCompra(usuario);
-                                session.setAttribute("exitosoMSG", "CompraCancelado");
-                                if(idTarjeta==-1 && request.getParameter("guardarTarjeta")!=null){
-                                    carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
+                                    carritoDao.cancelarCompra(usuario);
+                                    session.setAttribute("exitosoMSG", "CompraCancelado");
+                                    if(idTarjeta==-1 && request.getParameter("guardarTarjeta")!=null){
+                                        carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
+                                    }
+                                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
+                                }else{
+                                    session.setAttribute("msg", "errorBanco");
+                                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                                 }
-                                response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
                             }else{
-                                session.setAttribute("msg", "errorBanco");
+                                session.setAttribute("msg", "errorFV");
                                 response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                             }
-                        }else{
-                            session.setAttribute("msg", "errorFV");
+                        }catch (NumberFormatException e){
+                            session.setAttribute("msg", "numTaroCVV");
+                            response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                        } catch (MessagingException | WriterException e) {
+                            session.setAttribute("msg", "errorAntivirus");
                             response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                         }
-                    }catch (NumberFormatException e){
-                        session.setAttribute("msg", "numTaroCVV");
-                        response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
-                    } catch (MessagingException | WriterException e) {
-                        session.setAttribute("msg", "errorAntivirus");
-                        response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                     }
                 }
                 break;
@@ -132,6 +141,9 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 request.setAttribute("tarjetas", carritoDao.listarTarjetas(usuario.getIdPer()));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Cliente/Usuariopayment.jsp");
                 requestDispatcher.forward(request,response);
+                break;
+            default:
+                response.sendRedirect(request.getContextPath());
                 break;
         }
     }
