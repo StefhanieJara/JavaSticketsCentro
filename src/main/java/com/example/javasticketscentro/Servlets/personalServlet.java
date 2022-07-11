@@ -156,7 +156,7 @@ public class personalServlet extends HttpServlet {
         }
     }
 
-    static boolean esSoloLetras(String cadena){
+    public boolean esSoloLetras(String cadena){
         //Recorremos cada caracter de la cadena y comprobamos si son letras.
         //Para comprobarlo, lo pasamos a mayuscula y consultamos su numero ASCII.
         //Si está fuera del rango 65 - 90, es que NO son letras.

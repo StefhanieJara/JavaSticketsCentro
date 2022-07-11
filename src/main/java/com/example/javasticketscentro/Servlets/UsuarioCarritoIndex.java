@@ -51,7 +51,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
         String idFuncionStr= request.getParameter("idFuncion");
         HttpSession session;
         BPersona usuario;
-
+        personalServlet soloLetras = new personalServlet();
         switch (action){
             case "guardar":
                 session=request.getSession();
@@ -62,31 +62,41 @@ public class UsuarioCarritoIndex extends HttpServlet {
                 String bancoNombre = request.getParameter("bancoNombre");
                 String tipoTarjeta = request.getParameter("tipoTarjeta");
                 String idTarjetasr= request.getParameter("idTarjeta");
-                try{
-                    int cvv = Integer.parseInt(cvvStr);
-                    long numeroTarjeta= Long.parseLong(numeroTarjetaStr); //Solo para captar que sean números
-                    int idTarjeta= Integer.parseInt(idTarjetasr);
-                    if(carritoDao.fVen_valido(fechaVencimientoStr)){
-                        carritoDao = new CarritoDao();
-                        session=request.getSession();
-                        usuario= (BPersona) session.getAttribute("clienteLog");
+                if(cvvStr.length()!=3 || numeroTarjetaStr.length()!=16){
+                    session.setAttribute("msg", "tamanoCVVTar");
+                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                }else{
+                    try{
+                        int cvv = Integer.parseInt(cvvStr);
+                        long numeroTarjeta= Long.parseLong(numeroTarjetaStr); //Solo para captar que sean números
+                        int idTarjeta= Integer.parseInt(idTarjetasr);
+                        if(carritoDao.fVen_valido(fechaVencimientoStr) && fechaVencimientoStr.length()==5){
+                            if(soloLetras.esSoloLetras(bancoNombre)){
+                                carritoDao = new CarritoDao();
+                                session=request.getSession();
+                                usuario= (BPersona) session.getAttribute("clienteLog");
 
-                        carritoDao.cancelarCompra(usuario);
-                        session.setAttribute("exitosoMSG", "CompraCancelado");
-                        if(idTarjeta==-1 && request.getParameter("guardarTarjeta")!=null){
-                            carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
+                                carritoDao.cancelarCompra(usuario);
+                                session.setAttribute("exitosoMSG", "CompraCancelado");
+                                if(idTarjeta==-1 && request.getParameter("guardarTarjeta")!=null){
+                                    carritoDao.ingresarTarjeta(numeroTarjetaStr,cvv,fechaVencimientoStr,bancoNombre,tipoTarjeta,usuario.getIdPer());
+                                }
+                                response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
+                            }else{
+                                session.setAttribute("msg", "errorBanco");
+                                response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                            }
+                        }else{
+                            session.setAttribute("msg", "errorFV");
+                            response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                         }
-                        response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex");
-                    }else{
-                        session.setAttribute("msg", "errorFV");
+                    }catch (NumberFormatException e){
+                        session.setAttribute("msg", "numTaroCVV");
+                        response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
+                    } catch (MessagingException | WriterException e) {
+                        session.setAttribute("msg", "errorAntivirus");
                         response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                     }
-                }catch (NumberFormatException e){
-                    session.setAttribute("msg", "numTaroCVV");
-                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
-                } catch (MessagingException | WriterException e) {
-                    session.setAttribute("msg", "errorAntivirus");
-                    response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=pagar");
                 }
                 break;
             case "listar":

@@ -188,8 +188,6 @@
                                                             type="text"
                                                             class="form-control"
                                                             name="numeroTarjeta"
-                                                            maxlength="16"
-                                                            minlength="16"
                                                             placeholder="################"
                                                             value="<%= tarjetaSelect.getIdTarjeta()!=0 ?tarjetaSelect.getNumerTar() : ""%>"
                                                     />
@@ -203,8 +201,6 @@
                                                             type="text"
                                                             id="Mail"
                                                             class="form-control"
-                                                            minlength="3"
-                                                            maxlength="3"
                                                             name="cvv"
                                                             placeholder="Ingrese el cvv"
                                                             value="<%= tarjetaSelect.getIdTarjeta()!=0 ?tarjetaSelect.getCVV() : ""%>"
@@ -220,8 +216,6 @@
                                                             type="text"
                                                             class="form-control"
                                                             name="fechaVencimiento"
-                                                            minlength="5"
-                                                            maxlength="5"
                                                             placeholder="MM/YY"
                                                             value="<%= tarjetaSelect.getIdTarjeta()!=0 ?tarjetaSelect.getFechaV() : ""%>"
                                                     />
@@ -266,6 +260,12 @@
                                         <%}%>
                                         <%if(session.getAttribute("msg").equals("errorAntivirus")){%>
                                         <div class="text-warning mb-2">Porfavor, desactive su antivirus para realizar la compra y recibir un correo de confirmación!</div>
+                                        <%}%>
+                                        <%if(session.getAttribute("msg").equals("errorBanco")){%>
+                                        <div class="text-danger mb-2">El banco debe ser solo texto.</div>
+                                        <%}%>
+                                        <%if(session.getAttribute("msg").equals("tamanoCVVTar")){%>
+                                        <div class="text-danger mb-2">El número de tarjeta debe poseer 16 y el CVV 3 carácteres.</div>
                                         <%}%>
                                         <%session.removeAttribute("msg");%>
                                         <%}%>

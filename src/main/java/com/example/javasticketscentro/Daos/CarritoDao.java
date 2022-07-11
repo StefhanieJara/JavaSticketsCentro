@@ -46,7 +46,11 @@ public class CarritoDao extends BaseDao {
             try {
                 Integer.parseInt(a2[0]);
                 Integer.parseInt(a2[1]);
-                valido = true;
+                if(a2[0].length()==2 &&a2[1].length()==2){
+                    valido = true;
+                }else{
+                    return false;
+                }
             } catch (NumberFormatException e) {
                 return false;
             }
