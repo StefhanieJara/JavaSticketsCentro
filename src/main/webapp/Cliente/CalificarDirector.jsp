@@ -36,7 +36,7 @@
 
         .star{
             font-size: 3rem;
-            color: #ff9800;
+            color: black;
             background-color: unset;
             border: none;
 
@@ -160,10 +160,11 @@
                             </div>
                         </form>
                         <div>
-                            <a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a>
+                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a></center>
                         </div>
+                        <br>
                         <div>
-                            <a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a>
+                            <center><a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a></center>
                         </div>
 
                     </div>
