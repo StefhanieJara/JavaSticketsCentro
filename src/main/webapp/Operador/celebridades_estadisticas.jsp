@@ -182,8 +182,13 @@ int samir2 =1;%>
     <div class="card-header mt-5 mb-4"></div>
     <br><br>
     <figure class="text-center">
-        <h3>Celebridades mejor calificadas</h3>
-    </figure>
+        <ul class="nav nav-tabs nav-fill mb-4 justify-content-around px-5">
+            <li class="nav-item">
+                <a class="nav-link text-white active" aria-current="page" href="#"
+                ><h3>Celebridad Mejor Calificadas</h3></a
+                >
+            </li>
+        </ul>
 <div class="container-fluid">
 <table class="table table-dark table-hover">
     <thead>
