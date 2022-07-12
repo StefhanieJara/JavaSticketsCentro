@@ -152,17 +152,17 @@
                                         <input type="hidden" name="puntaje" value="<%=puntaje%>" id="puntaje"/>
                                     </div>
                                 <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=Pelicula.getIdPelicula()%>"/>
-                                    <input  class="btn btn-tele" type="submit" value="Calificar" />
+                                    <input  class="btn btn-tele fa fa-check" type="submit" value=" ☑ Calificar" />
                                 </div>
                             </div>
                         </form>
 
                         <div>
-                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger ">Regresar al historial</a></center>
+                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger fa fa-arrow-circle-left ">   Regresar al historial</a></center>
                         </div>
                         <br>
                         <div>
-                            <center><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarD&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success">Calificar Director</a></center>
+                            <center><a href="<%=request.getContextPath()%>/calificarPelicula?action=listarD&idPelicula=<%=Pelicula.getIdPelicula()%>" type="button" class="btn btn-success fa fa-film">   Calificar Director</a></center>
                         </div>
 
                     </div>

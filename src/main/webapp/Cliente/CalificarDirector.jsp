@@ -151,20 +151,20 @@
                                     <input type="hidden"  name="idPelicula" id="idPelicula" value="<%=idPelicula%>"/>
                                     <div class="form-outline mb-4">
                                         <input
-                                                class="btn btn-tele"
+                                                class="btn btn-tele fa fa-check"
                                                 type="submit"
-                                                value="Calificar"
+                                                value=" ☑ Calificar"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <div>
-                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a></center>
+                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger fa fa-arrow-circle-left">   Regresar al historial</a></center>
                         </div>
                         <br>
                         <div>
-                            <center><a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success">Calificar Actores</a></center>
+                            <center><a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success fa fa-film">   Calificar Actores</a></center>
                         </div>
 
                     </div>

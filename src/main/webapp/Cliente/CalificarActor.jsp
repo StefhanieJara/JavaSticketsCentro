@@ -149,9 +149,9 @@
                                     <input type="hidden"  name="idPelicula"  value="<%=idPelicula%>"/>
                                     <input type="hidden" name="pagina" value="<%=pagina%>">
                                     <div class="form-outline mb-4">
-                                        <input class="btn btn-tele"
+                                        <input class="btn btn-tele fa fa-check"
                                                 type="submit"
-                                                value="Calificar"/>
+                                                value=" ☑ Calificar"/>
                                     </div>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                         <%}%>
 
                         <div>
-                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger">Regresar al historial</a></center>
+                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger fa fa-arrow-circle-left">   Regresar al historial</a></center>
                         </div>
 
                     </div>
