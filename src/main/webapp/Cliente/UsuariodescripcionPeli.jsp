@@ -174,9 +174,10 @@
                         <thead>
                         <br>
                         <tr  >
-
+                                <center>
                                 <b><h1 face="Tahoma,sans-serif " size="10px" class="dist-name" style="color:#e72d4b" ><%=pelicula.getNombre()%></h1>
                                 </b>
+                            </center>
                         </tr>
                         </thead>
                         <br>
@@ -234,9 +235,9 @@
                     <br>
                 </div>
                 <br><br>
-                <br><br><br><br><br><br>
+                <br><br><br><br>
                 <div class="main-container">
-                <form method="POST" action="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=anadirCarro">
+                    <form method="POST" action="<%=request.getContextPath()%>/UsuariodescripcionServlet?action=anadirCarro">
                     <table class="table table-sm table-borderless">
                         <tbody>
                         <!--Label-->
