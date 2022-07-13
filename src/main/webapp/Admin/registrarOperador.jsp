@@ -113,7 +113,7 @@
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="email">Correo</label>
                                         <input name="email"
-                                               type="text"
+                                               type="email"
                                                id="email"
                                                class="form-control"
                                                placeholder="Ingrese correo"/>
@@ -135,31 +135,18 @@
                                                 type="number"
                                                 id="dni"
                                                 class="form-control"
-                                                placeholder="Ingrese su dni"/>
+                                                placeholder="Ingrese su dni"
+                                               min="10000000" max="99999999"/>
                                     </div>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo")){%>
-                                    <div class="text-danger mb-2">El DNI no puede ser negativo</div>
-                                    <%}%>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digitodni")){%>
-                                    <div class="text-danger mb-2">El DNI debe contar con 8 digitos</div>
-                                    <%}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="numCel">Numero de contacto</label>
                                         <input name="numCel"
                                                type="number"
                                                id="numCel"
                                                class="form-control"
-                                               placeholder="Ingrese numero"/>
+                                               placeholder="Ingrese numero"
+                                               min="900000000" max="999999999"/>
                                     </div>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo1")){%>
-                                    <div class="text-danger mb-2">No puede ingresar numero negativo</div>
-                                    <%}%>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digitonumero")){%>
-                                    <div class="text-danger mb-2">El numero deben tener 9 digitos</div>
-                                    <%}%>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("comienzo")){%>
-                                    <div class="text-danger mb-2">El numero deben comenzar con 9</div>
-                                    <%}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="fechaNac">Ferha de Nacimiento</label>
                                         <input name="fechaNac"

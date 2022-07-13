@@ -180,6 +180,15 @@
                                     <span>Visualizar Lista de Clientes</span>
                                 </a>
                             </div>
+                            <div class="p-2">
+                                <a
+                                        href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar1"
+                                        class="text-dark text-decoration-none"
+                                >
+                                    <span><i class="fas fa-list"></i></span>
+                                    <span>Editar Perfil</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,9 +295,6 @@
                 <td><%=operador.getNombre()+" "+operador.getApellido()%></td>
                 <td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
                 <td>
-                    <a href="<%=request.getContextPath()%>/EditarOperadorServlet?&id=<%=operador.getIdPer()%>">
-                        <i class="far fa-edit btn-tele p-2 rounded"></i>
-                    </a>
                     <hr class="my-1" style="background-color: white" />
                     <button
                             class="btn btn-danger py-2 px-2"

@@ -23,6 +23,13 @@ public class EditarOperadorServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/editarOperador.jsp");
                 requestDispatcher.forward(request, response);
             }
+            case "editar1" -> {
+                int id = Integer.parseInt(request.getParameter("id"));
+                BPersona admin = adminDao.buscarOperadorPorId_editar(id);
+                request.setAttribute("Admin", admin);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/editarAdmin.jsp");
+                requestDispatcher.forward(request, response);
+            }
             case "borrar" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
                 adminDao.eliminarOperador(id);
@@ -36,9 +43,8 @@ public class EditarOperadorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action") == null ? "actualizar" : request.getParameter("a");
+        String action = request.getParameter("action") == null ? "actualizar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
-        HttpSession session= request.getSession();
         switch (action) {
             case "actualizar" -> {
                 String ID = request.getParameter("idPer");
@@ -53,28 +59,32 @@ public class EditarOperadorServlet extends HttpServlet {
                 operador.setApellido(apellido);
                 operador.setEmail(email);
                 operador.setDireccion(direccion);
-                if(numero.charAt(0) == '-'){
-                    session.setAttribute("error","negativo");
-                    response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
-                }else{
-                    if(numero.charAt(0) == '9'){
-                    try{operador.setNumCel(Integer.parseInt(numero));
-                    } catch (NumberFormatException e) {
-                        session.setAttribute("error","digito");
-                    }
-                        if(((int)Math.log10(operador.getNumCel())+1)==9){
-                        adminDao.editarOperadores(operador);
-                        response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
-                    }else{
-                        session.setAttribute("error","digito");
-                        response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
-                    }
-                }else{
-                        session.setAttribute("error","comienzo");
-                        response.sendRedirect(request.getContextPath()+"/EditarOperadorServlet?id="+operador.getIdPer());
-                    }
+                operador.setNumCel(Integer.parseInt(numero));
+                adminDao.editarOperadores(operador);
+                response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
 
-                }
+
+            }
+            case "actualizar1" -> {
+                String ID = request.getParameter("idPer");
+                String nombre = request.getParameter("nombre");
+                String apellido = request.getParameter("apellido");
+                String email = request.getParameter("email");
+                String direccion = request.getParameter("direccion");
+                String numero = request.getParameter("numCel");
+                BPersona admin = new BPersona();
+                admin.setIdPer(Integer.parseInt(ID));
+                admin.setNombre(nombre);
+                admin.setApellido(apellido);
+                admin.setEmail(email);
+                admin.setDireccion(direccion);
+                admin.setNumCel(Integer.parseInt(numero));
+                adminDao.editarOperadores(admin);
+                response.sendRedirect(request.getContextPath() + "/AdminIndexServlet");
+
+
+
+
             }
 
         }
