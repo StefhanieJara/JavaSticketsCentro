@@ -15,6 +15,7 @@
     <title>Estadisticas</title>
     <%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>
     <style>
+
         .container {
             padding-right: 0 !important;
             padding-left: 0 !important;
@@ -313,7 +314,9 @@
 <div class="container px-4 py-5" id="icon-grid">
 
 
+
 <main>
+
     <div class="card-header mt-5 mb-4"></div>
 
     <!--Pestañas visualización y gestión-->
@@ -324,53 +327,110 @@
             >
         </li>
     </ul>
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 ">
+
         <div class="col d-flex align-items-start">
-
             <div>
-                <h2>Funciones</h2>
-                <p>Puedes encontrar los porcentajes de asistencia de todas las funciones.</p>
-                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar1"
-                   type="button"
-                   class="btn btn-danger border-start-1"
-                ><b>Visualizar</b></a>
+                <div
+                        class="card-header h-100 shadow border-0 text-white "
+                        style="
+                      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Sala_cine.jpg/2560px-Sala_cine.jpg');
+                      background-size: cover;
+                      height: 600px;
+                      width: 600px;
+                    "
+                >
+                    <h2>Funciones</h2>
+                    <p>En esta seccion para una mejor gestion de salas es importante </p>
+                    <p>conocer el porcentaje de asistencia de las peliculas proyectadas</p>
+                    <p>las cuales podras filtrar por fecha de inicio y fin.</p>
+                    <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar1"
+                       type="button"
+                       class="btn btn-danger border-start-1"
+                    ><b>Visualizar</b></a>
+                </div>
             </div>
-        </div>
-        <div class="col d-flex align-items-start">
 
-            <div>
-                <h2>Vistas</h2>
-                <p>Puedes encontrar la función más y menos vista.</p>
-                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar2"
-                   type="button"
-                   class="btn btn-danger border-start-1"
-                ><b>Visualizar</b></a>
+
+        <div class="col" style="width: 250px"></div>
+            <div class="col d-flex align-items-start">
+
+                <div>
+                    <div
+                            class="card-header h-100 shadow border-0 text-white"
+                            style="
+                      background-image: url('https://sinsubtitulos.com.ar/wp-content/uploads/2015/01/hottest-films.jpg');
+                      background-size: cover;
+                      height: 600px;
+                      width: 600px;
+                    "
+                    >
+                        <h2>Vistas</h2>
+                        <p>En las salas de cine podemos observar que hay grandes exitos de taquilla</p>
+                        <p>Esta seccion muestra las funcion mas vista y la sede donde se proyecto</p>
+                        <p>las cuales podras filtrar por fecha de inicio y fin.</p>
+                        <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar2"
+                           type="button"
+                           class="btn btn-danger border-start-1"
+                        ><b>Visualizar</b></a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col d-flex align-items-start">
-
-            <div>
-                <h2>Películas</h2>
-                <p>Puedes encontrar la pelicula mejor calificada y buscar por género.</p>
-                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar3"
-                   type="button"
-                   class="btn btn-danger border-start-1"
-                ><b>Visualizar</b></a>
-            </div>
-        </div>
-        <div class="col d-flex align-items-start">
-
-            <div>
-                <h2>Actores y Directores</h2>
-                <p>Puedes encontrar las celebridades mejores calificadas.</p>
-                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar4"
-                   type="submit"
-                   class="btn btn-danger border-start-1"
-                ><b>Visualizar</b></a>
-            </div>
-        </div>
-
     </div>
+    </div>
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 ">
+    <div class="col d-flex align-items-start">
+
+                    <div>
+                        <div
+                                class="card-header h-100 shadow border-0 text-white"
+                                style="
+                      background-image: url('https://noticieros.televisa.com/wp-content/uploads/2022/03/coda-gana-oscar-reuters.jpg');
+                      background-size: cover;
+                      height: 600px;
+                      width: 600px;
+                    "
+                        >
+                            <h2>Películas</h2>
+                            <p>Puedes encontrar la pelicula mejor calificada y buscar por género</p>
+                            <p>mostrando una clasificación en base a estrellas que es la media</p>
+                            <p>de valoraciones asi como el listado de películas.</p>
+                            <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar3"
+                               type="button"
+                               class="btn btn-danger border-start-1"
+                            ><b>Visualizar</b></a>
+                        </div>
+                    </div>
+        <div class="col" style="width: 250px"></div>
+    <div/>
+                    <div class="col d-flex align-items-start">
+
+                        <div>
+                            <div
+                                    class="card-header h-100 shadow border-0 text-white"
+                                    style="
+                      background-image: url('https://estaticos-cdn.elperiodico.com/clip/735b8d8c-ef56-420b-bf66-2ddb1b7e6887_alta-libre-aspect-ratio_default_0.jpg');
+                      background-size: cover;
+                      height: 600px;
+                      width: 600px;
+                    "
+                            >
+                                <h2>Actores y Directores</h2>
+                                <p>Puedes encontrar las celebridades mejores calificadas por nuestros usuarios</p>
+                                <p>mostrando una clasificación en base a estrellas que representa la media de </p>
+                                <p>clasificación de actores y directores de los filmes proyectados por JavaSticket.</p>
+                                <a href="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar4"
+                                   type="submit"
+                                   class="btn btn-danger border-start-1"
+                                ><b>Visualizar</b></a>
+                            </div>
+                        </div>
+
+                    </div>
+    </div>
+    <div/>
 
 </main>
 </div>
