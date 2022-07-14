@@ -49,23 +49,7 @@
             <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
             <!--Espacio-->
 
-            <!--Menú-->
-            <div
-                    class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0"
-            >
-                <button
-                        class="btn"
-                        type="button"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasWithBackdrop"
-                        aria-controls="offcanvasWithBackdrop"
-                        style="color: #fff"
-                >
-                    <div style="font-size: 0.62rem">
-                        <i class="fas fa-user-circle fa-3x"></i>
-                    </div>
-                </button>
-            </div>
+
             <!--Boton atras-->
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
@@ -126,7 +110,7 @@
                                         <label class="form-label" for="email"></label>
                                         <input  type="hidden"
                                                 name ="email"
-                                                type="text"
+                                                type="email"
                                                 id="email"
                                                 class="form-control"
                                                 value="<%=Operador.getEmail()%>"
@@ -151,17 +135,9 @@
                                                 class="form-control"
                                                 value="<%=Operador.getNumCel()%>"
                                                 placeholder="Ingrese su numero de celular"
+                                                min="900000000" max="999999999"
                                         >
                                     </div>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("negativo")){%>
-                                    <div class="text-danger mb-2">No debe ser negativo</div>
-                                    <%}%>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("digito")){%>
-                                    <div class="text-danger mb-2">Debe tener 9 digitos</div>
-                                    <%}%>
-                                    <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("comienzo")){%>
-                                    <div class="text-danger mb-2">Los numero deben comenzar con 9</div>
-                                    <%}%>
 
                                 </div>
 
@@ -187,87 +163,7 @@
             </div>
     </div>
 
-    <!--Menú cine-->
-    <div
-            class="offcanvas offcanvas-end text-center"
-            tabindex="-1"
-            id="offcanvasWithBackdrop"
-            aria-labelledby="offcanvasWithBackdropLabel"
-    >
-        <div class="d-flex align-items-center flex-column mb-3 vh-100">
-            <div class="p-2 w-100">
-                <div class="offcanvas-header border-bottom">
-                    <h5 class="mb-0">Menú de Administrador</h5>
-                    <button
-                            type="button"
-                            class="btn-close text-reset"
-                            data-bs-dismiss="offcanvas"
-                            aria-label="Close"
-                    ></button>
-                </div>
-            </div>
-            <div class="p-2">
-                <div class="offcanvas-body p-3">
-                    <div class="d-flex flex-column">
-                        <div class="my-2">
-                            <h4 class="mb-3">Rex Campos Díaz</h4>
-                            <img
-                                    src="img/images.png"
-                                    class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
-                                    alt="profile image"
-                            />
-                        </div>
-                        <div class="mb-3">
-                            <div class="p-2">
-                                <a
-                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionSalas"
-                                        class="text-dark text-decoration-none"
-                                >
-                                    <span><i class="fas fa-list"></i></span>
-                                    <span>Gestione Salas</span>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                <a
-                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionCelebridad"
-                                        class="text-dark text-decoration-none"
-                                >
-                                    <span><i class="fas fa-list"></i></span>
-                                    <span>Visualizar Actores y Directores</span>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                <a
-                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionOperadores"
-                                        class="text-dark text-decoration-none"
-                                >
-                                    <span><i class="fas fa-list"></i></span>
-                                    <span>Visualizar Operadores</span>
-                                </a>
-                            </div>
-                            <div class="p-2">
-                                <a
-                                        href="<%=request.getContextPath()%>/AdminIndexServlet?action=gestionClientes"
-                                        class="text-dark text-decoration-none"
-                                >
-                                    <span><i class="fas fa-list"></i></span>
-                                    <span>Visualizar Lista de Clientes</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-auto p-2 w-100">
-                <div class="offcanvas-body border-top pt-4">
-                    <a href="#" class="text-dark text-decoration-none">
-                        <span><i class="fas fa-sign-out-alt"></i></span>
-                        <span>Cerrar sesión</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 
 

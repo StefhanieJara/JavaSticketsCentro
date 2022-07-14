@@ -1,5 +1,6 @@
 package com.example.javasticketscentro.Servlets;
 
+import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
 
 import javax.servlet.*;
@@ -37,7 +38,6 @@ public class AdminIndexServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }
 

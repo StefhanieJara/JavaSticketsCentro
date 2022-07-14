@@ -135,6 +135,16 @@
                             </a>
                         </div>
                     </div>
+                    <div class="p-2">
+                        <a
+                                href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar1"
+                                class="text-dark text-decoration-none"
+                        >
+                            <span><i class="fas fa-list"></i></span>
+                            <span>Editar Perfil</span>
+                        </a>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
