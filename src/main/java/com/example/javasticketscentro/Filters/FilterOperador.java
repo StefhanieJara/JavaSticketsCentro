@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebFilter(filterName = "FilterOperador", value ={"/indexOperadorServlet", "/editarPeliculaServlet",
                         "/insertarCelebridadServlet", "/operador_estadisticasServlet",
                         "/OperadorGestionSalasServlet", "/peliculaVisualizacionServlet",
-                        "/personalServlet", "/RegistrarPeliculaServlet","/OperadorFuncionesServlet"})
+                        "/personalServlet", "/RegistrarPeliculaServlet","/OperadorFuncionesServlet","/OperadorEditaPerfilServlet"})
 public class FilterOperador implements Filter {
 
     @Override

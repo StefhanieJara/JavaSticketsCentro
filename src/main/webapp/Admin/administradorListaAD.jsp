@@ -160,10 +160,10 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar1"
+                                        href="<%=request.getContextPath()%>/AdminEditaPerfilServlet"
                                         class="text-dark text-decoration-none"
                                 >
-                                    <span><i class="fas fa-list"></i></span>
+                                    <span><i class="fas fa-user-edit" aria-hidden="true"></i></span>
                                     <span>Editar Perfil</span>
                                 </a>
                             </div>
@@ -225,7 +225,7 @@
         <div class="col-md-1 text-center mt-5 d-none d-md-block">
             <h6>Rol</h6>
             <p style="font-size: larger"><%=celebridad.getRol()%></p>
-            <p><%=celebridad.getIdCelebridad()%></p>
+            <p hidden><%=celebridad.getIdCelebridad()%></p>
         </div>
         <!--Descripción de la celebridad-->
         <div class="col-md-2 mt-5 d-none d-md-block">

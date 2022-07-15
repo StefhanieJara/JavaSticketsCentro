@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebFilter(filterName = "FilterAdmin", value ={"/AdminClienteServlet", "/AdminIndexServlet",
         "/AdminListarSalasServlet", "/ADServlet", "/ListarOperadorServlet", "/RegistrarCelebridadServlet",
-        "/RegistrarOperadorServlet"})
+        "/RegistrarOperadorServlet","/AdminEditaPerfilServlet"})
 public class FilterAdmin implements Filter {
 
     @Override

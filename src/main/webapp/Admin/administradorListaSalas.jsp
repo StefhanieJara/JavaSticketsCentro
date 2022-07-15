@@ -190,10 +190,10 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar1"
+                                        href="<%=request.getContextPath()%>/AdminEditaPerfilServlet"
                                         class="text-dark text-decoration-none"
                                 >
-                                    <span><i class="fas fa-list"></i></span>
+                                    <span><i class="fas fa-user-edit" aria-hidden="true"></i></span>
                                     <span>Editar Perfil</span>
                                 </a>
                             </div>
