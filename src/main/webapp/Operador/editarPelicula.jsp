@@ -55,8 +55,8 @@
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
                     <div style="font-size: 0.62rem">
-                        <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"></a>
-                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                        <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                     </div>
                 </button>
             </div>
@@ -211,12 +211,11 @@
                                                 name="restriccionEdad"
                                                 class="form-select  frm-field required sect"
                                         >
-                                            <option selected="true"><%=pelicula.getRestriccionEdad()%></option>
-                                            <option>Para todo publico (AA)</option>
-                                            <option>+12 (B)</option>
-                                            <option>+15(B15)</option>
-                                            <option>+18 (C)</option>
-                                            <option>Explicitas o lenguaje violento(D)</option>
+                                            <option <%=pelicula.getRestriccionEdad().equals("AA")?"selected":""%>>Para todo publico (AA)</option>
+                                            <option <%=pelicula.getRestriccionEdad().equals("+12 (B)")?"selected":""%>>+12 (B)</option>
+                                            <option <%=pelicula.getRestriccionEdad().equals("+15 (B15)")?"selected":""%>>+15 (B15)</option>
+                                            <option <%=pelicula.getRestriccionEdad().equals("+18 (C)")?"selected":""%>>+18 (C)</option>
+                                            <option <%=pelicula.getRestriccionEdad().equals("D")?"selected":""%>>Explicitas o lenguaje violento (D)</option>
                                         </select>
                                     </div>
                                 </div>

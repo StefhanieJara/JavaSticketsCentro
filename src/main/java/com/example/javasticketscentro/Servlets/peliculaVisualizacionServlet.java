@@ -67,6 +67,27 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                     String restriccion = request.getParameter("restriccionEdad")==null?pelicula.getRestriccionEdad():request.getParameter("restriccionEdad");
                     String sinopsis = request.getParameter("sinopsis")==null?pelicula.getSinopsis():request.getParameter("sinopsis");
                     String URLFoto = request.getParameter("photoUrl");
+
+                    switch (restriccion){
+                        case "Para todo publico (AA)":
+                            restriccion = "AA";
+                            break;
+                        case "+12 (B)":
+                            restriccion="+12 (B)";
+                            break;
+                        case "+15 (B15)":
+                            restriccion="+15 (B15)";
+                            break;
+                        case "+18 (C)":
+                            restriccion="+18 (C)";
+                            break;
+                        case "Explicitas o lenguaje violento (D)":
+                            restriccion="D";
+                            break;
+                        default:
+                            restriccion="";
+                    }
+
                     if  (URLFoto == null){
                         URLFoto = pelicula.getFoto();
                     }else if(URLFoto.equals("")){
