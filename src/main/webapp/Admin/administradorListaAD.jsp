@@ -273,23 +273,26 @@
                 <div class="modal-body">
                     <%if(!puedeElimimar.get(a)){%>
                     <center>
-                        <div class="text-danger mb-2">Participa en una película. No es posible eliminar a la Celebridad.</div>
+                        <div class="modal-title dist-name">Participa en una película. No es posible eliminar a la Celebridad.</div>
                     <%}else{%>
                     Este actor o director será eliminado y ya no podra recuperar la
                     información.<br>
                         <center>
-                        <form class="dist-name">
+                        <form  class=" dist-name">
                             ¿Está seguro que desea eliminarlo de la lista?
                         </form>
                     <%}%>
 
                         <a href="<%=request.getContextPath()%>/ADServlet">
+
                             <button type="button"
                                     class="btn btn-secondary"
+                                    style="margin-top: 15px;"
                                     data-bs-dismiss="modal">Cancelar</button>
                         </a>
                         <%if(puedeElimimar.get(a)){%>
                         <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
+
                             <button type="button" class="btn btn-danger">Eliminar </button>
                         </a>
                         <%}%>
