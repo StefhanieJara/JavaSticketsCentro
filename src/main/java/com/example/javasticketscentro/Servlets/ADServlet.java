@@ -59,14 +59,14 @@ public class ADServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/ADServlet");
                 break;
             case "editar":
-                idCelebridad = Integer.parseInt(request.getParameter("id"));
-                BCelebridad celebridad = adminDao.buscarPorId(idCelebridad);
-                if (celebridad != null){
-                    request.setAttribute("celebridad", celebridad);
+                if(request.getSession().getAttribute("idCelebridad")!=null){
+                    idCelebridad=(Integer)request.getSession().getAttribute("idCelebridad");
+                    BCelebridad c=adminDao.buscarPorId(idCelebridad);
+                    request.setAttribute("celebridad", c);
                     RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
                     editarCelebridad.forward(request, response);
                 }else{
-                    response.sendRedirect(request.getContextPath()+"/ADServlet");
+                    response.sendRedirect(request.getContextPath());
                 }
                 break;
             default:
@@ -99,25 +99,31 @@ public class ADServlet extends HttpServlet {
                 }
                 break;
             case "actualizar":
+                personalServlet soloLetras = new personalServlet();
                 int id = Integer.parseInt(request.getParameter("id"));
                 BCelebridad celebr = new BCelebridad();
                 celebr.setIdCelebridad(id);
                 celebr.setNombre(nombre);
                 celebr.setApellido(apellido);
-                celebr.setRol(rol);
-                if  (URLFoto == null){
-                    URLFoto="mantener";
-                }else if (URLFoto.equals("")){
-                    URLFoto="mantener";
-                }
-                celebr.setFoto(URLFoto);
-                if(celebr.getApellido().equals("") || celebr.getNombre().equals("")){
-                    request.setAttribute("celebridad", adminDao.buscarPorId(celebr.getIdCelebridad()));
-                    RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
-                    editarCelebridad.forward(request, response);
+                if(soloLetras.esSoloLetras(nombre)&&soloLetras.esSoloLetras(apellido)){
+                    if  (URLFoto == null){
+                        URLFoto="mantener";
+                    }else if (URLFoto.equals("")){
+                        URLFoto="mantener";
+                    }
+                    celebr.setFoto(URLFoto);
+                    if(celebr.getApellido().equals("") || celebr.getNombre().equals("")){
+                        request.setAttribute("celebridad", adminDao.buscarPorId(celebr.getIdCelebridad()));
+                        RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
+                        editarCelebridad.forward(request, response);
+                    }else{
+                        adminDao.editarCelebridad(celebr);
+                        response.sendRedirect(request.getContextPath()+"/ADServlet");
+                    }
                 }else{
-                    adminDao.editarCelebridad(celebr);
-                    response.sendRedirect(request.getContextPath()+"/ADServlet");
+                    request.getSession().setAttribute("msg","");
+                    request.getSession().setAttribute("idCelebridad",id);
+                    response.sendRedirect(request.getContextPath()+"/ADServlet?action=editar");
                 }
                 break;
             case "buscar":
@@ -146,6 +152,17 @@ public class ADServlet extends HttpServlet {
                 } catch (SQLException e) {
                     e.printStackTrace();
                     response.sendRedirect(request.getContextPath());
+                }
+                break;
+            case "editar":
+                int idCelebridad = Integer.parseInt(request.getParameter("idCelebridad"));
+                BCelebridad celebridad = adminDao.buscarPorId(idCelebridad);
+                if (celebridad != null){
+                    request.setAttribute("celebridad", celebridad);
+                    RequestDispatcher editarCelebridad = request.getRequestDispatcher("/Admin/editarCelebridad.jsp");
+                    editarCelebridad.forward(request, response);
+                }else{
+                    response.sendRedirect(request.getContextPath()+"/ADServlet");
                 }
                 break;
         }

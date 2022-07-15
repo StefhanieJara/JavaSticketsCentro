@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="celebridad" scope="request" type="com.example.javasticketscentro.Beans.BCelebridad" />
-
+<jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,8 +94,9 @@
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-2">Editar Celebridad</h4>
+                        <h4 class="my-2">Editar <%=celebridad.getRol()%></h4>
                     </div>
+
                     <div class="card-body p-4 p-md-5">
                         <form method="POST" action="<%=request.getContextPath()%>/ADServlet?action=actualizar">
                             <div class="row">
@@ -126,24 +127,11 @@
                                                 placeholder="Ingrese los apellidos"
                                         />
                                     </div>
-                                    <div class="d-flex justify-content-start my-3">
-                                        <div class="pb-1">Rol:&nbsp;&nbsp;&nbsp;</div>
-                                        <div class="form-outline mb-4 py-4 dropdown">
-                                            <select
-                                                    name="rol"
-                                                    id="country1"
-                                                    class="frm-field required sect">
-                                                <% if (celebridad.getRol().equals("actor") || celebridad.getRol().equals("Actor")){ %>
-                                                    <option selected="true">Actor</option>
-                                                    <option >Director</option>
-                                                <% }else{%>
-                                                    <option>Actor</option>
-                                                    <option selected="true">Director</option>
-                                                <% } %>
-                                            </select>
-                                        </div>
-
-                                    </div>
+                                    <button type="submit" class="btn btn-danger">Actualizar celebridad</button>
+                                    <%if(session.getAttribute("msg")!=null){%>
+                                    <center>
+                                        <div class="text-danger mb-2">No es posible ingresar números en el nombre y apellido.</div>
+                                    <%session.removeAttribute("msg");}%>
                                 </div>
 
                                 <div class="col-md-6 mb-4 text-center">
@@ -159,7 +147,6 @@
                                 <input type="hidden" name="photoUrl" id="photoUrl" />
                             </div>
 
-                            <button type="submit" class="btn btn-danger">Actualizar celebridad</button>
                         </form>
                     </div>
                 </div>

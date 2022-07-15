@@ -234,9 +234,12 @@
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-around">
-            <a href="<%=request.getContextPath()%>/ADServlet?action=editar&id=<%=celebridad.getIdCelebridad()%>">
+            <form method="post" action="<%=request.getContextPath()%>/ADServlet?action=editar">
+                <input type="hidden" name="idCelebridad" value="<%=celebridad.getIdCelebridad()%>">
+            <button type="submit">
                 <i class="far fa-edit btn-tele p-3 rounded"></i>
-            </a>
+            </button>
+            </form>
             <hr class="my-1" style="background-color: white" />
                 <button
                         class="btn btn-danger p-3"
