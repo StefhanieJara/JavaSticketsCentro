@@ -165,10 +165,10 @@ int samir = 1;%>
                         </div>
                         <div class="p-2">
                             <a
-                                    href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar"
+                                    href="<%=request.getContextPath()%>/OperadorEditaPerfilServlet"
                                     class="text-dark text-decoration-none"
                             >
-                                <span><i class="fas fa-list"></i></span>
+                                <span><i class="fa fa-user-o" aria-hidden="true"></i></span>
                                 <span>Editar Perfil</span>
                             </a>
                         </div>
