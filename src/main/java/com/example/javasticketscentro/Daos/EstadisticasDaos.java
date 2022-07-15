@@ -377,6 +377,7 @@ public class EstadisticasDaos extends BaseDao{
         ArrayList<BPelicula> peliculas = new ArrayList<>();
         String sql = "select pe.nombre, pe.foto, pe.calificacionPelicula, pe.idPelicula from pelicula pe\n" +
                 "inner join funcion f on pe.idPelicula = f.Pelicula_idPelicula\n"+
+                "group by pe.nombre\n"+
                 "order by pe.calificacionPelicula desc limit 3";
         try (Connection conn = this.getConnection();
              Statement stmt = conn.createStatement();
