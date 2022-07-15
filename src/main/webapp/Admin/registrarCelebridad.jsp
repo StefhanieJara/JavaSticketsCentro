@@ -46,7 +46,7 @@
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
                     >
-                        <h4 class="my-2">Registrar Celebridad</h4>
+                        <h4 class="my-2">Registrar Actor o Director</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <form method="POST" action="<%=request.getContextPath()%>/ADServlet?action=crear">
@@ -87,7 +87,7 @@
                                                 <option >Director</option>
                                             </select>
                                         </div>
-
+                                        <b>Nota: </b> Una vez creada la celebridad, no es posible editar su rol.
                                     </div>
                                 </div>
 
