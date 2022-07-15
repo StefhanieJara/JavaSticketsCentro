@@ -1,12 +1,10 @@
 package com.example.javasticketscentro.Daos;
 
 import com.example.javasticketscentro.Beans.*;
-import com.sun.mail.imap.protocol.ID;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.concurrent.locks.StampedLock;
 
 public class OperadorDao extends BaseDao{
 
@@ -192,18 +190,17 @@ public class OperadorDao extends BaseDao{
         }
     }
 
-    public void crearPelicula(String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
+    public void crearPelicula(String nombre, String genero, String restriccion, String sinopsis, String URLFoto, String duracionConFormato){
         String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero, estado)\n" +
-                "values (?, ?, ?, ?, ?,?,?,1);";
+                "values (?, ?, ?, ?, ?,0.0,?,1);";
         try(Connection connection = this.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)){
             pstmt.setString(1, nombre);
             pstmt.setString(2, restriccion);
             pstmt.setString(3, sinopsis);
-            pstmt.setString(4, duracion);
+            pstmt.setString(4, duracionConFormato);
             pstmt.setString(5, URLFoto);
-            pstmt.setDouble(6, 0.0);
-            pstmt.setString(7, genero);
+            pstmt.setString(6, genero);
             pstmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();

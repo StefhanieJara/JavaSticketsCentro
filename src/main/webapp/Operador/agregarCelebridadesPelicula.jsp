@@ -164,11 +164,6 @@
                         class="card shadow-2-strong card-registration"
                         style="border-radius: 15px; margin-top: 100px"
                 >
-                    <%if (!mensaje.equals("")){%>
-                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
-                        ¡Datos incompletos!
-                    </div>
-                    <%}%>
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
@@ -176,7 +171,7 @@
                         <h4 class="my-8">Añadir celebridades</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=actualizar">
+                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=agregarCelebridades">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <input type="hidden" value="<%=idPeli%>" name="idPeli">

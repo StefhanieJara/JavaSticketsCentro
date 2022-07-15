@@ -39,11 +39,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }
             case "crear"->{
-                if(mensaje.equals("incompletos")){
-                    request.setAttribute("mensaje", mensaje);
-                }
-                request.setAttribute("listarsala",adminDao.listasala());
-                request.setAttribute("listarsede",adminDao.listarSedes());
+                request.setAttribute("mensaje", mensaje);
                 request.setAttribute("listarDirector",adminDao.listarDirector());
                 request.setAttribute("listarActor",adminDao.listarActor());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_pelicula.jsp");
@@ -100,21 +96,47 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                     String genero = request.getParameter("genero")==null?"":request.getParameter("genero");
                     String tiempoDuracion = request.getParameter("tiempo")==null?"":request.getParameter("tiempo");
                     String duracionConFormato = tiempoDuracion + ":00";
-                    String restriccion = request.getParameter("restriccionEdad")==null?"":request.getParameter("restriccionEdad");
-                    String sinopsis = request.getParameter("sinopsis")==null?"":request.getParameter("sinopsis");
-                    String URLFoto = request.getParameter("photoUrl");
-                    if  (URLFoto == null){
-                        URLFoto=" https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
-                    }else if (URLFoto.equals("")){
-                        URLFoto="https://e7.pngegg.com/pngimages/386/168/png-clipart-white-frame-photo-gallery-frame.png";
+                    String restriccionEdad = request.getParameter("restriccionEdad")==null?"":request.getParameter("restriccionEdad");
+                    String restriccion="";
+                    switch (restriccionEdad){
+                        case "Para todo publico (AA)":
+                            restriccion = "AA";
+                            break;
+                        case "+12 (B)":
+                            restriccion="+12 (B)";
+                            break;
+                        case "+15 (B15)":
+                            restriccion="+15 (B15)";
+                            break;
+                        case "+18 (C)":
+                            restriccion="+18 (C)";
+                            break;
+                        case "Explicitas o lenguaje violento (D)":
+                            restriccion="D";
+                            break;
+                        default:
+                            restriccion="";
                     }
-                    operadorDao.crearPelicula(nombre, genero, duracionConFormato, restriccion, sinopsis, URLFoto);
-                    AdminDao adminDao = new AdminDao();
-                    request.setAttribute("listarActor", adminDao.listarActor());
-                    request.setAttribute("listarDirector", adminDao.listarDirector());
-                    request.setAttribute("idPeli", operadorDao.obtenerIdPelicula(nombre));
-                    RequestDispatcher view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
-                    view.forward(request, response);
+                    String sinopsis = request.getParameter("sinopsis")==null?"":request.getParameter("sinopsis");
+                    String URLFoto = request.getParameter("photoUrl") == null?"":request.getParameter("photoUrl");
+                    if  (URLFoto == null){
+                        URLFoto="";
+                    }
+                    if(restriccion.equals("")) {
+                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet?action=crear&mensaje=restriccion");
+                    }
+                    else if(URLFoto.equals("")){
+                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet?action=crear&mensaje=url");
+                    }else{
+                        operadorDao.crearPelicula(nombre, genero, restriccion, sinopsis, URLFoto, duracionConFormato);
+                        request.setAttribute("idPeli", operadorDao.obtenerIdPelicula(nombre));
+                        AdminDao adminDao = new AdminDao();
+                        request.setAttribute("listarDirector", adminDao.listarDirector());
+                        request.setAttribute("listarActor", adminDao.listarActor());
+                        System.out.println("éxito");
+                        RequestDispatcher view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                 }
@@ -128,6 +150,18 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 session.setAttribute("pagina", pagina);
                 response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
                 break;
+            case "agregarCelebridades":
+                idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                int idDirector = Integer.parseInt(request.getParameter("director").equals("Seleccionar")?"0":request.getParameter("director"));
+                int actor1 = Integer.parseInt(request.getParameter("actor1").equals("Seleccionar")?"0":request.getParameter("actor1"));
+                int actor2 = Integer.parseInt(request.getParameter("actor2").equals("Seleccionar")?"0":request.getParameter("actor2"));
+                int actor3 = Integer.parseInt(request.getParameter("actor3").equals("Seleccionar")?"0":request.getParameter("actor3"));
+                int actor4 = Integer.parseInt(request.getParameter("actor4").equals("Seleccionar")?"0":request.getParameter("actor4"));
+
+
+                break;
+            default:
+                response.sendRedirect(request.getContextPath());
         }
     }
 }

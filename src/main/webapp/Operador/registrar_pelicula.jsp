@@ -8,11 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listarsala" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>"/>
 <jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
-<jsp:useBean id="listarsede" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>"/>
-<jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 
 <!DOCTYPE html>
@@ -166,9 +162,13 @@
                         class="card shadow-2-strong card-registration"
                         style="border-radius: 15px; margin-top: 100px"
                 >
-                    <%if (!mensaje.equals("")){%>
+                    <%if (mensaje.equals("restriccion")){%>
                     <div style="font-weight: bold;" class="alert alert-danger" role="alert">
-                       ¡Datos incompletos!
+                       ¡Debe completar la restricción de edad!
+                    </div>
+                    <%}else if(mensaje.equals("url")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                        ¡Debe subir una foto para la película!
                     </div>
                     <%}%>
                     <div
@@ -218,9 +218,9 @@
                                             <option disabled="disabled" selected="true">Seleccionar</option>
                                             <option>Para todo publico (AA)</option>
                                             <option>+12 (B)</option>
-                                            <option>+15(B15)</option>
+                                            <option>+15 (B15)</option>
                                             <option>+18 (C)</option>
-                                            <option>Explicitas o lenguaje violento(D)</option>
+                                            <option>Explicitas o lenguaje violento (D)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -230,7 +230,7 @@
                                         <img id="img-preview" style="max-width: 300px; resize: both; max-width: 300px" />
                                     </div>
                                     <div class="d-flex justify-content-center my-3">
-                                        <input type="file" id="img-uploader">
+                                        <input type="file" accept="image/*" id="img-uploader">
                                     </div>
                                     <progress id="img-upload-bar" width="10px" value="0" max="100"
                                               style="width: 100%"></progress>
@@ -242,7 +242,7 @@
                                 <div class="col-md-12 mb-4 pb-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="productoDescription">Sinopsis</label>
-                                        <textarea name="sinopsis" id="productoDescription" class="form-control"></textarea>
+                                        <textarea required name="sinopsis" id="productoDescription" class="form-control"></textarea>
                                     </div>
                                 </div>
                             </div>
