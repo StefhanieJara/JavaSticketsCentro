@@ -213,7 +213,7 @@ int samir = 1;%>
     <%
         for(contador=0; contador<5; contador++){
             double su = puntaje-contador;
-            System.out.println(su);
+
 
             if(su<0.4 && su <=1 && su >=0){
                 puntajeX = Math.floor(puntaje);

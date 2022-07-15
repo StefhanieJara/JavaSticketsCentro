@@ -212,7 +212,7 @@ int samir2 =1;%>
     <%
         for(contador=0; contador<5; contador++){
             double su = puntaje1-contador;
-            System.out.println(su);
+
 
             if(su<0.4 && su <=1 && su >=0){
                 puntajeX = Math.floor(puntaje1);
@@ -270,7 +270,7 @@ int samir2 =1;%>
         existe=false;
         for(contador=0; contador<5; contador++){
             double su = puntaje2-contador;
-            System.out.println(su);
+
 
             if(su<0.4 && su <=1 && su >=0){
                 puntajeX = Math.floor(puntaje2);
