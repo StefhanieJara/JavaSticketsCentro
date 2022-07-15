@@ -236,8 +236,9 @@
         <div class="col-sm-1 mt-5 d-none d-md-block text-around">
             <form method="post" action="<%=request.getContextPath()%>/ADServlet?action=editar">
                 <input type="hidden" name="idCelebridad" value="<%=celebridad.getIdCelebridad()%>">
-            <button type="submit">
-                <i class="far fa-edit btn-tele p-3 rounded"></i>
+            <button type="submit"
+                    class="btn-tele p-3 rounded">
+                <i class="far fa-edit "></i>
             </button>
             </form>
             <hr class="my-1" style="background-color: white" />
