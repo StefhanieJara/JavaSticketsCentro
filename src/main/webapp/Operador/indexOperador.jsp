@@ -137,7 +137,7 @@
                                     href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar"
                                     class="text-dark text-decoration-none"
                             >
-                                <span><i class="fas fa-list"></i></span>
+                                <span><i class="fas fa-user-edit" aria-hidden="true"></i></span>
                                 <span>Editar Perfil</span>
                             </a>
                         </div>
