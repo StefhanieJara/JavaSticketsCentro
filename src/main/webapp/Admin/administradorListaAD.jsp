@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="listaCelebridades" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>" />
+<jsp:useBean id="puedeElimimar" scope="request" type="java.util.ArrayList<java.lang.Boolean>"/>
 <jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="filtro" scope="request" type="java.lang.String"/>
@@ -248,18 +249,7 @@
         </div>
 
     </div>
-    <hr class="mx-md-5 mx-sm-3" />
-    <div class="mx-3"></div>
-    <button
-            class="btn btn-danger p-2"
-            type="hidden"
-            data-bs-toggle="modal"
-            data-bs-target="#confirmacion<%=a%>"
-    >
-    </button>
-    </td>
-    </tr>
-    </tr>
+
     <div class="modal fade"
          id="confirmacion<%=a%>"
          tabindex="-1"
@@ -277,18 +267,28 @@
                     ></button>
                 </div>
                 <div class="modal-body">
+                    <%if(!puedeElimimar.get(a)){%>
+                    <center>
+                        <div class="text-danger mb-2">Participa en una película. No es posible eliminar a la Celebridad.</div>
+                    <%}else{%>
                     Este actor o director será eliminado y ya no podra recuperar la
                     información.<br>
-                    <center><form class="dist-name">¿Está seguro que desea eliminarlo de la lista?</form>
+                        <center>
+                        <form class="dist-name">
+                            ¿Está seguro que desea eliminarlo de la lista?
+                        </form>
+                    <%}%>
 
                         <a href="<%=request.getContextPath()%>/ADServlet">
                             <button type="button"
                                     class="btn btn-secondary"
                                     data-bs-dismiss="modal">Cancelar</button>
                         </a>
+                        <%if(puedeElimimar.get(a)){%>
                         <a href="<%=request.getContextPath()%>/ADServlet?action=eliminar&id=<%=celebridad.getIdCelebridad()%>">
                             <button type="button" class="btn btn-danger">Eliminar </button>
                         </a>
+                        <%}%>
                     </center>
                 </div>
                 </div>
@@ -299,6 +299,7 @@
     %>
     </div>
     <%}%>
+    <%if(cant_paginas>1){%>
     <!--Paginación-->
     <div class="container">
         <div class="d-flex justify-content-center my-3">
@@ -345,6 +346,7 @@
             </nav>
         </div>
     </div>
+    <%}%>
 </main>
 
 <!--JS-->

@@ -329,6 +329,24 @@ public class AdminDao extends BaseDao{
     }
 
        //Eliminar Celebridad
+    public boolean perteneceAPelicula(int idCelebridad) throws SQLException {
+        boolean tienePeli= false;
+        String sql="select p.idPelicula,c.idCelebridad,c.nombre, c.apellido, c.rol,p.nombre from celebridad c " +
+                "left join celebridad_por_pelicula cpp on c.idCelebridad = cpp.Celebridad_idCelebridad " +
+                "left join pelicula p on cpp.Pelicula_idPelicula = p.idPelicula " +
+                "where idCelebridad=? ";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idCelebridad);
+            try(ResultSet rs= pstmt.executeQuery();){
+                rs.next();//Se supone que siempre existe
+                if(rs.getInt(1)!=0){
+                    tienePeli=true;
+                }
+            }
+        }
+        return tienePeli;
+    }
     public void eliminarCelebridad(int id_Celebridad){
         eliminarCelebridadPorPelicula(id_Celebridad, 0);
         eliminarCalificacionCelebridad(id_Celebridad,0);
@@ -379,6 +397,7 @@ public class AdminDao extends BaseDao{
             }
         }
     }
+
         //Eliminar Calificacion de Personas a Celebridades
     public void eliminarCalificacionCelebridad(int idCelebridad, int idPersona){
         if(idPersona==0){

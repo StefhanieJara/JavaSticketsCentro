@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.net.URLConnection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "ADServlet", urlPatterns ={"/ADServlet"} )
@@ -28,9 +29,25 @@ public class ADServlet extends HttpServlet {
                 request.setAttribute("cant_paginas", cant_paginas);
                 request.setAttribute("pagina", pagina);
                 request.setAttribute("filtro", filtro);
-                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
-                RequestDispatcher listarActDir = request.getRequestDispatcher("/Admin/administradorListaAD.jsp");
-                listarActDir.forward(request, response);
+                ArrayList<BCelebridad> listaCelebridades=  adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina);
+                request.setAttribute("listaCelebridades",listaCelebridades);
+                ArrayList<Boolean> puedeElimimar= new ArrayList<>();
+                try {
+                for(BCelebridad c:listaCelebridades){
+                    if(adminDao.perteneceAPelicula(c.getIdCelebridad())){
+                        puedeElimimar.add(false);
+                    }else{
+                        puedeElimimar.add(true);
+                    }
+                }
+                    request.setAttribute("puedeElimimar", puedeElimimar);
+                    RequestDispatcher listarActDir = request.getRequestDispatcher("/Admin/administradorListaAD.jsp");
+                    listarActDir.forward(request, response);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    response.sendRedirect(request.getContextPath());
+                }
                 break;
             case "agregar":
                 RequestDispatcher agregarActDir = request.getRequestDispatcher("/Admin/registrarCelebridad.jsp");
@@ -107,12 +124,29 @@ public class ADServlet extends HttpServlet {
                 int pagina= Integer.parseInt(request.getParameter("pagina"));
                 String filtro= request.getParameter("filtro");
                 int cant_paginas=(int)Math.ceil((double)adminDao.listarCelebridad(filtro, false, cant_resultClientes, pagina).size()/cant_resultClientes);
-                request.setAttribute("listaCelebridades", adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina));
+                ArrayList<BCelebridad> celebridads= adminDao.listarCelebridad(filtro, true, cant_resultClientes, pagina);
+                request.setAttribute("listaCelebridades", celebridads);
                 request.setAttribute("pagina", pagina);
                 request.setAttribute("cant_paginas", cant_paginas);
                 request.setAttribute("filtro", filtro);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
-                requestDispatcher.forward(request, response);
+
+                ArrayList<Boolean> puedeElimimar= new ArrayList<>();
+                try {
+                    for(BCelebridad c:celebridads){
+                        if(adminDao.perteneceAPelicula(c.getIdCelebridad())){
+                            puedeElimimar.add(false);
+                        }else{
+                            puedeElimimar.add(true);
+                        }
+                    }
+                    request.setAttribute("puedeElimimar", puedeElimimar);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/administradorListaAD.jsp");
+                    requestDispatcher.forward(request, response);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    response.sendRedirect(request.getContextPath());
+                }
                 break;
         }
     }
