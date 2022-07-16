@@ -242,7 +242,9 @@
                                 </div>
                             </div>
                             <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
-                            <button type="submit" id="enviar" class="btn btn-danger">Siguiente: Editar celebridades</button>
+                            <button type="submit" id="enviar" class="btn btn-dark">Guardar Edición</button>
+                            <%session.setAttribute("peliEditar",pelicula);%>
+                            <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=editarCelebridades" class="btn btn-danger">Siguiente: Editar celebridades</a>
                         </form>
                     </div>
                 </div>

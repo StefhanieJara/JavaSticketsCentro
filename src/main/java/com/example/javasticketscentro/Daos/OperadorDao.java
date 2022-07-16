@@ -8,6 +8,29 @@ import java.util.ArrayList;
 
 public class OperadorDao extends BaseDao{
 
+    public void actualizarCelebridades(int idPeli, int idCelebridad) throws SQLException {
+       String sql="insert into celebridad_por_pelicula (Celebridad_idCelebridad, Pelicula_idPelicula) values (?,?)";
+       try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idCelebridad);
+            pstmt.setInt(2,idPeli);
+            pstmt.executeUpdate();
+       }
+    }
+
+    public boolean limpiarCelebridadesPeli(int idPeli){
+        String sql="delete from celebridad_por_pelicula where Pelicula_idPelicula= ?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idPeli);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public ArrayList<BPelicula> listapeliculas(String nombre, int pagina, int cant_result, boolean limit) {
         String sql;
         ArrayList<BPelicula> listapeliculas = new ArrayList<>();

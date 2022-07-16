@@ -13,7 +13,7 @@ public class PeliculaDao extends BaseDao {
     public BPelicula devolverPelicula(int id) {
         BPelicula pelicula = new BPelicula();
 
-        String sql = "select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol from pelicula p left join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) left join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
+        String sql = "select p.idPelicula, p.nombre, p.restriccionEdad, p.sinopsis, p.duracion, p.foto, p.calificacionPelicula, p.genero, c.nombre, c.apellido, c.rol, c.idCelebridad,c.foto from pelicula p left join celebridad_por_pelicula k on (k.Pelicula_idPelicula=p.idPelicula) left join celebridad c on (c.idCelebridad=k.Celebridad_idCelebridad) where p.idPelicula= ?";
         try (Connection conn = this.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -35,6 +35,8 @@ public class PeliculaDao extends BaseDao {
                     bCelebridad.setNombre(resultSet.getString(9));
                     bCelebridad.setApellido(resultSet.getString(10));
                     bCelebridad.setRol(resultSet.getString(11));
+                    bCelebridad.setIdCelebridad(resultSet.getInt(12));
+                    bCelebridad.setFoto(resultSet.getString(13));
                     if (bCelebridad.getRol() == null || bCelebridad.getRol().equals("director")) {
                         //Por si no hay ninguna celebridad
                         if (bCelebridad.getRol() == null) {

@@ -1,5 +1,3 @@
-<%@ page import="com.example.javasticketscentro.Beans.BSede" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
 <%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
   Created by IntelliJ IDEA.
   User: stefh
@@ -8,11 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
-<jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
-<jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
-<jsp:useBean id="idPeli" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="pelicula" scope="request" type="com.example.javasticketscentro.Beans.BPelicula"/>
+<jsp:useBean id="listarActor" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+<jsp:useBean id="listarDirector" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BCelebridad>"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +39,7 @@
      style="background-color: #e72d4b">
     <div class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2">
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-6 d-flex justify-content-center ps-2 ps-md-5 ps-lg-4 ps-xl-5 ps-xxl-2">
-            <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" /></a>
+            <a href="<%=request.getContextPath()%>/indexOperadorServlet"><img src="img/logo.png" with="188px" height="97px"/></a>
         </div>
 
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end ">
@@ -171,80 +169,62 @@
                         <h4 class="my-8">Añadir celebridades</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=agregarCelebridades">
+                        <form method="POST" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
-                                    <input type="hidden" value="<%=idPeli%>" name="idPeli">
+                                    <input type="hidden" value="1" name="editarCelebridad">
+                                    <input type="hidden" value="<%=pelicula.getIdPelicula()%>" name="idPeli">
                                     <div class="form-outline mb-4">
                                         <label class="form-label"
-                                        >Elija el director de la película</label>
+                                        >Director: </label>
                                         <select
                                                 name="director"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
+                                                class="frm-field required sect">
                                             <%for(BCelebridad celebridad : listarDirector){%>
-                                            <option value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
+                                            <option <%=pelicula.getDirectores().get(0).getIdCelebridad()==celebridad.getIdCelebridad()?"selected":""%> value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
-                                    Elija un máximo de 4 actores
+                                    Se permiten 4 actores, como máximo
+                                    <br>
+                                    <%for(int i=0;i<pelicula.getActores().size();i++){%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label"
-                                        >Elija el actor 1:</label>
+                                        >Actor: </label>
                                         <select
-                                                name="actor1"
+                                                name="actor<%=i+1%>"
                                                 class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
+                                        >   <%if(i!=0){%>
+                                            <option value="0">--No Seleccionado--</option>
+                                            <%}%>
+                                            <%for(BCelebridad celebridad : listarActor){%>
+                                            <option <%=pelicula.getActores().get(i).getIdCelebridad()==celebridad.getIdCelebridad()?"selected":""%> value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
+                                            <%}%>
+                                        </select>
+                                        <img
+                                                class="w-75"
+                                                src="<%=pelicula.getActores().get(i).getFoto()%>"
+                                                style="max-height: 400px; max-width: 250px"/>
+                                    </div>
+
+                                    <%}%>
+                                    <%for(int i=0;i<4-pelicula.getActores().size();i++){%>
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label">Actor: </label>
+                                        <select
+                                                name="actor<%=4-i%>"
+                                                class="frm-field required sect"
+                                        >   <option value="0">--No Seleccionado--</option>
                                             <%for(BCelebridad celebridad : listarActor){%>
                                             <option value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
                                             <%}%>
                                         </select>
                                     </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label"
-                                        >Elija el actor 2:</label>
-                                        <select
-                                                name="actor2"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
-                                            <%for(BCelebridad celebridad : listarActor){%>
-                                            <option value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
-                                            <%}%>
-                                        </select>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label"
-                                        >Elija el actor 3:</label>
-                                        <select
-                                                name="actor3"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
-                                            <%for(BCelebridad celebridad : listarActor){%>
-                                            <option value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
-                                            <%}%>
-                                        </select>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <label class="form-label"
-                                        >Elija el actor 4:</label>
-                                        <select
-                                                name="actor4"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
-                                            <%for(BCelebridad celebridad : listarActor){%>
-                                            <option value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
-                                            <%}%>
-                                        </select>
-                                    </div>
+                                    <%}%>
                                 </div>
                             </div>
-
-                            <button type="submit" id="enviar" class="btn btn-danger">Registrar Película</button>
+                            <a type="button" href="<%=request.getContextPath()%>/peliculaVisualizacionServlet" class="btn btn-dark">Regresar a Listar Películas</a>
+                            <button type="submit" id="enviar" class="btn btn-danger">Guardar cambios</button>
                         </form>
                     </div>
                 </div>

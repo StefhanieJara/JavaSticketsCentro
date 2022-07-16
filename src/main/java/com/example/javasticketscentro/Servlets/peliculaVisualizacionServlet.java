@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 
 
@@ -45,6 +46,18 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_pelicula.jsp");
                 requestDispatcher.forward(request,response);
             }
+            case "editarCelebridades"->{
+                BPelicula pelicula= (BPelicula) session.getAttribute("peliEditar");
+                if(pelicula!=null){
+                    request.setAttribute("pelicula", pelicula);
+                    request.setAttribute("listarDirector",adminDao.listarDirector());
+                    request.setAttribute("listarActor",adminDao.listarActor());
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarCelebridadesPelicula.jsp");
+                    requestDispatcher.forward(request,response);
+                }else{
+                    response.sendRedirect(request.getContextPath());
+                }
+            }
             default -> {response.sendRedirect(request.getContextPath());}
         }
     }
@@ -56,52 +69,79 @@ public class peliculaVisualizacionServlet extends HttpServlet {
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         HttpSession session= request.getSession();
         int idPelicula = 0;
-        switch (action){
+        switch (action) {
             case "actualizar":
-                try {
-                    idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                    BPelicula pelicula = operadorDao.obtenerPelicula(idPelicula);
-                    String nombre = request.getParameter("nombrePeli")==null?pelicula.getNombre():request.getParameter("nombrePeli");
-                    String genero = request.getParameter("genero")==null?pelicula.getGenero():request.getParameter("genero");
-                    String tiempoDuracion = request.getParameter("tiempo")==null?pelicula.getDuracion():request.getParameter("tiempo");
-                    String restriccion = request.getParameter("restriccionEdad")==null?pelicula.getRestriccionEdad():request.getParameter("restriccionEdad");
-                    String sinopsis = request.getParameter("sinopsis")==null?pelicula.getSinopsis():request.getParameter("sinopsis");
-                    String URLFoto = request.getParameter("photoUrl");
+                String editar = request.getParameter("editarCelebridad");
+                if (editar == null) {
+                    try {
+                        idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                        BPelicula pelicula = operadorDao.obtenerPelicula(idPelicula);
+                        String nombre = request.getParameter("nombrePeli") == null ? pelicula.getNombre() : request.getParameter("nombrePeli");
+                        String genero = request.getParameter("genero") == null ? pelicula.getGenero() : request.getParameter("genero");
+                        String tiempoDuracion = request.getParameter("tiempo") == null ? pelicula.getDuracion() : request.getParameter("tiempo");
+                        String restriccion = request.getParameter("restriccionEdad") == null ? pelicula.getRestriccionEdad() : request.getParameter("restriccionEdad");
+                        String sinopsis = request.getParameter("sinopsis") == null ? pelicula.getSinopsis() : request.getParameter("sinopsis");
+                        String URLFoto = request.getParameter("photoUrl");
 
-                    switch (restriccion){
-                        case "Para todo publico (AA)":
-                            restriccion = "AA";
-                            break;
-                        case "+12 (B)":
-                            restriccion="+12 (B)";
-                            break;
-                        case "+15 (B15)":
-                            restriccion="+15 (B15)";
-                            break;
-                        case "+18 (C)":
-                            restriccion="+18 (C)";
-                            break;
-                        case "Explicitas o lenguaje violento (D)":
-                            restriccion="D";
-                            break;
-                        default:
-                            restriccion="";
-                    }
+                        switch (restriccion) {
+                            case "Para todo publico (AA)":
+                                restriccion = "AA";
+                                break;
+                            case "+12 (B)":
+                                restriccion = "+12 (B)";
+                                break;
+                            case "+15 (B15)":
+                                restriccion = "+15 (B15)";
+                                break;
+                            case "+18 (C)":
+                                restriccion = "+18 (C)";
+                                break;
+                            case "Explicitas o lenguaje violento (D)":
+                                restriccion = "D";
+                                break;
+                            default:
+                                restriccion = "";
+                        }
 
-                    if  (URLFoto == null){
-                        URLFoto = pelicula.getFoto();
-                    }else if(URLFoto.equals("")){
-                        URLFoto = pelicula.getFoto();
+                        if (URLFoto == null) {
+                            URLFoto = pelicula.getFoto();
+                        } else if (URLFoto.equals("")) {
+                            URLFoto = pelicula.getFoto();
+                        }
+                        operadorDao.actualizarPelicula(idPelicula, nombre, genero, tiempoDuracion, restriccion, sinopsis, URLFoto);
+                        response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
                     }
-                    operadorDao.actualizarPelicula(idPelicula, nombre, genero, tiempoDuracion, restriccion, sinopsis, URLFoto);
-                    response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
-                }catch (NumberFormatException e){
-                    e.printStackTrace();
+                } else {
+                    int idPeli= Integer.parseInt(request.getParameter("idPeli"));
+                    int actor;
+                    int director= Integer.parseInt(request.getParameter("director"));
+                    try {
+                        if(operadorDao.limpiarCelebridadesPeli(idPeli)){
+                            operadorDao.actualizarCelebridades(idPeli,director);
+                            for(int i=1;i<=4;i++){
+                                actor= Integer.parseInt(request.getParameter("actor"+i));
+                                if(actor!=0){
+                                    operadorDao.actualizarCelebridades(idPeli,actor);
+                                }
+                            }
+                            System.out.println("Se actualizó exitosamente!");
+                            response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                        }else{
+                            System.out.println("No se limpio la peli de celebridades");
+                            response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                        }
+                    }catch(SQLException e){
+                        e.printStackTrace();
+                        response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                    }
                 }
                 break;
             case "editar":
                 idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                BPelicula pelicula = operadorDao.obtenerPelicula(idPelicula);
+                PeliculaDao peli= new PeliculaDao();
+                BPelicula pelicula = peli.devolverPelicula(idPelicula);
                 request.setAttribute("pelicula", pelicula);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarPelicula.jsp");
                 requestDispatcher.forward(request, response);
