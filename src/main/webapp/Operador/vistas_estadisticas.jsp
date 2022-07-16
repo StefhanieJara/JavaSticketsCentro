@@ -1,4 +1,5 @@
-<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %><%--
+<%@ page import="com.example.javasticketscentro.Beans.BFuncion" %>
+<%@ page import="java.time.LocalDate" %><%--
   Created by IntelliJ IDEA.
   User: david
   Date: 8/07/2022
@@ -13,6 +14,7 @@
 <jsp:useBean id="fechaI" scope="request" type="java.lang.String" class="java.lang.String"/>
 <jsp:useBean id="fechaH" scope="request" type="java.lang.String" class="java.lang.String"/>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
+<%LocalDate localDate = LocalDate.now();%>
 <html>
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
@@ -187,7 +189,7 @@
                     <td>
                         <div style="padding-right:20px">
                             <label> Fecha de inicio</label>
-                            <input class="form-select" type="date" name="date3" value="<%=session.getAttribute("fechaI") == null ? fecha3: session.getAttribute("fechaI")%>">
+                            <input class="form-select" type="date" name="date3" value="<%=session.getAttribute("fechaI") == null ? fecha3: session.getAttribute("fechaI")%>" max="<%=localDate%>">
                             <%session.removeAttribute("fechaI");%>
                         </div>
 
@@ -195,7 +197,7 @@
                     <td>
                         <div style="padding-right:20px">
                             <label> Fecha de fin </label>
-                            <input class="form-select" type="date" name="date4" value="<%=session.getAttribute("fechaH") == null ? fecha4: session.getAttribute("fechaH")%>" >
+                            <input class="form-select" type="date" name="date4" value="<%=session.getAttribute("fechaH") == null ? fecha4: session.getAttribute("fechaH")%>" max="<%=localDate%>">
                             <%session.removeAttribute("fechaH");%>
                         </div>
                     </td>

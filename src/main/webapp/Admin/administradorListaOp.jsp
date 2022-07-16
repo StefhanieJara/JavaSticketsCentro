@@ -283,16 +283,17 @@
             <thead>
             <tr>
                 <th>Nombres</th>
+                <th>DNI</th>
                 <th>Email</th>
-                <th>Telefono</th>
-                <th>Direccion</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
                 <th></th>
             </tr>
             </thead>
                 <% int a = 1;
                 for (BPersona operador : listaOperadores ) {%>
             <tr>
-                <td><%=operador.getNombre()+" "+operador.getApellido()%></td>
+                <td><%=operador.getNombre()+" "+operador.getApellido()%></td><td><%=operador.getDni()%></td>
                 <td><%=operador.getEmail()%></td><td><%=operador.getNumCel()%></td><td><%=operador.getDireccion()%></td>
                 <td>
                     <hr class="my-1" style="background-color: white" />

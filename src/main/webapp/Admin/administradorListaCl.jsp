@@ -292,15 +292,19 @@
         <thead>
         <tr>
             <th>Nombres</th>
+            <th>DNI</th>
+            <th>PUCP</th>
             <th>Email</th>
-            <th>Telefono</th>
-            <th>Direccion</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
         </tr>
         </thead>
         <tbody>
         <%for (BPersona cliente : listaClientes) { %>
         <tr>
             <td><%=cliente.getNombre() +" "+ cliente.getApellido()%></td>
+            <td><%=cliente.getDni()%></td>
+            <td><%=cliente.getCodigoPUCP() == 0 ? "No es alumno": cliente.getCodigoPUCP()%></td>
             <td><%=cliente.getEmail()%></td>
             <td><%=cliente.getNumCel()%></td>
             <td><%=cliente.getDireccion()%></td>
