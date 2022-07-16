@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Locale;
 
 
@@ -45,18 +45,6 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 request.setAttribute("listarActor",adminDao.listarActor());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_pelicula.jsp");
                 requestDispatcher.forward(request,response);
-            }
-            case "editarCelebridades"->{
-                BPelicula pelicula= (BPelicula) session.getAttribute("peliEditar");
-                if(pelicula!=null){
-                    request.setAttribute("pelicula", pelicula);
-                    request.setAttribute("listarDirector",adminDao.listarDirector());
-                    request.setAttribute("listarActor",adminDao.listarActor());
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarCelebridadesPelicula.jsp");
-                    requestDispatcher.forward(request,response);
-                }else{
-                    response.sendRedirect(request.getContextPath());
-                }
             }
             default -> {response.sendRedirect(request.getContextPath());}
         }
@@ -194,7 +182,6 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         AdminDao adminDao = new AdminDao();
                         request.setAttribute("listarDirector", adminDao.listarDirector());
                         request.setAttribute("listarActor", adminDao.listarActor());
-                        System.out.println("éxito");
                         RequestDispatcher view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
                         view.forward(request, response);
                     }
@@ -212,14 +199,63 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
                 break;
             case "agregarCelebridades":
-                idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                int idDirector = Integer.parseInt(request.getParameter("director").equals("Seleccionar")?"0":request.getParameter("director"));
-                int actor1 = Integer.parseInt(request.getParameter("actor1").equals("Seleccionar")?"0":request.getParameter("actor1"));
-                int actor2 = Integer.parseInt(request.getParameter("actor2").equals("Seleccionar")?"0":request.getParameter("actor2"));
-                int actor3 = Integer.parseInt(request.getParameter("actor3").equals("Seleccionar")?"0":request.getParameter("actor3"));
-                int actor4 = Integer.parseInt(request.getParameter("actor4").equals("Seleccionar")?"0":request.getParameter("actor4"));
+                HashSet<Integer> listaActores = new HashSet<>();
+                RequestDispatcher view;
+                try {
+                    idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                    int idDirector = Integer.parseInt(request.getParameter("director").equals("Seleccionar") ? "0" : request.getParameter("director"));
+                    if (idDirector==0){
+                        request.setAttribute("mensaje", "directorCero");
+                        view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }
+                    int actor1 = Integer.parseInt(request.getParameter("actor1").equals("Seleccionar") ? "0" : request.getParameter("actor1"));
+                    if(actor1!=0){
+                        listaActores.add(actor1);
+                    }
+                    int actor2 = Integer.parseInt(request.getParameter("actor2").equals("Seleccionar") ? "0" : request.getParameter("actor2"));
+                    if(listaActores.contains(actor2)){
+                        request.setAttribute("mensaje", "actorRepetido");
+                        view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }else{
+                        if(actor2!=0) {
+                            listaActores.add(actor2);
+                        }
+                    }
+                    int actor3 = Integer.parseInt(request.getParameter("actor3").equals("Seleccionar") ? "0" : request.getParameter("actor3"));
+                    if(listaActores.contains(actor3)){
+                        request.setAttribute("mensaje", "actorRepetido");
+                        view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }else{
+                        if(actor3!=0) {
+                            listaActores.add(actor3);
+                        }
+                    }
+                    int actor4 = Integer.parseInt(request.getParameter("actor4").equals("Seleccionar") ? "0" : request.getParameter("actor4"));
+                    if(listaActores.contains(actor4)){
+                        request.setAttribute("mensaje", "actorRepetido");
+                        view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }else{
+                        if(actor4!=0) {
+                            listaActores.add(actor4);
+                        }
+                    }
+                    if(listaActores.size()==0){
+                        request.setAttribute("mensaje", "actoresCero");
+                        view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
+                        view.forward(request, response);
+                    }else{
+                        for(int idActor : listaActores){
+                            operadorDao.asignarCelebridad(idPelicula, idActor);
+                        }
+                    }
 
-
+                }catch (NumberFormatException e){
+                    e.printStackTrace();
+                }
                 break;
             default:
                 response.sendRedirect(request.getContextPath());

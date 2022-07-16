@@ -1,5 +1,3 @@
-<%@ page import="com.example.javasticketscentro.Beans.BSede" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSala" %>
 <%@ page import="com.example.javasticketscentro.Beans.BCelebridad" %><%--
   Created by IntelliJ IDEA.
   User: stefh
@@ -164,6 +162,19 @@
                         class="card shadow-2-strong card-registration"
                         style="border-radius: 15px; margin-top: 100px"
                 >
+                    <%if (mensaje.equals("actorRepetido")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                        Seleccione actores diferentes.
+                    </div>
+                    <%}else if(mensaje.equals("directorCero")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                        Esta película debe tener un director.
+                    </div>
+                    <%}else if(mensaje.equals("actoresCero")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                        Debe seleccionar al menos un actor para esta película.
+                    </div>
+                    <%}%>
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
