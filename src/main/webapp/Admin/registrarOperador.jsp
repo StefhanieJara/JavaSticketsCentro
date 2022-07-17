@@ -182,7 +182,8 @@
                                     <div class="col-md-6 mb-4 text-center">
                                         <div class="text-center mt-2 mb-3">
                                             <img id="img-preview"
-                                                 src="https://th.bing.com/th/id/R.eb691d29845dfbc97cd4f6545cd51ba8?rik=SntRktYYmk%2f6zA&riu=http%3a%2f%2fwww.cubiertasparacocina.com%2fimages%2fsinfoto.jpg&ehk=yAsKFdHTMSQezgFDs3RZvJU7iN02F9gvSGo5sEY7AgU%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" style="max-width: 300px; resize: both; max-width: 300px" />
+                                                 src="https://th.bing.com/th/id/R.eb691d29845dfbc97cd4f6545cd51ba8?rik=SntRktYYmk%2f6zA&riu=http%3a%2f%2fwww.cubiertasparacocina.com%2fimages%2fsinfoto.jpg&ehk=yAsKFdHTMSQezgFDs3RZvJU7iN02F9gvSGo5sEY7AgU%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1"
+                                                 style="max-width: 300px; resize: both; max-width: 300px" />
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center my-3">

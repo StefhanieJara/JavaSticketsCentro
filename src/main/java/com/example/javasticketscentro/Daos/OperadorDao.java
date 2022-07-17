@@ -138,7 +138,7 @@ public class OperadorDao extends BaseDao{
         }
         return listapeliculas;
     }
-
+/*
     public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
         ArrayList<BSala> SalasDisponibles;
         ArrayList<BSala> SalasFiltradas = new ArrayList<>();
@@ -178,6 +178,28 @@ public class OperadorDao extends BaseDao{
         }
         return SalasDisponibles;
     }
+*/
+    public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
+        ArrayList<BSala> SalasDisponibles = new ArrayList<>();
+        String sql = "select idsala, aforo, numero from sala inner join sede s on sala.Sede_idSede = s.idSede;";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            try(ResultSet rs= pstmt.executeQuery();){
+                while (rs.next()) {
+                    BSala sala = new BSala();
+                    sala.setIdSala(rs.getInt(1));
+                    sala.setAforo(rs.getInt(2));
+                    sala.setNumero(rs.getInt(3));
+                    SalasDisponibles.add(sala);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return SalasDisponibles;
+    }
+
+
 
     public ArrayList<BSala> filtrarSalas(ArrayList<BSala> SalasFiltradas, ArrayList<BSala> SalasTotales, ArrayList<BFuncion> funciones, String duracion, String horaInicio){
         ArrayList<Integer> SalasNoElegidas = new ArrayList<>();

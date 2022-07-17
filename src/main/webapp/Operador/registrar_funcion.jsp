@@ -267,7 +267,7 @@
                                     >
                                         <option>Seleccionar</option>
                                         <%for(BSala sala : ListaSalas){%>
-                                        <option value="<%=sala.getIdSala()%>"><%=sala.getNumero()%></option>
+                                        <option value="<%=sala.getIdSala()%>">N°: <%=sala.getNumero()%> | Aforo Máximo: <%=sala.getAforo()%></option>
                                         <%}%>
                                     </select>
                                 </div>
