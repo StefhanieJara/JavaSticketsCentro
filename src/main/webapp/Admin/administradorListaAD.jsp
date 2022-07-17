@@ -287,7 +287,7 @@
 
                             <button type="button"
                                     class="btn btn-secondary"
-                                    style="margin-top: 15px;"
+                                    style="margin-top: 10 px;"
                                     data-bs-dismiss="modal">Cancelar</button>
                         </a>
                         <%if(puedeElimimar.get(a)){%>
