@@ -229,7 +229,7 @@
                                                 <td colspan="0.7">Opcion</td>
                                             </tr>
 
-                                            <%for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
+                                            <%int j=0;for(Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
                                             <tr id="dt-<%=i%>" class="collapse cell-1 row-child-rows">
                                                 <td colspan="0.7"><%=funcion.getPelicula()%></td>
                                                 <td colspan="0.7"><%=funcion.getSede()%></td>
@@ -254,12 +254,19 @@
                                                     String datetime2_2 = separados_2[0]+'T'+separados_2[1];
                                                     LocalDateTime fechayhora_2 = LocalDateTime.parse(datetime2_2);
                                                     if(fechayhora_2.isAfter(LocalDateTime.now())){ %>
-                                                <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar&idTicket=<%=ticket.getCodigo()%>&idFuncion=<%=funcion.getIdFuncion()%>" class="btn btn-danger">Cancelar</a></td>
+                                                <td colspan="0.7">
+                                                    <button type="button"
+                                                            class="btn btn-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#eliminar<%=i%><%=j%>">
+                                                        <a>Cancelar</a>
+                                                    </button>
+                                                </td>
                                                 <%}else{%>
                                                 <td colspan="0.7"><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=listarP&id=<%=funcion.getIdPelicula()%> " type="button" class="btn btn-warning">Calificar</a></td>
                                                 <%}%>
-
                                             </tr>
+                                            <%j++;%>
                                             <%}%>
                                             <%i++;%>
                                             <%}%>
@@ -280,6 +287,66 @@
                 </div>
             </div>
         </div>
+
+        <!--Modal eliminar producto: Producto pendiente para pedido-->
+        <%i=1;for(Bhistorial ticket : lista) {%>
+        <%int j=0;for (Bhistorial_detalle funcion : listaHistoriales.get(i-1)) {%>
+        <div    class="modal fade"
+                id="eliminar<%=i%><%=j%>"
+                tabindex="-1"
+                aria-labelledby="err_eliminar"
+                aria-hidden="true">
+
+            <div class="modal-dialog">
+                <div class="modal-content border-0">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="err_eliminar">Advertencia</h5>
+                        <button
+                                type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="dist-name">¿Estás seguro que deseas cancelar este ticket? Una vez realizada, esta acción no se podrá deshacer.</form>
+
+                        <TABLE FRAME="void" RULES="rows" border="1" style="margin: 0 auto;">
+                            <TR>
+                                <TD>Película: </TD> <TD><%=funcion.getPelicula()%></TD>
+                            </TR>
+                            <TR>
+                                <TD>Fecha y hora:&nbsp;&nbsp;</TD><TD><%=funcion.getFecha()%></TD>
+                            </TR>
+                            <TR>
+                                <TD>Sede:</TD> <TD><%=funcion.getSede()%></TD>
+                            </TR>
+                        </TABLE>
+
+                    </div>
+                    <form method="post" action="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet?action=borrar">
+                        <input type="hidden" name="datosEnviados" value="<%=ticket.getCodigo()%>-<%=funcion.getIdFuncion()%>">
+
+                        <center>
+                            <div style="padding-right: 10px">
+
+                                <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Regresar</button>
+                                <button
+                                        type="submit"
+                                        class="btn btn-danger"
+                                        data-bs-dismiss="modal">
+                                    Cancelar ticket
+                                </button>
+                            </div>
+                        </center>
+
+                    </form>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <%j++;}%>
+        <%i++;}%>
 
         <!--JS-->
         <script src="main.js"></script>

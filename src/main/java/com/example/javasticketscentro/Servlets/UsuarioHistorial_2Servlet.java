@@ -38,6 +38,7 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/");
                 }
             }
+            /*
             case "borrar" -> {
                 String idTicket = request.getParameter("idTicket");
                 String idFuncion = request.getParameter("idFuncion");
@@ -48,6 +49,7 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath());
                 }
             }
+             */
             case "listarP"->{
                 String idPeliculaStr =  request.getParameter("id");
                 session.setAttribute("idPeli", Integer.parseInt(idPeliculaStr));
@@ -62,8 +64,40 @@ public class UsuarioHistorial_2Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("a") == null ? "listar" : request.getParameter("a");
+        String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
+        HttpSession session= request.getSession();;
+        BPersona usuario;
         HistorialDao historialDao = new HistorialDao();
 
+        switch (action) {
+
+            case "listar" -> {
+                try{
+                    usuario= (BPersona) session.getAttribute("clienteLog");
+                    ArrayList<Bhistorial> listadetickets = historialDao.listaTickets(usuario.getIdPer());
+                    request.setAttribute("lista", listadetickets);
+                    ArrayList<ArrayList<Bhistorial_detalle>> listaHistoriales = new ArrayList<>();
+                    for(Bhistorial ticket : listadetickets){
+                        ArrayList<Bhistorial_detalle> historial = historialDao.buscarFuncionesDeTicket(ticket.getCodigo());
+                        listaHistoriales.add(historial);
+                    }
+                    request.setAttribute("listaHistoriales", listaHistoriales);
+                    RequestDispatcher view = request.getRequestDispatcher("/Cliente/UsuarioHistorial_2.jsp");
+                    view.forward(request, response);
+                }catch (NumberFormatException e){
+                    System.out.println("Error en el id del Cliente");
+                    response.sendRedirect(request.getContextPath()+"/");
+                }
+            }
+
+            case "borrar" -> {
+                String datosRecibidos = request.getParameter("datosEnviados");
+                String[] datosSeparados = datosRecibidos.split("-");
+                String idTicket = datosSeparados[0];
+                String idFuncion = datosSeparados[1];
+                historialDao.borrar(idTicket,Integer.parseInt(idFuncion));
+                response.sendRedirect(request.getContextPath() + "/UsuarioHistorial_2Servlet");
+            }
+        }
     }
 }
