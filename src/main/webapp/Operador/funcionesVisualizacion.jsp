@@ -263,21 +263,24 @@
             <div class="col-md-1 text-center mt-5 d-none d-md-block">
                 <h6>Precio de ticket</h6>
                 <p style="font-size: larger">s/ <%=funcion.getPrecio()%></p>
+                <br>
                 <h6>Stock</h6>
                 <p style="font-size: larger"><%=funcion.getStock()%></p>
             </div>
             <!--Descripción del producto-->
             <div class="col-md-6 mt-5 d-none d-md-block">
-                <h6>Sede</h6>
-                <p>
+                <h6><b><b>Sede:</b></b>
+
                     <%=funcion.getbSede().getNombre()%>
-                </p>
-                <h6>Número de sala</h6>
-                <p>
-                    <%=funcion.getbSala().getNumero()%>
-                </p>
-                <h6 class="mt-1">Hora: <b><%=funcion.getHoraInicio()%></b></h6>
-                <h6 class="mt-1">Fecha: <b><%=funcion.getFecha()%></b></h6>
+
+                </h6>
+                <h6><b><b>Número de sala:</b></b>
+                    <%=funcion.getbSala().getNumero()%></h6>
+
+                <h6 class="mt-1"><b><b>Hora:</b></b>
+                    <%=funcion.getHoraInicio()%></h6>
+                <h6 class="mt-1"><b><b>Fecha:</b></b>
+                <%=funcion.getFecha()%></h6>
             </div>
             <!--Botones de editar y eliminar-->
             <div class="col-sm-1 mt-5 d-none d-md-block text-center">
