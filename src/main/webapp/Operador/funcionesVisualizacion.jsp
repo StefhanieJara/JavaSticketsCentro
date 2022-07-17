@@ -9,6 +9,7 @@
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="fechaFiltro" scope="request" type="java.lang.String"/>
 <jsp:useBean id="idSala" scope="request" type="java.lang.String"/>
+<jsp:useBean id="sePuedeEditar" scope="request" type="java.util.ArrayList<java.lang.Boolean>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -281,6 +282,7 @@
             <!--Botones de editar y eliminar-->
             <div class="col-sm-1 mt-5 d-none d-md-block text-center">
                 <div class="col-sm-1 d-none d-md-block text-around">
+                    <%if(sePuedeEditar.get(i)){%>
                     <form action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=editar" method="post">
                         <input type="hidden" value="<%=funcion.getIdFuncion()%>" name="idFuncion">
                         <button type="submit"
@@ -288,6 +290,13 @@
                             <i class="far fa-edit "></i>
                         </button>
                     </form>
+                    <%;}else{%> <button type="button"
+                                       class="btn btn-tele py-0 px-1"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#editar<%=i%>">
+                        <i class="far fa-edit "></i>
+                        </button>
+                    <%;}%>
                     <hr class="my-1" style="background-color: white" />
                     <button type="button"
                             class="btn btn-danger py-0 px-1"
@@ -354,16 +363,18 @@
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><%=sePuedeEditar.get(i)?"¡Advertencia!":"¡Ups!"%></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Esta película será deshabilitada y todas sus funciones serán eliminadas.
+                    <%=sePuedeEditar.get(i)?"Esta película será deshabilitada y todas sus funciones serán eliminadas.":"Ya se vendieron algunos tickets para esta función. No es posible eliminarla."%>
                     <br>
+                    <%if(sePuedeEditar.get(i)){%>
                     <center>¿Está seguro de realizar esta acción?</center>
                     <form method="post" class="row g-3" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=borrar">
                         <input type="hidden" name="idFuncion" value="<%=funcion.getIdFuncion()%>">
                        <center>
+
                         <table>
                             <tr>
                                 <td>
@@ -378,6 +389,21 @@
                         </table>
                        </center>
                     </form>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-black text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">¡Ups!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Ya se vendieron algunos tickets para esta función. No es posible editarla.
+                    <br>
                 </div>
             </div>
         </div>

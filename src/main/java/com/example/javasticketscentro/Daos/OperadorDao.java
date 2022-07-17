@@ -8,6 +8,20 @@ import java.util.ArrayList;
 
 public class OperadorDao extends BaseDao{
 
+    public boolean esPosibleEditarFuncion(int idFuncion) throws SQLException {
+        String sql="select * from ticket where Funcion_idFuncion=?";
+        try (Connection conn= this.getConnection();
+             PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idFuncion);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void actualizarFuncion(int idFuncion, int idPeli, double precio,String fecha, String hora,int idSala,int stock) throws SQLException {
         String sql="update funcion set precio=?, stock=?, Pelicula_idPelicula=?, fecha=?, horaInicio=? where idFuncion=?;";
         try(Connection conn= this.getConnection();

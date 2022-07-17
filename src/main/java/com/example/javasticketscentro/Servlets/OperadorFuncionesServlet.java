@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "OperadorFuncionesServlet", value = "/OperadorFuncionesServlet")
 public class OperadorFuncionesServlet extends HttpServlet {
@@ -32,7 +33,17 @@ public class OperadorFuncionesServlet extends HttpServlet {
         AdminDao adminDao = new AdminDao();
         switch (action){
             case "listar" -> {
-                request.setAttribute("listaFunciones",operadorDao.listarFunciones(date, idSala, pagina,cant_resultFunciones, true));
+                ArrayList<BFuncion> funciones= operadorDao.listarFunciones(date, idSala, pagina,cant_resultFunciones, true);
+                request.setAttribute("listaFunciones",funciones);
+                ArrayList<Boolean> sePuedeEditar= new ArrayList<>();
+                for(BFuncion funcion: funciones){
+                    try {
+                        sePuedeEditar.add(operadorDao.esPosibleEditarFuncion(funcion.getIdFuncion()));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                request.setAttribute("sePuedeEditar",sePuedeEditar);
                 request.setAttribute("pagina", pagina);
                 request.setAttribute("fechaFiltro", date);
                 request.setAttribute("idSala",idSala);
@@ -141,6 +152,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
                 break;
             case "filtrar":
+                session.removeAttribute("pagina");
                 String date= request.getParameter("fechaFiltro");
                 String idSalaStr= request.getParameter("idSala");
                 try{
