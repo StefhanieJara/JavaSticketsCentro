@@ -257,8 +257,12 @@ public class peliculaVisualizacionServlet extends HttpServlet {
             case "agregarCelebridades":
                 HashSet<Integer> listaActores = new HashSet<>();
                 RequestDispatcher view;
+                AdminDao adminDao = new AdminDao();
+                idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                request.setAttribute("idPeli", idPelicula);
+                request.setAttribute("listarDirector", adminDao.listarDirector());
+                request.setAttribute("listarActor", adminDao.listarActor());
                 try {
-                    idPelicula = Integer.parseInt(request.getParameter("idPeli"));
                     int idDirector = Integer.parseInt(request.getParameter("director").equals("Seleccionar") ? "0" : request.getParameter("director"));
                     if (idDirector==0){
                         request.setAttribute("mensaje", "directorCero");
@@ -307,7 +311,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         for(int idActor : listaActores){
                             operadorDao.asignarCelebridad(idPelicula, idActor);
                         }
-                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
+                        response.sendRedirect("peliculaVisualizacionServlet");
                     }
 
                 }catch (NumberFormatException e){
