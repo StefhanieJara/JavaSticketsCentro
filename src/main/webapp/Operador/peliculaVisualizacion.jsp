@@ -119,7 +119,7 @@
                         <div class="my-2">
                             <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                             <img
-                                    src="<%=clienteLog.getFoto()%>"
+                                    src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
                                     class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                     alt="profile image"
                             />
@@ -231,7 +231,7 @@
             <h4><%=pelicula.getNombre()%></h4>
             <img
                     class="w-100"
-                    src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
+                    src = "<%=pelicula.getFoto()%>"
                     style="max-height: 400px; max-width: 250px"/>
         </div>
         <!--Descripción del producto-->
