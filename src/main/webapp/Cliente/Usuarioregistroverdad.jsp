@@ -158,7 +158,7 @@
                                     <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("emailExiste")){%>
                                     <div class="text-danger mb-2">Ya existe una cuenta con este correo!</div>
                                     <%}%>
-                                    <p style="text-align: center"><a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a>
+                                    <p style="text-align: center"><a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet">Ir al Login</a><br>
                                     <a class="text-center" href="<%=request.getContextPath()%>/UsuariologinclientServlet?action=olvidoContra">Recuperar Contraseña</a></p>
                                     <%session.removeAttribute("error");%>
                                 </div>
