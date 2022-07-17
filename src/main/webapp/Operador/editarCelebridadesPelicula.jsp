@@ -87,7 +87,7 @@
                     <div class="my-2">
                         <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                         <img
-                                src="<%=clienteLog.getFoto()%>"
+                                src="<%=clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"%>"
                                 class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                 alt="profile image"
                         />
@@ -189,7 +189,7 @@
                                         </select>
                                         <img
                                                 class="w-75"
-                                                src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
+                                                src="<%=pelicula.getDirectores().get(0)%>"
                                                 style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     Se permiten 4 actores, como máximo

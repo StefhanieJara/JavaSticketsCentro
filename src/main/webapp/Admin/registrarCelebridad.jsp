@@ -225,8 +225,8 @@
                                                     class="frm-field required sect"
                                             >
                                                 <option selected="true" disabled="disabled">Seleccione el rol</option>
-                                                <option >Actor</option>
-                                                <option >Director</option>
+                                                <option >actor</option>
+                                                <option >director</option>
                                             </select>
                                         </div>
                                     </div>
