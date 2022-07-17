@@ -223,7 +223,7 @@
                         </div>
                                  <%if(session.getAttribute("edicion")!=null){%>
                         <%if(session.getAttribute("edicion").equals("exitoEnEdicion")){%>
-                        <div class="text-danger mb-2">Perfil editado exitosamente</div>
+                        <div class="text-success mb-2">Perfil editado exitosamente</div>
                         <%}else if(session.getAttribute("edicion").equals("errorEnEdicion")){%>
                         <div class="text-danger mb-2">Hubo un error en la edición</div>
                         <%}%>
