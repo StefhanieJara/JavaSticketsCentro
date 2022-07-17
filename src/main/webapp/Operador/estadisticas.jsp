@@ -344,7 +344,7 @@
                 <div
                         class="card-header h-100 shadow border-0 text-white "
                         style="
-                      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Sala_cine.jpg/2560px-Sala_cine.jpg');
+                      background-image: url('https://res.cloudinary.com/dytz5evzl/image/upload/v1658071950/Sala_cine_d9e72b.jpg');
                       background-size: cover;
                       height: 600px;
                       width: 600px;
@@ -369,7 +369,7 @@
                     <div
                             class="card-header h-100 shadow border-0 text-white"
                             style="
-                      background-image: url('https://sinsubtitulos.com.ar/wp-content/uploads/2015/01/hottest-films.jpg');
+                      background-image: url('https://res.cloudinary.com/dytz5evzl/image/upload/v1658071949/hottest-films_fkhyg9.jpg');
                       background-size: cover;
                       height: 600px;
                       width: 600px;
@@ -396,7 +396,7 @@
                         <div
                                 class="card-header h-100 shadow border-0 text-white"
                                 style="
-                      background-image: url('https://noticieros.televisa.com/wp-content/uploads/2022/03/coda-gana-oscar-reuters.jpg');
+                      background-image: url('https://res.cloudinary.com/dytz5evzl/image/upload/v1658071947/coda-gana-oscar-reuters_emwreu.jpg');
                       background-size: cover;
                       height: 600px;
                       width: 600px;
@@ -420,7 +420,7 @@
                             <div
                                     class="card-header h-100 shadow border-0 text-white"
                                     style="
-                      background-image: url('https://estaticos-cdn.elperiodico.com/clip/735b8d8c-ef56-420b-bf66-2ddb1b7e6887_alta-libre-aspect-ratio_default_0.jpg');
+                      background-image: url('https://res.cloudinary.com/dytz5evzl/image/upload/v1658071948/735b8d8c-ef56-420b-bf66-2ddb1b7e6887_alta-libre-aspect-ratio_default_0_uj9sdq.jpg');
                       background-size: cover;
                       height: 600px;
                       width: 600px;
