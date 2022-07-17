@@ -189,6 +189,14 @@
                             </div>
                         </div>
                         <div class="form-outline mb-4">
+                            <label class="form-label" for="direccion">Fecha de Nacimiento</label>
+                            <input  name ="fechaNac"
+                                 type="date"
+                                 id="fechaNac"
+                                 class="form-control"
+                                 value="<%=clienteLog.getFecha_Nc()%>">
+                        </div>
+                        <div class="form-outline mb-4">
                             <label class="form-label" for="direccion">Dirección</label>
                             <input  name ="direccion"
                                     type="text"
@@ -197,8 +205,14 @@
                                     value="<%=clienteLog.getDireccion()==null? "": clienteLog.getDireccion()%>"
                                     placeholder="Ingrese su direccion">
                         </div>
-
-
+                                 <%if(session.getAttribute("edicion")!=null){%>
+                        <%if(session.getAttribute("edicion").equals("exitoEnEdicion")){%>
+                        <div class="text-danger mb-2">Perfil editado exitosamente</div>
+                        <%}else if(session.getAttribute("edicion").equals("errorEnEdicion")){%>
+                        <div class="text-danger mb-2">Hubo un error en la edición</div>
+                        <%}%>
+                                 <%session.removeAttribute("edicion");%>
+                                 <%}%>
                         </div>
                              <button id="cambiarcolorboton" type="submit" class="btn btn-tele">Guardar Edicion</button>
                          </form>

@@ -2,12 +2,15 @@ package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Daos.AdminDao;
+import com.example.javasticketscentro.Daos.CarritoDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.Period;
 
 @WebServlet(name = "UsuarioEditaPerfilServlet", value = "/UsuarioEditaPerfilServlet")@MultipartConfig
 public class UsuarioEditaPerfilServlet extends HttpServlet {
@@ -44,6 +47,7 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
                 String nombre = request.getParameter("nombre");
                 String apellido = request.getParameter("apellido");
                 String direccion = request.getParameter("direccion");
+                String fechaNac = request.getParameter("fechaNac");
                 String numero = request.getParameter("numCel");
                 String usuario= request.getParameter("usuario");
 
@@ -55,7 +59,20 @@ public class UsuarioEditaPerfilServlet extends HttpServlet {
                         persona.setDireccion(direccion);
                         persona.setNumCel(Integer.parseInt(numero));
                         persona.setUsuario(usuario);
-                        adminDao.editarUsuario(persona);
+                        persona.setFecha_Nc(fechaNac);
+                        CarritoDao carrito = new CarritoDao();
+                        String fechaActual = carrito.obtenerFechaActual();
+                        LocalDate actual = LocalDate.parse(fechaActual);
+                        LocalDate nacimiento = LocalDate.parse(persona.getFecha_Nc());
+                        Period periodoEdad = Period.between(nacimiento, actual);
+                        int edad = periodoEdad.getYears();
+                        persona.setEdad(edad);
+                        boolean exito = adminDao.editarUsuario(persona);
+                        if(exito){
+                            session.setAttribute("edicion","exitoEnEdicion");
+                        }else{
+                            session.setAttribute("edicion","errorEnEdicion");
+                        }
                     }else{
                         session.setAttribute("msg", "errorNum9");
                     }

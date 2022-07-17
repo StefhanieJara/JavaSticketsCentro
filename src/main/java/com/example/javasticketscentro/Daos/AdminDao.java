@@ -802,8 +802,9 @@ public class AdminDao extends BaseDao{
         return operador;
     }
 
-    public void editarUsuario(BPersona usuario){
-        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, direccionCliente = ?,usuario = ?" +
+    public boolean editarUsuario(BPersona usuario){
+        boolean edicionExitosa = false;
+        String sql="UPDATE centro1.persona SET nombre = ?, apellido = ?, numeroCelular = ?, direccionCliente = ?,usuario = ?, fechaDeNacimiento=?" +
                 "where idPersona = ?";
 
         try(Connection conn= this.getConnection();
@@ -813,12 +814,15 @@ public class AdminDao extends BaseDao{
             pstmt.setInt(3, usuario.getNumCel());
             pstmt.setString(4, usuario.getDireccion());
             pstmt.setString(5, usuario.getUsuario());
-            pstmt.setInt(6, usuario.getIdPer());
+            pstmt.setString(6, usuario.getFecha_Nc());
+            pstmt.setInt(7, usuario.getIdPer());
             pstmt.executeUpdate();
+            edicionExitosa = true;
         }catch(SQLException e) {
             System.out.println("Hubo un error en la conexión!");
             e.printStackTrace();
         }
+        return edicionExitosa;
     }
     public void editarFoto(int id, InputStream foto){
         String sql="UPDATE centro1.persona SET foto = ?" +
