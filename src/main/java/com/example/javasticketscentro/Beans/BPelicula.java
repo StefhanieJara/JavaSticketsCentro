@@ -13,6 +13,7 @@ public class BPelicula {
     private String genero;
     private ArrayList<BCelebridad> actores = new ArrayList<>();
     private ArrayList<BCelebridad> directores = new ArrayList<>();
+    private int estado;
 
     public ArrayList<BCelebridad> getActores() {
         return actores;
@@ -92,5 +93,13 @@ public class BPelicula {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 }

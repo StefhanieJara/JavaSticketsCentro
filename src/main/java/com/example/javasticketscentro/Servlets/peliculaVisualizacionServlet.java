@@ -169,6 +169,8 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 operadorDao.deshabilitarPelicula(idPelicula);
                 response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
                 break;
+
+
             case "guardar":
                 try {
                     String nombre = request.getParameter("nombrePeli")==null?"":request.getParameter("nombrePeli");
@@ -281,6 +283,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         for(int idActor : listaActores){
                             operadorDao.asignarCelebridad(idPelicula, idActor);
                         }
+                        response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
                     }
 
                 }catch (NumberFormatException e){

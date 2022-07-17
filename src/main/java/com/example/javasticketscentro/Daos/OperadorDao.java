@@ -71,10 +71,10 @@ public class OperadorDao extends BaseDao{
         int posicion=0;
         if(limit){
             posicion=(pagina-1)*cant_result;
-            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe " +
+            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto, pe.estado from pelicula pe " +
                     "where pe.nombre like ? limit ?,"+cant_result;
         }else{
-            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto from pelicula pe " +
+            sql = "select pe.idPelicula,pe.nombre, pe.restriccionEdad, pe.sinopsis,pe.duracion,pe.genero, pe.foto, pe.estado from pelicula pe " +
                     "where pe.nombre like ? ";
         }
         try (Connection connection = this.getConnection();
@@ -93,6 +93,7 @@ public class OperadorDao extends BaseDao{
                     bPelicula.setDuracion(rs.getString(5));
                     bPelicula.setGenero(rs.getString(6));
                     bPelicula.setFoto(rs.getString(7));
+                    bPelicula.setEstado(rs.getInt(8));
                     listapeliculas.add(bPelicula);
                 }
             }
@@ -229,6 +230,8 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
+
+
 
     public void actualizarPelicula(int idPelicula, String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
         String sql = "update pelicula set nombre = ?, restriccionEdad = ?, sinopsis = ?, duracion = ?, foto= ?, genero = ? where idPelicula=?;";

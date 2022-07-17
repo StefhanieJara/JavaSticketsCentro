@@ -252,6 +252,13 @@
             <p class="mb-4">
                 <%=pelicula.getGenero()%>
             </p>
+            <h6>Estado</h6>
+                <%if(pelicula.getEstado()==1){%>
+                <p class="mb-4">Habilitado</p>
+                <%}else{%>
+                <p class="mb-4">Deshabilitado</p>
+                <%}%>
+            </p>
         </div>
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
@@ -263,6 +270,8 @@
                         <i class="far fa-edit "></i>
                     </button>
                 </form>
+
+                <%if(pelicula.getEstado()==1){%>
                 <hr class="my-1" style="background-color: white" />
                 <button type="button"
                         class="btn btn-danger py-0 px-1"
@@ -270,9 +279,18 @@
                         data-bs-target="#eliminar<%=i%>">
                     <i class="fas fa-times-circle"></i>
                 </button>
+                <%}else{%>
+                <hr class="my-1" style="background-color: white" />
+                <button type="button"
+                        class="btn btn-danger py-0 px-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#eliminar<%=i%>">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+                <%}%>
+
             </div>
         </div>
-
     </div>
 
     <hr class="mx-md-5 mx-sm-3" />
@@ -326,6 +344,8 @@
     <!--Modal eliminar producto: Producto pendiente para pedido-->
 
     <%i=0; for (BPelicula pelicula : listapeliculas ) {%>
+
+    <%if(pelicula.getEstado()==1){%>
     <div class="modal fade" id="eliminar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content border-0">
@@ -348,18 +368,50 @@
                                         <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-danger" width="50px">Eliminar</button>
+                                        <button type="submit" class="btn btn-danger" width="50px">Deshabilitar</button>
                                     </td>
                                 </tr>
                             </table>
-
-
                         </center>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <%}else{%>
+    <div class="modal fade" id="eliminar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal-dialog">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Esta película será eliminada definitivamente.
+                    <br>
+                    <center>¿Está seguro de realizar esta acción?</center>
+                    <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=eliminarDeshabilitado">
+                        <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
+                        <br>
+                        <center>
+                            <br>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-danger" width="50px">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%}%>
     <%i++;}%>
 </main>
 

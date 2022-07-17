@@ -160,7 +160,7 @@
     <div class="container">
         <div class="row">
             <div class="moverTitulo">
-                <h3 class="text-dark">Bienvenido <%=clienteLog.getNombre()%></h3>
+                <h3 class="text-dark">Bienvenido(a) <%=clienteLog.getNombre()%></h3>
             </div>
         </div>
         <div class="row">
