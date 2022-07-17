@@ -235,7 +235,7 @@ public class AdminDao extends BaseDao{
 
         ArrayList<BCelebridad> listarDirector = new ArrayList<>();
 
-        String sql = "select concat(nombre,' ', apellido), idCelebridad from celebridad where rol ='director';";
+        String sql = "select concat(nombre,' ', apellido), idCelebridad, foto from celebridad where rol ='director';";
 
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -245,6 +245,7 @@ public class AdminDao extends BaseDao{
                 BCelebridad bCelebridad = new BCelebridad();
                 bCelebridad.setNombre(rs.getString(1));
                 bCelebridad.setIdCelebridad(rs.getInt(2));
+                bCelebridad.setFoto(rs.getString(3));
                 listarDirector.add(bCelebridad);
             }
         } catch (SQLException e) {
@@ -257,7 +258,7 @@ public class AdminDao extends BaseDao{
         ArrayList<BCelebridad> listarActor = new ArrayList<>();
 
 
-        String sql = "select concat(nombre, ' ', apellido), idCelebridad from celebridad where rol ='actor';";
+        String sql = "select concat(nombre, ' ', apellido), idCelebridad, foto from celebridad where rol ='actor';";
 
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -267,6 +268,7 @@ public class AdminDao extends BaseDao{
                 BCelebridad bCelebridad = new BCelebridad();
                 bCelebridad.setNombre(rs.getString(1));
                 bCelebridad.setIdCelebridad(rs.getInt(2));
+                bCelebridad.setFoto(rs.getString(3));
                 listarActor.add(bCelebridad);
             }
         } catch (SQLException e) {

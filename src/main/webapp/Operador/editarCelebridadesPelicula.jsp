@@ -183,13 +183,16 @@
                                         <select
                                                 name="director"
                                                 class="frm-field required sect">
-                                            <%for(BCelebridad celebridad : listarDirector){%>
+                                            <%String almacenarFoto= "";for(BCelebridad celebridad : listarDirector){%>
+                                            <%if(pelicula.getDirectores().get(0).getIdCelebridad()==celebridad.getIdCelebridad()){
+                                                almacenarFoto= celebridad.getFoto();
+                                            }%>
                                             <option <%=pelicula.getDirectores().get(0).getIdCelebridad()==celebridad.getIdCelebridad()?"selected":""%> value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
                                             <%}%>
                                         </select>
                                         <img
                                                 class="w-75"
-                                                src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
+                                                src="<%=almacenarFoto%>"
                                                 style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     Se permiten 4 actores, como máximo
@@ -205,12 +208,15 @@
                                             <option value="0">--No Seleccionado--</option>
                                             <%}%>
                                             <%for(BCelebridad celebridad : listarActor){%>
+                                            <%if(pelicula.getActores().get(i).getIdCelebridad()==celebridad.getIdCelebridad()){
+                                                almacenarFoto= celebridad.getFoto();
+                                            }%>
                                             <option <%=pelicula.getActores().get(i).getIdCelebridad()==celebridad.getIdCelebridad()?"selected":""%> value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
                                             <%}%>
                                         </select>
                                         <img
                                                 class="w-75"
-                                                src="<%=pelicula.getActores().get(i).getFoto()%>"
+                                                src="<%=almacenarFoto%>"
                                                 style="max-height: 400px; max-width: 250px"/>
                                     </div>
 

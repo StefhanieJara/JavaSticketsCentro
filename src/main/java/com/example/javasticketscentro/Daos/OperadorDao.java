@@ -138,47 +138,7 @@ public class OperadorDao extends BaseDao{
         }
         return listapeliculas;
     }
-/*
-    public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
-        ArrayList<BSala> SalasDisponibles;
-        ArrayList<BSala> SalasFiltradas = new ArrayList<>();
-        ArrayList<BFuncion> funcionesFiltradas = new ArrayList<>();
-        String sql = "select fecha, horaInicio, duracion, Sala_idSala, s.numero, s.aforo  from funcion\n" +
-                "    inner join funcion_has_sala fhs on funcion.idFuncion = fhs.Funcion_idFuncion\n" +
-                "    inner join sala s on fhs.Sala_idSala = s.idSala\n" +
-                "    inner join pelicula p on funcion.Pelicula_idPelicula = p.idPelicula\n" +
-                "    where (Sede_idSede=? and fecha=?)";
-        try (Connection connection = this.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql);) {
-            pstmt.setInt(1, idsede);
-            pstmt.setString(2, fechaInicio);
-            try(ResultSet rs= pstmt.executeQuery();){
-                while (rs.next()) {
-                    BSala sala = new BSala();
-                    BFuncion funcion = new BFuncion();
-                    BPelicula pelicula = new BPelicula();
-                    sala.setIdSala(rs.getInt(4));
-                    sala.setNumero(rs.getInt(5));
-                    sala.setAforo(rs.getInt(6));
-                    funcion.setFecha(rs.getString(1));
-                    funcion.setHoraInicio(rs.getString(2));
-                    funcion.setbPelicula(pelicula);
-                    funcion.getbPelicula().setDuracion(rs.getString(3));
-                    funcionesFiltradas.add(funcion);
-                    SalasFiltradas.add(sala);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if(SalasFiltradas.size()>0){
-            SalasDisponibles = filtrarSalas(SalasFiltradas, listarSalasPorID(idsede), funcionesFiltradas, obtenerPelicula(idPeli).getDuracion(), horaInicio);
-        }else{
-            SalasDisponibles = listarSalasPorID(idsede);
-        }
-        return SalasDisponibles;
-    }
-*/
+
     public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
         ArrayList<BSala> SalasDisponibles = new ArrayList<>();
         String sql = "select idsala, aforo, numero from sala inner join sede s on sala.Sede_idSede = s.idSede;";
@@ -296,20 +256,25 @@ public class OperadorDao extends BaseDao{
         }
     }
 
-    public void crearPelicula(String nombre, String genero, String restriccion, String sinopsis, String URLFoto, String duracionConFormato){
+    public int crearPelicula(BPelicula pelicula){
         String sql = "INSERT INTO centro1.pelicula (nombre, restriccionEdad, sinopsis, duracion, foto, calificacionPelicula, genero, estado)\n" +
                 "values (?, ?, ?, ?, ?,0.0,?,1);";
         try(Connection connection = this.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql)){
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, restriccion);
-            pstmt.setString(3, sinopsis);
-            pstmt.setString(4, duracionConFormato);
-            pstmt.setString(5, URLFoto);
-            pstmt.setString(6, genero);
+            PreparedStatement pstmt = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)){
+            pstmt.setString(1, pelicula.getNombre());
+            pstmt.setString(2, pelicula.getRestriccionEdad());
+            pstmt.setString(3, pelicula.getSinopsis());
+            pstmt.setString(4, pelicula.getDuracion());
+            pstmt.setString(5, pelicula.getFoto());
+            pstmt.setString(6, pelicula.getGenero());
             pstmt.executeUpdate();
+            ResultSet rs=pstmt.getGeneratedKeys();
+            rs.next();
+            System.out.println("id: "+rs.getInt(1));
+            return rs.getInt(1);
         }catch (SQLException e){
             e.printStackTrace();
+            return 0;
         }
     }
 

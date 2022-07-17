@@ -1,5 +1,6 @@
 package com.example.javasticketscentro.Servlets;
 
+import com.example.javasticketscentro.Beans.BCelebridad;
 import com.example.javasticketscentro.Beans.BPelicula;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.OperadorDao;
@@ -62,9 +63,8 @@ public class peliculaVisualizacionServlet extends HttpServlet {
             }
             case "editarCelebridades"->{
                 BPelicula pelicula=(BPelicula)session.getAttribute("peliEditar");
+
                 request.setAttribute("pelicula", pelicula);
-                System.out.println(pelicula.getDirectores().size());
-                System.out.println(pelicula.getActores().size());
                 request.setAttribute("listarActor",adminDao.listarActor());
                 request.setAttribute("listarDirector", adminDao.listarDirector());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarCelebridadesPelicula.jsp");
@@ -89,7 +89,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
         OperadorDao operadorDao = new OperadorDao();
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         HttpSession session= request.getSession();
-        int idPelicula = 0;
+        int idPelicula;
         switch (action) {
             case "actualizar":
                 String editar = request.getParameter("editarCelebridad");
@@ -156,21 +156,29 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                         }
                         if(noseRepiten){
                             if(operadorDao.limpiarCelebridadesPeli(idPeli)){
+                                BPelicula pelicula=(BPelicula)session.getAttribute("peliEditar");
+                                pelicula.getDirectores().clear();
+                                pelicula.getActores().clear();
+
                                 operadorDao.actualizarCelebridades(idPeli,director);
+                                BCelebridad direc= new BCelebridad();
+                                direc.setIdCelebridad(director);
+                                pelicula.getDirectores().add(direc);
+
                                 for(int i : actores){
                                     if(i!=0){
+                                        BCelebridad act= new BCelebridad();
+                                        act.setIdCelebridad(i);
+                                        pelicula.getActores().add(act);
                                         operadorDao.actualizarCelebridades(idPeli,i);
                                     }
                                 }
-                                System.out.println("Se actualizó exitosamente!");
-                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=editarCelebridades");
                             }else{
-                                System.out.println("No se limpio la peli de celebridades");
-                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=editarCelebridades");
                             }
                         }else {
                             session.setAttribute("msg", "");
-                            System.out.println("No se deben repetir actores");
                             response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=editarCelebridades");
                         }
                     }catch(SQLException e){
@@ -235,7 +243,15 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                     else if(URLFoto.equals("")){
                         response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet?action=crear&mensaje=url");
                     }else{
-                        operadorDao.crearPelicula(nombre, genero, restriccion, sinopsis, URLFoto, duracionConFormato);
+                        BPelicula pelicula1= new BPelicula();
+                        pelicula1.setNombre(nombre);
+                        pelicula1.setGenero(genero);
+                        pelicula1.setRestriccionEdad(restriccionEdad);
+                        pelicula1.setSinopsis(sinopsis);
+                        pelicula1.setFoto(URLFoto);
+                        pelicula1.setDuracion(duracionConFormato);
+                        session.setAttribute("PeliculaNueva", pelicula1);
+
                         request.setAttribute("idPeli", operadorDao.obtenerIdPelicula(nombre));
                         AdminDao adminDao = new AdminDao();
                         request.setAttribute("listarDirector", adminDao.listarDirector());
@@ -260,8 +276,8 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 HashSet<Integer> listaActores = new HashSet<>();
                 RequestDispatcher view;
                 AdminDao adminDao = new AdminDao();
-                idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                request.setAttribute("idPeli", idPelicula);
+                BPelicula pelicula1 = (BPelicula) session.getAttribute("PeliculaNueva");
+                request.setAttribute("idPeli", pelicula1.getIdPelicula());
                 request.setAttribute("listarDirector", adminDao.listarDirector());
                 request.setAttribute("listarActor", adminDao.listarActor());
                 try {
@@ -316,9 +332,11 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                             view = request.getRequestDispatcher("Operador/agregarCelebridadesPelicula.jsp");
                             view.forward(request, response);
                         }else{
-                            operadorDao.asignarCelebridad(idPelicula, idDirector);
+                            session.removeAttribute("PeliculaNueva");
+                            pelicula1.setIdPelicula(operadorDao.crearPelicula(pelicula1));
+                            operadorDao.asignarCelebridad(pelicula1.getIdPelicula(), idDirector);
                             for(int idActor : listaActores){
-                                operadorDao.asignarCelebridad(idPelicula, idActor);
+                                operadorDao.asignarCelebridad(pelicula1.getIdPelicula(), idActor);
                             }
                             response.sendRedirect("peliculaVisualizacionServlet");
                         }
