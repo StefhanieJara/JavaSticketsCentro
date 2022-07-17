@@ -4,6 +4,7 @@ import com.example.javasticketscentro.Beans.BPelicula;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.OperadorDao;
 import com.example.javasticketscentro.Daos.PeliculaDao;
+import com.sun.jdi.IntegerType;
 import com.sun.security.jgss.GSSUtil;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,7 +36,17 @@ public class peliculaVisualizacionServlet extends HttpServlet {
         String filtrnombre=session.getAttribute("filtrnombre")==null?"":(String)session.getAttribute("filtrnombre");
         switch (action){
             case "listar" ->{
-                request.setAttribute("listapeliculas",operadorDao.listapeliculas(filtrnombre, pagina, cant_resultFunciones, true));
+                ArrayList<BPelicula> peliculas=operadorDao.listapeliculas(filtrnombre, pagina, cant_resultFunciones, true);
+                request.setAttribute("listapeliculas",peliculas);
+                ArrayList<Boolean> sePuedeEditar= new ArrayList<>();
+                for(BPelicula pelicula: peliculas){
+                    try {
+                        sePuedeEditar.add(operadorDao.esPosibleEditarPelicula(pelicula.getIdPelicula()));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                request.setAttribute("sePuedeEditar",sePuedeEditar);
                 int cant_paginas=(int)Math.ceil((double)operadorDao.listapeliculas(filtrnombre, pagina, cant_resultFunciones, false).size()/cant_resultFunciones);
                 request.setAttribute("cant_paginas", cant_paginas);
                 request.setAttribute("pagina", pagina);
@@ -55,6 +67,15 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 request.setAttribute("listarDirector", adminDao.listarDirector());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarCelebridadesPelicula.jsp");
                 requestDispatcher.forward(request, response);
+            }
+            case "borrarPermanente"->{
+                session.removeAttribute("pagina");
+                try {
+                    operadorDao.eliminarPelicula(Integer.parseInt(request.getParameter("idPeli")));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
             }
             default -> {response.sendRedirect(request.getContextPath());}
         }
@@ -164,13 +185,16 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarPelicula.jsp");
                 requestDispatcher.forward(request, response);
                 break;
-            case "borrar":
+            case "deshabilitar":
                 idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                operadorDao.deshabilitarPelicula(idPelicula);
+                operadorDao.deshabilitarHabilitarPelicula(idPelicula,0);
                 response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
                 break;
-
-
+            case "habilitar":
+                idPelicula = Integer.parseInt(request.getParameter("idPeli"));
+                operadorDao.deshabilitarHabilitarPelicula(idPelicula,1);
+                response.sendRedirect(request.getContextPath()+"/peliculaVisualizacionServlet");
+                break;
             case "guardar":
                 try {
                     String nombre = request.getParameter("nombrePeli")==null?"":request.getParameter("nombrePeli");

@@ -10,6 +10,7 @@
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <jsp:useBean id="pagina" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="cant_paginas" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="sePuedeEditar" scope="request" type="java.util.ArrayList<java.lang.Boolean>"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,7 +120,7 @@
                         <div class="my-2">
                             <h4 class="mb-3"><%=clienteLog.getNombre()+" "+clienteLog.getApellido()%></h4>
                             <img
-                                    src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
+                                    src="<%=clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"%>"
                                     class="rounded-circle mx-auto d-block mb-3 h-25 w-50"
                                     alt="profile image"
                             />
@@ -231,7 +232,7 @@
             <h4><%=pelicula.getNombre()%></h4>
             <img
                     class="w-100"
-                    src = "<%=pelicula.getFoto()%>"
+                    src="<%=pelicula.getFoto()%>"
                     style="max-height: 400px; max-width: 250px"/>
         </div>
         <!--Descripción del producto-->
@@ -263,6 +264,7 @@
         <!--Botones de editar y eliminar-->
         <div class="col-sm-1 mt-5 d-none d-md-block text-center">
             <div class="col-sm-1 d-none d-md-block text-around">
+                <%if(sePuedeEditar.get(i)){%>
                 <form action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=editar" method="post">
                     <input type="hidden" value="<%=pelicula.getIdPelicula()%>" name="idPeli">
                     <button type="submit"
@@ -270,24 +272,21 @@
                         <i class="far fa-edit "></i>
                     </button>
                 </form>
-
-                <%if(pelicula.getEstado()==1){%>
-                <hr class="my-1" style="background-color: white" />
-                <button type="button"
-                        class="btn btn-danger py-0 px-1"
-                        data-bs-toggle="modal"
-                        data-bs-target="#eliminar<%=i%>">
-                    <i class="fas fa-times-circle"></i>
-                </button>
                 <%}else{%>
-                <hr class="my-1" style="background-color: white" />
                 <button type="button"
-                        class="btn btn-danger py-0 px-1"
+                        class="btn btn-tele py-0 px-1"
                         data-bs-toggle="modal"
-                        data-bs-target="#eliminar<%=i%>">
-                    <i class="fas fa-times-circle"></i>
+                        data-bs-target="#editar<%=i%>">
+                    <i class="far fa-edit "></i>
                 </button>
                 <%}%>
+                <hr class="my-1" style="background-color: white" />
+                <button type="button"
+                        class="btn btn-danger py-0 px-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#eliminar<%=i%>">
+                    <i class="fas fa-times-circle"></i>
+                </button>
 
             </div>
         </div>
@@ -345,19 +344,18 @@
 
     <%i=0; for (BPelicula pelicula : listapeliculas ) {%>
 
-    <%if(pelicula.getEstado()==1){%>
     <div class="modal fade" id="eliminar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
+                    <h5 class="modal-title" ><%=pelicula.getEstado()==1?"¡Advertencia!":"Activar Película"%></h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Esta película será deshabilitada y todas sus funciones serán eliminadas.
+                    <%=pelicula.getEstado()==1?"Esta película será deshabilitada y no se podrá crear funciones futuras con esta.":"Esta película será habilitada y así podrás crear funciones con esta."%>
                     <br>
                     <center>¿Está seguro de realizar esta acción?</center>
-                    <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=borrar">
+                    <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=<%=pelicula.getEstado()==1?"deshabilitar":"habilitar"%>">
                         <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
                         <br>
                         <center>
@@ -368,8 +366,13 @@
                                         <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-danger" width="50px">Deshabilitar</button>
+                                        <button type="submit" class="btn btn-danger" width="50px"><%=pelicula.getEstado()==1?"Deshabilitar":"Habilitar"%></button>
                                     </td>
+                                    <%if(pelicula.getEstado()==0 && sePuedeEditar.get(i)){%>
+                                    <td>
+                                        <a type="button" href="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=borrarPermanente&idPeli=<%=pelicula.getIdPelicula()%>" class="btn btn-dark" width="15%" >Borrar Permanentemente</a>
+                                    </td>
+                                    <%}%>
                                 </tr>
                             </table>
                         </center>
@@ -378,40 +381,20 @@
             </div>
         </div>
     </div>
-    <%}else{%>
-    <div class="modal fade" id="eliminar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+
+    <div class="modal fade" id="editar<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content border-0">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">¡Advertencia!</h5>
+                <div class="modal-header bg-black text-white">
+                    <h5 class="modal-title" >¡Ups!</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Esta película será eliminada definitivamente.
-                    <br>
-                    <center>¿Está seguro de realizar esta acción?</center>
-                    <form method="post" class="row g-3" action="<%=request.getContextPath()%>/peliculaVisualizacionServlet?action=eliminarDeshabilitado">
-                        <input type="hidden" name="idPeli" value="<%=pelicula.getIdPelicula()%>">
-                        <br>
-                        <center>
-                            <br>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" width="15%" data-bs-dismiss="modal">Cancelar</button>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-danger" width="50px">Eliminar</button>
-                                    </td>
-                                </tr>
-                            </table>
-                        </center>
-                    </form>
+                    Esta película ya pertenece a mínimo una función, por tanto no es posible modificarla.
                 </div>
             </div>
         </div>
     </div>
-    <%}%>
     <%i++;}%>
 </main>
 

@@ -8,6 +8,22 @@ import java.util.ArrayList;
 
 public class OperadorDao extends BaseDao{
 
+    public boolean esPosibleEditarPelicula(int idPeli) throws SQLException {
+        String sql="select * from funcion f\n" +
+                "inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
+                "where p.idPelicula=?;";
+        try (Connection conn= this.getConnection();
+             PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idPeli);
+            try(ResultSet rs= pstmt.executeQuery();){
+                if(rs.next()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean esPosibleEditarFuncion(int idFuncion) throws SQLException {
         String sql="select * from ticket where Funcion_idFuncion=?";
         try (Connection conn= this.getConnection();
@@ -209,17 +225,17 @@ public class OperadorDao extends BaseDao{
         return hora;
     }
 
-    public void deshabilitarPelicula(int idPelicula){
-        String sql = "UPDATE pelicula SET estado = 0 where pelicula.idPelicula=?;";
+    public void deshabilitarHabilitarPelicula(int idPelicula, int habilitar){
+        String sql = "UPDATE pelicula SET estado = ? where pelicula.idPelicula=?;";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt= connection.prepareStatement(sql)){
-            pstmt.setInt(1, idPelicula);
+            pstmt.setInt(1, habilitar);
+            pstmt.setInt(2,idPelicula);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     public void deshabilitarFuncion(int idFuncion){
         String sql = "UPDATE funcion SET habilitado = 0 where idFuncion=?;";
         try (Connection connection = this.getConnection();
@@ -230,7 +246,15 @@ public class OperadorDao extends BaseDao{
             throw new RuntimeException(e);
         }
     }
-
+    public void eliminarPelicula(int idPeli) throws SQLException {
+        limpiarCelebridadesPeli(idPeli);
+        String sql="delete from pelicula where idPelicula=?";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setInt(1,idPeli);
+            pstmt.executeUpdate();
+        }
+    }
 
 
     public void actualizarPelicula(int idPelicula, String nombre, String genero, String duracion, String restriccion, String sinopsis, String URLFoto){
