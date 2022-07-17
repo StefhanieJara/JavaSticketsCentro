@@ -23,13 +23,6 @@ public class EditarOperadorServlet extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/editarOperador.jsp");
                 requestDispatcher.forward(request, response);
             }
-            case "editar1" -> {
-                int id = Integer.parseInt(request.getParameter("id"));
-                BPersona admin = adminDao.buscarOperadorPorId_editar(id);
-                request.setAttribute("Admin", admin);
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Admin/editarAdmin.jsp");
-                requestDispatcher.forward(request, response);
-            }
             case "borrar" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
                 adminDao.eliminarOperador(id);
@@ -81,9 +74,6 @@ public class EditarOperadorServlet extends HttpServlet {
                 admin.setNumCel(Integer.parseInt(numero));
                 adminDao.editarOperadores(admin);
                 response.sendRedirect(request.getContextPath() + "/AdminIndexServlet");
-
-
-
 
             }
 

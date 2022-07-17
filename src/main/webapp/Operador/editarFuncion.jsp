@@ -191,7 +191,7 @@
                                         </select>
                                         <img
                                                 class="w-75"
-                                                src="<%=funcion.getbPelicula().getFoto()%>"
+                                                src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
                                                 style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     <div class="form-outline">

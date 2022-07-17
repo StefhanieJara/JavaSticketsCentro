@@ -1,4 +1,5 @@
-
+<%@ page import="java.time.Period" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <!DOCTYPE html>
@@ -135,6 +136,7 @@
                     </div>
                         <div class="row mb-4">
                      <div class="col mb-1">
+
                          <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizar" >
                          <div class="row mb-4">
                             <div class="col-md-6" >
@@ -188,9 +190,23 @@
                                 <%session.removeAttribute("msg");%>
                             </div>
                         </div>
+                             <%LocalDateTime now= LocalDateTime.now();
+                             String mes1, day1;
+                             if(((int)Math.log10(now.getMonthValue())+1)!=2){
+                             mes1= "0"+now.getMonthValue();
+                             }else{
+                             mes1= ""+now.getMonthValue();
+                             }
+                             if(((int)Math.log10(now.getDayOfMonth())+1)!=2){
+                             day1= "0"+now.getDayOfMonth();
+                             }else{
+                             day1= ""+now.getDayOfMonth();
+                             }%>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="direccion">Fecha de Nacimiento</label>
                             <input  name ="fechaNac"
+                                    min="<%=(now.getYear()-100)+"-"+mes1+"-"+day1%>"
+                                    max="<%=(now.getYear()-18)+"-"+mes1+"-"+day1%>"
                                  type="date"
                                  id="fechaNac"
                                  class="form-control"
@@ -224,7 +240,7 @@
                             <form method="POST" action="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet?action=actualizarFoto" enctype="multipart/form-data">
                                 <h4 class="form-label" >Imagen de perfil</h4>
                                 <div class="text-center mt-2 mb-3">
-                                    <img id="img-preview" src="<%=clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"%>" style="max-width: 300px; resize: both; max-width: 300px" />
+                                    <img id="img-preview" src="<%=clienteLog.getFoto().contains("http")?clienteLog.getFoto():request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"%>" style="max-width: 300px; resize: both; max-width: 300px" />
                                 </div>
                                 <!--progress class="text-center" id="img-upload-bar" width="8px" value="0" max="100"
                                           style="width: 100%"></progress-->

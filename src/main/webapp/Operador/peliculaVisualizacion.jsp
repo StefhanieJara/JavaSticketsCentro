@@ -231,7 +231,7 @@
             <h4><%=pelicula.getNombre()%></h4>
             <img
                     class="w-100"
-                    src="<%=pelicula.getFoto()%>"
+                    src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
                     style="max-height: 400px; max-width: 250px"/>
         </div>
         <!--Descripción del producto-->

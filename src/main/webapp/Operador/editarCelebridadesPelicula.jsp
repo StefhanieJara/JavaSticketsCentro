@@ -189,7 +189,7 @@
                                         </select>
                                         <img
                                                 class="w-75"
-                                                src="<%=pelicula.getDirectores().get(0).getFoto()%>"
+                                                src="<%=(clienteLog.getFoto()!=null? (clienteLog.getFoto().contains("http") ?clienteLog.getFoto() :request.getContextPath()+"/UsuarioEditaPerfilServlet?action=entregarImagen"): "")%>"
                                                 style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     Se permiten 4 actores, como máximo
