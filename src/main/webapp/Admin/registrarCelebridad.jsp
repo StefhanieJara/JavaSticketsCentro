@@ -176,6 +176,7 @@
 
 <main>
 <section class="vh-100">
+    <br><br><br><br><br>
     <div class="container py-4 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
@@ -228,7 +229,9 @@
                                                 <option >Director</option>
                                             </select>
                                         </div>
-                                        <b>Nota: </b> Una vez creada la celebridad, no es posible editar su rol.
+                                    </div>
+                                        <div class="d-flex justify-content-start">
+                                            <b>Nota: </b> <p>Una vez creada la celebridad, no es posible editar su rol.</p>
                                     </div>
                                 </div>
 
@@ -245,6 +248,7 @@
                                 </div>
                                 <input type="hidden" name="photoUrl" id="photoUrl" />
                             </div>
+                            <br>
                             <button type="submit" id="enviar" class="btn btn-danger">Registrar celebridad</button>
                         </form>
                     </div>
