@@ -106,6 +106,7 @@ public class ADServlet extends HttpServlet {
                 celebr.setNombre(nombre);
                 celebr.setApellido(apellido);
                 if(soloLetras.esSoloLetras(nombre)&&soloLetras.esSoloLetras(apellido)){
+                    System.out.println("Si SON LETRAS");
                     if  (URLFoto == null){
                         URLFoto="mantener";
                     }else if (URLFoto.equals("")){
@@ -123,8 +124,10 @@ public class ADServlet extends HttpServlet {
                 }else{
                     request.getSession().setAttribute("msg","");
                     request.getSession().setAttribute("idCelebridad",id);
+                    System.out.println("No son letras");
                     response.sendRedirect(request.getContextPath()+"/ADServlet?action=editar");
                 }
+
                 break;
             case "buscar":
                 int pagina= Integer.parseInt(request.getParameter("pagina"));

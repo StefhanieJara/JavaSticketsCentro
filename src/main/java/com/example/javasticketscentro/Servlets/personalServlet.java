@@ -163,11 +163,13 @@ public class personalServlet extends HttpServlet {
         //Para ser más exactos al tratarse del idioma español, tambien comprobamos
         //el valor 165 equivalente a la Ñ
 
+        System.out.println("Llegamos akiiiiiiiiiiiiiiii");
         for (int i = 0; i < cadena.length(); i++)
         {
             char caracter = cadena.toUpperCase().charAt(i);
             int valorASCII = caracter;
-            if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90))
+            if ((valorASCII != 165 || valorASCII!=32) && ((valorASCII < 65 ) || valorASCII > 90) )
+                System.out.println("Valor Ascii erroneo:" + valorASCII);
                 return false; //Se ha encontrado un caracter que no es letra
         }
         //Terminado el bucle sin que se haya retornado false, es que todos los caracteres son letras
