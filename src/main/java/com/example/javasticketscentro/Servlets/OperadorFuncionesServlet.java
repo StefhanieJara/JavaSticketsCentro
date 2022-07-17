@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 @WebServlet(name = "OperadorFuncionesServlet", value = "/OperadorFuncionesServlet")
 public class OperadorFuncionesServlet extends HttpServlet {
@@ -61,6 +62,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
         OperadorDao operadorDao = new OperadorDao();
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
         AdminDao adminDao = new AdminDao();
+        int idFuncion, idSala;
         HttpSession session= request.getSession();
         String fechaStr = request.getParameter("fechaHora")==null?"":request.getParameter("fechaHora");
         switch (action) {
@@ -93,7 +95,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     int idPelicula = Integer.parseInt(request.getParameter("idPeli"));
                     double precio = Double.parseDouble(request.getParameter("precio"));
                     int stock = Integer.parseInt(request.getParameter("stock"));
-                    int idSala = Integer.parseInt(request.getParameter("idSala"));
+                    idSala = Integer.parseInt(request.getParameter("idSala"));
                     operadorDao.crearFuncion(precio, stock, idPelicula, fechaInicio, horaInicio, idSala);
                     response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
                 }catch (NumberFormatException e){
@@ -103,24 +105,38 @@ public class OperadorFuncionesServlet extends HttpServlet {
             case "editar":
                 int IDFuncion = Integer.parseInt(request.getParameter("idFuncion"));
                 BFuncion funcionSel = operadorDao.obtenerFuncion(IDFuncion);
-                int IDSala = operadorDao.obtenerSalaPorFuncion(IDFuncion);
+
                 String fecha = funcionSel.getFecha();
                 String hora = funcionSel.getHoraInicio();
                 String[] horaMin = hora.split(":");
                 String fechaHoraFormato = fecha + "T"+horaMin[0]+":"+horaMin[1];
-                request.setAttribute("idPelicula", funcionSel.getbPelicula().getIdPelicula());
-                request.setAttribute("Precio", funcionSel.getPrecio());
-                request.setAttribute("idSala", IDSala);
-                request.setAttribute("stock", funcionSel.getStock());
-                request.setAttribute("idSede", operadorDao.obtenerSede(IDSala));
+
+                request.setAttribute("funcion", funcionSel);
                 request.setAttribute("fecha", fechaHoraFormato);
                 request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
-                request.setAttribute("listaSedes",adminDao.listarSedes());
+                request.setAttribute("listaSalas", adminDao.listasala());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarFuncion.jsp");
                 requestDispatcher.forward(request,response);
                 break;
+            case "actualizar":
+                idFuncion=Integer.parseInt(request.getParameter("idFuncion"));
+                int idPeli= Integer.parseInt(request.getParameter("idPeli"));
+                double precio= Double.parseDouble(request.getParameter("precio"));
+                String fechaHora= request.getParameter("fechaHora");
+                idSala= Integer.parseInt(request.getParameter("idSala"));
+                int stock= Integer.parseInt(request.getParameter("stock"));
+
+                fecha= fechaHora.split("T")[0];
+                hora= fechaHora.split("T")[1]+":00";
+                try {
+                    operadorDao.actualizarFuncion(idFuncion, idPeli, precio, fecha,hora,idSala,stock);
+                    response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
             case "borrar":
-                int idFuncion = Integer.parseInt(request.getParameter("idFuncion"));
+                idFuncion = Integer.parseInt(request.getParameter("idFuncion"));
                 operadorDao.deshabilitarFuncion(idFuncion);
                 response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
                 break;
@@ -128,7 +144,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 String date= request.getParameter("fechaFiltro");
                 String idSalaStr= request.getParameter("idSala");
                 try{
-                    int idSala= Integer.parseInt(idSalaStr);
+                    idSala= Integer.parseInt(idSalaStr);
                     if(idSala==-1){
                         session.setAttribute("idSala", "");
                     }else{
@@ -148,15 +164,15 @@ public class OperadorFuncionesServlet extends HttpServlet {
             case "descargar":
                 AdminDao admin= new AdminDao();
                 String fechaFiltro=request.getParameter("fechaFiltro");
-                String idSala= request.getParameter("idSala");
+                String idsala= request.getParameter("idSala");
                 try(PrintWriter salir =  response.getWriter()) {
-                    BSala sala= admin.buscarSala(Integer.parseInt(idSala));
+                    BSala sala= admin.buscarSala(Integer.parseInt(idsala));
                     BFuncion funcionFecha= new BFuncion();
                     funcionFecha.setbSala(sala);
                     funcionFecha.setFecha(fechaFiltro);
                     int i = 1;
                     String text = "#%Película%Precio por Ticket%Stock%Hora de Inicio\n";
-                    for(BFuncion funcion : operadorDao.listarFunciones(fechaFiltro, idSala, 1,cant_resultFunciones, false)){
+                    for(BFuncion funcion : operadorDao.listarFunciones(fechaFiltro, idsala, 1,cant_resultFunciones, false)){
                         text += i+".%"+funcion.getbPelicula().getNombre()+"%"+funcion.getPrecio()+
                                 "%"+funcion.getStock()+"%"+funcion.getHoraInicio()+"\n";
                         i ++;

@@ -8,6 +8,26 @@ import java.util.ArrayList;
 
 public class OperadorDao extends BaseDao{
 
+    public void actualizarFuncion(int idFuncion, int idPeli, double precio,String fecha, String hora,int idSala,int stock) throws SQLException {
+        String sql="update funcion set precio=?, stock=?, Pelicula_idPelicula=?, fecha=?, horaInicio=? where idFuncion=?;";
+        try(Connection conn= this.getConnection();
+            PreparedStatement pstmt= conn.prepareStatement(sql);){
+            pstmt.setDouble(1,precio);
+            pstmt.setInt(2, stock);
+            pstmt.setInt(3, idPeli);
+            pstmt.setString(4, fecha);
+            pstmt.setString(5, hora);
+            pstmt.setInt(6, idFuncion);
+            pstmt.executeUpdate();
+            sql= "update funcion_has_sala set Sala_idSala=? where Funcion_idFuncion=?;";
+            try(PreparedStatement pstmt2= conn.prepareStatement(sql);){
+                pstmt2.setInt(1,idSala);
+                pstmt2.setInt(2,idFuncion);
+                pstmt2.executeUpdate();
+            }
+        }
+    }
+
     public void actualizarCelebridades(int idPeli, int idCelebridad) throws SQLException {
        String sql="insert into celebridad_por_pelicula (Celebridad_idCelebridad, Pelicula_idPelicula) values (?,?)";
        try(Connection conn= this.getConnection();
@@ -468,7 +488,14 @@ public class OperadorDao extends BaseDao{
 
     public BFuncion obtenerFuncion(int idFuncion){
         BFuncion funcion = new BFuncion();
-        String sql = "select * from funcion where idFuncion = ?";
+        String sql = "select f.idFuncion, f.precio, f.stock, p.idPelicula, f.fecha, f.horaInicio,\n" +
+                "       p.nombre, s.idSala, s2.idSede, s2.nombre, p.foto " +
+                "from funcion f " +
+                "inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
+                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                "inner join sede s2 on s.Sede_idSede = s2.idSede\n" +
+                "where idFuncion = ?";
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt= connection.prepareStatement(sql)){
             pstmt.setInt(1, idFuncion);
@@ -479,50 +506,24 @@ public class OperadorDao extends BaseDao{
                     funcion.setPrecio(rs.getDouble(2));
                     funcion.setStock(rs.getInt(3));
                     pelicula.setIdPelicula(rs.getInt(4));
-                    pelicula.setNombre(obtenerPelicula(pelicula.getIdPelicula()).getNombre());
-                    funcion.setbPelicula(pelicula);
                     funcion.setFecha(rs.getString(5));
                     funcion.setHoraInicio(rs.getString(6));
+                    pelicula.setNombre(rs.getString(7));
+                    BSala sala= new BSala();
+                    sala.setIdSala(rs.getInt(8));
+                    BSede sede= new BSede();
+                    sede.setIdSede(rs.getInt(9));
+                    sede.setNombre(rs.getString(10));
+                    pelicula.setFoto(rs.getString(11));
+                    sala.setbSede(sede);
+                    funcion.setbSala(sala);
+                    funcion.setbPelicula(pelicula);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return funcion;
-    }
-
-    public int obtenerSalaPorFuncion(int IDFuncion){
-        int id=0;
-        String sql = "Select Sala_idSala from funcion_has_sala where Funcion_idFuncion = ?";
-        try(Connection conn = this.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, IDFuncion);
-            try (ResultSet rs = pstmt.executeQuery();) {
-                if (rs.next()) {
-                    id = rs.getInt(1);
-                }
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return id;
-    }
-
-    public int obtenerSede(int IDSala){
-        int id=0;
-        String sql = "Select Sede_idSede from sala where idSala = ?";
-        try(Connection conn = this.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setInt(1, IDSala);
-            try (ResultSet rs = pstmt.executeQuery();) {
-                if (rs.next()) {
-                    id = rs.getInt(1);
-                }
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return id;
     }
 
     public int obtenerIdPelicula(String nombre){

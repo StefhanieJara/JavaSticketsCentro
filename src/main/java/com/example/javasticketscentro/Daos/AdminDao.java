@@ -590,7 +590,8 @@ public class AdminDao extends BaseDao{
 
         ArrayList<BSala> listasala = new ArrayList<>();
 
-        String sql = "select aforo, numero, idSala from sala;";
+        String sql = "select aforo, numero, idSala, s.idSede,s.nombre from sala " +
+                "inner join sede s on sala.Sede_idSede = s.idSede ";
 
         try (Connection connection =this.getConnection();
              Statement stmt = connection.createStatement();
@@ -601,6 +602,10 @@ public class AdminDao extends BaseDao{
                 bSala.setAforo(rs.getInt(1));
                 bSala.setNumero(rs.getInt(2));
                 bSala.setIdSala(rs.getInt(3));
+                BSede sede= new BSede();
+                sede.setIdSede(rs.getInt(4));
+                sede.setNombre(rs.getString(5));
+                bSala.setbSede(sede);
                 listasala.add(bSala);
             }
         } catch (SQLException e) {

@@ -1,9 +1,6 @@
 <%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
 <%@ page import="com.example.javasticketscentro.Beans.BSala" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.time.LocalDateTime" %>
-<%@ page import="com.example.javasticketscentro.Beans.BSede" %><%--
+
   Created by IntelliJ IDEA.
   User: Niurka
   Date: 06/06/2022
@@ -14,13 +11,9 @@
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
 <jsp:useBean id="listaPeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" class="java.util.ArrayList"/>
 <jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
-<jsp:useBean id="listaSedes" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSede>" class="java.util.ArrayList"/>
-<jsp:useBean id="ListaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
-<jsp:useBean id="idPelicula" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="Precio" scope="request" type="java.lang.Double"/>
-<jsp:useBean id="idSede" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="idSala" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="stock" scope="request" type="java.lang.Integer"/>
+
+<jsp:useBean id="listaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
+<jsp:useBean id="funcion" scope="request" type="com.example.javasticketscentro.Beans.BFuncion"/>
 <jsp:useBean id="fecha" scope="request" type="java.lang.String"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,8 +62,8 @@
             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
                 <button class="btn" type="button" style=" color: white">
                     <div style="font-size: 0.62rem">
-                        <a href="<%=request.getContextPath()%>/peliculaVisualizacionServlet"></a>
-                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i>
+                        <a href="<%=request.getContextPath()%>/OperadorFuncionesServlet">
+                        <i class="fa fa-caret-square-o-left fa-3x" style='color: #fff'></i></a>
                     </div>
                 </button>
             </div>
@@ -182,21 +175,24 @@
                         <h4 class="my-2">Editar función</h4>
                     </div>
                     <div class="card-body p-4 p-md-5">
-                        <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action">
+                        <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
+                                        <input type="hidden" name="idFuncion" value="<%=funcion.getIdFuncion()%>">
                                         <label class="form-label">Seleccione la película</label>
                                         <select
                                                 name="idPeli"
                                                 class="frm-field required sect"
                                         >
-                                            <option>Seleccionar</option>
-
                                             <%for(BPelicula pelicula : listaPeliculas){%>
-                                            <option <%=pelicula.getIdPelicula()==idPelicula?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
+                                            <option <%=pelicula.getIdPelicula()==funcion.getbPelicula().getIdPelicula()?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
                                             <%}%>
                                         </select>
+                                        <img
+                                                class="w-75"
+                                                src="<%=funcion.getbPelicula().getFoto()%>"
+                                                style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     <div class="form-outline">
                                         <label class="form-label">Precio por ticket (S/.)</label>
@@ -208,7 +204,7 @@
                                                 max="60"
                                                 id="productPrice"
                                                 class="form-control"
-                                                value="<%=Precio%>"
+                                                value="<%=funcion.getPrecio()%>"
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
@@ -227,17 +223,23 @@
                                         />
                                     </div>
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Elija la sede</label>
-                                        <select
-                                                name="idsede"
-                                                class="frm-field required sect"
-                                        >
-                                            <option>Seleccionar</option>
-                                            <%for(BSede sede : listaSedes){%>
-                                            <option <%=sede.getIdSede()==idSede?"selected":""%> value="<%=sede.getIdSede()%>"><%=sede.getNombre()%></option>
-                                            <%}%>
-                                        </select>
+                                        <label class="form-label" for="productName">Sede: <%=funcion.getbSala().getbSede().getNombre()%></label>
+                                        <%if(funcion.getbSala().getbSede().getIdSede()==1){%>
+                                        <img
+                                                class="w-75"
+                                                src="img/sedeChacarilla.jpg"
+                                                style="max-height: 400px; max-width: 250px"/>
+                                        <%}else if(funcion.getbSala().getbSede().getIdSede()==2){%>
+                                        <img
+                                                class="w-75"
+                                                src="img/sedeLince.jpg"
+                                                style="max-height: 400px; max-width: 250px"/>
+                                        <%}else{%>
+                                        <img
+                                                class="w-75"
+                                                src="img/sedeMiraflores.jpg"
+                                                style="max-height: 400px; max-width: 250px"/>
+                                        <%}%>
                                     </div>
                                 </div>
                             </div>
@@ -250,9 +252,8 @@
                                             name="idSala"
                                             class="frm-field required sect"
                                     >
-                                        <option>Seleccionar</option>
-                                        <%for(BSala sala : ListaSalas){%>
-                                        <option value="<%=sala.getIdSala()==idSala?"selected":""%>"><%=sala.getNumero()%></option>
+                                        <%for(BSala sala : listaSalas){%>
+                                            <option <%=sala.getIdSala()==funcion.getbSala().getIdSala()?"selected":""%> value="<%=sala.getIdSala()%>">Sede: <%=sala.getbSede().getNombre()%> N°:<%=sala.getNumero()%></option>
                                         <%}%>
                                     </select>
                                 </div>
@@ -267,7 +268,7 @@
                                                 min="0.0"
                                                 step="0.1"
                                                 class="form-control"
-                                                value="<%=stock%>"
+                                                value="<%=funcion.getStock()%>"
                                         />
                                     </div>
                                 </div>
