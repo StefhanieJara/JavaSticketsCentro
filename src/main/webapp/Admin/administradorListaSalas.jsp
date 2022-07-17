@@ -259,16 +259,16 @@
             <thead>
             <tr>
                 <th>Sede</th>
+                <th>Número</th>
                 <th>Aforo</th>
-                <th>Numero</th>
                 <th></th>
             </tr>
             </thead>
                 <%int i=0;for (BSala sala : listaSala ) {%>
             <tr>
                 <td><%=sala.getbSede().getNombre()%></td>
-                <td><%=sala.getAforo()%></td>
                 <td><%=sala.getNumero()%></td>
+                <td><%=sala.getAforo()%></td>
                 <td>
                     <div class="col-sm-1 d-none d-md-block text-around">
                         <button type="button"
@@ -395,7 +395,7 @@
 
         <div class="modal-dialog">
             <div class="modal-content border-0">
-                <div class="modal-header bg-warning text-white">
+                <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">Editar Aforo de la sala | <%=sala.getbSede().getNombre()%> N°<%=sala.getNumero()%></h5>
                     <button
                             type="button"
@@ -414,7 +414,7 @@
                     <div class="modal-footer my-0 py-1">
                         <button
                                 type="submit"
-                                class="btn btn-warning">
+                                class="btn btn-danger">
                             Guardar
                         </button>
                     </div>

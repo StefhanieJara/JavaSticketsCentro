@@ -12,6 +12,7 @@ public class BFuncion {
     private float Asistencia;
     private int butacas;
 
+
     public BSede getbSede() {
         return bSede;
     }
@@ -91,4 +92,5 @@ public class BFuncion {
     public void setButacas(int butacas) {
         this.butacas = butacas;
     }
+
 }
