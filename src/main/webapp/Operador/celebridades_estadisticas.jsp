@@ -43,7 +43,27 @@ int samir2 =1;%>
     />
     <link rel="stylesheet" href="assets/css/estilos.css" />
 
+<style>
+    .table > :not(caption) > * > * {
+        padding: .5rem .5rem;
+        background-color: var(--bs-table-bg);
+        border-bottom-width: 1px;
+        box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
+    }
+    .table-dark {
+        --bs-table-bg: #transparent;
+        --bs-table-striped-bg: #2c3034;
+        --bs-table-striped-color: #fff;
+        --bs-table-active-bg: #373b3e;
+        --bs-table-active-color: #fff;
+        --bs-table-hover-bg: #323539;
+        --bs-table-hover-color: #fff;
+        color: black;
+        border-color: #373b3e
+    }
 
+
+</style>
 
 </head>
 <body>
