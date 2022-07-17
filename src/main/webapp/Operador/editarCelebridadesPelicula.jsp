@@ -174,6 +174,9 @@
                                 <div class="col-md-6 mb-1">
                                     <input type="hidden" value="1" name="editarCelebridad">
                                     <input type="hidden" value="<%=pelicula.getIdPelicula()%>" name="idPeli">
+                                    <%if(session.getAttribute("msg")!=null){%>
+                                    <div class="text-danger mb-2">No puede ingresar el mismo actor más de una vez en una película.</div>
+                                    <%session.removeAttribute("msg");}%>
                                     <div class="form-outline mb-4">
                                         <label class="form-label"
                                         >Director: </label>
@@ -184,6 +187,10 @@
                                             <option <%=pelicula.getDirectores().get(0).getIdCelebridad()==celebridad.getIdCelebridad()?"selected":""%> value="<%=celebridad.getIdCelebridad()%>"><%=celebridad.getNombre()%></option>
                                             <%}%>
                                         </select>
+                                        <img
+                                                class="w-75"
+                                                src="<%=pelicula.getDirectores().get(0).getFoto()%>"
+                                                style="max-height: 400px; max-width: 250px"/>
                                     </div>
                                     Se permiten 4 actores, como máximo
                                     <br>

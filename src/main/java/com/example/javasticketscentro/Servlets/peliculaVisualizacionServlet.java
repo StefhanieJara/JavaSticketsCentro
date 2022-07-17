@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 
@@ -45,6 +47,14 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 request.setAttribute("listarActor",adminDao.listarActor());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_pelicula.jsp");
                 requestDispatcher.forward(request,response);
+            }
+            case "editarCelebridades"->{
+                BPelicula pelicula=(BPelicula)session.getAttribute("peliEditar");
+                request.setAttribute("pelicula", pelicula);
+                request.setAttribute("listarActor",adminDao.listarActor());
+                request.setAttribute("listarDirector", adminDao.listarDirector());
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarCelebridadesPelicula.jsp");
+                requestDispatcher.forward(request, response);
             }
             default -> {response.sendRedirect(request.getContextPath());}
         }
@@ -104,21 +114,41 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 } else {
                     int idPeli= Integer.parseInt(request.getParameter("idPeli"));
                     int actor;
+                    ArrayList<Integer> actores= new ArrayList<>();
+                    boolean noseRepiten=true;
                     int director= Integer.parseInt(request.getParameter("director"));
                     try {
-                        if(operadorDao.limpiarCelebridadesPeli(idPeli)){
-                            operadorDao.actualizarCelebridades(idPeli,director);
-                            for(int i=1;i<=4;i++){
-                                actor= Integer.parseInt(request.getParameter("actor"+i));
-                                if(actor!=0){
-                                    operadorDao.actualizarCelebridades(idPeli,actor);
+                        forActores:
+                        for(int i=1;i<=4;i++){
+                            actor= Integer.parseInt(request.getParameter("actor"+i));
+                            if(i!=1){
+                                for(int act : actores){
+                                    if(actor==act && act!=0){
+                                        noseRepiten=false;
+                                        break forActores;
+                                    }
                                 }
                             }
-                            System.out.println("Se actualizó exitosamente!");
-                            response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
-                        }else{
-                            System.out.println("No se limpio la peli de celebridades");
-                            response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                            actores.add(actor);
+                        }
+                        if(noseRepiten){
+                            if(operadorDao.limpiarCelebridadesPeli(idPeli)){
+                                operadorDao.actualizarCelebridades(idPeli,director);
+                                for(int i : actores){
+                                    if(i!=0){
+                                        operadorDao.actualizarCelebridades(idPeli,i);
+                                    }
+                                }
+                                System.out.println("Se actualizó exitosamente!");
+                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                            }else{
+                                System.out.println("No se limpio la peli de celebridades");
+                                response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
+                            }
+                        }else {
+                            session.setAttribute("msg", "");
+                            System.out.println("No se deben repetir actores");
+                            response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet?action=editarCelebridades");
                         }
                     }catch(SQLException e){
                         e.printStackTrace();

@@ -144,6 +144,7 @@ public class PeliculaDao extends BaseDao {
 
         return deshabilitar;
     }
+
     public ArrayList<Bticket> funcionesDelCliente(int idClient){
         String sql= "select p.idPersona , c.idCompra,c.cancelado, " +
                 "                       t.cantidadButaca, t.carrito,f.idFuncion, f.fecha, f.horaInicio, s2.nombre, s.numero from persona p " +
