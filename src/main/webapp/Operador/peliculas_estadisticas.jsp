@@ -44,6 +44,27 @@ int samir = 1;%>
     />
     <link rel="stylesheet" href="assets/css/estilos.css" />
 
+    <style>
+        .table > :not(caption) > * > * {
+            padding: .5rem .5rem;
+            background-color: var(--bs-table-bg);
+            border-bottom-width: 1px;
+            box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg)
+        }
+        .table-dark {
+            --bs-table-bg: #transparent;
+            --bs-table-striped-bg: #2c3034;
+            --bs-table-striped-color: #fff;
+            --bs-table-active-bg: #373b3e;
+            --bs-table-active-color: #fff;
+            --bs-table-hover-bg: #323539;
+            --bs-table-hover-color: #fff;
+            color: black;
+            border-color: #373b3e
+        }
+
+
+    </style>
 
 
 </head>
@@ -259,15 +280,18 @@ int samir = 1;%>
 <br>
 
 <div class="d-flex gap-5 justify-content-center">
+
     <form method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=filtrar7">
         <select class="form-select form-select-sm" name="filtro" aria-label=".form-select-sm example">
-            <option value="Selecciona el género" >Selecciona el género</option>
+            <option value="Selecciona el género" >   Selecciona el género</option>
             <%for(BFuncion gen : generos){%>
             <option value="<%=gen.getbPelicula().getGenero()%>"  <%=gen.getbPelicula().getGenero().equals(filtro) ? "selected" : ""%> ><%=gen.getbPelicula().getGenero()%></option>
             <%}%>
         </select>
 
-        <button type="submit" class="btn btn-danger">Filtrar</button>
+
+        <button type="submit" class="btn btn-danger fa fa-filter ">   Filtrar</button>
+
     </form>
 </div>
 
@@ -276,7 +300,7 @@ int samir = 1;%>
         <blockquote class="blockquote">
             <h4>Listado de películas</h4>
             <form  method="post" action="<%=request.getContextPath()%>/operador_estadisticasServlet?action=listar8">
-                <button type="submit" class="btn btn-primary">Ver películas</button>
+                <button type="submit" class="btn btn-primary fa fa-film">Ver películas</button>
             </form>
         </blockquote>
     </figure>
