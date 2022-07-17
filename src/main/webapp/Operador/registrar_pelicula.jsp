@@ -131,7 +131,7 @@
                             </div>
                             <div class="p-2">
                                 <a
-                                        href="<%=request.getContextPath()%>/OperadorEditaPerfilServlet"
+                                        href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet"
                                         class="text-dark text-decoration-none"
                                 >
                                     <span><i class="fas fa-user-edit" aria-hidden="true"></i></span>

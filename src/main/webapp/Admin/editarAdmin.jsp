@@ -84,7 +84,7 @@
                                            id="idPer"
                                            class="form-control"
                                            value="<%=Admin.getIdPer()%>"
-                                           placeholder=<%=Admin.getIdPer()%>
+                                           placeholder=<%=Admin.gtIdPer()%>
                                                    readonly/></div>
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="nombre">Nombre</label>

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 
 @WebFilter(filterName = "FilterLogin", value ={"/calificarActor", "/calificarDirector",
-                                        "/calificarPelicula","/UsuarioCarritoIndex","/UsuarioEditaPerfilServlet",
+                                        "/calificarPelicula","/UsuarioCarritoIndex",
                                     "/UsuarioHistorial_2Servlet"})
 public class FilterLogin implements Filter {
 

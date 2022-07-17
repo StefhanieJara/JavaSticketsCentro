@@ -46,6 +46,7 @@
         <!--Espacio-->
         <div class="col-xl-7 col-lg-7 col-md-7 d-none d-md-block ps-0"></div>
         <!--Carrito-->
+        <%if(clienteLog.getRol().equals("Cliente")){%>
         <div
                 class="col-md-1 col-sm-2 col-2 ms-sm-auto ms-auto d-flex justify-content-end"
         >
@@ -60,6 +61,7 @@
                 </div>
             </a>
         </div>
+        <%}%>
         <!--Boton atras-->
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <button class="btn" type="button" style=" color: white">

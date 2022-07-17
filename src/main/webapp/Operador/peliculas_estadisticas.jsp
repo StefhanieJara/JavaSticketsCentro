@@ -165,7 +165,7 @@ int samir = 1;%>
                         </div>
                         <div class="p-2">
                             <a
-                                    href="<%=request.getContextPath()%>/OperadorEditaPerfilServlet"
+                                    href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fa fa-user-o" aria-hidden="true"></i></span>

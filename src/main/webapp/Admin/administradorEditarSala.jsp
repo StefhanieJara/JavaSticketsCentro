@@ -146,7 +146,7 @@
                         </div>
                         <div class="p-2">
                             <a
-                                    href="<%=request.getContextPath()%>/EditarOperadorServlet?id=<%=clienteLog.getIdPer()%>&a=editar1"
+                                    href="<%=request.getContextPath()%>/UsuarioEditaPerfilServlet"
                                     class="text-dark text-decoration-none"
                             >
                                 <span><i class="fas fa-list"></i></span>
