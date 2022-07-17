@@ -365,7 +365,7 @@
                     Recuerde que para eliminar una sala, esta no debe poseer una función pendiente.
                 </div>
                 <%if(!eliminarSePuede.get(i)){%>
-                    <div class="text-danger mb-2">No es posible eliminar esta sala, existen funciones pendientes.</div>
+                    <div class="text-danger mb-2" style="padding-left: 15px">No es posible eliminar esta sala, existen funciones pendientes.</div>
                 <%}%>
                 <form method="post" action="<%=request.getContextPath()%>/AdminListarSalasServlet?action=eliminar">
                     <input type="hidden" name="id" value="<%=sala.getIdSala()%>">
