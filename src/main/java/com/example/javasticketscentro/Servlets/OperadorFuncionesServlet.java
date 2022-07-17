@@ -126,6 +126,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 request.setAttribute("fecha", fechaHoraFormato);
                 request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
                 request.setAttribute("listaSalas", adminDao.listasala());
+                request.setAttribute("aforo", operadorDao.obtenerAforoPorFuncion(IDFuncion));
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarFuncion.jsp");
                 requestDispatcher.forward(request,response);
                 break;

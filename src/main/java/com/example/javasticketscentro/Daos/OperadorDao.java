@@ -652,4 +652,22 @@ public class OperadorDao extends BaseDao{
             e.printStackTrace();
         }
     }
+
+   public Integer obtenerAforoPorFuncion(int id){
+        int rori = 0;
+        String sql = "select aforo from sala sa inner join funcion_has_sala fs on sa.idSala =fs.Sala_idSala\n" +
+                "inner join funcion f on fs.Funcion_idFuncion = f.idFuncion where idFuncion = ?";
+       try (Connection connection = this.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);) {
+           pstmt.setInt(1, id);
+           try(ResultSet rs= pstmt.executeQuery();){
+               if (rs.next()) {
+                   rori = rs.getInt(1);
+               }
+           }
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+        return rori;
+   }
 }

@@ -15,6 +15,7 @@
 <jsp:useBean id="listaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
 <jsp:useBean id="funcion" scope="request" type="com.example.javasticketscentro.Beans.BFuncion"/>
 <jsp:useBean id="fecha" scope="request" type="java.lang.String"/>
+<jsp:useBean id="aforo" scope="request" type="java.lang.Integer"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -269,6 +270,7 @@
                                                 step="0.1"
                                                 class="form-control"
                                                 value="<%=funcion.getStock()%>"
+                                                max = "<%=aforo%>"
                                         />
                                     </div>
                                 </div>
