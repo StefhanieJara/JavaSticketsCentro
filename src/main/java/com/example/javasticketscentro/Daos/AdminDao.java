@@ -310,7 +310,6 @@ public class AdminDao extends BaseDao{
                 stmt.setString(1, "%"+nombreApellido[0]+"%");
                 if(nombreApellido.length!=1){
                     stmt.setString(2, "%"+nombreApellido[1]+"%");
-                    System.out.println(nombreApellido[0]+" "+nombreApellido[1]);
                 }
             }
             try(ResultSet rs =stmt.executeQuery()) {
