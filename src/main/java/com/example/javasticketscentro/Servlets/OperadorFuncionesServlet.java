@@ -30,6 +30,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
         String idSala= session.getAttribute("idSala")==null?"":(String)session.getAttribute("idSala");
         int pagina= session.getAttribute("pagina")==null?1:(int)session.getAttribute("pagina");
         session.removeAttribute("idSala");session.removeAttribute("fechaFiltro");
+        String mensaje = request.getParameter("mensaje")==null?"":request.getParameter("mensaje");
         OperadorDao operadorDao = new OperadorDao();
         AdminDao adminDao = new AdminDao();
         switch (action){
@@ -55,6 +56,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }
             case "crear"-> {
+                request.setAttribute("mensaje", mensaje);
                 request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
                 request.setAttribute("listaSedes",adminDao.listarSedes());
                 request.setAttribute("idPelicula", 0);
@@ -81,32 +83,39 @@ public class OperadorFuncionesServlet extends HttpServlet {
         switch (action) {
             case "registrar":
                 try {
-                    String[] fechaHora = fechaStr.split("T");
-                    String fecha = fechaHora[0];
-                    String horaInicio = fechaHora[1] + ":00";
-                    int idPelicula = Integer.parseInt(request.getParameter("idPeli"));
-                    double precio = Double.parseDouble(request.getParameter("precio"));
-                    int idsede = Integer.parseInt(request.getParameter("idsede"));
-                    request.setAttribute("idPelicula", idPelicula);
-                    request.setAttribute("Precio", precio);
-                    request.setAttribute("idSede", idsede);
-                    request.setAttribute("fecha", fechaStr);
-                    request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
-                    request.setAttribute("listaSedes",adminDao.listarSedes());
+                    String idPeli = request.getParameter("idPeli").equals("Seleccionar") ? "0" : request.getParameter("idPeli");
+                    String precioFuncion = request.getParameter("precio") == null ? "0.0" : request.getParameter("precio");
+                    String sedeEleg = request.getParameter("idsede").equals("Seleccionar") ? "0" : request.getParameter("idsede");
 
-                    BPelicula peli= operadorDao.obtenerPelicula(idPelicula);
-                    ArrayList<BSala> salasDisponibles= new ArrayList<>();
-                    ArrayList<BSala> salas=operadorDao.listarSalas();
-                    for(BSala sala: salas){
-                        if(sala.getbSede().getIdSede()==idsede){
-                            if(operadorDao.salaEsDisponible(fecha, horaInicio, peli.getDuracion(),sala.getIdSala())){
-                                salasDisponibles.add(sala);
+                    if(fechaStr.equals("") || idPeli.equals("0") || precioFuncion.equals("0.0")  || sedeEleg.equals("0")){
+                        response.sendRedirect(request.getContextPath()+"/OperadorFuncionesServlet?action=crear&mensaje=incompletos");
+                    }else {
+                        String[] fechaHora = fechaStr.split("T");
+                        String fecha = fechaHora[0];
+                        String horaInicio = fechaHora[1] + ":00";
+                        int idPelicula = Integer.parseInt(idPeli);
+                        double precio = Double.parseDouble(precioFuncion);
+                        int idsede = Integer.parseInt(sedeEleg);
+                        request.setAttribute("idPelicula", idPelicula);
+                        request.setAttribute("Precio", precio);
+                        request.setAttribute("idSede", idsede);
+                        request.setAttribute("fecha", fechaStr);
+                        request.setAttribute("listaPeliculas", operadorDao.listapeliculas());
+                        request.setAttribute("listaSedes", adminDao.listarSedes());
+                        BPelicula peli = operadorDao.obtenerPelicula(idPelicula);
+                        ArrayList<BSala> salasDisponibles = new ArrayList<>();
+                        ArrayList<BSala> salas = operadorDao.listarSalas();
+                        for (BSala sala : salas) {
+                            if (sala.getbSede().getIdSede() == idsede) {
+                                if (operadorDao.salaEsDisponible(fecha, horaInicio, peli.getDuracion(), sala.getIdSala())) {
+                                    salasDisponibles.add(sala);
+                                }
                             }
                         }
+                        request.setAttribute("ListaSalas", salasDisponibles);
+                        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
+                        requestDispatcher.forward(request, response);
                     }
-                    request.setAttribute("ListaSalas",salasDisponibles);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
-                    requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                 }
@@ -215,6 +224,21 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     in.close();
                 }
                 break;
+            default:
+                response.sendRedirect(request.getContextPath());
         }
+    }
+    public void redireccionar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OperadorDao operadorDao = new OperadorDao();
+        AdminDao adminDao = new AdminDao();
+        request.setAttribute("mensaje", "incompletos");
+        request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
+        request.setAttribute("listaSedes",adminDao.listarSedes());
+        request.setAttribute("idPelicula", 0);
+        request.setAttribute("Precio", 0.0);
+        request.setAttribute("idSede", 0);
+        request.setAttribute("fecha", "");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
+        requestDispatcher.forward(request,response);
     }
 }

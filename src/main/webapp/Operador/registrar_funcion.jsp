@@ -194,7 +194,6 @@
                                                 class="frm-field required sect"
                                         >
                                             <option>Seleccionar</option>
-
                                             <%for(BPelicula pelicula : listaPeliculas){%>
                                             <option <%=pelicula.getIdPelicula()==idPelicula?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
                                             <%}%>
@@ -202,7 +201,7 @@
                                     </div>
                                     <div class="form-outline">
                                         <label class="form-label">Precio por ticket (S/.)</label>
-                                        <input
+                                        <input required
                                                 name="precio"
                                                 type="number"
                                                 min="0.0"
@@ -277,6 +276,7 @@
                                         >Stock</label
                                         >
                                         <input
+                                                required
                                                 name="stock"
                                                 type="number"
                                                 min="0.0"
@@ -291,7 +291,6 @@
                         </form>
                         <%}%>
                     </div>
-
                 </div>
             </div>
         </div>
