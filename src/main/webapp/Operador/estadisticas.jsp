@@ -12,7 +12,7 @@
 <head>
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Estadisticas</title>
+    <title>Centro Cultural PUCP - Estadisticas</title>
     <%session.removeAttribute("nombrefil");session.removeAttribute("apellidofil");%>
     <style>
 

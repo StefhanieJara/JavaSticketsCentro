@@ -30,7 +30,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Centro Cultural PUCP - Perfil de usuario</title>
+    <title>Centro Cultural PUCP - Registrar Función</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/estilos.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

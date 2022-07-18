@@ -20,7 +20,7 @@
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PUCP-Lista de operadores</title>
+    <title>Centro Cultural PUCP -Lista de operadores</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

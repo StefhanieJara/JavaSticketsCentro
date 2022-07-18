@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/207/207052.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PUCP - Lista del Personal</title>
+    <title>Centro Cultural PUCP  - Lista del Personal</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
