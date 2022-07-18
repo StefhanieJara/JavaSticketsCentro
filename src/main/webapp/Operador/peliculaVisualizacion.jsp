@@ -297,7 +297,7 @@
     <hr class="mx-md-5 mx-sm-3" />
     <%i++;}%>
     <!--Paginación-->
-    <%if(cant_paginas>1){%>
+    <%if(cant_paginas!=1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
