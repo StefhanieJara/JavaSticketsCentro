@@ -309,7 +309,7 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <form class="dist-name">¿Estás seguro que deseas cancelar este ticket? Una vez realizada, esta acción no se podrá deshacer.</form>
+                        <form class="dist-name">¿Estás seguro que deseas cancelar este ticket? Una vez realizada, esta acción no se podrá deshacer y no obtendrás un reembolso.</form>
 
                         <TABLE FRAME="void" RULES="rows" border="1" style="margin: 0 auto;">
                             <TR>
