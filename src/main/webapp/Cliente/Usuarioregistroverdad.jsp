@@ -110,10 +110,10 @@
                                         <%}%>
                                         <div class="row">
                                             <div class="col-md-6" >
-                                                <input class="form-control" type="number" name="dni" placeholder="DNI" required="required">
+                                                <input class="form-control" type="number" min="0" max="99999999" oninvalid="setCustomValidity('Por favor ingrese 8 dígitos')" onchange="try{setCustomValidity('')}catch(e){}" name="dni" placeholder="DNI" required="required">
                                             </div>
                                             <div class="col-md-6">
-                                                <input class="form-control" type="number" name="numeroTelefono" required="required" placeholder="Teléfono">
+                                                <input class="form-control" type="number" min="0" max="999999999" oninvalid="setCustomValidity('Por favor ingrese 9 dígitos')" onchange="try{setCustomValidity('')}catch(e){}" name="numeroTelefono" required="required" placeholder="Teléfono">
                                             </div>
                                         </div>
                                         <%if(session.getAttribute("error")!=null && session.getAttribute("error").equals("dniIncorrecto")){%>
