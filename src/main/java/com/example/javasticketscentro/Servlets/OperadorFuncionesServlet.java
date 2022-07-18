@@ -1,6 +1,7 @@
 package com.example.javasticketscentro.Servlets;
 
 import com.example.javasticketscentro.Beans.BFuncion;
+import com.example.javasticketscentro.Beans.BPelicula;
 import com.example.javasticketscentro.Beans.BPersona;
 import com.example.javasticketscentro.Beans.BSala;
 import com.example.javasticketscentro.Daos.AdminDao;
@@ -68,7 +69,8 @@ public class OperadorFuncionesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         request.setCharacterEncoding("UTF-8");
         OperadorDao operadorDao = new OperadorDao();
         String action = request.getParameter("action") == null ? "listar" : request.getParameter("action");
@@ -80,7 +82,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
             case "registrar":
                 try {
                     String[] fechaHora = fechaStr.split("T");
-                    String fechaInicio = fechaHora[0];
+                    String fecha = fechaHora[0];
                     String horaInicio = fechaHora[1] + ":00";
                     int idPelicula = Integer.parseInt(request.getParameter("idPeli"));
                     double precio = Double.parseDouble(request.getParameter("precio"));
@@ -91,7 +93,18 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     request.setAttribute("fecha", fechaStr);
                     request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
                     request.setAttribute("listaSedes",adminDao.listarSedes());
-                    request.setAttribute("ListaSalas", operadorDao.obtenerSalasDisponibles(fechaInicio, horaInicio, idsede, idPelicula));
+
+                    BPelicula peli= operadorDao.obtenerPelicula(idPelicula);
+                    ArrayList<BSala> salasDisponibles= new ArrayList<>();
+                    ArrayList<BSala> salas=operadorDao.listarSalas();
+                    for(BSala sala: salas){
+                        if(sala.getbSede().getIdSede()==idsede){
+                            if(operadorDao.salaEsDisponible(fecha, horaInicio, peli.getDuracion(),sala.getIdSala())){
+                                salasDisponibles.add(sala);
+                            }
+                        }
+                    }
+                    request.setAttribute("ListaSalas",salasDisponibles);
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
                     requestDispatcher.forward(request,response);
                 }catch (NumberFormatException e){

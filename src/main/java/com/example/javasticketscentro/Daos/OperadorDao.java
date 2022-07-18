@@ -139,27 +139,34 @@ public class OperadorDao extends BaseDao{
         return listapeliculas;
     }
 
-    public ArrayList<BSala> obtenerSalasDisponibles(String fechaInicio, String horaInicio, int idsede, int idPeli){
-        ArrayList<BSala> SalasDisponibles = new ArrayList<>();
-        String sql = "select idsala, aforo, numero from sala inner join sede s on sala.Sede_idSede = s.idSede;";
+    public boolean salaEsDisponible(String fecha, String horaInicio, String duracionPeli,int idSala){
+        String sql = "select s.idSala,s.aforo,s.numero,f.idFuncion,f.horaInicio, timediff(f.horaInicio,concat('-',p.duracion)) as `horaFinal`,\n" +
+                "       ? as `inicioElegido`, timediff(?,concat('-',?)) as `horaFinalElegida`\n" +
+                "       from funcion f\n" +
+                "inner join funcion_has_sala fhs on f.idFuncion = fhs.Funcion_idFuncion\n" +
+                "inner join sala s on fhs.Sala_idSala = s.idSala\n" +
+                "inner join pelicula p on f.Pelicula_idPelicula = p.idPelicula\n" +
+                "where s.idSala=? and f.fecha=?\n" +
+                "having ((`inicioElegido`<=f.horaInicio and `horaFinalElegida`>=f.horaInicio) or (`inicioElegido`<=`horaFinal` and `horaFinalElegida`>=`horaFinal`));";
+
         try (Connection connection = this.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
+            pstmt.setString(1, horaInicio);
+            pstmt.setString(2, horaInicio);
+            pstmt.setString(3, duracionPeli);
+            pstmt.setInt(4,idSala);
+            pstmt.setString(5, fecha);
+
             try(ResultSet rs= pstmt.executeQuery();){
-                while (rs.next()) {
-                    BSala sala = new BSala();
-                    sala.setIdSala(rs.getInt(1));
-                    sala.setAforo(rs.getInt(2));
-                    sala.setNumero(rs.getInt(3));
-                    SalasDisponibles.add(sala);
-                }
+               if(rs.next()){
+                   return false;
+               }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return SalasDisponibles;
+        return true;
     }
-
-
 
     public ArrayList<BSala> filtrarSalas(ArrayList<BSala> SalasFiltradas, ArrayList<BSala> SalasTotales, ArrayList<BFuncion> funciones, String duracion, String horaInicio){
         ArrayList<Integer> SalasNoElegidas = new ArrayList<>();
