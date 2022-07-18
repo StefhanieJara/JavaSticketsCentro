@@ -144,6 +144,11 @@ public class personalServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/personalServlet");
             }
             case "filtrar"->{
+                session.removeAttribute("filtrar");
+                if(!nombre.equals("")||!apellido.equals("")){
+                    session= request.getSession();
+                    session.setAttribute("filtrar", "");
+                }
                 session.setAttribute("nombrefil", nombre);
                 session.setAttribute("apellidofil", apellido);
                 response.sendRedirect(request.getContextPath() + "/personalServlet");

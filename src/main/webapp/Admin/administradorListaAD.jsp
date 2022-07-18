@@ -207,6 +207,12 @@
             </button>
         </div>
     </form>
+    <%if(!filtro.equals("")&&listaCelebridades.size()!=0){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}%>
+    <%if(!filtro.equals("")&&listaCelebridades.size()==0){%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
+    <%}%>
 
     <% int a = 0;
     for (BCelebridad celebridad : listaCelebridades ) {%>

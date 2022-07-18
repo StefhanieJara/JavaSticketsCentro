@@ -217,8 +217,10 @@
         <br>
     </form>
     <%if(session.getAttribute("filtrnombre")!=null){%>
-    <%if(!session.getAttribute("filtrnombre").equals("")){%>
+    <%if(!session.getAttribute("filtrnombre").equals("")&&listapeliculas.size()!=0){%>
     <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}if(listapeliculas.size()==0){%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
     <%}}session.removeAttribute("peliEditar");%>
 
     <!--Productos-->
@@ -295,7 +297,7 @@
     <hr class="mx-md-5 mx-sm-3" />
     <%i++;}%>
     <!--Paginación-->
-    <%if(cant_paginas!=1){%>
+    <%if(cant_paginas>1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">

@@ -264,6 +264,7 @@ public class peliculaVisualizacionServlet extends HttpServlet {
                 }
                 break;
             case "buscar":
+                session.removeAttribute("pagina");
                 session.setAttribute("filtrnombre", request.getParameter("filtrnombre"));
                 response.sendRedirect(request.getContextPath() + "/peliculaVisualizacionServlet");
                 break;

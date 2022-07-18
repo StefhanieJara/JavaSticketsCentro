@@ -228,6 +228,20 @@
 <div class="caja2">
 </div>
 
+    <%boolean existeFiltro=false;for(String a: filtros){
+        if(!a.equals("")){
+            existeFiltro=true;
+            break;
+        }
+    }%>
+    <%if(existeFiltro){%>
+    <%if(listaClientes.size()!=0){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}else{%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
+    <%}%>
+    <%}%>
+
 <div class="caja1">
     <form method="post" action="<%=request.getContextPath()%>/AdminClienteServlet?a=buscar">
     <div class="row g-3 align-items-center mt-2 ">
@@ -315,7 +329,7 @@
 </div>
 
 
-
+<%if(cant_paginas>1){%>
 <div class="container">
     <div class="d-flex justify-content-center my-3">
         <nav aria-label="paginacion_productos">
@@ -371,6 +385,7 @@
         </nav>
     </div>
 </div>
+    <%}%>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

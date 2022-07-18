@@ -195,7 +195,6 @@
         </li>
     </ul>
 
-
     <form class="mb-4" method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=filtrar">
         <center>
         <table>
@@ -233,7 +232,7 @@
     <center>
     <!--Barra de búsqueda producto-->
     <%if(!idSala.equals("")&&!fechaFiltro.equals("")){%>
-    <%if(!idSala.equals("-1")){%>
+    <%if(!idSala.equals("-1")&&listaFunciones.size()!=0){%>
     <form method="post" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=descargar">
         <input type="hidden" value="<%=fechaFiltro%>" name="fechaFiltro">
         <input type="hidden" value="<%=idSala%>" name="idSala">
@@ -243,7 +242,11 @@
     <%}%>
     </center>
     <%if(!idSala.equals("") || !fechaFiltro.equals("")){%>
+    <%if(listaFunciones.size()!=0){%>
     <h3 class="dist-name textoPeliculas"  style="color:#e72d4b; padding-left: 50px ;">Resultados de su búsqueda</h3>
+    <%}else{%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
+    <%}%>
     <%}%>
     <!--Productos-->
     <% int i=0; for (BFuncion funcion :  listaFunciones) {%>

@@ -231,7 +231,13 @@
             >
         </li>
     </ul>
-
+    <%if (session.getAttribute("filtrar")!=null){%>
+    <%if(listaPersonal.size()!=0){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}else{%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
+    <%}%>
+    <%}%>
     <div class="caja2">
     </div>
     <div class="caja1">

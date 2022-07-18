@@ -215,6 +215,19 @@
             ></h3>
         </li>
     </ul>
+    <%boolean existeFiltro=false;for(String a: filtros){
+        if(!a.equals("")){
+            existeFiltro=true;
+            break;
+        }
+    }%>
+    <%if(existeFiltro){%>
+    <%if(listaOperadores.size()!=0){%>
+    <h3 class="dist-name title-peliculas">Resultados de su búsqueda</h3>
+    <%}else{%>
+    <h3 class="dist-name title-peliculas">No se encontraron resultados :(</h3>
+    <%}%>
+    <%}%>
 
     <div class="caja2">
     </div>
@@ -360,7 +373,7 @@
         </table>
     </div>
 
-
+    <%if(cant_paginas>1){%>
     <div class="container">
         <div class="d-flex justify-content-center my-3">
             <nav aria-label="paginacion_productos">
@@ -416,7 +429,7 @@
             </nav>
         </div>
     </div>
-
+    <%}%>
 
 </main>
 
