@@ -43,7 +43,7 @@
 <nav
         class="navbar navbar-light navbar-expand-md fixed-top navbar- shadow-sm navigation-clean-search d-flex justify-content-center"
         style="background-color: #e72d4b"
->
+><%session.removeAttribute("idFuncion");session.removeAttribute("funcionNUEVA");session.removeAttribute("ListaSalas");%>
     <div
             class="row w-100 align-items-center d-sm-flex d-flex pe-sm-4 ps-0 my-2"
     >

@@ -172,11 +172,17 @@
                         class="card shadow-2-strong card-registration"
                         style="border-radius: 15px; margin-top: 100px"
                 >
-                    <%if (!mensaje.equals("")){%>
+                    <%if (session.getAttribute("msg")!=null){%>
+                    <%if(session.getAttribute("msg").equals("errorIncompleto")){%>
                     <div style="font-weight: bold;" class="alert alert-danger" role="alert">
-                       ¡Datos incompletos!
+                        ¡Datos incompletos!
+                    </div>
+                    <%}if(session.getAttribute("msg").equals("vaciaSala")){%>
+                    <div style="font-weight: bold;" class="alert alert-danger" role="alert">
+                        Sala no ingresada. Porfavor, ingrese una.
                     </div>
                     <%}%>
+                    <%session.removeAttribute("msg");}%>
                     <div
                             class="card-header"
                             style="background-color: #e72d4b; color: white"
@@ -204,7 +210,7 @@
                                         <input required
                                                 name="precio"
                                                 type="number"
-                                                min="0.0"
+                                                min="1.0"
                                                 step="0.1"
                                                 max="200"
                                                 id="productPrice"
@@ -233,12 +239,10 @@
                                         />
                                     </div>
                                    <div class="form-outline mb-4">
-                                        <label class="form-label" for="productName"
-                                        >Elija la sede</label>
+                                        <label class="form-label" for="productName">Elija la sede</label>
                                         <select
                                                 name="idsede"
-                                                class="frm-field required sect"
-                                        >
+                                                class="frm-field required sect">
                                             <option>Seleccionar</option>
                                             <%for(BSede sede : listaSedes){%>
                                             <option <%=sede.getIdSede()==idSede?"selected":""%> value="<%=sede.getIdSede()%>"><%=sede.getNombre()%></option>
@@ -279,8 +283,8 @@
                                                 required
                                                 name="stock"
                                                 type="number"
-                                                min="0.0"
-                                                step="0.1"
+                                                min="1"
+                                                step="1"
                                                 class="form-control"
                                         />
                                     </div>

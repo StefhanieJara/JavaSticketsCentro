@@ -1,7 +1,10 @@
 <%@ page import="com.example.javasticketscentro.Beans.BPelicula" %>
 <%@ page import="com.example.javasticketscentro.Beans.BSala" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDateTime" %>
 
-  Created by IntelliJ IDEA.
+Created by IntelliJ IDEA.
   User: Niurka
   Date: 06/06/2022
   Time: 01:20
@@ -9,9 +12,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="clienteLog" scope="session" type="com.example.javasticketscentro.Beans.BPersona"/>
-<jsp:useBean id="listaPeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" class="java.util.ArrayList"/>
-<jsp:useBean id="mensaje" scope="request" type="java.lang.String" class="java.lang.String" />
 
+<jsp:useBean id="listaPeliculas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BPelicula>" class="java.util.ArrayList"/>
 <jsp:useBean id="listaSalas" scope="request" type="java.util.ArrayList<com.example.javasticketscentro.Beans.BSala>" class="java.util.ArrayList"/>
 <jsp:useBean id="funcion" scope="request" type="com.example.javasticketscentro.Beans.BFuncion"/>
 <jsp:useBean id="fecha" scope="request" type="java.lang.String"/>
@@ -175,11 +177,20 @@
                     >
                         <h4 class="my-2">Editar función</h4>
                     </div>
+                    <%session.setAttribute("editarFuncion", funcion);%>
                     <div class="card-body p-4 p-md-5">
                         <form method="POST" action="<%=request.getContextPath()%>/OperadorFuncionesServlet?action=actualizar">
                             <div class="row">
                                 <div class="col-md-6 mb-1">
                                     <div class="form-outline mb-4">
+                                        <%if(session.getAttribute("error")!=null){%>
+                                        <%if(session.getAttribute("error").equals("incoSalas")){%>
+                                        <div class="text-danger mb-2">Sala no disponible. Porfavor, otra sala.</div>
+                                        <%}%>
+                                        <%if(session.getAttribute("error").equals("tipoDato")){%>
+                                        <div class="text-danger mb-2">Debe ingresar un valor válido para el stock y el precio.</div>
+                                        <%}%>
+                                        <%session.removeAttribute("error");}%>
                                         <input type="hidden" name="idFuncion" value="<%=funcion.getIdFuncion()%>">
                                         <label class="form-label">Seleccione la película</label>
                                         <select
@@ -190,6 +201,7 @@
                                             <option <%=pelicula.getIdPelicula()==funcion.getbPelicula().getIdPelicula()?"selected":""%> value="<%=pelicula.getIdPelicula()%>"><%=pelicula.getNombre()%></option>
                                             <%}%>
                                         </select>
+                                        <br><br>
                                         <img
                                                 class="w-75"
                                                 src="<%=funcion.getbPelicula().getFoto()%>"
@@ -200,7 +212,7 @@
                                         <input
                                                 name="precio"
                                                 type="number"
-                                                min="0.0"
+                                                min="1.0"
                                                 step="0.1"
                                                 max="200"
                                                 id="productPrice"
@@ -212,9 +224,14 @@
                                         <label class="form-label" for="productName"
                                         >Tiempo de inicio</label
                                         >
+                                        <% LocalDate todaysDate = LocalDate.now();
+                                            String todayStr = todaysDate.toString();
+                                            DateTimeFormatter horaActual = DateTimeFormatter.ofPattern("HH:mm");
+                                            todayStr=todayStr+"T"+horaActual.format(LocalDateTime.now());
+                                        %>
                                         <input
                                                 type="datetime-local"
-                                                min="<%=fecha%>"
+                                                min="<%=todayStr%>"
                                                 name="fechaHora"
                                                 id="productName"
                                                 class="form-control"
@@ -266,8 +283,8 @@
                                         <input
                                                 name="stock"
                                                 type="number"
-                                                min="0.0"
-                                                step="0.1"
+                                                min="1"
+                                                step="1"
                                                 class="form-control"
                                                 value="<%=funcion.getStock()%>"
                                                 max = "<%=aforo%>"

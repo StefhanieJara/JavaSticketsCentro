@@ -1,9 +1,6 @@
 package com.example.javasticketscentro.Servlets;
 
-import com.example.javasticketscentro.Beans.BFuncion;
-import com.example.javasticketscentro.Beans.BPelicula;
-import com.example.javasticketscentro.Beans.BPersona;
-import com.example.javasticketscentro.Beans.BSala;
+import com.example.javasticketscentro.Beans.*;
 import com.example.javasticketscentro.Daos.AdminDao;
 import com.example.javasticketscentro.Daos.OperadorDao;
 import com.example.javasticketscentro.JavaPDF;
@@ -34,6 +31,22 @@ public class OperadorFuncionesServlet extends HttpServlet {
         OperadorDao operadorDao = new OperadorDao();
         AdminDao adminDao = new AdminDao();
         switch (action){
+            case "editar"->{
+                int IDFuncion = Integer.parseInt(request.getParameter("idFuncion")==null?(String)session.getAttribute("idFuncion"):request.getParameter("idFuncion"));
+
+                BFuncion funcionSel = operadorDao.obtenerFuncion(IDFuncion);
+                String fecha = funcionSel.getFecha();
+                String hora = funcionSel.getHoraInicio();
+                String[] horaMin = hora.split(":");
+                String fechaHoraFormato = fecha + "T"+horaMin[0]+":"+horaMin[1];
+
+                request.setAttribute("funcion", funcionSel);
+                request.setAttribute("fecha", fechaHoraFormato);
+                request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
+                request.setAttribute("listaSalas", adminDao.listasala());
+                request.setAttribute("aforo", operadorDao.obtenerAforoPorFuncion(IDFuncion));
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/editarFuncion.jsp");
+                requestDispatcher.forward(request,response);}
             case "listar" -> {
                 ArrayList<BFuncion> funciones= operadorDao.listarFunciones(date, idSala, pagina,cant_resultFunciones, true);
                 request.setAttribute("listaFunciones",funciones);
@@ -56,15 +69,27 @@ public class OperadorFuncionesServlet extends HttpServlet {
                 requestDispatcher.forward(request,response);
             }
             case "crear"-> {
-                request.setAttribute("mensaje", mensaje);
                 request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
                 request.setAttribute("listaSedes",adminDao.listarSedes());
                 request.setAttribute("idPelicula", 0);
-                request.setAttribute("Precio", 0.0);
+                request.setAttribute("Precio", 1.0);
                 request.setAttribute("idSede", 0);
                 request.setAttribute("fecha", "");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
                 requestDispatcher.forward(request,response);
+            }
+            case "registrar"->{
+                BFuncion funcion=(BFuncion) session.getAttribute("funcionNUEVA");
+                request.setAttribute("idPelicula", funcion.getbPelicula().getIdPelicula());
+                request.setAttribute("Precio", funcion.getPrecio());
+                request.setAttribute("idSede", funcion.getbSala().getbSede().getIdSede());
+                request.setAttribute("fecha", funcion.getFecha());
+                request.setAttribute("listaPeliculas", operadorDao.listapeliculas());
+                request.setAttribute("listaSedes", adminDao.listarSedes());
+                request.setAttribute("ListaSalas", session.getAttribute("ListaSalas"));
+
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
+                requestDispatcher.forward(request, response);
             }
             default -> {response.sendRedirect(request.getContextPath());}
         }
@@ -88,7 +113,8 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     String sedeEleg = request.getParameter("idsede").equals("Seleccionar") ? "0" : request.getParameter("idsede");
 
                     if(fechaStr.equals("") || idPeli.equals("0") || precioFuncion.equals("0.0")  || sedeEleg.equals("0")){
-                        response.sendRedirect(request.getContextPath()+"/OperadorFuncionesServlet?action=crear&mensaje=incompletos");
+                        session.setAttribute("msg", "errorIncompleto");
+                        response.sendRedirect(request.getContextPath()+"/OperadorFuncionesServlet?action=crear");
                     }else {
                         String[] fechaHora = fechaStr.split("T");
                         String fecha = fechaHora[0];
@@ -96,12 +122,27 @@ public class OperadorFuncionesServlet extends HttpServlet {
                         int idPelicula = Integer.parseInt(idPeli);
                         double precio = Double.parseDouble(precioFuncion);
                         int idsede = Integer.parseInt(sedeEleg);
+
                         request.setAttribute("idPelicula", idPelicula);
                         request.setAttribute("Precio", precio);
                         request.setAttribute("idSede", idsede);
                         request.setAttribute("fecha", fechaStr);
                         request.setAttribute("listaPeliculas", operadorDao.listapeliculas());
                         request.setAttribute("listaSedes", adminDao.listarSedes());
+
+                        BFuncion funcion= new BFuncion();
+                        BPelicula peli0= new BPelicula();
+                        peli0.setIdPelicula(idPelicula);
+                        funcion.setPrecio(precio);
+                        BSala sala0= new BSala();
+                        BSede sede= new BSede();
+                        sede.setIdSede(idsede);
+                        sala0.setbSede(sede);
+                        funcion.setbSala(sala0);
+                        funcion.setFecha(fechaStr);
+                        funcion.setbPelicula(peli0);
+                        session.setAttribute("funcionNUEVA", funcion);
+
                         BPelicula peli = operadorDao.obtenerPelicula(idPelicula);
                         ArrayList<BSala> salasDisponibles = new ArrayList<>();
                         ArrayList<BSala> salas = operadorDao.listarSalas();
@@ -113,6 +154,8 @@ public class OperadorFuncionesServlet extends HttpServlet {
                             }
                         }
                         request.setAttribute("ListaSalas", salasDisponibles);
+
+                        session.setAttribute("ListaSalas", salasDisponibles);
                         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
                         requestDispatcher.forward(request, response);
                     }
@@ -128,17 +171,23 @@ public class OperadorFuncionesServlet extends HttpServlet {
                     int idPelicula = Integer.parseInt(request.getParameter("idPeli"));
                     double precio = Double.parseDouble(request.getParameter("precio"));
                     int stock = Integer.parseInt(request.getParameter("stock"));
-                    idSala = Integer.parseInt(request.getParameter("idSala"));
-                    operadorDao.crearFuncion(precio, stock, idPelicula, fechaInicio, horaInicio, idSala);
-                    response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                    idSala = Integer.parseInt(request.getParameter("idSala").equals("Seleccionar")?"0":request.getParameter("idSala"));
+                    if(idSala!=0){
+                        operadorDao.crearFuncion(precio, stock, idPelicula, fechaInicio, horaInicio, idSala);
+                        response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                    }else{
+                        session.setAttribute("msg", "vaciaSala");
+                        response.sendRedirect(request.getContextPath()+"/OperadorFuncionesServlet?action=registrar");
+                    }
                 }catch (NumberFormatException e){
                     e.printStackTrace();
                 }
                 break;
             case "editar":
                 int IDFuncion = Integer.parseInt(request.getParameter("idFuncion"));
-                BFuncion funcionSel = operadorDao.obtenerFuncion(IDFuncion);
+                session.removeAttribute("idFuncion");
 
+                BFuncion funcionSel = operadorDao.obtenerFuncion(IDFuncion);
                 String fecha = funcionSel.getFecha();
                 String hora = funcionSel.getHoraInicio();
                 String[] horaMin = hora.split(":");
@@ -155,18 +204,50 @@ public class OperadorFuncionesServlet extends HttpServlet {
             case "actualizar":
                 idFuncion=Integer.parseInt(request.getParameter("idFuncion"));
                 int idPeli= Integer.parseInt(request.getParameter("idPeli"));
-                double precio= Double.parseDouble(request.getParameter("precio"));
-                String fechaHora= request.getParameter("fechaHora");
-                idSala= Integer.parseInt(request.getParameter("idSala"));
-                int stock= Integer.parseInt(request.getParameter("stock"));
-
-                fecha= fechaHora.split("T")[0];
-                hora= fechaHora.split("T")[1]+":00";
                 try {
-                    operadorDao.actualizarFuncion(idFuncion, idPeli, precio, fecha,hora,idSala,stock);
-                    response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                    double precio= Double.parseDouble(request.getParameter("precio"));
+                    String fechaHora= request.getParameter("fechaHora");
+                    idSala= Integer.parseInt(request.getParameter("idSala"));
+                    int stock= Integer.parseInt(request.getParameter("stock"));
+
+                    fecha= fechaHora.split("T")[0];
+                    hora= fechaHora.split("T")[1]+":00";
+                    BPelicula peli= operadorDao.obtenerPelicula(idPeli);
+                    BFuncion funcion=(BFuncion)session.getAttribute("editarFuncion");
+                    session.removeAttribute("editarFuncion");
+                    if(!funcion.getFecha().equals(fecha)){
+                        if(operadorDao.salaEsDisponible(fecha,hora,peli.getDuracion(),idSala)){
+                            System.out.println("Exitoso!");
+                            operadorDao.actualizarFuncion(idFuncion, idPeli, precio, fecha,hora,idSala,stock);
+                            response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                        }else{
+                            session.setAttribute("idFuncion", ""+idFuncion);
+                            session.setAttribute("error", "incoSalas");
+                            response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet?action=editar");
+                        }
+                    }else{
+                        if(idSala!=funcion.getbSala().getIdSala()){
+                            if(operadorDao.salaEsDisponible(fecha,hora,peli.getDuracion(),idSala)){
+                                System.out.println("Editar Exitoso");
+                                operadorDao.actualizarFuncion(idFuncion, idPeli, precio, fecha,hora,idSala,stock);
+                                response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                            }else{
+                                session.setAttribute("idFuncion", ""+idFuncion);
+                                session.setAttribute("error", "incoSalas");
+                                response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet?action=editar");
+                            }
+                        }else{
+                            operadorDao.actualizarFuncion(idFuncion, idPeli, precio, fecha,hora,idSala,stock);
+                            System.out.println("Editar Exitoso");
+                            response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet");
+                        }
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                }catch (NumberFormatException e){
+                    session.setAttribute("idFuncion", ""+idFuncion);
+                    session.setAttribute("error", "tipoDato");
+                    response.sendRedirect(request.getContextPath() + "/OperadorFuncionesServlet?action=editar");
                 }
                 break;
             case "borrar":
@@ -235,7 +316,7 @@ public class OperadorFuncionesServlet extends HttpServlet {
         request.setAttribute("listaPeliculas",operadorDao.listapeliculas());
         request.setAttribute("listaSedes",adminDao.listarSedes());
         request.setAttribute("idPelicula", 0);
-        request.setAttribute("Precio", 0.0);
+        request.setAttribute("Precio", 1.0);
         request.setAttribute("idSede", 0);
         request.setAttribute("fecha", "");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Operador/registrar_funcion.jsp");
