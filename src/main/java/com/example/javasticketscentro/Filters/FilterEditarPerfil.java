@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter(filterName = "FilterLogin", value ={"/UsuarioEditaPerfilServlet"})
+@WebFilter(filterName = "FilterEditarPerfil", value ={"/UsuarioEditaPerfilServlet"})
 public class FilterEditarPerfil implements Filter {
 
     @Override

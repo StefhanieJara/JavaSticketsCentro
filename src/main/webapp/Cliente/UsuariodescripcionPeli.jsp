@@ -67,11 +67,12 @@
 
             <a class="btn btn-tele-inverso"
                     role="button"
-                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex?action=listar">
+                    href="<%=request.getContextPath()%>/UsuarioCarritoIndex">
             <div style="font-size: 0.6rem">
                     <!--para cambios más precisos del tamaño-->
                     <i class="fas fa-cart-plus fa-3x"></i></div></a>
         </div>
+
         <!--Menú usuario-->
         <div class="col-md-1 col-sm-2 col-2 d-flex justify-content-start ps-0">
             <%if(clienteLog.getIdPer()!=0 && clienteLog!=null){%>
