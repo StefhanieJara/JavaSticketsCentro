@@ -139,7 +139,7 @@
                                         <img id="img-preview" src="<%=celebridad.getFoto()%>" style="max-width: 300px; resize: both; max-width: 300px" />
                                     </div>
                                     <div class="d-flex justify-content-center my-3">
-                                        <input type="file" id="img-uploader">
+                                        <input type="file" accept="image/*"  id="img-uploader">
                                     </div>
                                     <progress id="img-upload-bar" width="10px" value="0" max="100"
                                               style="width: 100%"></progress>

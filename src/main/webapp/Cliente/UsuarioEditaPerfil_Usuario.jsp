@@ -248,7 +248,7 @@
                                 <label>Archivos tipo: .jpg,.png,.jpeg,.webp,.heic</label>
                                 <div class="d-flex justify-content-center my-3">
                                     <!--input type="file" id="img-uploader"-->
-                                    <input type="file" accept=".jpg,.png,.jpeg,.webp,.heic" name="photoUrl">
+                                    <input type="file" accept="image/*"  name="photoUrl">
                                 </div>
                                 <button  type="submit"  class="btn btn-tele">Cambiar foto de perfil</button>
                             </form>

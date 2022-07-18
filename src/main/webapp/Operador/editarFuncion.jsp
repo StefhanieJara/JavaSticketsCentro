@@ -202,7 +202,7 @@
                                                 type="number"
                                                 min="0.0"
                                                 step="0.1"
-                                                max="60"
+                                                max="200"
                                                 id="productPrice"
                                                 class="form-control"
                                                 value="<%=funcion.getPrecio()%>"
