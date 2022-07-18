@@ -159,13 +159,15 @@
                                 </div>
                             </div>
                         </form>
-                        <div>
-                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger fa fa-arrow-circle-left">   Regresar al historial</a></center>
-                        </div>
-                        <br>
+
                         <div>
                             <center><a href="<%=request.getContextPath()%>/calificarDirector?action=listarA&idPelicula=<%=idPelicula%>" type="button" class="btn btn-success fa fa-film">   Calificar Actores</a></center>
                         </div>
+                        <br>
+                        <div>
+                            <center><a href="<%=request.getContextPath()%>/UsuarioHistorial_2Servlet" type="button" class="btn btn-danger fa fa-arrow-circle-left">   Regresar al historial</a></center>
+                        </div>
+
 
                     </div>
                 </div>
