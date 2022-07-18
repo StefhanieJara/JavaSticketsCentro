@@ -118,7 +118,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
                     carritoDao.cambiarButacasTicket(butacas, idFuncion, idCompraStr);
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=listar");
                 }catch (NumberFormatException e){
-                    System.out.println("Error al convertir id | doPost UsuarioCarrotpIndex");
+                    System.out.println("Error al convertir id | doPost UsuarioCarritoIndex");
                     response.sendRedirect(request.getContextPath());
                 }
                 break;
@@ -128,7 +128,7 @@ public class UsuarioCarritoIndex extends HttpServlet {
                     carritoDao.borrarTicket(idFuncion, idCompraStr);
                     response.sendRedirect(request.getContextPath()+"/UsuarioCarritoIndex?action=listar");
                 }catch (NumberFormatException e){
-                    System.out.println("Error al convertir id | doPost UsuarioCarrotpIndex");
+                    System.out.println("Error al convertir id | doPost UsuarioCarritoIndex");
                     response.sendRedirect(request.getContextPath());
                 }
                 break;

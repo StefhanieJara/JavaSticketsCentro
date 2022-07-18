@@ -26,7 +26,6 @@ public class EditarOperadorServlet extends HttpServlet {
             case "borrar" -> {
                 int id = Integer.parseInt(request.getParameter("id"));
                 adminDao.eliminarOperador(id);
-                System.out.println(id);
                 response.sendRedirect(request.getContextPath() + "/ListarOperadorServlet");
             }
             default -> {response.sendRedirect(request.getContextPath());}
