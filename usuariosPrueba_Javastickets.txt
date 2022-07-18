@@ -1,0 +1,28 @@
+Cliente
+user: Calos95
+password: contrasenia
+
+user: MarthyLove
+password: 32MarkXD
+
+user: Anthony
+password: antonio33
+
+
+--------------------------------------------------------------------------
+Operador
+
+user: Mela
+password: Chorri*o*s
+
+user: Marthita
+password: matherCha#!
+
+user: Antonio Ing
+password: mecanicaBetter
+
+----------------------------------------------------------------------
+
+Administrador
+user: Ingeniero Diaz
+password: #$IngeDiaz-ma
