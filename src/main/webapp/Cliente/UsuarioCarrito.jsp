@@ -295,9 +295,9 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                             <tr>
-                                <th scope="col">Producto</th>
+                                <th scope="col">Pelicula</th>
                                 <th scope="col">Sede</th>
-                                <th scope="col">Butacas:</th>
+                                <th scope="col">Butacas</th>
                                 <th scope="col">Subtotal</th>
                             </tr>
                             </thead>
